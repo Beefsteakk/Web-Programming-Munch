@@ -1,0 +1,38 @@
+@model List<PostsEntity>
+
+@{
+    ViewData["Title"] = "Posts Page";
+}
+
+<h2>Posts</h2>
+
+<br>
+<div class="row">
+    <div class = "col-md-12">
+        <a asp-action="CreatePosts" asp-controller="Posts" class="btn btn-success">Create Posts</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class = "table">
+            <thead>
+                <tr>
+                    <td>Post ID</td>
+                    <td>Post Title</td>
+                    <td>Post Content</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model){
+                    <tr>
+                        <td>@item.PostID</td>
+                        <td>@item.PostTitle</td>
+                        <td>@item.PostContent</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
