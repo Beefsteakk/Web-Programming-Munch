@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/EffectiveWebProg.csproj": {}
+    "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg.csproj": {}
   },
   "projects": {
-    "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/EffectiveWebProg.csproj": {
+    "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/EffectiveWebProg.csproj",
+        "projectUniqueName": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg.csproj",
         "projectName": "EffectiveWebProg",
-        "projectPath": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/EffectiveWebProg.csproj",
-        "packagesPath": "/Users/User/.nuget/packages/",
-        "outputPath": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/",
+        "projectPath": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg.csproj",
+        "packagesPath": "C:\\Users\\addsw\\.nuget\\packages\\",
+        "outputPath": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/User/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\addsw\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -83,7 +89,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
