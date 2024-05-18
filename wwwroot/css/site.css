@@ -20,3 +20,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Example of custom CSS for the login button */
+.navbar .btn-primary {
+  margin-left: 20px; /* Adds space between the button and the navbar items */
+  background-color: black;
+}

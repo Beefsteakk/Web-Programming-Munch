@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="~/css/login.css" rel="stylesheet" />
+</head>
+
+<div class="container" style="padding-top: 60px;">
+    <div class="row">
+        <div class="col-lg-10 col-xl-9 mx-auto">
+            <div class="card card-signin flex-row my-5">
+                <div class="card-img-left d-none d-md-flex" style="background: scroll center url('/Images/munch2.png');">
+                    <!-- Background image for card set in CSS! -->
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center">Welcome to Munch!</h5>
+
+                    <form class="form-signin">
+                        <div class="form-label-group">
+                            <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                            <label for="inputUsername">Username</label>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                            <label for="inputPassword">Password</label>
+                        </div>
+
+                        <a class="d-block text-center mt-2 small" href="/Auth/BeginPasswordReset">Forgot password?</a>
+
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign In</button>
+                        <a class="d-block text-center mt-2 small" href="/Auth/Register">Register</a> <!-- Updated link -->
+                        <hr class="my-4">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
