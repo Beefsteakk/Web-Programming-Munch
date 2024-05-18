@@ -9,8 +9,188 @@
       "PackagePath": "staticwebassets/Images/Food1.jpeg"
     },
     {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/Munch_logo.png",
+      "PackagePath": "staticwebassets/Images/Munch_logo.png"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/msg_icon.png",
+      "PackagePath": "staticwebassets/Images/msg_icon.png"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/munch1.jpeg",
+      "PackagePath": "staticwebassets/Images/munch1.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/munch2.png",
+      "PackagePath": "staticwebassets/Images/munch2.png"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/munch_food.png",
+      "PackagePath": "staticwebassets/Images/munch_food.png"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/notification_icon.png",
+      "PackagePath": "staticwebassets/Images/notification_icon.png"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/xunyin.jpg",
+      "PackagePath": "staticwebassets/Images/xunyin.jpg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/bootstrap/js/bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets/assets/bootstrap/js/bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/dropdown/js/navbar-dropdown.js",
+      "PackagePath": "staticwebassets/assets/dropdown/js/navbar-dropdown.js"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/formoid/formoid.min.js",
+      "PackagePath": "staticwebassets/assets/formoid/formoid.min.js"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1491961865842-98f7befd1a60.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1491961865842-98f7befd1a60.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1502828331539-51c709e80300.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1502828331539-51c709e80300.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1526016650454-68a6f488910a.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1526016650454-68a6f488910a.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1529612700005-e35377bf1415.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1529612700005-e35377bf1415.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1536681052895-9f6a24b82141.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1536681052895-9f6a24b82141.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1548130149-a6955bd8d6f9.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1548130149-a6955bd8d6f9.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1556008531-57e6eefc7be4.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1556008531-57e6eefc7be4.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1557684387-08927d28c72a.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1557684387-08927d28c72a.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1569598409550-55537a83a662.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1569598409550-55537a83a662.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1579633711380-ad5922a56153.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1579633711380-ad5922a56153.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1580570656963-1a3c8e26b687.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1580570656963-1a3c8e26b687.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1589156191108-c762ff4b96ab.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1589156191108-c762ff4b96ab.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1591084728795-1149f32d9866.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1591084728795-1149f32d9866.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1595436065982-84fa400d8d8e.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1595436065982-84fa400d8d8e.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1596622723231-b20320c7346b.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1596622723231-b20320c7346b.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1604431838498-cb46f9656fbd.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1604431838498-cb46f9656fbd.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1606081430924-b6480765d470.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1606081430924-b6480765d470.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1606136968306-ab2868cc1f21.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1606136968306-ab2868cc1f21.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1607098665874-fd193397547b.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1607098665874-fd193397547b.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1614835964556-22807e3eeb39.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1614835964556-22807e3eeb39.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1619685350254-c7b4e26988eb.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1619685350254-c7b4e26988eb.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1627662236865-75ef4bba23a0.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1627662236865-75ef4bba23a0.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1635843131662-3f73685114af.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1635843131662-3f73685114af.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1651044450619-5ce74d316987.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1651044450619-5ce74d316987.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/images/photo-1681415851723-dca11d0ec9a6.jpeg",
+      "PackagePath": "staticwebassets/assets/images/photo-1681415851723-dca11d0ec9a6.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/imagesloaded/imagesloaded.pkgd.min.js",
+      "PackagePath": "staticwebassets/assets/imagesloaded/imagesloaded.pkgd.min.js"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/masonry/masonry.pkgd.min.js",
+      "PackagePath": "staticwebassets/assets/masonry/masonry.pkgd.min.js"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/parallax/jarallax.js",
+      "PackagePath": "staticwebassets/assets/parallax/jarallax.js"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/smoothscroll/smooth-scroll.js",
+      "PackagePath": "staticwebassets/assets/smoothscroll/smooth-scroll.js"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/theme/js/script.js",
+      "PackagePath": "staticwebassets/assets/theme/js/script.js"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/vimeoplayer/player.js",
+      "PackagePath": "staticwebassets/assets/vimeoplayer/player.js"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/web/assets/jquery/jquery.min.js",
+      "PackagePath": "staticwebassets/assets/web/assets/jquery/jquery.min.js"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/assets/ytplayer/index.js",
+      "PackagePath": "staticwebassets/assets/ytplayer/index.js"
+    },
+    {
       "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/css/home.css",
       "PackagePath": "staticwebassets/css/home.css"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/css/login.css",
+      "PackagePath": "staticwebassets/css/login.css"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/css/register.css",
+      "PackagePath": "staticwebassets/css/register.css"
     },
     {
       "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/css/site.css",

@@ -18,16 +18,28 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = /Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg
 build_property._RazorSourceGeneratorDebug = 
 
+[/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/Views/Auth/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aC9Gb3Jnb3RQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/Views/Auth/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aC9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/Views/Auth/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aC9SZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
+[/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/Views/Home/Index2.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleDIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/Views/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTG9naW4uY3NodG1s
+[/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/Views/Posts/CreatePosts.cshtml]

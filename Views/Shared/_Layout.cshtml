@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Munch</title>
+    <title>@ViewData["Title"] - EffectiveWebProg</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EffectiveWebProg.styles.css" asp-append-version="true" />
@@ -31,7 +31,7 @@
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="btn btn-primary" href="/Account/Login">Login</a>
+                            <a class="btn btn-primary" asp-controller="Auth" asp-action="Login">Login</a>
                         </li>
                     </ul>
                 </div>
