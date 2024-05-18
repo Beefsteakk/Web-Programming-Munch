@@ -1,137 +1,274 @@
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\appsettings.Development.json
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\appsettings.json
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\EffectiveWebProg.staticwebassets.runtime.json
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\EffectiveWebProg.exe
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\EffectiveWebProg.deps.json
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\EffectiveWebProg.runtimeconfig.json
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\EffectiveWebProg.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\EffectiveWebProg.pdb
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\EffectiveWebProg.GeneratedMSBuildEditorConfig.editorconfig
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\EffectiveWebProg.AssemblyInfoInputs.cache
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\EffectiveWebProg.AssemblyInfo.cs
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\EffectiveWebProg.csproj.CoreCompileInputs.cache
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\EffectiveWebProg.MvcApplicationPartsAssemblyInfo.cache
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\EffectiveWebProg.RazorAssemblyInfo.cache
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\EffectiveWebProg.RazorAssemblyInfo.cs
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\EffectiveWebProg.sourcelink.json
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\staticwebassets.build.json
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\staticwebassets.development.json
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\staticwebassets\msbuild.EffectiveWebProg.Microsoft.AspNetCore.StaticWebAssets.props
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\staticwebassets\msbuild.build.EffectiveWebProg.props
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.EffectiveWebProg.props
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.EffectiveWebProg.props
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\staticwebassets.pack.json
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\scopedcss\bundle\EffectiveWebProg.styles.css
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\scopedcss\projectbundle\EffectiveWebProg.bundle.scp.css
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\EffectiveWebProg.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\refint\EffectiveWebProg.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\EffectiveWebProg.pdb
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\EffectiveWebProg.genruntimeconfig.cache
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\ref\EffectiveWebProg.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Azure.Core.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Azure.Identity.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Humanizer.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.CodeAnalysis.Workspaces.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.Data.SqlClient.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.SqlServer.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.Identity.Client.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.Identity.Client.Extensions.Msal.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\Mono.TextTemplating.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\System.CodeDom.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\System.Composition.AttributedModel.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\System.Composition.Convention.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\System.Composition.Hosting.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\System.Composition.Runtime.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\System.Composition.TypedParts.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\System.Drawing.Common.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\System.Memory.Data.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\System.Runtime.Caching.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\System.Security.Permissions.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\System.Windows.Extensions.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\EffectiveWebProg.csproj.AssemblyReference.cache
-C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\obj\Debug\net8.0\Effectiv.588FD8A4.Up2Date
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/appsettings.Development.json
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/appsettings.json
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/EffectiveWebProg.staticwebassets.runtime.json
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/EffectiveWebProg.exe
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/EffectiveWebProg.deps.json
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/EffectiveWebProg.runtimeconfig.json
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/EffectiveWebProg.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/EffectiveWebProg.pdb
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.GeneratedMSBuildEditorConfig.editorconfig
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.AssemblyInfoInputs.cache
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.AssemblyInfo.cs
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.csproj.CoreCompileInputs.cache
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.MvcApplicationPartsAssemblyInfo.cache
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.RazorAssemblyInfo.cache
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.RazorAssemblyInfo.cs
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.sourcelink.json
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/staticwebassets.build.json
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/staticwebassets.development.json
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/staticwebassets/msbuild.EffectiveWebProg.Microsoft.AspNetCore.StaticWebAssets.props
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/staticwebassets/msbuild.build.EffectiveWebProg.props
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.EffectiveWebProg.props
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.EffectiveWebProg.props
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/staticwebassets.pack.json
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/scopedcss/bundle/EffectiveWebProg.styles.css
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/scopedcss/projectbundle/EffectiveWebProg.bundle.scp.css
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/refint/EffectiveWebProg.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.pdb
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.genruntimeconfig.cache
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/ref/EffectiveWebProg.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Azure.Core.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Azure.Identity.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Humanizer.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.Bcl.AsyncInterfaces.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.CodeAnalysis.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.CodeAnalysis.CSharp.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.CodeAnalysis.Workspaces.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.Data.SqlClient.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Design.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Relational.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.SqlServer.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.Extensions.DependencyModel.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.Identity.Client.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.Identity.Client.Extensions.Msal.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.SqlServer.Server.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Microsoft.Win32.SystemEvents.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/Mono.TextTemplating.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/System.CodeDom.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/System.Composition.AttributedModel.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/System.Composition.Convention.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/System.Composition.Hosting.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/System.Composition.Runtime.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/System.Composition.TypedParts.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/System.Configuration.ConfigurationManager.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/System.Drawing.Common.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/System.Memory.Data.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/System.Runtime.Caching.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/System.Security.Cryptography.ProtectedData.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/System.Security.Permissions.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/System.Windows.Extensions.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/cs/Microsoft.CodeAnalysis.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/de/Microsoft.CodeAnalysis.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/es/Microsoft.CodeAnalysis.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/fr/Microsoft.CodeAnalysis.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/it/Microsoft.CodeAnalysis.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/ja/Microsoft.CodeAnalysis.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/ko/Microsoft.CodeAnalysis.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/pl/Microsoft.CodeAnalysis.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/ru/Microsoft.CodeAnalysis.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/tr/Microsoft.CodeAnalysis.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/de/Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/es/Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/it/Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/runtimes/unix/lib/net6.0/Microsoft.Data.SqlClient.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/runtimes/win/lib/net6.0/Microsoft.Data.SqlClient.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-arm/native/Microsoft.Data.SqlClient.SNI.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-arm64/native/Microsoft.Data.SqlClient.SNI.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x64/native/Microsoft.Data.SqlClient.SNI.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x86/native/Microsoft.Data.SqlClient.SNI.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/runtimes/unix/lib/net6.0/System.Drawing.Common.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Drawing.Common.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Runtime.Caching.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Windows.Extensions.dll
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.csproj.AssemblyReference.cache
+C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0/Effectiv.588FD8A4.Up2Date
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/appsettings.Development.json
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/appsettings.json
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/EffectiveWebProg.staticwebassets.runtime.json
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/EffectiveWebProg
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/EffectiveWebProg.deps.json
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/EffectiveWebProg.runtimeconfig.json
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/EffectiveWebProg.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/EffectiveWebProg.pdb
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Azure.Core.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Azure.Identity.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Humanizer.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.CodeAnalysis.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.CodeAnalysis.CSharp.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.CodeAnalysis.Workspaces.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.Data.SqlClient.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Design.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Relational.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.SqlServer.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.Extensions.DependencyModel.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.Identity.Client.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.Identity.Client.Extensions.Msal.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.SqlServer.Server.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Microsoft.Win32.SystemEvents.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Mono.TextTemplating.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/System.CodeDom.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/System.Composition.AttributedModel.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/System.Composition.Convention.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/System.Composition.Hosting.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/System.Composition.Runtime.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/System.Composition.TypedParts.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/System.Configuration.ConfigurationManager.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/System.Drawing.Common.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/System.Memory.Data.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/System.Runtime.Caching.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/System.Security.Cryptography.ProtectedData.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/System.Security.Permissions.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/System.Windows.Extensions.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/cs/Microsoft.CodeAnalysis.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/de/Microsoft.CodeAnalysis.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/es/Microsoft.CodeAnalysis.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/fr/Microsoft.CodeAnalysis.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/it/Microsoft.CodeAnalysis.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/ja/Microsoft.CodeAnalysis.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/ko/Microsoft.CodeAnalysis.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/pl/Microsoft.CodeAnalysis.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/ru/Microsoft.CodeAnalysis.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/tr/Microsoft.CodeAnalysis.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/de/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/es/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/it/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/unix/lib/net6.0/Microsoft.Data.SqlClient.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win/lib/net6.0/Microsoft.Data.SqlClient.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-arm/native/Microsoft.Data.SqlClient.SNI.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-arm64/native/Microsoft.Data.SqlClient.SNI.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x64/native/Microsoft.Data.SqlClient.SNI.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x86/native/Microsoft.Data.SqlClient.SNI.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/unix/lib/net6.0/System.Drawing.Common.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Drawing.Common.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Runtime.Caching.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Windows.Extensions.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.csproj.AssemblyReference.cache
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.GeneratedMSBuildEditorConfig.editorconfig
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.AssemblyInfoInputs.cache
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.AssemblyInfo.cs
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.csproj.CoreCompileInputs.cache
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.MvcApplicationPartsAssemblyInfo.cache
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.RazorAssemblyInfo.cache
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.RazorAssemblyInfo.cs
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.sourcelink.json
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/staticwebassets.build.json
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/staticwebassets.development.json
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/staticwebassets/msbuild.EffectiveWebProg.Microsoft.AspNetCore.StaticWebAssets.props
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/staticwebassets/msbuild.build.EffectiveWebProg.props
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.EffectiveWebProg.props
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.EffectiveWebProg.props
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/staticwebassets.pack.json
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/scopedcss/bundle/EffectiveWebProg.styles.css
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/scopedcss/projectbundle/EffectiveWebProg.bundle.scp.css
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/Effectiv.588FD8A4.Up2Date
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/refint/EffectiveWebProg.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.pdb
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.genruntimeconfig.cache
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/Debug/net8.0/ref/EffectiveWebProg.dll
