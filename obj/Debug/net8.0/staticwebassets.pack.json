@@ -33,6 +33,10 @@
       "PackagePath": "staticwebassets\\Images\\notification_icon.png"
     },
     {
+      "Id": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\wwwroot\\Images\\picture.png",
+      "PackagePath": "staticwebassets\\Images\\picture.png"
+    },
+    {
       "Id": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\wwwroot\\Images\\xunyin.jpg",
       "PackagePath": "staticwebassets\\Images\\xunyin.jpg"
     },
@@ -187,6 +191,14 @@
     {
       "Id": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\wwwroot\\css\\login.css",
       "PackagePath": "staticwebassets\\css\\login.css"
+    },
+    {
+      "Id": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\wwwroot\\css\\ownerProfile.css",
+      "PackagePath": "staticwebassets\\css\\ownerProfile.css"
+    },
+    {
+      "Id": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\wwwroot\\css\\profile.css",
+      "PackagePath": "staticwebassets\\css\\profile.css"
     },
     {
       "Id": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\wwwroot\\css\\register.css",

@@ -38,8 +38,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleDIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/Home/LandingPageTest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMYW5kaW5nUGFnZVRlc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/OwnerProfile/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3duZXJQcm9maWxlXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/Posts/CreatePosts.cshtml]
@@ -48,6 +56,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/Posts/Posts.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdHNcUG9zdHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/Profile/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/Shared/Error.cshtml]

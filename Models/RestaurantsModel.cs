@@ -38,5 +38,6 @@ public class RestaurantsModel
     public UsersModel Owner { get; set; }
 
     public ICollection<FoodListEntriesModel> FoodEntry { get; set; }
-    public ICollection<ReservationModel> Reservation { get; set; }
+    public ICollection<ReservationsModel> Reservation { get; set; }
+    public ICollection<RestaurantRatingsModel> RestaurantRating { get; set; }
 }

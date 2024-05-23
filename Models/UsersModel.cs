@@ -44,5 +44,6 @@ public class UsersModel
     public ICollection<RestaurantsModel> Restaurant { get; set; }
     public ICollection<FoodListsModel> FoodList { get; set; }
     public ICollection<FoodListLikesModel> FoodListLike { get; set; }
-    public ICollection<ReservationModel> Reservation { get; set; }
+    public ICollection<ReservationsModel> Reservation { get; set; }
+    public ICollection<RestaurantRatingsModel> RestaurantRating { get; set; }
 }
