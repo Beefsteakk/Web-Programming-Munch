@@ -6,7 +6,7 @@
 }
 
 nav {
-  height: 80px;
+  height: 70px;
   background-color: white;
   display: flex;
   justify-content: space-between;
@@ -34,6 +34,7 @@ nav {
   color: white;
 }
 
+/* ------------- Hero section css --------------- */
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
@@ -61,12 +62,12 @@ nav {
 }
 
 .column-left h1 {
-  margin-bottom: 1rem;
-  font-size: 3rem;
+  margin-bottom: 2rem;
+  font-size: 4rem;
 }
 
 .column-left p {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   font-size: 1.5rem;
 }
 
@@ -87,9 +88,204 @@ nav {
   animation-direction: alternate;
   animation-iteration-count: infinite;
 }
+/* ------------------------------------------- */
+
+
+/* ------------- Feature 1 css --------------- */
+.feature-1 {
+  width: 100%;
+  min-height: 90%;
+  display: grid;
+  place-items: center;
+}
+
+.feature-1-box {
+  width: 85%;
+  background-color: rgb(255, 255, 25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.show {
+  opacity: 1;
+}
+
+.feature-1-box-left, 
+.feature-1-box-right {
+  flex: 1;
+  box-sizing: border-box;
+  padding: 10px;
+  display: grid;
+  place-items: center;
+}
+
+.feature-1-box-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.feature-1-box-description {
+  font-size: 1.5rem;
+  width: 100%;
+}
+/* ------------------------------------------- */
+
+/* ------------- Feature 2 css --------------- */
+.feature-2 {
+  width: 100%;
+  min-height: 90%;
+  display: grid;
+  place-items: center;
+  margin-top: 40px;
+}
+
+.feature-2-box {
+  width: 85%;
+  background-color: rgb(32, 210, 255);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+ 
+.feature-2-box-right {
+  flex: 1;
+  box-sizing: border-box;
+  padding: 10px;
+  display: grid;
+  place-items: center;
+}
+
+.feature-2-box-left {
+  flex: 1;
+  box-sizing: border-box;
+  padding: 10px;
+  padding-left: 20px;
+  display: grid;
+  place-items: center;
+}
+
+.feature-2-box-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.feature-2-box-description {
+  font-size: 1.5rem;
+  width: 100%;
+}
+/* ------------------------------------------- */
+/* ------------- Feature 3 css --------------- */
+.feature-3 {
+  width: 100%;
+  min-height: 90%;
+  display: grid;
+  place-items: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.feature-3-box {
+  width: 85%;
+  background-color: rgb(255, 255, 25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.feature-3-box-left, 
+.feature-3-box-right {
+  flex: 1;
+  box-sizing: border-box;
+  padding: 10px;
+  display: grid;
+  place-items: center;
+}
+
+.feature-3-box-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.feature-3-box-description {
+  font-size: 1.5rem;
+  width: 100%;
+}
+/* ------------------------------------------- */
 
 @media screen and (max-width: 760px) {
   .hero-container {
     grid-template-columns: 1fr;
+  }
+
+  .column-left {
+    align-items: center;
+  }
+
+  .column-left h1 {
+    text-align: center;
+  }
+
+  .column-left p {
+    text-align: center;
+  }
+
+  .column-left a
+  .feature-1-box {
+    flex-direction: column;
+  }
+  .hero-img {
+    margin-top: 5px;
+  }
+
+  .feature-1-box {
+    flex-direction: column;
+  }
+  
+  .feature-2-box {
+    flex-direction: column;
+  }
+
+  .feature-3-box {
+    flex-direction: column;
+  }
+
+  .feature-1-box-title {
+    text-align: center;
+  }
+
+  .feature-2-box-title {
+    text-align: center;
+  }
+
+  .feature-3-box-title {
+    text-align: center;
+  }
+
+  .feature-1-box-description {
+    text-align: center;
+  }
+
+  .feature-2-box-description {
+    text-align: center;
+  }
+
+  .feature-3-box-description {
+    text-align: center;
   }
 }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "cn+nPvSKR7NmNx3eJsl5m42MJbJZNz+EjBGG4ED3Yi8=",
+  "Hash": "JxvitOlS9asnpdJbxdAi/Q5U34haXz1fWDjJb4jEOgE=",
   "Source": "EffectiveWebProg",
   "BasePath": "_content/EffectiveWebProg",
   "Mode": "Default",
@@ -872,12 +872,12 @@
       "OriginalItemSpec": "wwwroot/favicon.ico"
     },
     {
-      "Identity": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/—Pngtree—cartoon hand drawn friends dancing_5049413.png",
+      "Identity": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/feature1.png",
       "SourceId": "EffectiveWebProg",
       "SourceType": "Discovered",
       "ContentRoot": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/",
       "BasePath": "_content/EffectiveWebProg",
-      "RelativePath": "Images/—Pngtree—cartoon hand drawn friends dancing_5049413.png",
+      "RelativePath": "Images/feature1.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -888,15 +888,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/Images/—Pngtree—cartoon hand drawn friends dancing_5049413.png"
+      "OriginalItemSpec": "wwwroot/Images/feature1.png"
     },
     {
-      "Identity": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/10 SCENE.png",
+      "Identity": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/feature2.png",
       "SourceId": "EffectiveWebProg",
       "SourceType": "Discovered",
       "ContentRoot": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/",
       "BasePath": "_content/EffectiveWebProg",
-      "RelativePath": "Images/10 SCENE.png",
+      "RelativePath": "Images/feature2.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -907,15 +907,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/Images/10 SCENE.png"
+      "OriginalItemSpec": "wwwroot/Images/feature2.png"
     },
     {
-      "Identity": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/9 SCENE.png",
+      "Identity": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/feature3.png",
       "SourceId": "EffectiveWebProg",
       "SourceType": "Discovered",
       "ContentRoot": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/",
       "BasePath": "_content/EffectiveWebProg",
-      "RelativePath": "Images/9 SCENE.png",
+      "RelativePath": "Images/feature3.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -926,7 +926,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/Images/9 SCENE.png"
+      "OriginalItemSpec": "wwwroot/Images/feature3.png"
     },
     {
       "Identity": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/Food1.jpeg",

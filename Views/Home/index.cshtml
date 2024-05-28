@@ -1,0 +1,91 @@
+@{
+  Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Munch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="~/css/landingpage.css"/>
+  </head>
+
+  <body>
+    <nav>
+      <div class="logo">Munch</div>
+      <div class="nav-items">
+				<a class="a-btn" asp-controller="Auth" asp-action="Login">Login</a>
+			</div>
+    </nav>
+    <section class="hero">
+      <div class="hero-container">
+				<div class="column-left">
+					<h1>Never Wonder Where To Eat Again</h1>
+					<p>Reserve seats. Save your favourite places to eat. Rate restaurarnts.</p>
+					<a class="a-btn" asp-controller="Auth" asp-action="Register">Register</a>
+				</div>
+				<div class="column-right">
+					<img src="~/Images/hero.png" alt="Food illustration" class="hero-img" height="520px" width="660px">
+				</div>
+      </div>
+    </section>
+
+    <section class="feature-1">
+      <div class="feature-1-box">
+        <div class="feature-1-box-left">
+          <img src="~/Images/feature1.png" alt="Foodlist Illustration" height="450px" width="500px" />
+        </div>
+        <div class="feature-1-box-right">
+          <div class="feature-1-box-title">
+            Create your very own Foodlist
+          </div>
+          <div class="feature-1-box-description">
+            Just like a music playlist, store your favourite places to eat into
+            foodlists and share them with your friends!
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-2">
+      <div class="feature-2-box">
+        <div class="feature-2-box-left">
+          <div class="feature-2-box-title">
+            See something you like? Reserve a seat right away
+          </div>
+          <div class="feature-2-box-description">
+            Instant seat booking. Gone are the days where you need to message or
+            call to reserve a seat.
+          </div>
+        </div>
+        <div clas="feature-2-box-right">
+          <img src="~/Images/feature2.png" alt="Foodlist Illustration" height="500px" width="600px" />
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-3">
+      <div class="feature-3-box">
+        <div class="feature-3-box-left">
+          <img src="~/Images/feature3.png" alt="Foodlist Illustration" height="550px" width="600px" />
+        </div>
+        <div class="feature-3-box-right">
+          <div class="feature-3-box-title">
+            Find the top rated restaurants near you
+          </div>
+          <div class="feature-3-box-description">
+            If you're in a new city or you just can't decide what to eat, there's
+            always something to try in our explore page.
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

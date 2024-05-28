@@ -5,20 +5,24 @@
       "PackagePath": "staticwebassets/EffectiveWebProg.bundle.scp.css"
     },
     {
-      "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/10 SCENE.png",
-      "PackagePath": "staticwebassets/Images/10 SCENE.png"
-    },
-    {
-      "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/9 SCENE.png",
-      "PackagePath": "staticwebassets/Images/9 SCENE.png"
-    },
-    {
       "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/Food1.jpeg",
       "PackagePath": "staticwebassets/Images/Food1.jpeg"
     },
     {
       "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/Munch_logo.png",
       "PackagePath": "staticwebassets/Images/Munch_logo.png"
+    },
+    {
+      "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/feature1.png",
+      "PackagePath": "staticwebassets/Images/feature1.png"
+    },
+    {
+      "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/feature2.png",
+      "PackagePath": "staticwebassets/Images/feature2.png"
+    },
+    {
+      "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/feature3.png",
+      "PackagePath": "staticwebassets/Images/feature3.png"
     },
     {
       "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/hero.png",
@@ -51,10 +55,6 @@
     {
       "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/xunyin.jpg",
       "PackagePath": "staticwebassets/Images/xunyin.jpg"
-    },
-    {
-      "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/Images/—Pngtree—cartoon hand drawn friends dancing_5049413.png",
-      "PackagePath": "staticwebassets/Images/—Pngtree—cartoon hand drawn friends dancing_5049413.png"
     },
     {
       "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/wwwroot/assets/bootstrap/js/bootstrap.bundle.min.js",
