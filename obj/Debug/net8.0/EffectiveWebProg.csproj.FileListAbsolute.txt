@@ -409,3 +409,7 @@ C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/obj/Debug/net8.0
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.pdb
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.genruntimeconfig.cache
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/obj/Debug/net8.0/ref/EffectiveWebProg.dll
+C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\EffectiveWebProg\bin\Debug\net8.0\EffectiveWebProg.exe
+C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\EffectiveWebProg\bin\Debug\net8.0\EffectiveWebProg.dll
+C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\EffectiveWebProg\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\EffectiveWebProg\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll

@@ -8,8 +8,7 @@ public class RestaurantsModel
     [Key]
     public Guid RestID { get; set; } // Primary Key
 
-    [Required]
-    public Guid OwnerID { get; set; } // Foreign Key From UsersEntity
+    public Guid? OwnerID { get; set; } // Foreign Key From UsersEntity
 
     [StringLength(255)]
     public string RestName { get; set; }
