@@ -17,6 +17,12 @@ namespace YourNamespace.Controllers
             return View();
         }
 
+        // GET: /Auth/RestaurantReg
+        public IActionResult RestaurantReg()
+        {
+            return View();
+        }
+
         // GET: /Auth/ForgotPassword
         public IActionResult ForgotPassword()
         {

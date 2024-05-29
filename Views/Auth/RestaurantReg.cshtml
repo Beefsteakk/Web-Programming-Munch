@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Restaurant Register";
 }
 
 <head>
@@ -20,7 +20,7 @@
         input[type="radio"] {
             margin: 8px 10px 0 10px;
         }
-
+        
         .register-link {
             text-align: right;
             font-size: 14px;
@@ -90,8 +90,8 @@
     <h4 class="display-4">Welcome to Munch!</h4>
 
     <div class="register-link">
-        Register for your restaurant?
-        <a class="a-btn" asp-controller="Auth" asp-action="RestaurantReg">Sign Up</a>
+        Register for personal?
+        <a class="a-btn" asp-controller="Auth" asp-action="Register">Sign Up</a>
     </div>
 
     <div class="registration-form" style="margin-bottom:120px;">
@@ -110,7 +110,7 @@
                 display: block;
                 margin-left: auto;
                 margin-right: auto;
-                margin-bottom: 7px;" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"
+                margin-bottom: 7px;" src="~/images/chef.png"
                     class="avatar" alt="Avatar">
                 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
                     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -122,49 +122,13 @@
 
 
             <div class="form-group">
-                <label for="name">Username</label>
+                <label for="name">Restaurant Name</label>
                 <input type="text" class="form-control" pattern="^[a-zA-Z][a-zA-Z ]{5,30}$"
-                    title="Username must be between 5 to 30 characters long, with no special characters." id="username"
+                    title="Restaurant name must be between 5 to 30 characters long, with no special characters." id="username"
                     autocomplete="off" required>
                 <span class="text-danger"></span>
 
             </div>
-
-            @* radio *@
-
-            <div class="form-group">
-                <label for="name">Gender</label>
-
-                <div class="d-flex flex-row justify-content-center">
-
-                    @Html.RadioButton("myUser.Gender", "Male") <span>Male</span>
-                    @Html.RadioButton("myUser.Gender", "Female") <span>Female</span>
-
-
-
-                </div>
-
-
-                <span class="text-danger"></span>
-
-
-                @*<input asp-for="myUser.Gender" type="text" class="form-control" id="username" required>
-                <span asp-validation-for="myUser.Gender" class="text-danger"></span>*@
-
-
-            </div>
-
-
-            @* Calender *@
-
-            <div class="form-group">
-                <label for="name">Date of Birth</label>
-                <input autocomplete="off" type="date" class="form-control" id="username" required>
-                <span class="text-danger"></span>
-            </div>
-
-
-
 
             <div class="form-group">
                 <label for="email">Email</label>
@@ -191,9 +155,6 @@
                 <input type="password" autocomplete="off" class="form-control" minlength="4" id="password_confirm"
                     oninput="check(this)" required>
                 <span class="text-danger"></span>
-
-
-
             </div>
 
 
@@ -205,13 +166,9 @@
             </div>
 
 
-
-
-
             <div class="form-group">
-                <label for="address">Mailing Address</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" title="5 characters minimum"
-                    maxlength="30" minlength="5"></textarea>
+                <label for="document">Upload Document for Verification</label>
+                <input type="file" class="form-control-file" id="document" name="document">
             </div>
 
             <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" />

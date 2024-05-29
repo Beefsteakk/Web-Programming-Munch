@@ -21,7 +21,7 @@
     <nav>
       <div class="logo">Munch</div>
       <div class="nav-items">
-				<a class="a-btn" asp-controller="Auth" asp-action="Login">Login</a>
+				<a class="l-btn" asp-controller="Auth" asp-action="Login">Login</a>
 			</div>
     </nav>
     <section class="hero">
@@ -29,7 +29,10 @@
 				<div class="column-left">
 					<h1>Never Wonder Where To Eat Again</h1>
 					<p>Reserve seats. Save your favourite places to eat. Rate restaurarnts.</p>
-					<a class="a-btn" asp-controller="Auth" asp-action="Register">Register</a>
+          <div class="buttons">
+            <a class="a-btn" asp-controller="Auth" asp-action="Register"><span>User</span></a>
+            <a class="r-btn" asp-controller="Auth" asp-action="RestaurantReg"><span>Restaurant</span></a>
+          </div>
 				</div>
 				<div class="column-right">
 					<img src="~/Images/hero.png" alt="Food illustration" class="hero-img" height="520px" width="660px">
