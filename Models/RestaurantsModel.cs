@@ -36,6 +36,8 @@ public class RestaurantsModel
     public ICollection<FoodListEntriesModel> FoodEntry { get; set; }
     public ICollection<ReservationsModel> Reservation { get; set; }
     public ICollection<RestaurantRatingsModel> RestaurantRating { get; set; }
+    public ICollection<RestaurantFollowingsModel> FollowedBy { get; set; } 
+    
 
     public RestaurantsModel()
     {
@@ -43,6 +45,7 @@ public class RestaurantsModel
         FoodEntry = new List<FoodListEntriesModel>();
         Reservation = new List<ReservationsModel>();
         RestaurantRating = new List<RestaurantRatingsModel>();
+        FollowedBy = new List<RestaurantFollowingsModel>();
     }
 
 }

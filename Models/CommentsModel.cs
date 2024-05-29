@@ -25,7 +25,7 @@ public class CommentsModel
     [ForeignKey("PostID")]
     public required PostsModel Post { get; set; }
 
-    [ForeignKey("UserID")]
+    [ForeignKey("AuthorID")]
     public required UsersModel Author { get; set; }
 
     public CommentsModel()

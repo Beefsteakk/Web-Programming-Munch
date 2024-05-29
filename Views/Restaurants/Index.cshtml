@@ -1,0 +1,35 @@
+@model IEnumerable<EffectiveWebProg.Models.RestaurantsModel>
+
+@{
+    ViewData["Title"] = "Restaurants";
+}
+
+<h2>Restaurants</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Bio</th>
+            <th>Email</th>
+            <th>Website</th>
+            <th>Owner</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var restaurant in Model)
+        {
+            <tr>
+                <td>@restaurant.RestName</td>
+                <td>@restaurant.RestLat</td>
+                <td>@restaurant.RestLong</td>
+                <td>@restaurant.RestBio</td>
+                <td>@restaurant.RestEmail</td>
+                <td>@restaurant.RestWebsite</td>
+                <td>@restaurant.Owner?.UserName</td> <!-- Assuming UserName is a property in UsersModel -->
+            </tr>
+        }
+    </tbody>
+</table>

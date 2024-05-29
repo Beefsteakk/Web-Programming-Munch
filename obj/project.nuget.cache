@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "mGiiKIlWPNGsKsd3881aGG975oDN9mLfHaS16sqmbFFJx+bknyxDCoHphzXd4pSCSPwivlxBbcoSvws47JrP+w==",
+  "dgSpecHash": "L7tEnQgcf/kEF7zxWrWk8/BCaQvn+yZRiACb58CU0fbVoGwK11pXcYTqlZ6uRmlctptbxAo/nEB8ZjmPH0w/nA==",
   "success": true,
   "projectFilePath": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg\\EffectiveWebProg.csproj",
   "expectedPackageFiles": [
@@ -52,6 +52,8 @@
     "C:\\Users\\addsw\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\addsw\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\addsw\\.nuget\\packages\\mysql.data\\8.4.0\\mysql.data.8.4.0.nupkg.sha512",
+    "C:\\Users\\addsw\\.nuget\\packages\\mysqlconnector\\2.3.5\\mysqlconnector.2.3.5.nupkg.sha512",
+    "C:\\Users\\addsw\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\8.0.2\\pomelo.entityframeworkcore.mysql.8.0.2.nupkg.sha512",
     "C:\\Users\\addsw\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\addsw\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
     "C:\\Users\\addsw\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
