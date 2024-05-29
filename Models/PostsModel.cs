@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EffectiveWebProg.Models;
 
@@ -10,25 +11,31 @@ public class PostsModel
     [Required]
     public Guid AuthorID { get; set; } // Foreign Key From UsersEntity
     [Required]
-    public string PostTitle { get; set; }
+    public required string PostTitle { get; set; }
     [Required, StringLength(255)]
-    public string PostContent { get; set; }
+    public required string PostContent { get; set; }
     [StringLength(255)]
-    public string PostImageURL { get; set; }
+    public string? PostImageURL { get; set; }
     [StringLength(255)]
-    public string PostLocation { get; set; }
+    public string? PostLocation { get; set; }
 
     public DateTime PostCreatedAt { get; set; }
     public DateTime PostUpdatedAt { get; set; }
 
+
+    // Navigation properties
+    [ForeignKey("AuthorID")]
+    public required UsersModel Author { get; set; }
+
+    public ICollection<CommentsModel> Comment { get; set; }
+    public ICollection<PostLikesModel> PostLike { get; set; }
+
+
     public PostsModel()
     {
         PostID = Guid.NewGuid();
+        PostCreatedAt = DateTime.UtcNow;
+        Comment = new List<CommentsModel>();
+        PostLike = new List<PostLikesModel>();
     }
-
-
-    // Navigation properties
-    public UsersModel Author { get; set; }
-    public ICollection<CommentsModel> Comment { get; set; }
-    public ICollection<PostLikesModel> PostLike { get; set; }
 }

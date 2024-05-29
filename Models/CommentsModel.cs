@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EffectiveWebProg.Models;
 
@@ -15,17 +16,21 @@ public class CommentsModel
     public Guid AuthorID { get; set; } // Foreign Key From UsersEntity
 
     [Required]
-    public string Comments { get; set; }
+    public required string Comments { get; set; }
 
     public DateTime CommentCreatedAt { get; set; }
 
 
+    // Navigation properties
+    [ForeignKey("PostID")]
+    public required PostsModel Post { get; set; }
+
+    [ForeignKey("UserID")]
+    public required UsersModel Author { get; set; }
+
     public CommentsModel()
     {
         CommentID = Guid.NewGuid();
+        CommentCreatedAt = DateTime.UtcNow;
     }
-
-    // Navigation properties
-    public PostsModel Post { get; set; }
-    public UsersModel Author { get; set; }
 }

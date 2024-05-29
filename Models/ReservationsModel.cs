@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 using EffectiveWebProg.Models;
 
@@ -20,10 +21,16 @@ public class ReservationsModel
     [Required]
     public int NumOfGuests { get; set; }
     [StringLength(255)] 
-    public string SpecialRequest { get; set; }
+    public string? SpecialRequest { get; set; }
     [StringLength(50)] 
-    public string ReservationStatus { get; set; }
+    public string? ReservationStatus { get; set; }
 
+    // Navigation properties
+    [ForeignKey("UserID")]
+    public required UsersModel User { get; set; }
+    
+    [ForeignKey("RestID")]
+    public required RestaurantsModel Restaurant { get; set; }
 
 
     public ReservationsModel()
@@ -31,7 +38,4 @@ public class ReservationsModel
         ReservationID = Guid.NewGuid();
     }
 
-    // Navigation properties
-    public UsersModel User { get; set; }
-    public RestaurantsModel Restaurant { get; set; }
 }

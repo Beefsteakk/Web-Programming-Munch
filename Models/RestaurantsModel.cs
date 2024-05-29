@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EffectiveWebProg.Models;
 
@@ -8,35 +9,40 @@ public class RestaurantsModel
     [Key]
     public Guid RestID { get; set; } // Primary Key
 
-    public Guid? OwnerID { get; set; } // Foreign Key From UsersEntity
+    public Guid? OwnerID { get; set; } // Foreign Key From UsersModel (Nullable)
 
     [StringLength(255)]
-    public string RestName { get; set; }
+    public string? RestName { get; set; } // nullable
 
-    public double RestLat { get; set; }
-    public double RestLong { get; set; }
+    public double? RestLat { get; set; } // nullable
+    public double? RestLong { get; set; } // nullable
 
-    public string RestBio { get; set; }
-
-    [StringLength(255)]
-    public string RestPic { get; set; }
+    public string? RestBio { get; set; } // nullable
 
     [StringLength(255)]
-    public string RestEmail { get; set; }
+    public string? RestPic { get; set; } // nullable
 
     [StringLength(255)]
-    public string RestWebsite { get; set; }
+    public string? RestEmail { get; set; } // nullable
+
+    [StringLength(255)]
+    public string? RestWebsite { get; set; } // nullable
     
 
-    public RestaurantsModel()
-    {
-        RestID = Guid.NewGuid();
-    }
-
     // Navigation properties potentially linking to other relevant data
-    public UsersModel Owner { get; set; }
+    [ForeignKey("OwnerID")]
+    public UsersModel? Owner { get; set; }
 
     public ICollection<FoodListEntriesModel> FoodEntry { get; set; }
     public ICollection<ReservationsModel> Reservation { get; set; }
     public ICollection<RestaurantRatingsModel> RestaurantRating { get; set; }
+
+    public RestaurantsModel()
+    {
+        RestID = Guid.NewGuid();
+        FoodEntry = new List<FoodListEntriesModel>();
+        Reservation = new List<ReservationsModel>();
+        RestaurantRating = new List<RestaurantRatingsModel>();
+    }
+
 }

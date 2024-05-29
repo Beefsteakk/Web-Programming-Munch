@@ -1,27 +1,34 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 using EffectiveWebProg.Models;
 
 public class FoodListLikesModel
 {
-    [Key]
-    public Guid FoodListLikeID { get; set; } // Primary Key
+    [Key, Column(Order = 0)]
+    public Guid FoodListID { get; set; } // Composite Primary Key and Foreign Key From FoodListsModel
+
+    [Key, Column(Order = 1)]
+    public Guid UserID { get; set; } // Composite Primary Key and Foreign Key From UsersModel
 
     [Required]
-    public Guid FoodListID { get; set; } // Foreign Key From FoodListsModel
+    public DateTime LikeCreatedAt { get; set; }
 
-    [Required]
-    public Guid UserID { get; set; } // Foreign Key From UsersModel
+
+
+
+    // Navigation properties
+    [ForeignKey("FoodListID")]
+    public required FoodListsModel FoodList { get; set; }
+
+    [ForeignKey("UserID")]
+    public required UsersModel User { get; set; }
 
 
     public FoodListLikesModel()
     {
-        FoodListLikeID = Guid.NewGuid();
+        LikeCreatedAt = DateTime.UtcNow;
     }
-
-    // Navigation properties
-    public FoodListsModel FoodList { get; set; }
-    public UsersModel User { get; set; }
 }
