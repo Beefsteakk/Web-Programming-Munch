@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg.csproj": {}
+    "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg\\EffectiveWebProg.csproj": {}
   },
   "projects": {
-    "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg.csproj": {
+    "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg\\EffectiveWebProg.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg.csproj",
+        "projectUniqueName": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg\\EffectiveWebProg.csproj",
         "projectName": "EffectiveWebProg",
-        "projectPath": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg.csproj",
+        "projectPath": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg\\EffectiveWebProg.csproj",
         "packagesPath": "C:\\Users\\addsw\\.nuget\\packages\\",
-        "outputPath": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\obj\\",
+        "outputPath": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -68,6 +68,14 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.5, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.4.0, )"
+            },
+            "System.IO": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             }
           },
           "imports": [

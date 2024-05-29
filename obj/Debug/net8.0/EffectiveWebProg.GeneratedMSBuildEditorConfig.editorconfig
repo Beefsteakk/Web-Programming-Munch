@@ -9,47 +9,75 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = EffectiveWebProg
 build_property.RootNamespace = EffectiveWebProg
-build_property.ProjectDir = C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\
+build_property.ProjectDir = C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\EffectiveWebProg\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg
+build_property.MSBuildProjectDirectory = C:\SIT\Y1 T3\CSC1106 - Web Programming\Project\EffectiveWebProg\EffectiveWebProg
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/Auth/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/Home/Privacy.cshtml]
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/Auth/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/Auth/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/Home/index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxpbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/Posts/CreatePosts.cshtml]
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/Map/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFwXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/Map/TestDatabaseConnection.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFwXFRlc3REYXRhYmFzZUNvbm5lY3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/OwnerProfile/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3duZXJQcm9maWxlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/Posts/CreatePosts.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdHNcQ3JlYXRlUG9zdHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/Posts/Posts.cshtml]
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/Posts/Posts.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdHNcUG9zdHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/Shared/Error.cshtml]
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/Profile/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/_ViewImports.cshtml]
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/_ViewStart.cshtml]
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/Views/Shared/_Layout.cshtml]
+[C:/SIT/Y1 T3/CSC1106 - Web Programming/Project/EffectiveWebProg/EffectiveWebProg/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-jc28mh0sdm

@@ -26,7 +26,7 @@ public class PostsController : Controller
     }
 
     [HttpPost]
-    public IActionResult CreatePosts(PostsEntity post){
+    public IActionResult CreatePosts(PostsModel post){
         _db.Posts.Add(post);
         _db.SaveChanges();
 
