@@ -1,58 +1,112 @@
-﻿
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Friends</title>
     <link rel="stylesheet" href="~/css/home.css">
 </head>
-<body>
+
+<body class="bg-white">
     <div class="container">
-        <nav class="sidebar">
-            <div class="logo">
-                <h2>Friends.</h2>
-            </div>
-            <ul>
+        <div class="col-2">
+
+        </div>
+        <nav class="sidebar position-fixed">
+            <ul class="sidebar-main-header">
                 <li><a href="#">Home</a></li>
-                <li><a href="#">Friends</a></li>
-                <li><a href="#">Groups</a></li>
-                <li><a href="#">Marketplace</a></li>
-                <li><a href="#">Saved</a></li>
-                <li><a href="#">Pages</a></li>
-                <li><a href="#">Favourites</a></li>
-                <li><a href="#">See More</a></li>
+                <li><a href="#">Search</a></li>
+                <li><a href="#">Explore</a></li>
+                <li><a href="#">Post</a></li>
             </ul>
-            <div class="groups">
-                <h3>My Group</h3>
-                <ul>
-                    <li><a href="#">The Nerd Head</a></li>
-                    <li><a href="#">Take a Trip</a></li>
-                    <li><a href="#">Papa Ki Pari</a></li>
-                    <li><a href="#">College Friends</a></li>
-                    <li><a href="#">My Dream House</a></li>
-                </ul>
-            </div>
+            <h5>Your Following</h5>
+            <ul class="sidebar-second-header">
+                <li><a href="#">Lolla</a></li>
+                <li><a href="#">Seroja</a></li>
+                <li><a href="#">Naeum</a></li>
+                <li><a href="#">Burnt Ends</a></li>
+                <li><a href="#">Fiz</a></li>
+                <li><a href="#">Path</a></li>
+                <li><a href="#">Odette</a></li>
+                <li><a href="#">Claudine</a></li>
+            </ul>
         </nav>
-        <div class="main-content">
-            <header>
-                <input type="text" placeholder="Search for friends, groups, pages">
-                <div class="user-options">
-                    <a href="#"><img src="user_icon.png" alt="User"></a>
-                    <a href="#"><img src="notification_icon.png" alt="Notifications"></a>
-                    <a href="#"><img src="settings_icon.png" alt="Settings"></a>
-                </div>
-            </header>
+        <div class="main-content col-8">
             <div class="content">
-                <div class="post-box">
-                    <img src="~/Images/xunyin.jpg" alt="User">
-                    <input type="text" placeholder="What’s on your mind?">
-                    <div class="post-options">
-                        <button>Go Live</button>
-                        <button>Photo</button>
-                        <button>Video</button>
-                        <button>Feeling</button>
+                <div class="post">
+                    <div class="post-header">
+                        <img src="~/Images/xunyin.jpg" alt="Xun Yin">
+                        <div class="post-info">
+                            <h4>Xun Yin</h4>
+                            <span>4 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p style="max-height: 200px;overflow-y:auto">What is Lorem Ipsum?
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.
+
+                            Why do we use it?
+                            It is a long established fact that a reader will be distracted by the readable content of a
+                            page when looking at its layout. The point of using Lorem Ipsum is that it has a
+                            more-or-less normal distribution of letters, as opposed to using 'Content here, content
+                            here', making it look like readable English. Many desktop publishing packages and web page
+                            editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will
+                            uncover many web sites still in their infancy. Various versions have evolved over the years,
+                            sometimes by accident, sometimes on purpose (injected humour and the like).
+
+
+                            Where does it come from?
+                            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece
+                            of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock,
+                            a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure
+                            Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the
+                            word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from
+                            sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and
+                            Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very
+                            popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit
+                            amet..", comes from a line in section 1.10.32.
+
+                            The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those
+                            interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are
+                            also reproduced in their exact original form, accompanied by English versions from the 1914
+                            translation by H. Rackham.
+
+                            Where can I get some?
+                            There are many variations of passages of Lorem Ipsum available, but the majority have
+                            suffered alteration in some form, by injected humour, or randomised words which don't look
+                            even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be
+                            sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum
+                            generators on the Internet tend to repeat predefined chunks as necessary, making this the
+                            first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined
+                            with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.
+                            The generated Lorem Ipsum is therefore always free from repetition, injected humour, or
+                            non-characteristic words etc.</p>
+                        <div class="images-table">
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <button>Like</button>
+                        <button>Comment</button>
+                        <button>Share</button>
                     </div>
                 </div>
                 <div class="post">
@@ -65,7 +119,36 @@
                     </div>
                     <div class="post-content">
                         <p>I love pasta.</p>
-                        <img src="~/Images/Food1.jpeg" alt="Post Image">
+                        <div class="images-table">
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <button>Like</button>
+                        <button>Comment</button>
+                        <button>Share</button>
+                    </div>
+                </div>
+                <div class="post">
+                    <div class="post-header">
+                        <img src="~/Images/xunyin.jpg" alt="Xun Yin">
+                        <div class="post-info">
+                            <h4>Xun Yin</h4>
+                            <span>4 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>I love pasta.</p>
+                        <div class="images-table">
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                        </div>
                     </div>
                     <div class="post-footer">
                         <button>Like</button>
@@ -75,20 +158,9 @@
                 </div>
             </div>
         </div>
-        <aside>
-            <div class="birthdays">
-                <h3>Birthdays <span>🎂</span></h3>
-                <p>Pola Foster and 3 other friends have birthday today</p>
-            </div>
-            <div class="activity">
-                <h3>Lastest Activity</h3>
-                <ul>
-                    <li>Hally Harald Gomes added a photo in Talk.js <span>about an hour ago</span></li>
-                    <li>Alex kai sent you a friend request <span>3 hours ago</span></li>
-                </ul>
-            </div>
+        <aside class="col-2">
             <div class="active-friends">
-                <h3>Active Friends</h3>
+                <h3>Recommended</h3>
                 <ul>
                     <li>Jaden Chance</li>
                     <li>Arezki Williams</li>
@@ -104,4 +176,5 @@
         </aside>
     </div>
 </body>
+
 </html>
