@@ -43,6 +43,9 @@ public class UsersModel
     public ICollection<FoodListLikesModel> FoodListLike { get; set; }
     public ICollection<ReservationsModel> Reservation { get; set; }
     public ICollection<RestaurantRatingsModel> RestaurantRating { get; set; }
+    public ICollection<UserFollowingsModel> Followings { get; set; } // Users that this user is following
+    public ICollection<UserFollowingsModel> Followers { get; set; } // Users that follow this user
+    public ICollection<RestaurantFollowingsModel> RestaurantFollowings { get; set; }
 
 
     public UsersModel()
@@ -57,6 +60,9 @@ public class UsersModel
         FoodListLike = new List<FoodListLikesModel>();
         Reservation = new List<ReservationsModel>();
         RestaurantRating = new List<RestaurantRatingsModel>();
+        Followings = new List<UserFollowingsModel>();
+        Followers = new List<UserFollowingsModel>();
+        RestaurantFollowings = new List<RestaurantFollowingsModel>();
     }
 
 }
