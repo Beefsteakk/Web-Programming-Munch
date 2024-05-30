@@ -4902,19 +4902,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\junji\\.nuget\\packages\\": {}
+    "/Users/ayers/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\junji\\OneDrive\\Desktop\\WebProgramming\\EffectiveWebProg.csproj",
+      "projectUniqueName": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/EffectiveWebProg.csproj",
       "projectName": "EffectiveWebProg",
-      "projectPath": "C:\\Users\\junji\\OneDrive\\Desktop\\WebProgramming\\EffectiveWebProg.csproj",
-      "packagesPath": "C:\\Users\\junji\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\junji\\OneDrive\\Desktop\\WebProgramming\\obj\\",
+      "projectPath": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/EffectiveWebProg.csproj",
+      "packagesPath": "/Users/ayers/.nuget/packages/",
+      "outputPath": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\junji\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/ayers/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -4995,7 +4995,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
