@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EffectiveWebProg")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fcc1e0e1067cb48b1367c5446acbcf3d179a0ad3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6dc41586e0fe06af2586d75ddbbbf3c4af1ad87d")]
 [assembly: System.Reflection.AssemblyProductAttribute("EffectiveWebProg")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EffectiveWebProg")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
