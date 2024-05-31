@@ -876,3 +876,17 @@ C:/Users/junji/OneDrive/Desktop/WebProgramming/obj/Debug/net8.0/ref/EffectiveWeb
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x64/native/k5sprt64.dll
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x64/native/krb5_64.dll
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x64/native/krbcc64.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/BouncyCastle.Cryptography.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Google.Protobuf.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/K4os.Compression.LZ4.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/K4os.Compression.LZ4.Streams.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/K4os.Hash.xxHash.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/MySql.Data.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/MySqlConnector.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/Pomelo.EntityFrameworkCore.MySql.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/ZstdSharp.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x64/native/comerr64.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x64/native/gssapi64.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x64/native/k5sprt64.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x64/native/krb5_64.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x64/native/krbcc64.dll

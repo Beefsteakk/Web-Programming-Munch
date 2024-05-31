@@ -35,7 +35,7 @@ body {
 }
 
     .registration-form form {
-        background-color: rgb(242, 242, 242);
+        background-color: #f7f7f7;
         max-width: 600px;
         margin: auto;
         padding: 50px 70px;
