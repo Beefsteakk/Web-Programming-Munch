@@ -15,6 +15,10 @@ public class PostsController : Controller
 
     }
 
+    public IActionResult Index(){
+        return View();
+    }
+
     public IActionResult Posts(){
         var posts = _db.Posts.ToList();
         return View(posts);
