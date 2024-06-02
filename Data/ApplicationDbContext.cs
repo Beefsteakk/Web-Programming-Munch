@@ -20,6 +20,8 @@ namespace EffectiveWebProg.Data
         public DbSet<RestaurantsModel> Restaurants { get; set; }
         public DbSet<ReservationsModel> Reservations { get; set; }
         public DbSet<RestaurantRatingsModel> RestaurantRatings { get; set; }
+        public DbSet<UserFollowingsModel> UserFollowings { get; set; }
+        public DbSet<RestaurantFollowingsModel> RestaurantFollowings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,6 +54,9 @@ namespace EffectiveWebProg.Data
                 .HasForeignKey(pl => pl.UserID)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<PostLikesModel>()
+                .HasKey(pl => new { pl.PostID, pl.UserID });
+
             // Configuring FoodLists and FoodListEntries
             modelBuilder.Entity<FoodListsModel>()
                 .HasOne(fl => fl.Owner)
@@ -71,6 +76,9 @@ namespace EffectiveWebProg.Data
                 .HasForeignKey(fle => fle.RestaurantID)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<FoodListEntriesModel>()
+                .HasKey(fle => new { fle.FoodListID, fle.RestaurantID });
+
             // Configuring FoodListLikes
             modelBuilder.Entity<FoodListLikesModel>()
                 .HasOne(fll => fll.FoodList)
@@ -84,13 +92,18 @@ namespace EffectiveWebProg.Data
                 .HasForeignKey(fll => fll.UserID)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // Configuring Restaurants and Reservations
-            modelBuilder.Entity<RestaurantsModel>()
-                .HasOne(r => r.Owner)
-                .WithMany(u => u.Restaurant)
-                .HasForeignKey(r => r.OwnerID)
+            modelBuilder.Entity<FoodListLikesModel>()
+                .HasKey(fll => new { fll.FoodListID, fll.UserID });
+
+            // Configuring one-to-one relationship between Users and Restaurants
+            modelBuilder.Entity<UsersModel>()
+                .HasOne(u => u.Restaurant)
+                .WithOne(r => r.Owner)
+                .HasForeignKey<RestaurantsModel>(r => r.OwnerID)
                 .OnDelete(DeleteBehavior.NoAction);
 
+
+            // Configuring Restaurants and Reservations
             modelBuilder.Entity<ReservationsModel>()
                 .HasOne(r => r.User)
                 .WithMany(u => u.Reservation)
@@ -102,7 +115,6 @@ namespace EffectiveWebProg.Data
                 .WithMany(res => res.Reservation)
                 .HasForeignKey(r => r.RestID)
                 .OnDelete(DeleteBehavior.NoAction);
-
 
             // Configuring Restaurants Rating
             modelBuilder.Entity<RestaurantRatingsModel>()
@@ -116,6 +128,38 @@ namespace EffectiveWebProg.Data
                 .WithMany(res => res.RestaurantRating)
                 .HasForeignKey(rr => rr.RestID)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            // Configuring UserFollowings
+            modelBuilder.Entity<UserFollowingsModel>()
+                .HasOne(uf => uf.Follower)
+                .WithMany(u => u.Followings)
+                .HasForeignKey(uf => uf.FollowerID)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<UserFollowingsModel>()
+                .HasOne(uf => uf.FollowedUser)
+                .WithMany(u => u.Followers)
+                .HasForeignKey(uf => uf.FollowedUserID)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<UserFollowingsModel>()
+                .HasKey(uf => new { uf.FollowerID, uf.FollowedUserID });
+
+            // Configuring RestaurantFollowings
+            modelBuilder.Entity<RestaurantFollowingsModel>()
+                .HasOne(rf => rf.Follower)
+                .WithMany(u => u.RestaurantFollowings)
+                .HasForeignKey(rf => rf.FollowerID)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<RestaurantFollowingsModel>()
+                .HasOne(rf => rf.FollowedRest)
+                .WithMany(r => r.FollowedBy)
+                .HasForeignKey(rf => rf.FollowedRestID)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<RestaurantFollowingsModel>()
+                .HasKey(rf => new { rf.FollowerID, rf.FollowedRestID });
         }
     }
 }

@@ -3,7 +3,7 @@
 }
 
 <head>
-    <script src="https://www.google.com/recaptcha/api.js?render=6LfLmX8dAAAAAGbTIkC40y7eHl9GptSMiJQDI8L8"></script>    
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfLmX8dAAAAAGbTIkC40y7eHl9GptSMiJQDI8L8"></script>
     <link href="~/css/register.css" rel="stylesheet" />
 
     <style>
@@ -21,6 +21,17 @@
             margin: 8px 10px 0 10px;
         }
 
+        .register-link {
+            text-align: center;
+            font-size: 14px;
+            color: black;
+            margin-top: 23px;
+            line-height: 33px;
+        }
+
+        * {
+            color: black;
+        }
     </style>
 
 
@@ -78,145 +89,152 @@
 
 </head>
 
+<div style="margin:30px auto 0;width:600px;">
 
+    <h4 class="display-4">Register as User</h4>
 
-<h4 class="display-4">Register for Munch!</h4>
-
-<div class="registration-form" style="margin-bottom:120px;">
-
-
-    @*<form id="subscribeForm" method="POST" action="" enctype="multipart/form-data">*@
-
-    <form method="post" enctype="multipart/form-data" onsubmit="return validatexx()">
-        <div asp-validation-summary="All" class="text-danger"></div>
-
-
-
-        <div>
-            <img id="avatarImg" style="
-            width: 100px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 7px;" 
-            src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png" class="avatar" alt="Avatar">
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-        </div>
-        <div>
-        </div>
-
-
-        <div class="form-group">
-            <label for="name">Username</label>
-            <input type="text" class="form-control" pattern="^[a-zA-Z][a-zA-Z ]{5,30}$" title="Username must be between 5 to 30 characters long, with no special characters." id="username" autocomplete="off" required>
-            <span class="text-danger"></span>
-
-        </div>
-
-        @* radio *@
-
-    <div class="form-group">
-        <label for="name">Gender</label>
-
-        <div class="d-flex flex-row justify-content-center">
-
-            @Html.RadioButton("myUser.Gender", "Male") <span>Male</span>
-            @Html.RadioButton("myUser.Gender", "Female") <span>Female</span>
-
-
-
-        </div>
-
-
-        <span class="text-danger"></span>
-
-
-        @*<input asp-for="myUser.Gender" type="text" class="form-control" id="username" required>
-        <span asp-validation-for="myUser.Gender" class="text-danger"></span>*@
-
-
+    <div class="register-link">
+        Register for your restaurant?
+        <a class="a-btn" asp-controller="Auth" asp-action="RestaurantReg">Sign Up</a>
     </div>
 
+    <div class="registration-form" style="margin-bottom:120px;">
 
-        @* Calender *@
 
-        <div class="form-group">
-            <label for="name">Date of Birth</label>
-            <input autocomplete="off" type="date" class="form-control" id="username" required>
-            <span class="text-danger"></span>
-        </div>
+        @*<form id="subscribeForm" method="POST" action="" enctype="multipart/form-data">*@
 
+        <form method="post" enctype="multipart/form-data" onsubmit="return validatexx()">
+            <div asp-validation-summary="All" class="text-danger"></div>
 
 
 
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input autocomplete="off" type="email" id="email" class="form-control" required>
-            <span class="text-danger"></span>
-        </div>
+            <div>
+                <img id="avatarImg" style="
+                width: 100px;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 7px;" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"
+                    class="avatar" alt="Avatar">
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                    crossorigin="anonymous">
 
-        @{
-            var pwPattern = @"^(?=[^A-Z\n]*[A-Z])(?=[^a-z\n]*[a-z])(?=[^0-9\n]*[0-9])(?=[^#?!@$%^&*\n-]*[#?!@$%^&*-]).{8,}$";
+            </div>
+            <div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="name">Username</label>
+                <input type="text" class="form-control" pattern="^[a-zA-Z][a-zA-Z ]{5,30}$"
+                    title="Username must be between 5 to 30 characters long, with no special characters." id="username"
+                    autocomplete="off" required>
+                <span class="text-danger"></span>
+
+            </div>
+
+            @* radio *@
+
+            <div class="form-group">
+                <label for="name">Gender</label>
+
+                <div class="d-flex flex-row justify-content-center">
+
+                    @Html.RadioButton("myUser.Gender", "Male") <span>Male</span>
+                    @Html.RadioButton("myUser.Gender", "Female") <span>Female</span>
+
+
+
+                </div>
+
+
+                <span class="text-danger"></span>
+
+
+                @*<input asp-for="myUser.Gender" type="text" class="form-control" id="username" required>
+                <span asp-validation-for="myUser.Gender" class="text-danger"></span>*@
+
+
+            </div>
+
+
+            @* Calender *@
+
+            <div class="form-group">
+                <label for="name">Date of Birth</label>
+                <input autocomplete="off" type="date" class="form-control" id="username" required>
+                <span class="text-danger"></span>
+            </div>
+
+
+
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input autocomplete="off" type="email" id="email" class="form-control" required>
+                <span class="text-danger"></span>
+            </div>
+
+            @{
+                var pwPattern =
+                @"^(?=[^A-Z\n]*[A-Z])(?=[^a-z\n]*[a-z])(?=[^0-9\n]*[0-9])(?=[^#?!@$%^&*\n-]*[#?!@$%^&*-]).{8,}$";
             }
 
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input pattern="@pwPattern" title="Password has to be at least 8 characters, contains a special character, an upper case, a lower case & a digit. " type="password" autocomplete="off" name="password" class="form-control" minlength="4" id="password" />
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input pattern="@pwPattern"
+                    title="Password has to be at least 8 characters, contains a special character, an upper case, a lower case & a digit. "
+                    type="password" autocomplete="off" name="password" class="form-control" minlength="4" id="password" />
 
+            </div>
+
+
+            <div class="form-group">
+                <label for="password2">Confirm Password</label>
+                <input type="password" autocomplete="off" class="form-control" minlength="4" id="password_confirm"
+                    oninput="check(this)" required>
+                <span class="text-danger"></span>
+
+
+
+            </div>
+
+
+            <div class="form-group">
+                <label for="number">Contact Number</label>
+                <input autocomplete="off" placeholder="12345678" type="text" id="number" class="form-control" minlength="8"
+                    maxlength="8" title="Contact number has to be 8 digits." pattern="[0-9]{8}" required>
+                <span class="text-danger"></span>
+            </div>
+
+
+
+
+            <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" />
+
+
+            <div class="form-group">
+                <button type="submit" onclick="validate();" value="Submit" class="btn btn-block create-account">
+                    Create
+                    Account
+                </button>
+                <br>
+                <p class="text-muted">
+                    Signing up signifies that you have read and agree to the <a href="#" data-toggle="modal"
+                        data-target="#exampleModalCenter">Terms Of Service</a>
+                    and our <a href="#" data-toggle="modal" data-target="#exampleModalCenter2">Privacy Policy</a>.
+                </p>
+            </div>
+
+
+
+
+        </form>
+        <div class="social-media">
         </div>
-
-
-        <div class="form-group">
-            <label for="password2">Confirm Password</label>
-            <input type="password" autocomplete="off" class="form-control" minlength="4" id="password_confirm" oninput="check(this)" required>
-            <span class="text-danger"></span>
-
-
-
-        </div>
-
-
-        <div class="form-group">
-            <label for="number">Contact Number</label>
-            <input autocomplete="off" placeholder="12345678" type="text" id="number" class="form-control" minlength="8" maxlength="8" title="Contact number has to be 8 digits." pattern="[0-9]{8}" required>
-            <span class="text-danger"></span>
-        </div>
-
-
-
-
-
-        <div class="form-group">
-            <label for="address">Mailing Address</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                      title="5 characters minimum" maxlength="30" minlength="5"></textarea>
-        </div>
-
-        <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" />
-
-
-        <div class="form-group">
-            <button type="submit" onclick="validate();" value="Submit" class="btn btn-block create-account">
-                Create
-                Account
-            </button>
-            <br>
-            <p class="text-muted">
-                Signing up signifies that you have read and agree to the <a href="#" data-toggle="modal"
-                                                                            data-target="#exampleModalCenter">Terms Of Service</a>
-                and our <a href="#" data-toggle="modal" data-target="#exampleModalCenter2">Privacy Policy</a>.
-            </p>
-        </div>
-
-
-
-
-</form>
-    <div class="social-media">
     </div>
 </div>
-
 
 <script>
 

@@ -1,27 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 using EffectiveWebProg.Models;
 
 public class FoodListEntriesModel
 {
-    [Key]
-    public Guid FoodListEntriesID { get; set; } // Primary Key
 
-    [Required]
-    public Guid RestaurantID { get; set; } // Foreign Key From RestaurantModel
-    [Required]
-    public Guid FoodListID { get; set; } // Foreign Key From FoodListsModel
+    [Key, Column(Order = 0)]
+    public Guid FoodListID { get; set; } // Composite Primary Key and Foreign Key From FoodListsModel
 
+    [Key, Column(Order = 1)]
+    public Guid RestaurantID { get; set; } // Composite Primary Key and Foreign Key From RestaurantModel
 
-
-    public FoodListEntriesModel()
-    {
-        FoodListEntriesID = Guid.NewGuid();
-    }
 
     // Navigation properties
-    public FoodListsModel FoodList { get; set; }
-    public RestaurantsModel Restaurant { get; set; }
+    [ForeignKey("FoodListID")]
+    public required FoodListsModel FoodList { get; set; }
+    [ForeignKey("RestaurantID")]
+    public required RestaurantsModel Restaurant { get; set; }
 }

@@ -1,0 +1,87 @@
+@{
+    ViewData["Title"] = "Map";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Restaurants</title>
+    <style type="text/css">
+        h1 {
+            text-align: center;
+        }
+        .map {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 95%;
+            height: 650px;
+            border: 0;
+        }
+        
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCln59tQOKYJfWz1ywTtqzuQLG8Cj5m1yg&callback=initMap" async defer></script>
+    <script>
+        function initMap() {
+            // Create a map centered at a default location in singapore 
+            
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: { lat: 1.3521, lng: 103.8198 }
+            });
+
+            // Fetch locations data from the server
+            fetch('/Map/GetLocations')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Log the fetched data
+                    // Set bounds to fit all markers
+                    var bounds = new google.maps.LatLngBounds();
+
+                                            @* var test coordinates = { lat: -25.344, lng: 131.036 }; *@
+
+
+                    // Loop through the locations and add them to the map
+                    data.forEach(function(location) {
+                        var lat = parseFloat(location.lat);
+                        var lng = parseFloat(location.lng);
+
+                        // Validate latitude and longitude
+                        if (!isNaN(lat) && !isNaN(lng)) {
+                            var latLng = { lat: lat, lng: lng };
+                            bounds.extend(latLng);
+
+                            var marker = new google.maps.Marker({
+                                position: latLng,
+                                map: map,
+                                title: location.name
+                            });
+
+                            // Optionally add info windows
+                            var infowindow = new google.maps.InfoWindow({
+                                content: '<h3>' + location.name + '</h3>'
+                            });
+
+                            marker.addListener('click', function() {
+                                infowindow.open(map, marker);
+                            });
+                        } else {
+                            console.error('Invalid coordinates:', location);
+                        }
+                    });
+
+                    // Adjust map to fit all markers
+                    map.fitBounds(bounds);
+                })
+                .catch(error => console.log('Error:', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>@ViewData["meow"]</h1> <!-- Display the title -->
+    <div id="map" class="map"></div>
+</body>
+</html>

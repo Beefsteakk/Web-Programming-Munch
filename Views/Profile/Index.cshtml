@@ -33,6 +33,39 @@
     <div id="reservations" class="tab-content" style="display:none;">
         <h3>My Reservations</h3>
         <!-- Add content for My Reservations here -->
+
+         <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h5 class="card-title">Reservation Details</h5>
+            </div>
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Reservation ID:
+                    @* @Model.RestID *@
+                </h6>
+                <p class="card-text">
+                    <strong>Names:</strong>
+                    @* @Model.CustomerName *@
+                    <br />
+                    <strong>Date:</strong>
+                    @* @Model.ReservationDate.ToString("MMMM dd, yyyy") *@
+                    <br />
+                    <strong>Time:</strong>
+                    @* @Model.ReservationTime.ToString("hh:mm tt") *@
+                    <br />
+                    <strong>Pax:</strong>
+                    @* @Model.NumOfGuest *@
+                    <br />
+                    <strong>Special Requests:</strong>
+                    @* @Model.SpecialRequest *@
+                </p>
+            </div>
+            @* <div class="card-footer text-right">
+                <a href="@Url.Action("Edit", "Reservations", new { id = Model.ReservationId })"
+                    class="btn btn-primary">Edit</a>
+                <a href="@Url.Action("Delete", "Reservations", new { id = Model.ReservationId })"
+                    class="btn btn-danger">Delete</a>
+            </div> *@
+        </div>
     </div>
 </div>
 @section Scripts {

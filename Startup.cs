@@ -15,7 +15,8 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-        // Add additional services
+            options.UseMySql(Configuration.GetConnectionString("DefaultConnection"),
+                new MySqlServerVersion(new Version(8, 0, 30)))); 
+        services.AddControllersWithViews();
     }
 }
