@@ -10,6 +10,32 @@
 </head>
 
 <body class="bg-white">
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-image">
+                    <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="carouselInner">
+                            <!-- Slides will be inserted here -->
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-details">
+                    <div class="modal-title" id="modalTitle">Title</div>
+                    <div class="modal-message" id="modalMessage">Message</div>
+                    <div class="modal-comments" id="modalComments">Comments</div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container mb-6">
         <div class="col-2 d-none d-lg-block">
 
