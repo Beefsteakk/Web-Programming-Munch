@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MySql.Data.MySqlClient;
 
 namespace EffectiveWebProg.Models;
 
@@ -47,5 +48,6 @@ public class RestaurantsModel
         RestaurantRating = new List<RestaurantRatingsModel>();
         FollowedBy = new List<RestaurantFollowingsModel>();
     }
+
 
 }
