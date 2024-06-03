@@ -9,10 +9,6 @@
       "PackagePath": "staticwebassets/Images/Food1.jpeg"
     },
     {
-      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/Munch_logo.png",
-      "PackagePath": "staticwebassets/Images/Munch_logo.png"
-    },
-    {
       "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/chef.png",
       "PackagePath": "staticwebassets/Images/chef.png"
     },
@@ -47,6 +43,18 @@
     {
       "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/munch_food.png",
       "PackagePath": "staticwebassets/Images/munch_food.png"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/munch_logo.png",
+      "PackagePath": "staticwebassets/Images/munch_logo.png"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/munch_logo2.jpeg",
+      "PackagePath": "staticwebassets/Images/munch_logo2.jpeg"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/munch_logo3.jpeg",
+      "PackagePath": "staticwebassets/Images/munch_logo3.jpeg"
     },
     {
       "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/notification_icon.png",
