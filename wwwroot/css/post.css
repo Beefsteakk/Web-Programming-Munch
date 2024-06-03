@@ -180,13 +180,24 @@ aside .recommended ul li span {
     width: 100%;
     height: 100%;
 }
+@media screen and (min-width: 1200px) {
+    .modal-content {
+        width: 70%; /* adjust as needed */
+        margin: auto; /* centers the modal */
+    }
+}
 .modal-image {
-    flex: 1;
+    flex: 2;
     background-color: #f5f5f5;
     padding: 20px;
 }
+.modal-image img {
+    width: 800px;
+    height: 600px;
+    object-fit: contain;
+}
 .modal-details {
-    flex: 2;
+    flex: 1;
     padding: 20px;
     overflow-y: auto; /* Enable vertical scroll if content overflows */
 }
@@ -199,7 +210,11 @@ aside .recommended ul li span {
     margin-bottom: 20px;
 }
 .modal-comments {
-    font-size: 16px;
+    font-size: 14px; /* Smaller font size */
+    color: #333; /* Dark gray text */
+    border-top: 1px solid lightgray; /* Border on top only */
+    padding: 15px 10px; /* More vertical padding, less horizontal padding */
+    margin-bottom: 10px; /* Space between comments */
 }
 .carousel-item img {
     max-width: 100%;
