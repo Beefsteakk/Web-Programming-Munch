@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using MySql.Data.MySqlClient;
 
 namespace EffectiveWebProg.Models;
 
@@ -10,13 +9,22 @@ public class RestaurantsModel
     [Key]
     public Guid RestID { get; set; } // Primary Key
 
-    public Guid? OwnerID { get; set; } // Foreign Key From UsersModel (Nullable)
-
     [StringLength(255)]
     public string? RestName { get; set; } // nullable
 
     public double? RestLat { get; set; } // nullable
     public double? RestLong { get; set; } // nullable
+
+    [StringLength(255)]
+    public string? RestAddress { get; set; } 
+
+    [StringLength(255)]
+    public string? RestEmail { get; set; } // nullable
+
+    [StringLength(255)]
+    public string? RestPassword { get; set; } // nullable
+
+    public int? RestContact {get; set;}
 
     public string? RestBio { get; set; } // nullable
 
@@ -24,20 +32,20 @@ public class RestaurantsModel
     public string? RestPic { get; set; } // nullable
 
     [StringLength(255)]
-    public string? RestEmail { get; set; } // nullable
-
-    [StringLength(255)]
     public string? RestWebsite { get; set; } // nullable
+
+    public float? RestRatings {get; set;}
     
 
-    // Navigation properties potentially linking to other relevant data
-    [ForeignKey("OwnerID")]
-    public UsersModel? Owner { get; set; }
-
+    // Navigation properties
     public ICollection<FoodListEntriesModel> FoodEntry { get; set; }
     public ICollection<ReservationsModel> Reservation { get; set; }
-    public ICollection<RestaurantRatingsModel> RestaurantRating { get; set; }
+    public ICollection<RestaurantReviewsModel> RestaurantReview { get; set; }
     public ICollection<RestaurantFollowingsModel> FollowedBy { get; set; } 
+    public ICollection<CommentsModel> Comment { get; set; }
+    public ICollection<PostLikesRestModel> PostLikesRest { get; set; }
+    public ICollection<PostsModel> Post { get; set; }
+    public ICollection<ForumCommentsModel> ForumComment { get; set; }
     
 
     public RestaurantsModel()
@@ -45,9 +53,12 @@ public class RestaurantsModel
         RestID = Guid.NewGuid();
         FoodEntry = new List<FoodListEntriesModel>();
         Reservation = new List<ReservationsModel>();
-        RestaurantRating = new List<RestaurantRatingsModel>();
+        RestaurantReview = new List<RestaurantReviewsModel>();
         FollowedBy = new List<RestaurantFollowingsModel>();
+        Comment = new List<CommentsModel>();
+        PostLikesRest = new List<PostLikesRestModel>();
+        Post = new List<PostsModel>();
+        ForumComment = new List<ForumCommentsModel>();
     }
-
 
 }

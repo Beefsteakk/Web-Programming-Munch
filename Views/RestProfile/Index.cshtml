@@ -1,5 +1,9 @@
 @{
     ViewData["Title"] = "Restaurant Profile";
+    var details = ViewBag.RestaurantDetails as RestaurantsModel;
+    var followerCounts = ViewBag.FollowerCounts as Dictionary<string, int>;
+    var restaurantId = "12345"; // Replace with your specific restaurant ID
+    var followerCount = followerCounts.ContainsKey(restaurantId) ? followerCounts[restaurantId] : 0;
 }
 
 <div class="profile-container">
@@ -9,16 +13,18 @@
         </div>
         <div class="profile-info">
             <div class="profile-username">
-                <h2>@ViewBag.RestaurantName</h2>
+                <h2>@details.RestName</h2>
                 <button>Edit Profile</button>
             </div>
             <div class="profile-stats">
                 <span><strong>0</strong> posts</span>
-                <span><strong>129</strong> followers</span>
+                <span><strong>@followerCount</strong> followers</span>
                 <span><strong>107</strong> following</span>
             </div>
             <div class="profile-bio">
-                <p>deva Bio</p>
+                <p>@details.RestBio</p>
+                <p>@details.RestWebsite</p>
+                <P>Rating: @details.RestRatings</P>
             </div>
         </div>
     </div>
@@ -47,7 +53,9 @@
                     <div>
                         <h4>Categories</h4>
                         <p>Bar</p>
-                        <h4>Contact info</h4>
+                        <h5>Contact info: @details.RestContact</h5>
+                        <h5>Email Address: @details.RestEmail</h5>
+
                         <div id="map" style="height: 400px; width: 100%;"></div>
                     </div>
                 </div>
@@ -85,7 +93,7 @@
         }
 
         function initMap() {
-            var location = { lat: 1.3521, lng: 103.8198 }; // Example coordinates for Singapore
+            var location = { lat: @details.RestLat, lng: @details.RestLong }; // Example coordinates for Singapore
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 10,
                 center: location

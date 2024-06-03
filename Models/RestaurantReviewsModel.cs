@@ -5,10 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 using EffectiveWebProg.Models;
 
-public class RestaurantRatingsModel
+public class RestaurantReviewsModel
 {
     [Key]
-    public Guid RatingID { get; set; } // Primary Key
+    public Guid ReviewID { get; set; } // Primary Key
     
     [Required]
     public Guid UserID { get; set; } // Foreign Key From UsersModel
@@ -18,7 +18,9 @@ public class RestaurantRatingsModel
 
     [Required]
     public int RatingValue { get; set; }
-    public DateTime RatingCreatedAt { get; set; }
+
+    public string? Comments {get; set;}
+    public DateTime ReviewCreatedAt { get; set; }
 
 
     // Navigation properties
@@ -29,9 +31,9 @@ public class RestaurantRatingsModel
     public required RestaurantsModel Restaurant { get; set; }
 
 
-    public RestaurantRatingsModel()
+    public RestaurantReviewsModel()
     {
-        RatingID = Guid.NewGuid();
-        RatingCreatedAt = DateTime.UtcNow;
+        ReviewID = Guid.NewGuid();
+        ReviewCreatedAt = DateTime.UtcNow;
     }
 }
