@@ -85,5 +85,15 @@ namespace EffectiveWebProg.Controllers
             
             return View();
         }
+
+        public async Task<IActionResult> EditProfile()
+        {
+            string userId = "deab13da-1e6b-11ef-ad56-662ef0370963"; // example userId
+            RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(userId);
+
+            ViewBag.RestaurantDetails = restaurantDetails;
+
+            return View();
+        }
     }
 }

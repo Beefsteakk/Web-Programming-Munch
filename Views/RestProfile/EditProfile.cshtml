@@ -1,0 +1,46 @@
+@{ 
+    ViewData["Title"] = "Edit Restaurant Profile";
+    var details = ViewBag.RestaurantDetails as RestaurantsModel;
+    var followerCounts = ViewBag.FollowerCounts as Dictionary<string, int>;
+    var restaurantId = "12345"; // Replace with your specific restaurant ID
+    @* var followerCount = followerCounts.ContainsKey(restaurantId) ? followerCounts[restaurantId] : 0;  *@
+} 
+ 
+    <form action="/submit-edit" method="POST" enctype="multipart/form-data"> 
+        <div> 
+            <label for="name">Restaurant Name:</label> 
+            <input type="text" id="name" name="restaurant_name" value="@details.RestName" required>
+    </div>
+        <div> 
+            <label for="address">Restaurant Address:</label> 
+            <input type="text" id="address" name="restaurant_address" value="@details.RestAddress" required> 
+        </div> 
+        <div> 
+            <label for="email">Restaurant Email:</label> 
+            <input type="email" id="email" name="restaurant_email" value="@details.RestEmail" required> 
+        </div> 
+        <div> 
+            <label for="password">Restaurant Password:</label> 
+            <input type="password" id="password" name="restaurant_password" disabled> 
+        </div> 
+        <div> 
+            <label for="contact">Restaurant Contact:</label> 
+            <input type="tel" id="contact" name="restaurant_contact" value="@details.RestContact" required> 
+        </div> 
+        <div> 
+            <label for="bio">Restaurant Bio:</label> 
+            <textarea id="bio" name="restaurant_bio" rows="4" cols="50" required>@details.RestBio </textarea> 
+        </div> 
+        <div> 
+            <label for="picture">Restaurant Picture:</label> 
+            <input type="file" id="picture" name="restaurant_picture" accept="image/*" required> 
+        </div> 
+        <div> 
+            <label for="website">Restaurant Website:</label> 
+            <input type="url" id="website"  name="restaurant_website" value="@details.RestWebsite" required> 
+        </div> 
+        <div> 
+            <button type="submit">Submit</button> 
+        </div> 
+    </form> 
+ 
