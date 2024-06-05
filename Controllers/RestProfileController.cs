@@ -95,5 +95,33 @@ namespace EffectiveWebProg.Controllers
 
             return View();
         }
+        [HttpPost("SaveProfile")]
+        // public async Task<IActionResult> SaveProfile(RestaurantsModel restaurantDetails)
+        // {
+        //     string query = "UPDATE Restaurants SET RestName = @RestName, RestBio = @RestBio, RestContact = @RestContact, RestEmail = @RestEmail, RestAddress = @RestAddress, RestLat = @RestLat, RestLong = @RestLong, RestPic = @RestPic, RestWebsite = @RestWebsite, RestRatings = @RestRatings WHERE RestID = @RestID";
+
+        //     using (MySqlConnection conn = new MySqlConnection(connectionString))
+        //     {
+        //         await conn.OpenAsync();
+        //         using (MySqlCommand cmd = new MySqlCommand(query, conn))
+        //         {
+        //             cmd.Parameters.AddWithValue("@RestID", restaurantDetails.RestID);
+        //             cmd.Parameters.AddWithValue("@RestName", restaurantDetails.RestName);
+        //             cmd.Parameters.AddWithValue("@RestBio", restaurantDetails.RestBio);
+        //             cmd.Parameters.AddWithValue("@RestContact", restaurantDetails.RestContact);
+        //             cmd.Parameters.AddWithValue("@RestEmail", restaurantDetails.RestEmail);
+        //             cmd.Parameters.AddWithValue("@RestAddress", restaurantDetails.RestAddress);
+        //             cmd.Parameters.AddWithValue("@RestLat", restaurantDetails.RestLat);
+        //             cmd.Parameters.AddWithValue("@RestLong", restaurantDetails.RestLong);
+        //             cmd.Parameters.AddWithValue("@RestPic", restaurantDetails.RestPic);
+        //             cmd.Parameters.AddWithValue("@RestWebsite", restaurantDetails.RestWebsite);
+        //             cmd.Parameters.AddWithValue("@RestRatings", restaurantDetails.RestRatings);
+
+        //             await cmd.ExecuteNonQueryAsync();
+        //         }
+        //     }
+
+        //     return RedirectToAction("Index");
+        // }
     }
 }
