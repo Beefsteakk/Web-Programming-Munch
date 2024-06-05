@@ -1,0 +1,165 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+}
+
+.container {
+    margin-top: 0px;
+    display: flex;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.main-content header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.main-content header input {
+    width: 50%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+}
+
+.main-content header .user-options a {
+    margin: 0 10px;
+}
+
+.content .post {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.content .post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.content .post-header img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+}
+
+.content .post-header .post-info h4 {
+    margin: 0;
+}
+
+.content .post-header .post-info span {
+    color: #777;
+}
+
+.content .post-content p {
+    margin: 0 0 15px 0;
+}
+
+.content .post-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.content .post-footer button {
+    background: none;
+    border: none;
+    color: #1877f2;
+}
+
+aside {
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+aside h3 {
+    margin-top: 0;
+}
+
+aside .recommended {
+    margin-top: 20px;
+}
+
+aside .activity ul,
+aside .recommended ul {
+    list-style: none;
+    padding: 0;
+}
+
+aside .activity ul li,
+aside .recommended ul li {
+    margin: 10px 0;
+}
+
+aside .activity ul li span,
+aside .recommended ul li span {
+    color: #777;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.sidebar {
+    font-size: large;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.sidebar .sidebar-main-header {
+    margin-top: 50px;
+}
+
+.sidebar .sidebar-main-header li {
+    margin-top: 20px;
+}
+
+.sidebar h5 {
+    margin-top: 80px;
+}
+
+.sidebar .sidebar-second-header li {
+    margin-top: 20px;
+}
+
+.images-table {
+    height: 350px;
+    white-space: nowrap;
+    width: 100%;
+    display: table;
+}
+
+.images-table .test {
+    height: 350px;
+    vertical-align: middle;
+    padding: 5px;
+    display: table-cell;
+}
+
+.test img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mb-6 {
+    margin-bottom: 100px;
+}

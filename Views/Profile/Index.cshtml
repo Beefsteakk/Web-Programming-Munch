@@ -1,0 +1,87 @@
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-picture">
+            <img src="~/images/picture.png" alt="Profile Picture">
+        </div>
+        <div class="profile-info">
+            <div class="profile-username">
+                <h2>just._deva</h2>
+                <button>Edit Profile</button>
+            </div>
+            <div class="profile-stats">
+                <span><strong>0</strong> posts</span>
+                <span><strong>129</strong> followers</span>
+                <span><strong>107</strong> following</span>
+            </div>
+            <div class="profile-bio">
+                <p>deva Bio</p>
+            </div>
+        </div>
+    </div>
+        <div class="profile-tabs">
+        <button class="tab-link active" onclick="openTab(event, 'posts')">My Posts</button>
+        <button class="tab-link" onclick="openTab(event, 'reservations')">My Reservations</button>
+    </div>
+    <div id="posts" class="tab-content">
+        <h3>My Posts</h3>
+        <!-- Add content for My Posts here -->
+    </div>
+    <div id="reservations" class="tab-content" style="display:none;">
+        <h3>My Reservations</h3>
+        <!-- Add content for My Reservations here -->
+
+         <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h5 class="card-title">Reservation Details</h5>
+            </div>
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Reservation ID:
+                    @* @Model.RestID *@
+                </h6>
+                <p class="card-text">
+                    <strong>Names:</strong>
+                    @* @Model.CustomerName *@
+                    <br />
+                    <strong>Date:</strong>
+                    @* @Model.ReservationDate.ToString("MMMM dd, yyyy") *@
+                    <br />
+                    <strong>Time:</strong>
+                    @* @Model.ReservationTime.ToString("hh:mm tt") *@
+                    <br />
+                    <strong>Pax:</strong>
+                    @* @Model.NumOfGuest *@
+                    <br />
+                    <strong>Special Requests:</strong>
+                    @* @Model.SpecialRequest *@
+                </p>
+            </div>
+            @* <div class="card-footer text-right">
+                <a href="@Url.Action("Edit", "Reservations", new { id = Model.ReservationId })"
+                    class="btn btn-primary">Edit</a>
+                <a href="@Url.Action("Delete", "Reservations", new { id = Model.ReservationId })"
+                    class="btn btn-danger">Delete</a>
+            </div> *@
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+}
