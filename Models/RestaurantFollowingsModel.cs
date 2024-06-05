@@ -8,7 +8,7 @@ using EffectiveWebProg.Models;
 public class RestaurantFollowingsModel
 {
     [Key, Column(Order = 0)]
-    public Guid FollowerID { get; set; } // Composite Primary Key and Foreign Key From UsersModel
+    public Guid UserID { get; set; } // Composite Primary Key and Foreign Key From UsersModel
 
     [Key, Column(Order = 1)]
     public Guid FollowedRestID { get; set; } // Composite Primary Key and Foreign Key From RestaurantsModel
@@ -20,8 +20,8 @@ public class RestaurantFollowingsModel
 
 
     // Navigation properties
-    [ForeignKey("FollowerID")]
-    public required UsersModel Follower { get; set; }
+    [ForeignKey("UserID")]
+    public required UsersModel User { get; set; }
 
     [ForeignKey("FollowedRestID")]
     public required RestaurantsModel FollowedRest { get; set; }

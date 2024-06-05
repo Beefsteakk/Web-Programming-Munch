@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/EffectiveWebProg.csproj": {}
+    "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/EffectiveWebProg.csproj": {}
   },
   "projects": {
-    "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/EffectiveWebProg.csproj": {
+    "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/EffectiveWebProg.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/EffectiveWebProg.csproj",
+        "projectUniqueName": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/EffectiveWebProg.csproj",
         "projectName": "EffectiveWebProg",
-        "projectPath": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/EffectiveWebProg.csproj",
-        "packagesPath": "/Users/User/.nuget/packages/",
-        "outputPath": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/obj/",
+        "projectPath": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/EffectiveWebProg.csproj",
+        "packagesPath": "/Users/ayers/.nuget/packages/",
+        "outputPath": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/User/.nuget/NuGet/NuGet.Config"
+          "/Users/ayers/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"

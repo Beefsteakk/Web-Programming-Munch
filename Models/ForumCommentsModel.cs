@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EffectiveWebProg.Models;
 
-public class CommentsModel
+public class ForumCommentsModel
 {
     [Key]
     public Guid CommentID { get; set; } // Primary Key
 
     [Required]
-    public Guid PostID { get; set; } // Foreign Key From PostsModel
+    public Guid ForumID { get; set; } // Foreign Key From ForumsModel
 
     public Guid? UserID { get; set; } // Foreign Key From UsersModel
 
@@ -19,12 +19,11 @@ public class CommentsModel
     [Required]
     public required string Comments { get; set; }
 
-    public DateTime CommentCreatedAt { get; set; }
 
 
     // Navigation properties
-    [ForeignKey("PostID")]
-    public required PostsModel Post { get; set; }
+    [ForeignKey("ForumID")]
+    public required ForumsModel Forum { get; set; }
 
     [ForeignKey("UserID")]
     public UsersModel? User { get; set; }
@@ -32,9 +31,8 @@ public class CommentsModel
     [ForeignKey("RestID")]
     public RestaurantsModel? Restaurant { get; set; }
 
-    public CommentsModel()
+    public ForumCommentsModel()
     {
         CommentID = Guid.NewGuid();
-        CommentCreatedAt = DateTime.UtcNow;
     }
 }

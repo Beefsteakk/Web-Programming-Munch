@@ -11,7 +11,7 @@ public class FoodListsModel
     public Guid FoodListID { get; set; } // Primary Key
 
     [Required]
-    public Guid OwnerID { get; set; } // Foreign Key From UsersEntity
+    public Guid UserID { get; set; } // Foreign Key From UsersModel
 
     [Required, StringLength(100)]
     public required string FoodListTitle { get; set; }
@@ -22,8 +22,8 @@ public class FoodListsModel
 
 
     // Navigation properties
-    [ForeignKey("OwnerID")]
-    public required UsersModel Owner { get; set; }
+    [ForeignKey("UserID")]
+    public required UsersModel User { get; set; }
 
     public ICollection<FoodListEntriesModel> FoodListEntry { get; set; }
     public ICollection<FoodListLikesModel> FoodListLike { get; set; }

@@ -8,8 +8,8 @@ public class PostsModel
 {
     [Key]
     public Guid PostID { get; set; } // Primary Key
-    [Required]
-    public Guid AuthorID { get; set; } // Foreign Key From UsersEntity
+    public Guid? UserID { get; set; } // Foreign Key From UsersModel
+    public Guid? RestID { get; set; } // Foreign Key From RestaurantsModel
     [Required]
     public required string PostTitle { get; set; }
     [Required, StringLength(255)]
@@ -20,15 +20,17 @@ public class PostsModel
     public string? PostLocation { get; set; }
 
     public DateTime PostCreatedAt { get; set; }
-    public DateTime PostUpdatedAt { get; set; }
 
 
     // Navigation properties
-    [ForeignKey("AuthorID")]
-    public required UsersModel Author { get; set; }
+    [ForeignKey("UserID")]
+    public UsersModel? User { get; set; }
+    [ForeignKey("RestID")]
+    public RestaurantsModel? Restaurant { get; set; }
 
     public ICollection<CommentsModel> Comment { get; set; }
-    public ICollection<PostLikesModel> PostLike { get; set; }
+    public ICollection<PostLikesUserModel> PostLikeUser { get; set; }
+    public ICollection<PostLikesRestModel> PostLikeRest { get; set; }
 
 
     public PostsModel()
@@ -36,6 +38,7 @@ public class PostsModel
         PostID = Guid.NewGuid();
         PostCreatedAt = DateTime.UtcNow;
         Comment = new List<CommentsModel>();
-        PostLike = new List<PostLikesModel>();
+        PostLikeUser = new List<PostLikesUserModel>();
+        PostLikeRest = new List<PostLikesRestModel>();
     }
 }
