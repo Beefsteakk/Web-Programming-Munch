@@ -38,6 +38,23 @@ public class PostsController : Controller
         return RedirectToAction("Posts");
     }
 
+    [HttpGet]
+    public IActionResult EditPosts() {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult EditPosts(String postID, String postTitle, String postContent) {
+        var post = _db.Posts.Find(System.Guid.Parse(postID));
+        if (post != null) {
+            post.PostTitle = postTitle;
+            post.PostContent = postContent;
+            _db.Posts.Update(post);
+            _db.SaveChanges();
+        }
+        return RedirectToAction("Posts");
+    }
+
     [HttpPost]
     public JsonResult GetInfo(int id)
     {
