@@ -32,6 +32,7 @@ body {
 
     .card-signin .card-body {
         padding: 2rem;
+        background-color: rgb(224, 251, 252);
     }
 
 .form-signin {

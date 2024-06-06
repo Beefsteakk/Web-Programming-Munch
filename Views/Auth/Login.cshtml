@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="~/css/login.css" rel="stylesheet" />
+    <style>
+        .btn-primary:hover {
+            background-color: rgb(255, 255, 255) !important;
+            color: black; /* Optional: change text color on hover */
+        }
+    </style>
 </head>
 
 <div class="container" style="padding-top: 60px;">
@@ -13,7 +19,7 @@
         <div class="col-lg-10 col-xl-9 mx-auto">
             <div class="card card-signin flex-row my-5">
                 <div class="card-img-left d-none d-md-flex"
-                    style="background: scroll center url('/Images/munch_logo.png');">
+                    style="background: scroll center url('/Images/munch_logo3.png');">
                     <!-- Background image for card set in CSS! -->
                 </div>
                 <div class="card-body">
@@ -33,13 +39,14 @@
                         </div>
 
                         <a class="d-block text-center mt-2 small" href="/Auth/ForgotPassword">Forgot password?</a>
+                        <p></p>
                         <div class="container">
-
-
-
-                            <button class="btn btn-lg btn-primary btn-block text-uppercase " type="submit" style="width: 150px; text-align: center; margin-left: 95px;">Sign In</button>
-
-                        </div><a class="d-block text-center mt-2 small" href="/Auth/Register">Register</a>
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" 
+                            style="width: 150px; text-align: center; margin-left: 95px; background-color: rgb(27, 26, 26); border: 0px;">
+                                Sign In
+                            </button>
+                        </div>
+                        <a class="d-block text-center mt-2 small" href="/Auth/Register">Register</a>
                         <!-- Updated link -->
                         <hr class="my-4">
                     </form>
