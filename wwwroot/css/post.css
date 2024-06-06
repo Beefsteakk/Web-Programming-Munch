@@ -170,18 +170,18 @@ aside .recommended ul li span {
     margin-bottom: 100px;
 }
 
-.modal-dialog {
+.modal-info-dialog {
     max-width: 90vw;
     max-height: 90vh;
 }
-.modal-content {
+.modal-info-content {
     display: flex;
     flex-direction: row;
     width: 100%;
     height: 100%;
 }
 @media screen and (min-width: 1200px) {
-    .modal-content {
+    .modal-info-content {
         width: 70%; /* adjust as needed */
         margin: auto; /* centers the modal */
     }
@@ -196,20 +196,20 @@ aside .recommended ul li span {
     height: 600px;
     object-fit: contain;
 }
-.modal-details {
+.modal-info-details {
     flex: 1;
     padding: 20px;
     overflow-y: auto; /* Enable vertical scroll if content overflows */
 }
-.modal-title {
+.modal-info-title {
     font-size: 24px;
     margin-bottom: 10px;
 }
-.modal-message {
+.modal-info-message {
     font-size: 18px;
     margin-bottom: 20px;
 }
-.modal-comments {
+.modal-info-comments {
     font-size: 14px; /* Smaller font size */
     color: #333; /* Dark gray text */
     border-top: 1px solid lightgray; /* Border on top only */
@@ -221,4 +221,59 @@ aside .recommended ul li span {
     max-height: 100%;
     display: block;
     margin: 0 auto;
+}
+
+.modal-post-content {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.modal-post-header {
+    border-bottom: 1px solid #ddd;
+}
+
+.modal-post-title {
+    font-size: 24px;
+    color: #333;
+}
+
+.modal-post-body {
+    padding: 20px 0;
+}
+
+.modal-post-body label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 18px;
+    color: #555;
+}
+
+.modal-post-body input[type="text"],
+.modal-post-body textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+.modal-post-body input[type="file"] {
+    border: none;
+}
+
+.modal-post-footer {
+    border-top: 1px solid #ddd;
+    justify-content: flex-end;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
 }

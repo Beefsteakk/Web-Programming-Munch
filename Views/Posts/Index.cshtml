@@ -10,28 +10,68 @@
 </head>
 
 <body class="bg-white">
+    @model PostsModel
+    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-post-dialog">
+            <div class="modal-content modal-post-content">
+                <div class="modal-header modal-post-header">
+                    <h5 class="modal-title modal-post-title" id="postModalLabel">New Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body modal-post-body">
+                    <form asp-action="CreatePosts" asp-controller="Posts" method="post">
+                        <div class="form-group">
+                            <label>Author ID (This input is only here for testing purposes and should be removed in the
+                                long run)</label>
+                            <input asp-for="UserID" type="text" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Restaurant ID (This input is only here for testing purposes and should be removed in
+                                the long run)</label>
+                            <input asp-for="RestID" type="text" class="form-control" required>
+                        </div>
+                        <label for="title">Title:</label>
+                        <input asp-for="PostTitle" type="text" class="form-control" required>
+                        <label for="post">Post:</label>
+                        <input asp-for="PostContent" type="text" class="form-control" required>
+                        <label for="location">Location:</label>
+                        <input type="text" id="location" name="location">
+                        <label for="pictures">Pictures:</label>
+                        <input type="file" id="pictures" name="pictures" accept="image/*" multiple>
+                    </form>
+                </div>
+                <div class="modal-footer modal-post-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
+        <div class="modal-dialog modal-xl modal-info-dialog">
+            <div class="modal-content modal-info-content">
                 <div class="modal-image">
                     <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner" id="carouselInner">
                             <!-- Slides will be inserted here -->
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
                 </div>
-                <div class="modal-details">
-                    <div class="modal-title" id="modalTitle">Title</div>
-                    <div class="modal-message" id="modalMessage">Message</div>
-                    <div class="modal-comments" id="modalComments">Comments</div>
+                <div class="modal-details modal-info-details">
+                    <div class="modal-title modal-info-title" id="modalTitle">Title</div>
+                    <div class="modal-message modal-info-message" id="modalMessage">Message</div>
+                    <div class="modal-comments modal-info-comments" id="modalComments">Comments</div>
                 </div>
             </div>
         </div>
@@ -45,7 +85,8 @@
                 <li><a href="#"><span class="d-none d-lg-block">Home</span></a></li>
                 <li><a href="#"><span class="d-none d-lg-block">Search</span></a></li>
                 <li><a href="#"><span class="d-none d-lg-block">Explore</span></a></li>
-                <li><a href="#"><span class="d-none d-lg-block">Post</span></a></li>
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#postModal"><span
+                            class="d-none d-lg-block">Post</span></a></li>
             </ul>
             <h5><span class="d-none d-lg-block">Your Following</span></h5>
             <ul class="sidebar-second-header">
