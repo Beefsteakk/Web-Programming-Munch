@@ -4907,11 +4907,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/EffectiveWebProg.csproj",
+      "projectUniqueName": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/EffectiveWebProg.csproj",
       "projectName": "EffectiveWebProg",
-      "projectPath": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/EffectiveWebProg.csproj",
+      "projectPath": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/EffectiveWebProg.csproj",
       "packagesPath": "/Users/ayers/.nuget/packages/",
-      "outputPath": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/EffectiveWebProg/obj/",
+      "outputPath": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/ayers/.nuget/NuGet/NuGet.Config"
