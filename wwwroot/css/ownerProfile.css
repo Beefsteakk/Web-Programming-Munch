@@ -80,3 +80,7 @@ h3, h4 {
     width: calc(100% - 250px);
     padding: 20px;
 }
+
+footer {
+    display: none;
+}

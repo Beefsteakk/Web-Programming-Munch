@@ -890,3 +890,15 @@ C:/Users/junji/OneDrive/Desktop/WebProgramming/obj/Debug/net8.0/ref/EffectiveWeb
 /Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x64/native/k5sprt64.dll
 /Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x64/native/krb5_64.dll
 /Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/runtimes/win-x64/native/krbcc64.dll
+/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.csproj.AssemblyReference.cache
+/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.AssemblyInfoInputs.cache
+/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.AssemblyInfo.cs
+/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.csproj.CoreCompileInputs.cache
+/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.MvcApplicationPartsAssemblyInfo.cache
+/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.RazorAssemblyInfo.cache
+/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.RazorAssemblyInfo.cs
+/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.sourcelink.json
+/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.dll
+/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/refint/EffectiveWebProg.dll
+/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.pdb
