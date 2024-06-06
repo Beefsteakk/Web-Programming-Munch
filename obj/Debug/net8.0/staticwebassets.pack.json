@@ -57,6 +57,10 @@
       "PackagePath": "staticwebassets/Images/munch_logo3.jpeg"
     },
     {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/munch_logo3.png",
+      "PackagePath": "staticwebassets/Images/munch_logo3.png"
+    },
+    {
       "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/notification_icon.png",
       "PackagePath": "staticwebassets/Images/notification_icon.png"
     },
@@ -229,6 +233,10 @@
       "PackagePath": "staticwebassets/css/ownerProfile.css"
     },
     {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/css/post.css",
+      "PackagePath": "staticwebassets/css/post.css"
+    },
+    {
       "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/css/profile.css",
       "PackagePath": "staticwebassets/css/profile.css"
     },
@@ -239,6 +247,10 @@
     {
       "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/favicon.ico",
       "PackagePath": "staticwebassets/favicon.ico"
+    },
+    {
+      "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/js/post.js",
+      "PackagePath": "staticwebassets/js/post.js"
     },
     {
       "Id": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/js/site.js",

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WmBfknPSOr4d8hJo8zdLRIBfljaL9kWk8j0xNrDaEyk=",
+  "Hash": "4csaanrXpXXbfzjeL1dmogYpkidNZ/sMWzuSQb8J5oE=",
   "Source": "EffectiveWebProg",
   "BasePath": "_content/EffectiveWebProg",
   "Mode": "Default",
@@ -815,6 +815,25 @@
       "OriginalItemSpec": "wwwroot/css/ownerProfile.css"
     },
     {
+      "Identity": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/css/post.css",
+      "SourceId": "EffectiveWebProg",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/",
+      "BasePath": "_content/EffectiveWebProg",
+      "RelativePath": "css/post.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/post.css"
+    },
+    {
       "Identity": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/css/profile.css",
       "SourceId": "EffectiveWebProg",
       "SourceType": "Discovered",
@@ -1081,6 +1100,25 @@
       "OriginalItemSpec": "wwwroot/Images/munch_logo3.jpeg"
     },
     {
+      "Identity": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/munch_logo3.png",
+      "SourceId": "EffectiveWebProg",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/",
+      "BasePath": "_content/EffectiveWebProg",
+      "RelativePath": "Images/munch_logo3.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/Images/munch_logo3.png"
+    },
+    {
       "Identity": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/Images/munch1.jpeg",
       "SourceId": "EffectiveWebProg",
       "SourceType": "Discovered",
@@ -1174,6 +1212,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/Images/xunyin.jpg"
+    },
+    {
+      "Identity": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/js/post.js",
+      "SourceId": "EffectiveWebProg",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/",
+      "BasePath": "_content/EffectiveWebProg",
+      "RelativePath": "js/post.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/js/post.js"
     },
     {
       "Identity": "/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/wwwroot/js/site.js",
