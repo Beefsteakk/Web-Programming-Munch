@@ -60,6 +60,7 @@ body::-webkit-scrollbar-thumb {
   transition: 600ms !important;
   border-radius: 10px;
   padding-left: 1rem;
+  cursor: pointer;
 }
 
 .left-nav-item:hover {

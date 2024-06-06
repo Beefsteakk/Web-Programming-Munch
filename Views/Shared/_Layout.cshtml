@@ -18,13 +18,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" 
 </head>
 
-<style>
-    a {
-        text-decoration: none;
-    }
-</style>
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
 
 <body>
+    @{
+        var controller = (string)ViewContext.RouteData.Values["controller"];
+    }
     <nav class="left-sidebar">
         <ul class="left-sidebar-nav">
             <li class="left-sidebar-munch">
@@ -60,6 +63,16 @@
                     <span class="left-link-text">Foodlist</span>
                 </a>
             </li>
+            @if (controller == "Posts")
+            {
+                <li class="left-nav-item">
+                    <a class="left-nav-link text-dark" data-bs-toggle="modal" data-bs-target="#postModal">
+                        <i class="fa-solid fa-utensils"></i>
+                        <span class="left-link-text">Post</span>
+                    </a>
+                </li>
+                <!-- add more list items as needed -->
+            }
             <li class="left-nav-item">
                 <a class="left-nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
                     <span class="left-link-text">Log out</span>
