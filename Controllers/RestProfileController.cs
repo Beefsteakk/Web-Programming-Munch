@@ -1,7 +1,7 @@
 using EffectiveWebProg.Models;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EffectiveWebProg.Controllers
@@ -28,18 +28,17 @@ namespace EffectiveWebProg.Controllers
                         {
                             restaurantDetails = new RestaurantsModel
                             {
+                                RestID = Guid.Parse(reader["RestID"].ToString()),
                                 RestName = reader["RestName"].ToString(),
-                                RestBio = reader["RestBio"].ToString(),
-                                RestContact = int.Parse(reader["RestContact"].ToString()),
+                                RestBio = reader["RestBio"]?.ToString(),
+                                RestContact = !string.IsNullOrEmpty(reader["RestContact"].ToString()) ? int.Parse(reader["RestContact"].ToString()) : 0,
                                 RestEmail = reader["RestEmail"].ToString(),
-                                RestAddress = reader["RestAddress"].ToString(),
-                                RestLat = double.Parse(reader["RestLat"].ToString()),
-                                RestLong=double.Parse(reader["RestLong"].ToString()),
-                                RestPic=reader["RestPic"].ToString(),
-                                RestWebsite=reader["RestWebsite"].ToString(),
-                                RestRatings=int.Parse(reader["RestRatings"].ToString())
-
-
+                                RestAddress = reader["RestAddress"]?.ToString(),
+                                RestLat = !string.IsNullOrEmpty(reader["RestLat"].ToString()) ? double.Parse(reader["RestLat"].ToString()) : 0.0,
+                                RestLong = !string.IsNullOrEmpty(reader["RestLong"].ToString()) ? double.Parse(reader["RestLong"].ToString()) : 0.0,
+                                RestPic = reader["RestPic"]?.ToString(),
+                                RestWebsite = reader["RestWebsite"]?.ToString(),
+                                RestRatings = !string.IsNullOrEmpty(reader["RestRatings"].ToString()) ? int.Parse(reader["RestRatings"].ToString()) : 0
                             };
                         }
                     }
@@ -72,7 +71,6 @@ namespace EffectiveWebProg.Controllers
             return followerCounts;
         }
 
-
         public async Task<IActionResult> Index()
         {
             string userId = "deab13da-1e6b-11ef-ad56-662ef0370963"; // example userId
@@ -95,33 +93,35 @@ namespace EffectiveWebProg.Controllers
 
             return View();
         }
+
         [HttpPost("SaveProfile")]
-        // public async Task<IActionResult> SaveProfile(RestaurantsModel restaurantDetails)
-        // {
-        //     string query = "UPDATE Restaurants SET RestName = @RestName, RestBio = @RestBio, RestContact = @RestContact, RestEmail = @RestEmail, RestAddress = @RestAddress, RestLat = @RestLat, RestLong = @RestLong, RestPic = @RestPic, RestWebsite = @RestWebsite, RestRatings = @RestRatings WHERE RestID = @RestID";
+        [Route("RestProfile/SaveProfile")]
+        public async Task<IActionResult> SaveProfile(RestaurantsModel restaurantDetails)
+        {
+            string query = "UPDATE Restaurants SET RestName = @RestName, RestBio = @RestBio, RestContact = @RestContact, RestEmail = @RestEmail, RestAddress = @RestAddress, RestLat = @RestLat, RestLong = @RestLong, RestPic = @RestPic, RestWebsite = @RestWebsite, RestRatings = @RestRatings WHERE RestID = @RestID";
 
-        //     using (MySqlConnection conn = new MySqlConnection(connectionString))
-        //     {
-        //         await conn.OpenAsync();
-        //         using (MySqlCommand cmd = new MySqlCommand(query, conn))
-        //         {
-        //             cmd.Parameters.AddWithValue("@RestID", restaurantDetails.RestID);
-        //             cmd.Parameters.AddWithValue("@RestName", restaurantDetails.RestName);
-        //             cmd.Parameters.AddWithValue("@RestBio", restaurantDetails.RestBio);
-        //             cmd.Parameters.AddWithValue("@RestContact", restaurantDetails.RestContact);
-        //             cmd.Parameters.AddWithValue("@RestEmail", restaurantDetails.RestEmail);
-        //             cmd.Parameters.AddWithValue("@RestAddress", restaurantDetails.RestAddress);
-        //             cmd.Parameters.AddWithValue("@RestLat", restaurantDetails.RestLat);
-        //             cmd.Parameters.AddWithValue("@RestLong", restaurantDetails.RestLong);
-        //             cmd.Parameters.AddWithValue("@RestPic", restaurantDetails.RestPic);
-        //             cmd.Parameters.AddWithValue("@RestWebsite", restaurantDetails.RestWebsite);
-        //             cmd.Parameters.AddWithValue("@RestRatings", restaurantDetails.RestRatings);
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@RestID", restaurantDetails.RestID);
+                    cmd.Parameters.AddWithValue("@RestName", restaurantDetails.RestName);
+                    cmd.Parameters.AddWithValue("@RestBio", restaurantDetails.RestBio);
+                    cmd.Parameters.AddWithValue("@RestContact", restaurantDetails.RestContact);
+                    cmd.Parameters.AddWithValue("@RestEmail", restaurantDetails.RestEmail);
+                    cmd.Parameters.AddWithValue("@RestAddress", restaurantDetails.RestAddress);
+                    cmd.Parameters.AddWithValue("@RestLat", restaurantDetails.RestLat);
+                    cmd.Parameters.AddWithValue("@RestLong", restaurantDetails.RestLong);
+                    cmd.Parameters.AddWithValue("@RestPic", restaurantDetails.RestPic);
+                    cmd.Parameters.AddWithValue("@RestWebsite", restaurantDetails.RestWebsite);
+                    cmd.Parameters.AddWithValue("@RestRatings", restaurantDetails.RestRatings);
 
-        //             await cmd.ExecuteNonQueryAsync();
-        //         }
-        //     }
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
 
-        //     return RedirectToAction("Index");
-        // }
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -6,8 +6,7 @@
 }
 
 <div class="container mt-5">
-    <form action="/RestProfile/SaveProfile" method="post" enctype="multipart/form-data" class="p-4 shadow-sm rounded"
-        style="background: #fff;">
+    <form action="/RestProfile/SaveProfile" method="post" enctype="multipart/form-data" class="p-4 shadow-sm rounded" style="background: #fff;">
         <div class="row mb-4">
             <div class="col-sm-10">
                 <h1 class="display-4">Edit Restaurant Profile</h1>
@@ -21,60 +20,54 @@
             </div>
         </div>
 
+        <input type="hidden" name="RestID" value="@details.RestID" />
+
         <div class="form-group">
-            <label for="restaurantName">Restaurant Name</label>
-            <input type="text" id="restaurantName" name="restaurantName" class="form-control" value="@details.RestName"
-                required />
+            <label for="RestName">Restaurant Name</label>
+            <input type="text" id="RestName" name="RestName" class="form-control" value="@details.RestName" required />
         </div>
 
         <div class="form-group">
-            <label for="restaurantEmail">Restaurant Email</label>
-            <input type="email" id="restaurantEmail" name="restaurantEmail" class="form-control"
-                value="@details.RestEmail" required />
+            <label for="RestEmail">Restaurant Email</label>
+            <input type="email" id="RestEmail" name="RestEmail" class="form-control" value="@details.RestEmail" required />
             <span class="valid-icon"></span>
         </div>
 
         <div class="form-group">
-            <label for="restaurantAddress">Restaurant Address</label>
+            <label for="RestAddress">Restaurant Address</label>
             <div class="input-group">
-                <input type="text" id="restaurantAddress" name="restaurantAddress" class="form-control"
-                    value="@details.RestAddress" required />
+                <input type="text" id="RestAddress" name="RestAddress" class="form-control" value="@details.RestAddress" required />
                 <div class="input-group-append">
-                    <button type="button" class="btn btn-outline-secondary" onclick="openMapModal()">Select on
-                        Map</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="openMapModal()">Select on Map</button>
                 </div>
             </div>
-            <input type="hidden" id="latitude" name="latitude" value="@details.RestLat" />
-            <input type="hidden" id="longitude" name="longitude" value="@details.RestLong" />
+            <input type="hidden" id="latitude" name="RestLat" value="@details.RestLat" />
+            <input type="hidden" id="longitude" name="RestLong" value="@details.RestLong" />
         </div>
 
         <div class="form-group">
-            <label for="restaurantContact">Restaurant Contact</label>
-            <input type="tel" id="restaurantContact" name="restaurantContact" class="form-control"
-                value="@details.RestContact" required />
+            <label for="RestContact">Restaurant Contact</label>
+            <input type="tel" id="RestContact" name="RestContact" class="form-control" value="@details.RestContact" required />
         </div>
 
         <div class="form-group">
-            <label for="restaurantWebsite">Restaurant Website</label>
-            <input type="url" id="restaurantWebsite" name="restaurantWebsite" class="form-control"
-                value="@details.RestWebsite" required />
+            <label for="RestWebsite">Restaurant Website</label>
+            <input type="url" id="RestWebsite" name="RestWebsite" class="form-control" value="@details.RestWebsite" required />
         </div>
 
         <div class="form-group">
-            <label for="restaurantBio">Restaurant Bio</label>
-            <textarea id="restaurantBio" name="restaurantBio" class="form-control" rows="3"
-                required>@details.RestBio</textarea>
+            <label for="RestBio">Restaurant Bio</label>
+            <textarea id="RestBio" name="RestBio" class="form-control" rows="3" required>@details.RestBio</textarea>
         </div>
 
         <div class="form-group">
-            <label for="restaurantPic">Restaurant Picture</label>
-            <input type="file" id="restaurantPic" name="restaurantPic" class="form-control-file" accept="image/*" />
+            <label for="RestPic">Restaurant Picture</label>
+            <input type="file" id="RestPic" name="RestPic" class="form-control-file" accept="image/*" />
         </div>
 
         <div class="form-row">
             <button type="submit" class="btn btn-primary btn-block">Save</button>
-            <button type="button" class="btn btn-secondary btn-block"
-                onclick="window.location.href='/Restaurant/CancelEdit'">Cancel</button>
+            <button type="button" class="btn btn-secondary btn-block" onclick="window.location.href='/Restaurant/CancelEdit'">Cancel</button>
         </div>
     </form>
 </div>
@@ -177,7 +170,7 @@
         geocoder.geocode({ 'location': marker.getPosition() }, function (results, status) {
             if (status === 'OK') {
                 if (results[0]) {
-                    document.getElementById('restaurantAddress').value = results[0].formatted_address;
+                    document.getElementById('RestAddress').value = results[0].formatted_address;
                     document.getElementById('latitude').value = marker.getPosition().lat();
                     document.getElementById('longitude').value = marker.getPosition().lng();
                     $('#mapModal').modal('hide');
@@ -222,32 +215,6 @@
                 alert('An error occurred while uploading the photo.');
             });
     }
-
-    document.getElementById('form').addEventListener('submit', function (event) {
-        event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
-
-        fetch('/RestProfile/SaveProfile', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Handle success response
-                    window.location.href = '/RestProfile/Index';
-                } else {
-                    // Handle error response
-                    alert('An error occurred while saving the profile.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while saving the profile.');
-            });
-    });
-
 </script>
 
 <style>
