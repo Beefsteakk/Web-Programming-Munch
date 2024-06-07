@@ -12,12 +12,12 @@ public class FoodListEntriesModel
     public Guid FoodListID { get; set; } // Composite Primary Key and Foreign Key From FoodListsModel
 
     [Key, Column(Order = 1)]
-    public Guid RestaurantID { get; set; } // Composite Primary Key and Foreign Key From RestaurantModel
+    public Guid RestID { get; set; } // Composite Primary Key and Foreign Key From RestaurantModel
 
 
     // Navigation properties
     [ForeignKey("FoodListID")]
     public required FoodListsModel FoodList { get; set; }
-    [ForeignKey("RestaurantID")]
+    [ForeignKey("RestID")]
     public required RestaurantsModel Restaurant { get; set; }
 }

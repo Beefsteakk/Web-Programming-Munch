@@ -10,10 +10,11 @@ public class CommentsModel
     public Guid CommentID { get; set; } // Primary Key
 
     [Required]
-    public Guid PostID { get; set; } // Foreign Key From PostsEntity
+    public Guid PostID { get; set; } // Foreign Key From PostsModel
 
-    [Required]
-    public Guid AuthorID { get; set; } // Foreign Key From UsersEntity
+    public Guid? UserID { get; set; } // Foreign Key From UsersModel
+
+    public Guid? RestID { get; set; } // Foreign Key From RestaurantsModel
 
     [Required]
     public required string Comments { get; set; }
@@ -25,8 +26,11 @@ public class CommentsModel
     [ForeignKey("PostID")]
     public required PostsModel Post { get; set; }
 
-    [ForeignKey("AuthorID")]
-    public required UsersModel Author { get; set; }
+    [ForeignKey("UserID")]
+    public UsersModel? User { get; set; }
+
+    [ForeignKey("RestID")]
+    public RestaurantsModel? Restaurant { get; set; }
 
     public CommentsModel()
     {

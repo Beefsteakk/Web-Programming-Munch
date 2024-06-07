@@ -1,5 +1,6 @@
 ﻿﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,56 +10,81 @@
     <link rel="stylesheet" href="~/EffectiveWebProg.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/profile.css" />
     <link rel="stylesheet" href="~/css/ownerProfile.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHqTgpdsqCvRyuU6sdKw9XImU7+14ipEAPpmzFT5N7TRMI76X1x4s51LgGxPjKifUEs1O8yg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" 
 </head>
+
+<style>
+    a {
+        text-decoration: none;
+    }
+</style>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index2">Munch</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+    <nav class="left-sidebar">
+        <ul class="left-sidebar-nav">
+            <li class="left-sidebar-munch">
+                Munch
+            </li>
+            <li class="left-nav-item">
+                <a class="left-nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="left-link-text">Profile</span>
+                </a>
+            </li>
+            <li class="left-nav-item">
+                <a class="left-nav-link text-dark" asp-area="" asp-controller="RestProfile" asp-action="Index">
+                    <i class="fa-solid fa-bowl-food"></i>
+                    <span class="left-link-text">Restaurant Profile</span>
+                </a>
+            </li>
+            <li class="left-nav-item">
+                <a class="left-nav-link text-dark" asp-area="" asp-controller="Map" asp-action="Index">
+                    <i class="fa-solid fa-map"></i>
+                    <span class="left-link-text">Map</span>
+                </a>
+            </li>
+            <li class="left-nav-item">
+                <a class="left-nav-link text-dark" asp-area="" asp-controller="Posts" asp-action="Index">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="left-link-text">Main Feed</span>
+                </a>
+            </li>
+            <li class="left-nav-item">
+                <a class="left-nav-link text-dark" asp-area="" asp-controller="Foodlist" asp-action="Index">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span class="left-link-text">Foodlist</span>
+                </a>
+            </li>
+            <li class="left-nav-item">
+                <a class="left-nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span class="left-link-text">Log out</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Map" asp-action="Index">Map</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="OwnerProfile" asp-action="Index">Owner Profile</a>
-                        </li>
-                    
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="btn btn-primary" asp-controller="Auth" asp-action="Login">Login</a>
-                        </li>
-                    </ul>
-                </div>
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <nav class="right-sidebar">
+        <div class="right-sidebar-container">
+            <div class="right-sidebar-title">
+                Explore
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - EffectiveWebProg - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </nav>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

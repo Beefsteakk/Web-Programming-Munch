@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends</title>
+    <link rel="stylesheet" href="~/css/post.css">
+    <script type="text/javascript" src="~/js/post.js" defer></script>
+</head>
+
+<body class="bg-white">
+    @model PostsModel
+    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-post-dialog">
+            <div class="modal-content modal-post-content">
+                <div class="modal-header modal-post-header">
+                    <h5 class="modal-title modal-post-title" id="postModalLabel">New Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body modal-post-body">
+                    <form asp-action="CreatePosts" asp-controller="Posts" method="post">
+                        <div class="form-group">
+                            <label>Author ID (This input is only here for testing purposes and should be removed in the
+                                long run)</label>
+                            <input asp-for="UserID" type="text" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Restaurant ID (This input is only here for testing purposes and should be removed in
+                                the long run)</label>
+                            <input asp-for="RestID" type="text" class="form-control" required>
+                        </div>
+                        <label for="title">Title:</label>
+                        <input asp-for="PostTitle" type="text" class="form-control" required>
+                        <label for="post">Post:</label>
+                        <input asp-for="PostContent" type="text" class="form-control" required>
+                        <label for="location">Location:</label>
+                        <input type="text" id="location" name="location">
+                        <label for="pictures">Pictures:</label>
+                        <input type="file" id="pictures" name="pictures" accept="image/*" multiple>
+                    </form>
+                </div>
+                <div class="modal-footer modal-post-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-info-dialog">
+            <div class="modal-content modal-info-content">
+                <div class="modal-image">
+                    <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="carouselInner">
+                            <!-- Slides will be inserted here -->
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-details modal-info-details">
+                    <div class="modal-title modal-info-title" id="modalTitle">Title</div>
+                    <div class="modal-message modal-info-message" id="modalMessage">Message</div>
+                    <div class="modal-comments modal-info-comments" id="modalComments">Comments</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mb-6">
+        <div class="col-2 d-none d-lg-block">
+
+        </div>
+        <nav class="sidebar position-fixed d-none d-lg-block">
+            <ul class="sidebar-main-header">
+                <li><a href="#"><span class="d-none d-lg-block">Home</span></a></li>
+                <li><a href="#"><span class="d-none d-lg-block">Search</span></a></li>
+                <li><a href="#"><span class="d-none d-lg-block">Explore</span></a></li>
+                <li><a href="#" data-bs-toggle="modal" data-bs-target="#postModal"><span
+                            class="d-none d-lg-block">Post</span></a></li>
+            </ul>
+            <h5><span class="d-none d-lg-block">Your Following</span></h5>
+            <ul class="sidebar-second-header">
+                <li><a href="#"><span class="d-none d-lg-block">Lolla</span></a></li>
+                <li><a href="#"><span class="d-none d-lg-block">Seroja</span></a></li>
+                <li><a href="#"><span class="d-none d-lg-block">Seroja</span></a></li>
+                <li><a href="#"><span class="d-none d-lg-block">Burnt Ends</span></a></li>
+                <li><a href="#"><span class="d-none d-lg-block">Fiz</span></a></li>
+                <li><a href="#"><span class="d-none d-lg-block">Path</span></a></li>
+                <li><a href="#"><span class="d-none d-lg-block">Odette</span></a></li>
+                <li><a href="#"><span class="d-none d-lg-block">Claudine</span></a></li>
+            </ul>
+        </nav>
+        <div class="main-content col-8">
+            <div class="content">
+                <div class="post" id="1">
+                    <div class="post-header">
+                        <img src="~/Images/xunyin.jpg" alt="Xun Yin">
+                        <div class="post-info">
+                            <h4>Xun Yin</h4>
+                            <span>4 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p style="max-height: 200px;overflow-y:auto">What is Lorem Ipsum?
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.</p>
+                        <div class="images-table">
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <button type="like">Like</button>
+                        <button>Comment</button>
+                        <button>Share</button>
+                    </div>
+                </div>
+                <div class="post" id="2">
+                    <div class="post-header">
+                        <img src="~/Images/xunyin.jpg" alt="Xun Yin">
+                        <div class="post-info">
+                            <h4>Xun Yin</h4>
+                            <span>4 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>I love pasta.</p>
+                        <div class="images-table">
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <button>Like</button>
+                        <button>Comment</button>
+                        <button>Share</button>
+                    </div>
+                </div>
+                <div class="post" id="3">
+                    <div class="post-header">
+                        <img src="~/Images/xunyin.jpg" alt="Xun Yin">
+                        <div class="post-info">
+                            <h4>Xun Yin</h4>
+                            <span>4 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>I love pasta.</p>
+                        <div class="images-table">
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        <button>Like</button>
+                        <button>Comment</button>
+                        <button>Share</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <aside class="col-2 d-none d-lg-block">
+            <div class="recommended">
+                <h3>Recommended</h3>
+                <ul>
+                    <li>Jaden Chance</li>
+                    <li>Arezki Williams</li>
+                    <li>Rose James</li>
+                    <li>Tman Mats</li>
+                    <li>Alex Andrew</li>
+                    <li>Kaixi Cark</li>
+                    <li>Hamid Oskip</li>
+                    <li>Serena Lewis</li>
+                    <li>April Sky</li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+</body>
+
+</html>

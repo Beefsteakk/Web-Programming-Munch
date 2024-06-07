@@ -1,0 +1,107 @@
+@{
+    ViewData["Title"] = "Restaurant Profile";
+    var details = ViewBag.RestaurantDetails as RestaurantsModel;
+    var followerCounts = ViewBag.FollowerCounts as Dictionary<string, int>;
+    var restaurantId = "12345"; // Replace with your specific restaurant ID
+    var followerCount = followerCounts.ContainsKey(restaurantId) ? followerCounts[restaurantId] : 0;
+}
+
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-picture">
+            <img src="~/images/picture.png" alt="Profile Picture">
+        </div>
+        <div class="profile-info">
+            <div class="profile-username">
+                <h2>@details.RestName</h2>
+                <button><a asp-area="" asp-controller="RestProfile" asp-action="EditProfile">Edit Profile</a></button>
+            </div>
+            <div class="profile-stats">
+                <span><strong>0</strong> posts</span>
+                <span><strong>@followerCount</strong> followers</span>
+                <span><strong>107</strong> following</span>
+            </div>
+            <div class="profile-bio">
+                <p>@details.RestBio</p>
+                <p>@details.RestWebsite</p>
+                <P>Rating: @details.RestRatings</P>
+            </div>
+        </div>
+    </div>
+        <div class="profile-tabs">
+        <button class="tab-link active" onclick="openTab(event, 'posts')">My Posts</button>
+        <button class="tab-link" onclick="openTab(event, 'About')">About</button>
+        <button class="tab-link" onclick="openTab(event, 'Reels')">Reels</button>
+        <button class="tab-link" onclick="openTab(event, 'Photos')">Photos</button>
+        <button class="tab-link" onclick="openTab(event, 'Videos')">Videos</button>
+    </div>
+    <div id="posts" class="tab-content">
+        <h3>My Posts</h3>
+        <!-- Add content for My Posts here -->
+    </div>
+    <div id="About" class="tab-content" style="display:none;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="list-group">
+                        <h3>About</h3>
+                        <a href="#" class="list-group-item list-group-item-action active">Contact and basic info</a>
+                        <a href="#" class="list-group-item list-group-item-action">Page transparency</a>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div>
+                        <h4>Categories</h4>
+                        <p>Bar</p>
+                        <h5>Contact info: @details.RestContact</h5>
+                        <h5>Email Address: @details.RestEmail</h5>
+
+                        <div id="map" style="height: 400px; width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="Reels" class="tab-content" style="display:none;">
+        <h3>Reels</h3>
+        <!-- Add content for My Reservations here -->
+    </div>
+    <div id="Photos" class="tab-content" style="display:none;">
+        <h3>Photos</h3>
+        <!-- Add content for My Reservations here -->
+    </div>
+    <div id="Videos" class="tab-content" style="display:none;">
+        <h3>Videos</h3>
+        <!-- Add content for My Reservations here -->
+    </div>
+</div>
+@section Scripts {
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcZ-tpp7-d401k61UO39tGYGvq-yOAn1s&callback=initMap" async defer></script>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        function initMap() {
+            var location = { lat: @details.RestLat, lng: @details.RestLong }; // Example coordinates for Singapore
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: location
+            });
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+        }
+    </script>
+}

@@ -1,52 +1,118 @@
 /* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-*[b-jc28mh0sdm] {
-  font-family: 'Inter', Helvetica, Arial, sans-serif;
+:root[b-ugu0mftuqp] {
+  font-size: 16px;
+  --text-primary: rgb(234, 234, 20);
+  --text-secondary: rgb(32, 210, 255);
 }
 
-a.navbar-brand[b-jc28mh0sdm] {
-  white-space: normal;
+*[b-ugu0mftuqp] {
+  font-family: "Inter", Helvetica, Arial, sans-serif;
+}
+
+/* --------- Body ------------- */
+body[b-ugu0mftuqp] {
+  margin: 0;
+  padding: 0;
+}
+
+body[b-ugu0mftuqp]::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+body[b-ugu0mftuqp]::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+}
+/* ---------- Navbar ---------- */
+
+.left-sidebar-munch[b-ugu0mftuqp] {
+  font-size: 1.5rem;
+  font-weight: 600;
+  height: 3rem;
   text-align: center;
-  word-break: break-all;
+  padding-top: 0.5rem;
+  border-style: border-box;
 }
 
-a[b-jc28mh0sdm] {
-  color: #0077cc;
+.left-sidebar[b-ugu0mftuqp] {
+  width: 15rem;
+  height: 100vh;
+  position: fixed;
+  background-color: #f7f7f7;
+  border-right: 1px solid #e7e7e7;
 }
 
-.btn-primary[b-jc28mh0sdm] {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.left-sidebar-nav[b-ugu0mftuqp] {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.nav-pills .nav-link.active[b-jc28mh0sdm], .nav-pills .show > .nav-link[b-jc28mh0sdm] {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.left-nav-item[b-ugu0mftuqp] {
+  display: flex !important;
+  align-items: center;
+  height: 3rem;
+  color: black !important;
+  text-decoration: none;
+  filter: grayscale(100%) opacity(0.7);
+  transition: 600ms !important;
+  border-radius: 10px;
+  padding-left: 1rem;
 }
 
-.border-top[b-jc28mh0sdm] {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom[b-jc28mh0sdm] {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow[b-jc28mh0sdm] {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+.left-nav-item:hover[b-ugu0mftuqp] {
+  filter: grayscale(0%) opacity(1);
+  background-color: grey;
+  color: black;
 }
 
-button.accept-policy[b-jc28mh0sdm] {
-  font-size: 1rem;
-  line-height: inherit;
+.left-nav-item:last-child[b-ugu0mftuqp] {
+  margin-top: auto;
 }
 
-.footer[b-jc28mh0sdm] {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+
+.left-link-text[b-ugu0mftuqp] {
+  margin-left: 0.2rem;
+  text-decoration: none;
+}
+
+.fa-solid[b-ugu0mftuqp] {
+  color: rgb(32, 210, 255);
+  transition: 600ms;
+}
+
+/* ---------- Main ---------- */
+main[b-ugu0mftuqp] {
+  margin-left: 15rem;
+  padding: 1px;
+  margin-bottom: 3rem;
+  margin-right: 23rem;
+}
+
+/* ---------- left Navbar ---------- */
+.right-sidebar[b-ugu0mftuqp] {
+  width: 23rem;
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: #f7f7f7;
+  border-left: 1px solid #e7e7e7;
+  padding: 1rem;
+}
+
+.right-sidebar-container[b-ugu0mftuqp] {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+}
+
+.right-sidebar-title[b-ugu0mftuqp] {
+  margin-top: 4rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
 }
