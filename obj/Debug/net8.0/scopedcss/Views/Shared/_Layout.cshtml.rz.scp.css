@@ -1,32 +1,32 @@
 /* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-:root[b-ugu0mftuqp] {
+:root[b-jc28mh0sdm] {
   font-size: 16px;
   --text-primary: rgb(234, 234, 20);
   --text-secondary: rgb(32, 210, 255);
 }
 
-*[b-ugu0mftuqp] {
+*[b-jc28mh0sdm] {
   font-family: "Inter", Helvetica, Arial, sans-serif;
 }
 
 /* --------- Body ------------- */
-body[b-ugu0mftuqp] {
+body[b-jc28mh0sdm] {
   margin: 0;
   padding: 0;
 }
 
-body[b-ugu0mftuqp]::-webkit-scrollbar {
+body[b-jc28mh0sdm]::-webkit-scrollbar {
   width: 0.25rem;
 }
 
-body[b-ugu0mftuqp]::-webkit-scrollbar-thumb {
+body[b-jc28mh0sdm]::-webkit-scrollbar-thumb {
   background: var(--text-secondary);
 }
 /* ---------- Navbar ---------- */
 
-.left-sidebar-munch[b-ugu0mftuqp] {
+.left-sidebar-munch[b-jc28mh0sdm] {
   font-size: 1.5rem;
   font-weight: 600;
   height: 3rem;
@@ -35,7 +35,7 @@ body[b-ugu0mftuqp]::-webkit-scrollbar-thumb {
   border-style: border-box;
 }
 
-.left-sidebar[b-ugu0mftuqp] {
+.left-sidebar[b-jc28mh0sdm] {
   width: 15rem;
   height: 100vh;
   position: fixed;
@@ -43,14 +43,14 @@ body[b-ugu0mftuqp]::-webkit-scrollbar-thumb {
   border-right: 1px solid #e7e7e7;
 }
 
-.left-sidebar-nav[b-ugu0mftuqp] {
+.left-sidebar-nav[b-jc28mh0sdm] {
   padding: 0;
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.left-nav-item[b-ugu0mftuqp] {
+.left-nav-item[b-jc28mh0sdm] {
   display: flex !important;
   align-items: center;
   height: 3rem;
@@ -62,29 +62,29 @@ body[b-ugu0mftuqp]::-webkit-scrollbar-thumb {
   padding-left: 1rem;
 }
 
-.left-nav-item:hover[b-ugu0mftuqp] {
+.left-nav-item:hover[b-jc28mh0sdm] {
   filter: grayscale(0%) opacity(1);
   background-color: grey;
   color: black;
 }
 
-.left-nav-item:last-child[b-ugu0mftuqp] {
+.left-nav-item:last-child[b-jc28mh0sdm] {
   margin-top: auto;
 }
 
 
-.left-link-text[b-ugu0mftuqp] {
+.left-link-text[b-jc28mh0sdm] {
   margin-left: 0.2rem;
   text-decoration: none;
 }
 
-.fa-solid[b-ugu0mftuqp] {
+.fa-solid[b-jc28mh0sdm] {
   color: rgb(32, 210, 255);
   transition: 600ms;
 }
 
 /* ---------- Main ---------- */
-main[b-ugu0mftuqp] {
+main[b-jc28mh0sdm] {
   margin-left: 15rem;
   padding: 1px;
   margin-bottom: 3rem;
@@ -92,7 +92,7 @@ main[b-ugu0mftuqp] {
 }
 
 /* ---------- left Navbar ---------- */
-.right-sidebar[b-ugu0mftuqp] {
+.right-sidebar[b-jc28mh0sdm] {
   width: 23rem;
   height: 100vh;
   position: fixed;
@@ -103,14 +103,14 @@ main[b-ugu0mftuqp] {
   padding: 1rem;
 }
 
-.right-sidebar-container[b-ugu0mftuqp] {
+.right-sidebar-container[b-jc28mh0sdm] {
   display: flex;
   flex-direction: column;
   height: 100%;
   align-items: center;
 }
 
-.right-sidebar-title[b-ugu0mftuqp] {
+.right-sidebar-title[b-jc28mh0sdm] {
   margin-top: 4rem;
   font-size: 1.5rem;
   font-weight: 500;

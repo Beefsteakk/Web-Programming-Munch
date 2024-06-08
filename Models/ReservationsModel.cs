@@ -43,8 +43,4 @@ public class ReservationsModel
         ReservationID = Guid.NewGuid();
     }
 
-    public static implicit operator ReservationsModel(RestaurantsModel v)
-    {
-        throw new NotImplementedException();
-    }
 }
