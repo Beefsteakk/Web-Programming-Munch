@@ -20,6 +20,7 @@ body {
         margin-bottom: 2rem;
         font-weight: 300;
         font-size: 1.5rem;
+        font-weight: 600;
     }
 
     .card-signin .card-img-left {
@@ -32,6 +33,7 @@ body {
 
     .card-signin .card-body {
         padding: 2rem;
+        background-color: rgb(224, 251, 252);
     }
 
 .form-signin {
@@ -117,4 +119,10 @@ body {
 .btn-facebook {
     color: white;
     background-color: #3b5998;
+    size: 20px;
+}
+
+.btn-primary:hover {
+    background-color: rgb(164, 199, 208) !important;
+    color: black; /* Optional: change text color on hover */
 }

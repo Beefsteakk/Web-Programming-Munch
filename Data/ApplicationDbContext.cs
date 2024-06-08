@@ -19,7 +19,7 @@ namespace EffectiveWebProg.Data
         public DbSet<PostLikesRestModel> PostLikesRest { get; set; }
         public DbSet<UserFollowingsModel> UserFollowings { get; set; }
         public DbSet<RestaurantFollowingsModel> RestaurantFollowings { get; set; }
-        public DbSet<RestaurantReviewsModel> RestaurantReviews { get; set; }
+        public DbSet<ReviewsModel> Reviews { get; set; }
         public DbSet<ReservationsModel> Reservations { get; set; }
         public DbSet<FoodListsModel> FoodLists { get; set; }
         public DbSet<FoodListLikesModel> FoodListLikes { get; set; }
@@ -77,18 +77,6 @@ namespace EffectiveWebProg.Data
                 .HasOne(r => r.Restaurant)
                 .WithMany(rest => rest.Reservation)
                 .HasForeignKey(r => r.RestID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<RestaurantReviewsModel>()
-                .HasOne(rr => rr.User)
-                .WithMany(u => u.RestaurantReview)
-                .HasForeignKey(rr => rr.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<RestaurantReviewsModel>()
-                .HasOne(rr => rr.Restaurant)
-                .WithMany(rest => rest.RestaurantReview)
-                .HasForeignKey(rr => rr.RestID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<CommentsModel>()

@@ -17,7 +17,7 @@ public class CommentsModel
     public Guid? RestID { get; set; } // Foreign Key From RestaurantsModel
 
     [Required]
-    public required string Comments { get; set; }
+    public required string CommentContent { get; set; }
 
     public DateTime CommentCreatedAt { get; set; }
 

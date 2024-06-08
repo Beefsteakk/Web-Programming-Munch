@@ -1,200 +1,218 @@
 @{
-    ViewData["Title"] = "Restaurant Register";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://www.google.com/recaptcha/api.js?render=6LfLmX8dAAAAAGbTIkC40y7eHl9GptSMiJQDI8L8"></script>
+        <link href="~/css/register.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+        rel="stylesheet"
+        />
 
-<head>
-    <script src="https://www.google.com/recaptcha/api.js?render=6LfLmX8dAAAAAGbTIkC40y7eHl9GptSMiJQDI8L8"></script>
-    <link href="~/css/register.css" rel="stylesheet" />
-
-    <style>
-        #g-recaptcha-response {
-            display: block !important;
-            position: absolute;
-            margin: -78px 0 0 0 !important;
-            width: 302px !important;
-            height: 76px !important;
-            z-index: -999999;
-            opacity: 0;
-        }
-
-        input[type="radio"] {
-            margin: 8px 10px 0 10px;
-        }
-        
-        .register-link {
-            text-align: center;
-            font-size: 14px;
-            color: black;
-            margin-top: 23px;
-            line-height: 33px;
-        }
-    </style>
-
-
-
-    <script>
-
-        function validation(event) {
-            validate(event.target.value)
-        }
-
-        function validate(file) {
-            var ext = file.split(".");
-            ext = ext[ext.length - 1].toLowerCase();
-            var arrayExtensions = ["jpg", "jpeg"];
-
-            if (arrayExtensions.lastIndexOf(ext) == -1) {
-                alert("Only files with following extensions are allowed: .png, .jpg, .jpeg");
-                document.getElementById("avatarx").value = null;
+        <style>
+            #g-recaptcha-response {
+                display: block !important;
+                position: absolute;
+                margin: -78px 0 0 0 !important;
+                width: 302px !important;
+                height: 76px !important;
+                z-index: -999999;
+                opacity: 0;
             }
 
-            else {
-                previewImg(event)
+            input[type="radio"] {
+                margin: 8px 10px 0 10px;
+            }
+            
+            .register-link {
+                text-align: center;
+                font-size: 14px;
+                color: black;
+                margin-top: 23px;
+                line-height: 33px;
             }
 
-        }
+            * {
+                color: black;
+                font-family: 'Inter', Helvetica, Arial, sans-serif;
+            }
+        </style>
 
+        <script>
 
-        function previewImg(event) {
-            var reader = new FileReader();
-            reader.onload = function () {
-                var output = document.getElementById('avatarImg');
-                output.src = reader.result;
+            function validation(event) {
+                validate(event.target.value)
+            }
 
+            function validate(file) {
+                var ext = file.split(".");
+                ext = ext[ext.length - 1].toLowerCase();
+                var arrayExtensions = ["jpg", "jpeg"];
 
-            };
-
-            let img = new Image()
-            img.src = window.URL.createObjectURL(event.target.files[0])
-            img.onload = () => {
-                if (img.width <= 1000 & img.height <= 1000) {
-                    reader.readAsDataURL(event.target.files[0]);
-                    fileChanged = true;
+                if (arrayExtensions.lastIndexOf(ext) == -1) {
+                    alert("Only files with following extensions are allowed: .png, .jpg, .jpeg");
+                    document.getElementById("avatarx").value = null;
                 }
+
                 else {
-                    alert("Image too large; try using a smaller image ( 110 x 110 pixels )");
-
-                    document.getElementById('avatarx').value = null;
-
+                    previewImg(event)
                 }
 
             }
 
-        }
-    </script>
 
-</head>
-
-<div style="margin:30px auto 0;width:600px;">
-
-    <h4 class="display-4">Register as Restaurant</h4>
-
-    <div class="register-link">
-        Register for personal?
-        <a class="a-btn" asp-controller="Auth" asp-action="Register">Sign Up</a>
-    </div>
-
-    <div class="registration-form" style="margin-bottom:120px;">
+            function previewImg(event) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var output = document.getElementById('avatarImg');
+                    output.src = reader.result;
 
 
-        @*<form id="subscribeForm" method="POST" action="" enctype="multipart/form-data">*@
+                };
 
-        <form method="post" enctype="multipart/form-data" onsubmit="return validatexx()">
-            <div asp-validation-summary="All" class="text-danger"></div>
-
-
-
-            <div>
-                <img id="avatarImg" style="
-                width: 100px;
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-                margin-bottom: 7px;" src="~/images/chef.png"
-                    class="avatar" alt="Avatar">
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-                    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-                    crossorigin="anonymous">
-
-            </div>
-            <div>
-            </div>
-
-
-            <div class="form-group">
-                <label for="name">Restaurant Name</label>
-                <input type="text" class="form-control" pattern="^[a-zA-Z][a-zA-Z ]{5,30}$"
-                    title="Restaurant name must be between 5 to 30 characters long, with no special characters." id="username"
-                    autocomplete="off" required>
-                <span class="text-danger"></span>
-
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input autocomplete="off" type="email" id="email" class="form-control" required>
-                <span class="text-danger"></span>
-            </div>
-
-            @{
-                var pwPattern =
-                @"^(?=[^A-Z\n]*[A-Z])(?=[^a-z\n]*[a-z])(?=[^0-9\n]*[0-9])(?=[^#?!@$%^&*\n-]*[#?!@$%^&*-]).{8,}$";
+                let img = new Image()
+                img.src = window.URL.createObjectURL(event.target.files[0])
+                img.onload = () => {
+                    if (img.width <= 1000 & img.height <= 1000) {
+                        reader.readAsDataURL(event.target.files[0]);
+                        fileChanged = true;
+                    }
+                    else {
+                        alert("Image too large; try using a smaller image ( 110 x 110 pixels )");
+                        document.getElementById('avatarx').value = null;
+                    }
+                }
             }
+        </script>
+    </head>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input pattern="@pwPattern"
-                    title="Password has to be at least 8 characters, contains a special character, an upper case, a lower case & a digit. "
-                    type="password" autocomplete="off" name="password" class="form-control" minlength="4" id="password" />
+    <body>
+        <nav style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+            padding: 0rem calc((100vw - 1300px) / 2);">
+                <a class="logo" asp-controller="Home" asp-action="Index">Munch</a>
+            <div>
+                <a class="a-btn" asp-controller="Auth" asp-action="Login">Login</a>
+            </div>
+        </nav>
+        <div style="margin:30px auto 0;width:600px;">
 
+            <h4 class="display-4" style="font-weight: 800; font-size: 3rem;">Register as Restaurant</h4>
+
+            <div class="register-link">
+                Register for personal?
+                <a class="a-btn" asp-controller="Auth" asp-action="Register">Sign Up</a>
             </div>
 
+            <div class="registration-form" style="margin-bottom:120px;">
 
-            <div class="form-group">
-                <label for="password2">Confirm Password</label>
-                <input type="password" autocomplete="off" class="form-control" minlength="4" id="password_confirm"
-                    oninput="check(this)" required>
-                <span class="text-danger"></span>
+
+                @*<form id="subscribeForm" method="POST" action="" enctype="multipart/form-data">*@
+
+                <form method="post" enctype="multipart/form-data" onsubmit="return validatexx()">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+
+
+                    <div>
+                        <img id="avatarImg" style="
+                        width: 100px;
+                        display: block;
+                        margin-left: auto;
+                        margin-right: auto;
+                        margin-bottom: 7px;" src="~/images/chef.png"
+                            class="avatar" alt="Avatar">
+                        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                            crossorigin="anonymous">
+
+                    </div>
+                    <div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="name">Restaurant Name</label>
+                        <input type="text" class="form-control" pattern="^[a-zA-Z][a-zA-Z ]{5,30}$"
+                            title="Restaurant name must be between 5 to 30 characters long, with no special characters." id="username"
+                            autocomplete="off" required>
+                        <span class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input autocomplete="off" type="email" id="email" class="form-control" required>
+                        <span class="text-danger"></span>
+                    </div>
+
+                    @{
+                        var pwPattern =
+                        @"^(?=[^A-Z\n]*[A-Z])(?=[^a-z\n]*[a-z])(?=[^0-9\n]*[0-9])(?=[^#?!@$%^&*\n-]*[#?!@$%^&*-]).{8,}$";
+                    }
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input pattern="@pwPattern"
+                            title="Password has to be at least 8 characters, contains a special character, an upper case, a lower case & a digit. "
+                            type="password" autocomplete="off" name="password" class="form-control" minlength="4" id="password" />
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="password2">Confirm Password</label>
+                        <input type="password" autocomplete="off" class="form-control" minlength="4" id="password_confirm"
+                            oninput="check(this)" required>
+                        <span class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="number">Contact Number</label>
+                        <input autocomplete="off" placeholder="12345678" type="text" id="number" class="form-control" minlength="8"
+                            maxlength="8" title="Contact number has to be 8 digits." pattern="[0-9]{8}" required>
+                        <span class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="document">Upload Document for Verification</label>
+                        <input type="file" class="form-control-file" id="document" name="document">
+                    </div>
+
+                    <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" />
+
+
+                    <div class="form-group">
+                        <button type="submit" onclick="validate();" value="Submit" class="btn btn-block create-account">
+                            Create
+                            Account
+                        </button>
+                        <br>
+                        <p class="text-muted">
+                            Signing up signifies that you have read and agree to the <a href="#" data-toggle="modal"
+                                data-target="#exampleModalCenter">Terms Of Service</a>
+                            and our <a href="#" data-toggle="modal" data-target="#exampleModalCenter2">Privacy Policy</a>.
+                        </p>
+                    </div>
+
+
+
+
+                </form>
+                <div class="social-media">
+                </div>
             </div>
-
-
-            <div class="form-group">
-                <label for="number">Contact Number</label>
-                <input autocomplete="off" placeholder="12345678" type="text" id="number" class="form-control" minlength="8"
-                    maxlength="8" title="Contact number has to be 8 digits." pattern="[0-9]{8}" required>
-                <span class="text-danger"></span>
-            </div>
-
-
-            <div class="form-group">
-                <label for="document">Upload Document for Verification</label>
-                <input type="file" class="form-control-file" id="document" name="document">
-            </div>
-
-            <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" />
-
-
-            <div class="form-group">
-                <button type="submit" onclick="validate();" value="Submit" class="btn btn-block create-account">
-                    Create
-                    Account
-                </button>
-                <br>
-                <p class="text-muted">
-                    Signing up signifies that you have read and agree to the <a href="#" data-toggle="modal"
-                        data-target="#exampleModalCenter">Terms Of Service</a>
-                    and our <a href="#" data-toggle="modal" data-target="#exampleModalCenter2">Privacy Policy</a>.
-                </p>
-            </div>
-
-
-
-
-        </form>
-        <div class="social-media">
         </div>
-    </div>
-</div>
+    </body>
+</html>
 
 <script>
 

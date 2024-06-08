@@ -1,29 +1,25 @@
 @{
     ViewData["Title"] = "Map";
 }
+<title>Restaurants</title>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Restaurants</title>
-    <style type="text/css">
-        h1 {
-            text-align: center;
-        }
-        .map {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 95%;
-            height: 650px;
-            border: 0;
-        }
-        
-    </style>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCln59tQOKYJfWz1ywTtqzuQLG8Cj5m1yg&callback=initMap" async defer></script>
+<style type="text/css">
+    h1 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    .map {
+        width: 95%;
+        height: 650px;
+        margin: 0 auto; /* Center the map */
+        border: 1px solid black;
+    }       
+</style>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCln59tQOKYJfWz1ywTtqzuQLG8Cj5m1yg&callback=initMap" async defer></script>
+
+<h1>@ViewData["meow"]</h1> <!-- Display the title -->
+<div id="map" class="map">
     <script>
         function initMap() {
             // Create a map centered at a default location in singapore 
@@ -79,9 +75,4 @@
                 .catch(error => console.log('Error:', error));
         }
     </script>
-</head>
-<body>
-    <h1>@ViewData["meow"]</h1> <!-- Display the title -->
-    <div id="map" class="map"></div>
-</body>
-</html>
+</div>
