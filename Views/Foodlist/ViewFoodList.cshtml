@@ -1,0 +1,39 @@
+@model EffectiveWebProg.ViewModels.FoodListViewModel
+
+<h2>@Model.FoodList.FoodListTitle</h2>
+<p>@Model.FoodList.FoodListDescription</p>
+<p><strong>Created At:</strong>@Model.FoodList.FoodListCreatedAt</p>
+<p><strong>User:</strong>@Model.FoodList.User.UserName</p>
+
+<h3>My Favourite Restaurants</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>Restaurant Name</td>
+            <td>Actions</td>
+        </tr>
+    </thead>
+    <tbody>    
+        @foreach( var item in Model.FoodListEntries){
+            <tr>
+                <td>@item.Restaurant.RestName</td>
+                <td>
+                <a asp-action="DeleteEntries" asp-route-id="FoodListID" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Add Restaurant to Food List</h3>
+<form asp-action="AddRestaurantToFoodList" method="post">
+    <input type="hidden" name="foodListId" value="@Model.FoodList.FoodListID" />
+    <div class="form-group">
+        <label for="restaurantId">Select Restaurant</label>
+        <select id="restaurantId" name="restaurantId" class="form-control" asp-items="Model.Restaurants"></select>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+
+<a href="@Url.Action("Index", "FoodList")" class="btn btn-secondary">Back to List</a>

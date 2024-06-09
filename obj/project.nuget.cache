@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5FoFVrgG5V/T6sYTjSz3/0nV6+RK0bvWvsVe0IDO18ZV8a211b6X3AX3I+TX8vqFFOTkyQ6g756C7hr6xZ7Xwg==",
+  "dgSpecHash": "9VoIadJNSkD5F7QD3Fq5rOuOZjtT2BdVFVzIOsp54sLcRRk36PTvjeN9/IIrz+hecUa+eup37Mqako6DqRC2Ug==",
   "success": true,
-  "projectFilePath": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg.csproj",
+  "projectFilePath": "C:\\Project\\WebProg_G8\\EffectiveWebProg\\EffectiveWebProg.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\addsw\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\addsw\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

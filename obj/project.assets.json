@@ -4908,11 +4908,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg.csproj",
+      "projectUniqueName": "C:\\Project\\WebProg_G8\\EffectiveWebProg\\EffectiveWebProg.csproj",
       "projectName": "EffectiveWebProg",
-      "projectPath": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\EffectiveWebProg.csproj",
+      "projectPath": "C:\\Project\\WebProg_G8\\EffectiveWebProg\\EffectiveWebProg.csproj",
       "packagesPath": "C:\\Users\\addsw\\.nuget\\packages\\",
-      "outputPath": "C:\\SIT\\Y1 T3\\CSC1106 - Web Programming\\Project\\EffectiveWebProg\\obj\\",
+      "outputPath": "C:\\Project\\WebProg_G8\\EffectiveWebProg\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
