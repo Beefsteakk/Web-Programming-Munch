@@ -7,6 +7,19 @@
 
 <h3>My Favourite Restaurants</h3>
 
+<h3>Add Restaurant to Food List</h3>
+<form asp-action="AddRestaurantToFoodList" method="post">
+    <input type="hidden" name="foodListId" value="@Model.FoodList.FoodListID" />
+    <div class="form-group">
+        <label for="restaurantId">Select Restaurant</label>
+        <select id="restaurantId" name="restaurantId" class="form-control" asp-items="Model.Restaurants"></select>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+
+<a href="@Url.Action("Index", "FoodList")" class="btn btn-secondary">Back to List</a>
+
+
 <table class="table">
     <thead>
         <tr>
@@ -25,15 +38,3 @@
         }
     </tbody>
 </table>
-
-<h3>Add Restaurant to Food List</h3>
-<form asp-action="AddRestaurantToFoodList" method="post">
-    <input type="hidden" name="foodListId" value="@Model.FoodList.FoodListID" />
-    <div class="form-group">
-        <label for="restaurantId">Select Restaurant</label>
-        <select id="restaurantId" name="restaurantId" class="form-control" asp-items="Model.Restaurants"></select>
-    </div>
-    <button type="submit" class="btn btn-primary">Add</button>
-</form>
-
-<a href="@Url.Action("Index", "FoodList")" class="btn btn-secondary">Back to List</a>
