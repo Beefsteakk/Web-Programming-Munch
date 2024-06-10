@@ -40,7 +40,6 @@ public class RestaurantsModel
     // Navigation properties
     public ICollection<FoodListEntriesModel> FoodEntry { get; set; }
     public ICollection<ReservationsModel> Reservation { get; set; }
-    public ICollection<RestaurantReviewsModel> RestaurantReview { get; set; }
     public ICollection<RestaurantFollowingsModel> FollowedBy { get; set; } 
     public ICollection<CommentsModel> Comment { get; set; }
     public ICollection<PostLikesRestModel> PostLikesRest { get; set; }
@@ -53,7 +52,6 @@ public class RestaurantsModel
         RestID = Guid.NewGuid();
         FoodEntry = new List<FoodListEntriesModel>();
         Reservation = new List<ReservationsModel>();
-        RestaurantReview = new List<RestaurantReviewsModel>();
         FollowedBy = new List<RestaurantFollowingsModel>();
         Comment = new List<CommentsModel>();
         PostLikesRest = new List<PostLikesRestModel>();
