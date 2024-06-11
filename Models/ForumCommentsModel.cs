@@ -20,9 +20,10 @@ public class ForumCommentsModel
     [Column(TypeName = "char(36)")]
     public Guid? RestID { get; set; } // Foreign Key From RestaurantsModel
 
-    [Column(TypeName = "Text")]
+    
     [Required]
-    public required string Comments { get; set; }
+    [Column(TypeName = "text")]
+    public string Comments { get; set; }
 
 
 
