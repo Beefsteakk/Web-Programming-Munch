@@ -13,10 +13,93 @@
             <div class="position-relative ">
                 <img disabled src="~/assets/RestaurantStuff/Cover.jpg" alt="Cover Photo" class="img-fluid w-100"
                     style="height: 300px; object-fit: cover;">
-                <div class="profile-info col-sm">
-                    <img disabled src="~/assets/RestaurantStuff/ProfilePage.jpg" alt="Profile Photo"
-                        class="profile-photo rounded-circle border border-white" style="width: 200px; height: 200px;">
+
+                <div class="row">
+                    <div class="profile-info col-3">
+                        <img disabled src="~/assets/RestaurantStuff/ProfilePage.jpg" alt="Profile Photo"
+                            class="profile-photo rounded-circle border border-white" style="width: 70%; height: 70%;">
+                    </div>
+                    <div class="col-2"></div>
+                    <div class="col-10">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h2>@details.RestName</h2>
+                                    </div>
+                                    <div class="col-8">
+                                        @* @if ("userFollowed")
+                                        {
+                                        <button class="f-btn btn btn-primary">
+                                        <i class="fas fa-check"></i>
+                                        </button>
+                                        }
+                                        else
+                                        {
+                                        <button class="f-btn btn btn-primary">Follow</button>
+                                        } *@
+                                        <button class="f-btn btn btn-primary">Follow</button>
+                                        @if (restaurantId == "12345")
+                                        {
+                                            <a asp-area="" asp-controller="RestProfile" asp-action="EditProfile"
+                                                class="btn btn-primary e-btn">Edit Profile</a>
+
+                                        }
+
+                                    </div>
+                                </div>
+
+
+
+                                <p>Rating:
+                                    <span class="star-rating">
+                                        @{
+                                            float rating = details.RestRatings ?? 0f;
+                                            int fullStars = (int)rating;
+                                            bool hasHalfStar = rating - fullStars >= 0.5;
+                                            int emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+
+                                            for (int i = 0; i < fullStars; i++)
+                                            {
+                                                @:<i class="fas fa-star"></i>
+                                            }
+                                            if (hasHalfStar)
+                                            {
+                                                @:<i class="fas fa-star-half-alt"></i>
+                                            }
+                                            for (int i = 0; i < emptyStars; i++)
+                                            {
+                                                @:<i class="far fa-star"></i>
+                                            }
+                                        }
+                                    </span>
+                                    @details.RestRatings
+                                </p>
+                                <div class="profile-bio">
+                                    <p><strong>Bio: </strong>@details.RestBio</p>
+                                </div>
+                                <p class="website-link">
+                                    <i class="fas fa-link"></i>
+                                    <a href="@details.RestWebsite" target="_blank">@details.RestWebsite</a>
+                                </p>
+
+
+                            </div>
+                            <div class="col-2">
+                            </div>
+                            <div class="col-2">
+                                <button class="r-btn btn btn-primary ml-auto d-block"
+                                    onclick="openReservationPopup()">Reserve</button>
+                                <button class="m-btn btn btn-primary">Message</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
                 </div>
+
             </div>
         </div>
         <div class="container">
@@ -24,127 +107,214 @@
                 <div class="col-2">
                 </div>
                 <div class="col-8">
-                    <h2 >@details.RestName</h2>
+                    <div class="row">
 
-                    <p>Rating:
-                        <span class="star-rating">
-                            @{
-                                float rating = details.RestRatings ?? 0f; // Assuming details.RestRatings is a float
-                                int fullStars = (int)rating;
-                                bool hasHalfStar = rating - fullStars >= 0.5;
-                                int emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0); // Assuming a 5-star rating system
 
-                                for (int i = 0; i < fullStars; i++)
-                                {
-                                    @:<i class="fas fa-star"></i>
-                                }
-                                if (hasHalfStar)
-                                {
-                                    @:<i class="fas fa-star-half-alt"></i>
-                                }
-                                for (int i = 0; i < emptyStars; i++)
-                                {
-                                    @:<i class="far fa-star"></i>
-                                }
-                            }
-                        </span>
-                        @details.RestRatings
-                    </p>
-                    <p class="website-link">
-                        <i class="fas fa-link"></i>
-                        <a href="@details.RestWebsite" target="_blank">@details.RestWebsite</a>
-                    </p>
+                        </row>
 
-                    <div class="profile-bio">
-                        <p><strong>Bio: </strong>@details.RestBio</p>
+
 
                     </div>
-                </div>
 
-            </div>
-            <div class="row">
-                <div class="col-md text-center">
-                    <span><strong>0</strong> posts</span>
                 </div>
-                <div class="col-md text-center ">
-                    <span><strong>@followerCount</strong> followers</span>
-                </div>
-                <div class="col-md text-center">
-                    <span><strong>107</strong> following</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md">
-                <div class="profile-tabs">
-                    <ul class="nav nav-tabs mt-3 justify-content-center">
-                        <li class="nav-item Active">
-                            <button class="nav-link active" onclick="openTab(event, 'posts')">Posts</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link" onclick="openTab(event, 'About')">About</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link" onclick="openTab(event, 'Photos')">Photos</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link" onclick="openTab(event, 'Videos')">Videos</button>
-                        </li>
-
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="profile-body">
-        <div id="posts" class="tab-content">
-            <div class="row">
-                <div class="col-md-2">sss</div>
-                <div class="col-md-8">ss</div>
-                <div class="col-md-2">ss</div>
-
-            </div>
-        </div>
-        <div id="About" class="tab-content" style="display: none">
-            <div class="container">
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="list-group">
-                            <h3>About</h3>
-                            <a href="#" class="list-group-item list-group-item-action active">Contact and basic info</a>
-                            <a href="#" class="list-group-item list-group-item-action">Page transparency</a>
+                    <div class="col-md text-center">
+                        <span><strong>0</strong> posts</span>
+                    </div>
+                    <div class="col-md text-center ">
+                        <span><strong>@followerCount</strong> followers</span>
+                    </div>
+                    <div class="col-md text-center">
+                        <span><strong>107</strong> following</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="profile-tabs">
+                        <ul class="nav nav-tabs mt-3 justify-content-center">
+                            <li class="nav-item Active">
+                                <button class="nav-link active" onclick="openTab(event, 'posts')">Posts</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" onclick="openTab(event, 'About')">About</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" onclick="openTab(event, 'Photos')">Photos</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" onclick="openTab(event, 'Videos')">Videos</button>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="profile-body">
+            <div id="posts" class="tab-content">
+                <div class="row">
+                    <div class="col-md-2">
+
+                        <h3>Posts</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="~/assets/RestaurantStuff/Post1.jpg" alt="Post 1" class="img-fluid">
+                            </div>
+                            <div class="col-md-4">
+                                <img src="~/assets/RestaurantStuff/Post2.jpg" alt="Post 2" class="img-fluid">
+                            </div>
+                            <div class="col-md-4">
+                                <img src="~/assets/RestaurantStuff/Post3.jpg" alt="Post 3" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="~/assets/RestaurantStuff/Post4.jpg" alt="Post 4" class="img-fluid">
+                            </div>
+                            <div class="col-md-4">
+                                <img src="~/assets/RestaurantStuff/Post5.jpg" alt="Post 5" class="img-fluid">
+                            </div>
+                            <div class="col-md-4">
+                                <img src="~/assets/RestaurantStuff/Post6.jpg" alt="Post 6" class="img-fluid">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-9">
-                        <div>
-                            <h4>Categories</h4>
-                            <p>Bar</p>
-                            <h5>Contact info: @details.RestContact</h5>
-                            <h5>Email Address: @details.RestEmail</h5>
-                            <div id="map" style="height: 400px; width: 100%"></div>
+
+
+                </div>
+            </div>
+            <div id="About" class="tab-content" style="display: none">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="list-group">
+                                <h3>About</h3>
+                                <a href="#" class="list-group-item list-group-item-action active">Contact and basic
+                                    info</a>
+                                <a href="#" class="list-group-item list-group-item-action">Page transparency</a>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div>
+                                <h4>Categories</h4>
+                                <p>Bar</p>
+                                <h5>Contact info: @details.RestContact</h5>
+                                <h5>Email Address: @details.RestEmail</h5>
+                                <div id="map" style="height: 400px; width: 100%"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="Reels" class="tab-content" style="display: none">
-            <h3>Reels</h3>
-            <!-- Add content for Reels here -->
-        </div>
-        <div id="Photos" class="tab-content" style="display: none">
-            <h3>Photos</h3>
-            <!-- Add content for Photos here -->
-        </div>
-        <div id="Videos" class="tab-content" style="display: none">
-            <h3>Videos</h3>
-            <!-- Add content for Videos here -->
+            <div id="Reels" class="tab-content" style="display: none">
+                <h3>Reels</h3>
+                <!-- Add content for Reels here -->
+            </div>
+            <div id="Photos" class="tab-content" style="display: none">
+                <h3>Photos</h3>
+                <!-- Add content for Photos here -->
+            </div>
+            <div id="Videos" class="tab-content" style="display: none">
+                <h3>Videos</h3>
+                <!-- Add content for Videos here -->
+            </div>
+
         </div>
 
     </div>
+    <div id="reservationPopup" class="modal">
+        <div class="modal-content">
+            <div class="row" style="  border-bottom: 1px solid #ddd;">
+                <div class="col-1">
+                    <span class="close" onclick="closeReservationPopup()">&times;</span>
+                </div>
+                <div class="col-10">
+                    <h2>Reservation Details</h2>
+                </div>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" class="form-control" id="ReserveDate" name="ReserveDate">
+                </div>
+                <div class="form-group">
+                    <label for="pax">PAX:</label>
+                    <select id="pax" class="form-control">
+                        <option value="2">2 people</option>
+                        <option value="3">3 people</option>
+                        <option value="4">4 people</option>
+                        <option value="5">5 people</option>
+                        <option value="6">6 people</option>
+                        <option value="7">7 people</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Choose Time:</label>
+                    <div class="row">
+                        <div class="col-4 col-md-2">
+                            <label class="radio-label">
+                                <input class="radio-input" type="radio" name="time-discount">
+                                <span class="radio-tile">
+                                    15:00
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-4 col-md-2">
+                            <label class="radio-label">
+                                <input class="radio-input" type="radio" name="time-discount">
+                                <span class="radio-tile">
+                                    16:00
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-4 col-md-2">
+                            <label class="radio-label">
+                                <input class="radio-input" type="radio" name="time-discount">
+                                <span class="radio-tile">
+                                    17:00
+                                </span>
+                            </label>
+                        </div>
 
+                        <div class="col-4 col-md-2">
+                            <label class="radio-label">
+                                <input class="radio-input" type="radio" name="time-discount">
+                                <span class="radio-tile">
+                                    18:00
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-4 col-md-2">
+                            <label class="radio-label">
+                                <input class="radio-input" type="radio" name="time-discount">
+                                <span class="radio-tile">
+                                    19:00
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-4 col-md-2">
+                            <label class="radio-label">
+                                <input class="radio-input" type="radio" name="time-discount">
+                                <span class="radio-tile">
+                                    20:00
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                <button type="submit" class="Reserve-btn">Review Reservation</button>
+            </form>
+        </div>
+    </div>
 </div>
-
 
 
 
@@ -176,6 +346,22 @@
                 position: location,
                 map: map
             });
+        }
+        function closeReservationPopup() {
+            document.getElementById('reservationPopup').style.display = 'none';
+        }
+
+        // Function to open the reservation popup
+        function openReservationPopup() {
+            document.getElementById('reservationPopup').style.display = 'block';
+        }
+
+        // Close the modal if the user clicks outside of it
+        window.onclick = function (event) {
+            var modal = document.getElementById('reservationPopup');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
         }
     </script>
 }
