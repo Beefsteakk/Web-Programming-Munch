@@ -89,6 +89,18 @@
       "PackagePath": "staticwebassets/assets/RestaurantStuff/Cover.jpg"
     },
     {
+      "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/wwwroot/assets/RestaurantStuff/Post1.jpg",
+      "PackagePath": "staticwebassets/assets/RestaurantStuff/Post1.jpg"
+    },
+    {
+      "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/wwwroot/assets/RestaurantStuff/Post2.jpg",
+      "PackagePath": "staticwebassets/assets/RestaurantStuff/Post2.jpg"
+    },
+    {
+      "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/wwwroot/assets/RestaurantStuff/Post3.jpg",
+      "PackagePath": "staticwebassets/assets/RestaurantStuff/Post3.jpg"
+    },
+    {
       "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/wwwroot/assets/RestaurantStuff/ProfilePage.jpg",
       "PackagePath": "staticwebassets/assets/RestaurantStuff/ProfilePage.jpg"
     },
