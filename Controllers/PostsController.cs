@@ -60,12 +60,13 @@ public class PostsController : Controller
     }
 
     [HttpPost]
-    public JsonResult GetInfo(int id)
+    public JsonResult GetInfo(String id)
     {
         List<string> ImageUrl = new List<string>();
         ImageUrl.Add("/assets/images/photo-1556008531-57e6eefc7be4.jpeg");
         ImageUrl.Add("/assets/images/photo-1557684387-08927d28c72a.jpeg");
         ImageUrl.Add("/assets/images/photo-1526016650454-68a6f488910a.jpeg");
-        return Json(new {imageUrl = ImageUrl, info = $"Information for div {id}"});
+        var post = _db.Posts.Find(System.Guid.Parse(id));
+        return Json(new {imageUrl = ImageUrl, post = post});
     }
 }
