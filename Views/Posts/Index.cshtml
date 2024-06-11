@@ -111,24 +111,24 @@
             </ul>
         </nav> *@
         <div class="main-content col-8">
+            @await Html.PartialAsync("_CreatePostPartial", Model.NewPost)
             <div class="content">
-                @await Html.PartialAsync("_CreatePostPartial", Model.NewPost)
                 @foreach(var item in Model.PostLists) {
-                    <div class="post" id=@item.PostID>
-                        <h3><a asp-controller="Posts" asp-action="SpecificPost" asp-route-id=@item.PostID>@item.PostTitle</a></h3>
+                    <div class="post" id=@item.Post.PostID>
+                        <h3><a asp-controller="Posts" asp-action="SpecificPost" asp-route-id=@item.Post.PostID>@item.Post.PostTitle</a></h3>
                         <div class="post-header">
                             <img src="~/Images/xunyin.jpg" alt="Xun Yin">
                             <div class="post-info">
-                                @if (item.User != null) {
-                                    <h4>@item.User.UserName</h4>
-                                } else if (item.Restaurant != null) {
-                                    <h4>@item.Restaurant.RestName</h4>
+                                @if (item.Post.User != null) {
+                                    <h4>@item.Post.User.UserName</h4>
+                                } else if (item.Post.Restaurant != null) {
+                                    <h4>@item.Post.Restaurant.RestName</h4>
                                 }
-                                <span>@item.PostCreatedAt</span>
+                                <span>@item.Post.PostCreatedAt</span>
                             </div>
                         </div>
                         <div class="post-content">
-                            <p style="max-height: 200px;overflow-y:auto">@item.PostContent</p>
+                            <p style="max-height: 200px;overflow-y:auto">@item.Post.PostContent</p>
                             <!-- TODO: Generate the image table dynamically. -->
                             <div class="images-table">
                                 <div class="test">
@@ -140,11 +140,21 @@
                             </div>
                         </div>
                         <div class="post-footer">
-                            <button type="like">Like</button>
+                            <form asp-action="LikePost" method="post">
+                                <input type="hidden" name="postId" value="@item.Post.PostID" />
+                                <input type="hidden" name="userId" value="@userID" />
+                                <button type="submit" class="btn btn-primary">
+                                    @if (item.IsLikedByUser) {
+                                        <span>Unlike</span>
+                                    } else {
+                                        <span>Like</span>
+                                    }
+                                </button>
+                            </form>
                             <button>Comment</button>
                             <button>Share</button>
                         </div>
-                        @await Html.PartialAsync("/Views/Comments/_CommentFormPartial.cshtml", new CommentsModel{UserID=userID, PostID=item.PostID})
+                        @await Html.PartialAsync("/Views/Comments/_CommentFormPartial.cshtml", new CommentsModel{UserID=userID, PostID=item.Post.PostID})
                     </div>
                 }
             </div>
