@@ -1,12 +1,13 @@
 @model PostsModel
 
+@*temporary variable*@
+@{
+    var userID = Guid.Parse("10bb4451-19aa-11ef-ad56-662ef0370963");
+}
+
 <div class="post">
     <form asp-action="CreatePosts" asp-controller="Posts" method="post">
-        <div class="form-group">
-            <label>Author ID (This input is only here for testing purposes and should be removed in the long run)</label>
-            <input asp-for="UserID" type="text" class="form-control" required>
-        </div>
-
+        <input type="hidden" name="UserId" value="@userID" />
         <label for="title">Title:</label>
         <input asp-for="PostTitle" type="text" class="form-control" required>
 
