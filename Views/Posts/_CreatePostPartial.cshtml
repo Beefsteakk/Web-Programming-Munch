@@ -1,23 +1,26 @@
 @model PostsModel
 
-<div class="post">
-    <form asp-action="CreatePosts" asp-controller="Posts" method="post">
-        <div class="form-group">
-            <label>Author ID (This input is only here for testing purposes and should be removed in the long run)</label>
-            <input asp-for="UserID" type="text" class="form-control" required>
-        </div>
+@*temporary variable*@
+@{
+    var userID = Guid.Parse("10bb4451-19aa-11ef-ad56-662ef0370963");
+}
 
+<div>
+    <form asp-action="CreatePosts" asp-controller="Posts" method="post">
+        <input type="hidden" name="UserId" value="@userID" />
         <label for="title">Title:</label>
         <input asp-for="PostTitle" type="text" class="form-control" required>
 
-        <label for="post">Post:</label>
-        <input asp-for="PostContent" type="text" class="form-control" required>
+            <label for="post">Post:</label>
+            <input asp-for="PostContent" type="text" class="form-control" required>
 
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" class="form-control">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" class="form-control">
 
-        <label for="pictures">Pictures:</label>
-        <input type="file" id="pictures" name="pictures" accept="image/*" multiple class="form-control">
-        <button type="submit" class="btn btn-primary">Create Post</button>
+            <label for="pictures">Pictures:</label>
+            <input type="file" id="pictures" name="pictures" accept="image/*" multiple class="form-control">
+            
+        </div>
+        <button type="submit" class="btn btn-primary float-end">Create Post</button>
     </form>
 </div>

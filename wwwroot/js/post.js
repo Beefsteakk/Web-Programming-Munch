@@ -1,23 +1,43 @@
-allPost = document.querySelectorAll('.post');
+allPost = document.querySelectorAll('.posts');
 allPost.forEach(function(e) {
     e.addEventListener('click', function(obj) {
-        if (obj.target.localName != "button") {
+        console.log(e.id)
+        if (obj.target.localName != "button" && obj.target.localName != "input" && obj.target.localName != "span") {
             $.ajax({
                 url: '/Posts/GetInfo',
                 type: 'POST',
                 data: { id: e.id },
                 success: function(response) {
                     $('#carouselInner').empty();
-                        console.log(response.imageUrl)
-                        response.imageUrl.forEach((url, index) => {
-                            const isActive = index === 0 ? 'active' : '';
-                            $('#carouselInner').append(`
-                                <div class="carousel-item ${isActive}">
-                                    <img src="${url}" class="d-block w-100" alt="Image ${index + 1}">
-                                </div>
-                            `);
-                        });
-                    $('#modalMessage').text(response.info);
+
+                    if (response.imageUrl.length > 1) {
+                        $('#imageCarousel').append(`
+                            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                        `);
+                    }
+                    response.imageUrl.forEach((url, index) => {
+                        const isActive = index === 0 ? 'active' : '';
+                        $('#carouselInner').append(`
+                            <div class="carousel-item ${isActive}">
+                                <img src="${url}" class="d-block w-100" alt="Image ${index + 1}">
+                            </div>
+                        `);
+                    });
+                    $('#modalTitle').text(response.post.postTitle);
+                    $('#modalMessage').text(response.post.postContent);
+                    $('#modalComments').empty();
+                    response.post.comment.forEach((url, index) => {
+                        $('#modalComments').append(`${url.commentContent}`)
+                    });
                     $('#infoModal').modal('show');
                 },
                 error: function() {
@@ -28,10 +48,18 @@ allPost.forEach(function(e) {
     })
 });
 
-likeButton = document.querySelectorAll('.post-footer > button');
-likeButton.forEach(function(e) {
-    e.addEventListener('click', function(obj) {3
+Buttons = document.querySelectorAll('.post-footer > button');
+Buttons.forEach(function(e) {
+    e.addEventListener('click', function(obj) {
         obj.stopPropagation()
-        console.log("Yses")
+        if (e.textContent == "Like") {
+            
+        }
+        else if (e.textContent == "Comment") {
+            
+        }
+        else if (e.textContent == "Share") {
+            navigator.clipboard.writeText("https://localhost:5001/Posts");
+        }
     })
 });

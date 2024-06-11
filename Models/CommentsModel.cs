@@ -29,7 +29,7 @@ public class CommentsModel
 
     // Navigation properties
     [ForeignKey("PostID")]
-    public required PostsModel Post { get; set; }
+    public PostsModel? Post { get; set; }
 
     [ForeignKey("UserID")]
     public UsersModel? User { get; set; }
