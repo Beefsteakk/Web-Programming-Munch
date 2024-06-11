@@ -8,29 +8,37 @@ namespace EffectiveWebProg.Controllers;
 
 public class PostsController : Controller
 {
-    private ApplicationDbContext _db;
+    private readonly ApplicationDbContext _db;
 
     public PostsController(ApplicationDbContext db)
     {
         _db = db;
     }
 
-    private void CompletePostObject(PostsModel post) {
-        if (post.UserID != null) {
+    private void CompletePostObject(PostsModel post)
+    {
+        if (post.UserID != null)
+        {
             post.User = _db.Users.Find(post.UserID);
-        } else if (post.RestID != null) {
+        }
+        else if (post.RestID != null)
+        {
             post.Restaurant = _db.Restaurants.Find(post.RestID);
         }
     }
-    private async Task<List<PostsModel>> GetAllPostsAsync() {
+
+    private async Task<List<PostsModel>> GetAllPostsAsync()
+    {
         var posts = await _db.Posts.OrderByDescending(p => p.PostCreatedAt).ToListAsync();
-        foreach (var post in posts) {
+        foreach (var post in posts)
+        {
             CompletePostObject(post);
         }
         return posts;
     }
 
-    private async Task<List<CommentsModel>> GetSpecificPostCommentsAsync(Guid postID) {
+    private async Task<List<CommentsModel>> GetSpecificPostCommentsAsync(Guid postID)
+    {
         var comments = await _db.Comments
             .Where(c => c.PostID == postID)
             .ToListAsync();
@@ -38,37 +46,43 @@ public class PostsController : Controller
         return comments;
     }
 
-    public async Task<IActionResult> Index() {
+    public async Task<IActionResult> Index()
+    {
         var userID = Guid.Parse("10bb4451-19aa-11ef-ad56-662ef0370963"); // Temporary variable.
         var posts = await GetAllPostsAsync();
         var postViewModels = new List<PostViewModel>();
-        foreach (var post in posts) {
+        foreach (var post in posts)
+        {
             var like = await _db.PostLikesUser.FirstOrDefaultAsync(l => l.PostID == post.PostID && l.UserID == userID);
-            var isLiked = like != null ? true : false;
-            postViewModels.Add(new PostViewModel{Post = post, IsLikedByUser = isLiked});
+            var isLiked = like != null;
+            postViewModels.Add(new PostViewModel { Post = post, IsLikedByUser = isLiked });
         }
-        var viewModel = new MainFeedViewModel{
+        var viewModel = new MainFeedViewModel
+        {
             PostLists = postViewModels,
         };
         return View(viewModel);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreatePosts(PostsModel post) {
+    public async Task<IActionResult> CreatePosts(PostsModel post)
+    {
         await _db.Posts.AddAsync(post);
         await _db.SaveChangesAsync();
         return RedirectToAction("");
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddComment(CommentsModel comment) {
+    public async Task<IActionResult> AddComment(CommentsModel comment)
+    {
         await _db.Comments.AddAsync(comment);
         await _db.SaveChangesAsync();
         return RedirectToAction("");
     }
 
     [HttpPost]
-    public async Task<IActionResult> EditPosts(PostsModel post) {
+    public async Task<IActionResult> EditPosts(PostsModel post)
+    {
         _db.Posts.Update(post);
         await _db.SaveChangesAsync();
         return RedirectToAction("SpecificPost", new { id = post.PostID });
@@ -77,24 +91,29 @@ public class PostsController : Controller
     [HttpPost]
     public async Task<JsonResult> GetInfo(string id)
     {
-        var post = await _db.Posts.FindAsync(Guid.Parse(id));
-        List<string> ImageUrl = new List<string>();
-        ImageUrl.Add("/assets/images/photo-1556008531-57e6eefc7be4.jpeg");
-        ImageUrl.Add("/assets/images/photo-1557684387-08927d28c72a.jpeg");
-        ImageUrl.Add("/assets/images/photo-1526016650454-68a6f488910a.jpeg");
-        var post = _db.Posts.Find(System.Guid.Parse(id));
-        return Json(new {imageUrl = ImageUrl, post = post});
+        var post = await _db.Posts.FindAsync(Guid.Parse(id)); // Find the post once
+        List<string> ImageUrl = new List<string>
+        {
+            "/assets/images/photo-1556008531-57e6eefc7be4.jpeg",
+            "/assets/images/photo-1557684387-08927d28c72a.jpeg",
+            "/assets/images/photo-1526016650454-68a6f488910a.jpeg"
+        };
+
+        // Removed the duplicate declaration of `post`
+        return Json(new { imageUrl = ImageUrl, post });
     }
 
     [HttpGet]
-    public async Task<IActionResult> SpecificPost(Guid id) {
+    public async Task<IActionResult> SpecificPost(Guid id)
+    {
         var post = await _db.Posts.FirstOrDefaultAsync(p => p.PostID == id);
         var comments = await GetSpecificPostCommentsAsync(id);
-        if (post == null) {
+        if (post == null)
+        {
             return NotFound();
         }
         CompletePostObject(post);
-        var model = new IndividualPostViewModel{Post=post, CommentsList=comments};
+        var model = new IndividualPostViewModel { Post = post, CommentsList = comments };
         return View(model);
     }
 
@@ -107,7 +126,7 @@ public class PostsController : Controller
             // Add a new like
             var post = await _db.Posts.FirstOrDefaultAsync(p => p.PostID == postId);
             var user = await _db.Users.FirstOrDefaultAsync(u => u.UserID == userId);
-            like = new PostLikesUserModel{Post = post, User = user};
+            like = new PostLikesUserModel { Post = post, User = user };
             await _db.PostLikesUser.AddAsync(like);
         }
         else

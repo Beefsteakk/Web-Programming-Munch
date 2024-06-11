@@ -33,10 +33,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body modal-post-body">
+                    <!-- Your modal body content goes here -->
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-info-dialog">
             <div class="modal-content modal-info-content">
@@ -74,8 +76,8 @@
                     <div class="col-lg-2"></div>
                     <div class="col-8">
                         @foreach(var item in Model.PostLists) {
-                        <div class="posts" id=@item.Post.PostID>
-                            <h3><a asp-controller="Posts" asp-action="SpecificPost" asp-route-id=@item.Post.PostID>@item.Post.PostTitle</a></h3>
+                        <div class="posts" id="@item.Post.PostID">
+                            <h3><a asp-controller="Posts" asp-action="SpecificPost" asp-route-id="@item.Post.PostID">@item.Post.PostTitle</a></h3>
                             <div class="post-header">
                                 <img src="~/Images/xunyin.jpg" alt="Xun Yin">
                                 <div class="post-info">
@@ -85,15 +87,12 @@
                                         <h4>@item.Post.Restaurant.RestName</h4>
                                     }
                                     <span>@item.Post.PostCreatedAt</span>
-                            </div>
-                        </div>
                                 </div>
                             </div>
                             <div class="post-content">
-                                <p style="max-height: 200px;overflow-y:auto">@item.Post.PostContent</p>
-                                <!-- TODO: Generate the image table dynamically, currently randomizing amount of photos -->
+                                <p style="max-height: 200px; overflow-y:auto">@item.Post.PostContent</p>
                                 <div class="images-table">
-                                    @for (var i=0; i<randomNum(); i++) {
+                                    @for (var i = 0; i < randomNum(); i++) {
                                     <div class="test">
                                         <img src="/Images/Food1.jpeg" alt="Post Image">
                                     </div>
@@ -102,14 +101,15 @@
                             </div>
                             <div class="post-footer">
                                 <form asp-action="LikePost" method="post">
-                                  <input type="hidden" name="postId" value="@item.Post.PostID" />
-                                  <input type="hidden" name="userId" value="@userID" />
-                                  <button type="submit"><i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="icon-text">Like</span></button>
+                                    <input type="hidden" name="postId" value="@item.Post.PostID" />
+                                    <input type="hidden" name="userId" value="@userID" />
+                                    <button type="submit"><i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="icon-text">Like</span></button>
+                                </form>
                                 <button><i class="fa fa-comment" aria-hidden="true"></i><span class="icon-text">Comments</span></button>
                                 <button><i class="fa fa-share" aria-hidden="true"></i><span class="icon-text">Share</span></button>
                             </div>
                         </div>
-                        @await Html.PartialAsync("/Views/Comments/_CommentFormPartial.cshtml", new CommentsModel{UserID=userID, PostID=item.Post.PostID})
+                        @await Html.PartialAsync("/Views/Comments/_CommentFormPartial.cshtml", new CommentsModel { UserID = userID, PostID = item.Post.PostID })
                         }
                     </div>
                     <div class="col-lg-2"></div>
