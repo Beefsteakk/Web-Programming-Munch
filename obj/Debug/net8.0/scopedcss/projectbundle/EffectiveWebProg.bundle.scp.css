@@ -1,32 +1,33 @@
-﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+/* _content/EffectiveWebProg/Views/Shared/_Layout.cshtml.rz.scp.css */
+/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-:root {
+:root[b-ugu0mftuqp] {
   font-size: 16px;
   --text-primary: rgb(234, 234, 20);
   --text-secondary: rgb(32, 210, 255);
 }
 
-* {
+*[b-ugu0mftuqp] {
   font-family: "Inter", Helvetica, Arial, sans-serif;
 }
 
 /* --------- Body ------------- */
-body {
+body[b-ugu0mftuqp] {
   margin: 0;
   padding: 0;
 }
 
-body::-webkit-scrollbar {
+body[b-ugu0mftuqp]::-webkit-scrollbar {
   width: 0.25rem;
 }
 
-body::-webkit-scrollbar-thumb {
+body[b-ugu0mftuqp]::-webkit-scrollbar-thumb {
   background: var(--text-secondary);
 }
 /* ---------- Navbar ---------- */
 
-.left-sidebar-munch {
+.left-sidebar-munch[b-ugu0mftuqp] {
   font-size: 2rem;
   font-weight: 600;
   height: 4rem;
@@ -35,7 +36,7 @@ body::-webkit-scrollbar-thumb {
   border-style: border-box;
 }
 
-.left-sidebar {
+.left-sidebar[b-ugu0mftuqp] {
   width: 15rem;
   height: 100vh;
   position: fixed;
@@ -43,14 +44,14 @@ body::-webkit-scrollbar-thumb {
   border-right: 1px solid #e7e7e7;
 }
 
-.left-sidebar-nav {
+.left-sidebar-nav[b-ugu0mftuqp] {
   padding: 0;
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.left-nav-item {
+.left-nav-item[b-ugu0mftuqp] {
   display: flex !important;
   align-items: center;
   height: 3rem;
@@ -60,33 +61,32 @@ body::-webkit-scrollbar-thumb {
   transition: 600ms !important;
   border-radius: 10px;
   padding-left: 1rem;
-  cursor: pointer;
 }
 
-.left-nav-item:hover {
+.left-nav-item:hover[b-ugu0mftuqp] {
   filter: grayscale(0%) opacity(1);
   background-color: grey;
   color: black;
 }
 
-.left-nav-item:last-child {
+.left-nav-item:last-child[b-ugu0mftuqp] {
   margin-top: auto;
 }
 
 
-.left-link-text {
+.left-link-text[b-ugu0mftuqp] {
   margin-left: 0.2rem;
   text-decoration: none;
   font-size: 1.2rem;
 }
 
-.fa-solid {
+.fa-solid[b-ugu0mftuqp] {
   color: rgb(32, 210, 255);
   transition: 600ms;
 }
 
 /* ---------- Main ---------- */
-main {
+main[b-ugu0mftuqp] {
   margin-left: 15rem;
   padding: 1px;
   margin-bottom: 3rem;
@@ -94,7 +94,7 @@ main {
 }
 
 /* ---------- left Navbar ---------- */
-.right-sidebar {
+.right-sidebar[b-ugu0mftuqp] {
   width: 23rem;
   height: 100vh;
   position: fixed;
@@ -105,14 +105,14 @@ main {
   padding: 1rem;
 }
 
-.right-sidebar-container {
+.right-sidebar-container[b-ugu0mftuqp] {
   display: flex;
   flex-direction: column;
   height: 100%;
   align-items: center;
 }
 
-.right-sidebar-title {
+.right-sidebar-title[b-ugu0mftuqp] {
   margin-top: 4rem;
   font-size: 1.5rem;
   font-weight: 500;
