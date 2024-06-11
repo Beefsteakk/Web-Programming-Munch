@@ -91,16 +91,12 @@ public class PostsController : Controller
     [HttpPost]
     public async Task<JsonResult> GetInfo(string id)
     {
-        var post = await _db.Posts.FindAsync(Guid.Parse(id)); // Find the post once
-        List<string> ImageUrl = new List<string>
-        {
-            "/assets/images/photo-1556008531-57e6eefc7be4.jpeg",
-            "/assets/images/photo-1557684387-08927d28c72a.jpeg",
-            "/assets/images/photo-1526016650454-68a6f488910a.jpeg"
-        };
-
-        // Removed the duplicate declaration of `post`
-        return Json(new { imageUrl = ImageUrl, post });
+        var post = await _db.Posts.FindAsync(Guid.Parse(id));
+        List<string> ImageUrl = new List<string>();
+        ImageUrl.Add("/assets/images/photo-1556008531-57e6eefc7be4.jpeg");
+        ImageUrl.Add("/assets/images/photo-1557684387-08927d28c72a.jpeg");
+        ImageUrl.Add("/assets/images/photo-1526016650454-68a6f488910a.jpeg");
+        return Json(new {imageUrl = ImageUrl, post = post});
     }
 
     [HttpGet]
