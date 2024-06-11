@@ -7,17 +7,14 @@ using EffectiveWebProg.Models;
 
 public class RestaurantFollowingsModel
 {
-    [Key, Column(Order = 0)]
+    [Key, Column(Order = 0, TypeName = "char(36)")]
     public Guid UserID { get; set; } // Composite Primary Key and Foreign Key From UsersModel
 
-    [Key, Column(Order = 1)]
+    [Key, Column(Order = 1, TypeName = "char(36)")]
     public Guid FollowedRestID { get; set; } // Composite Primary Key and Foreign Key From RestaurantsModel
 
     [Required]
     public DateTime FollowCreatedAt { get; set; }
-
-
-
 
     // Navigation properties
     [ForeignKey("UserID")]
@@ -25,8 +22,6 @@ public class RestaurantFollowingsModel
 
     [ForeignKey("FollowedRestID")]
     public required RestaurantsModel FollowedRest { get; set; }
-
-
 
     public RestaurantFollowingsModel()
     {

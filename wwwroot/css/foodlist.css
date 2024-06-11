@@ -1,0 +1,87 @@
+body {
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.btn {
+  background-color: rgb(32, 210, 255);
+  color: black;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.search-bar {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: start;
+}
+
+.search-bar button {
+    margin-left: 1rem;
+}
+
+.search-bar input {
+    width: 50%;
+    padding: o.54rem;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.foodlist-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.card {
+    background-color: #e7e7e7;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left;
+    color: black;
+    text-decoration: none;
+    padding: 0.5rem;
+    height: 300px
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+}
+
+.card-body {
+    padding: 0;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 0.2rem;
+}
+
+.card-text {
+    font-size: 0.875rem;
+    color: black;
+    margin-top: 0.2rem;
+}

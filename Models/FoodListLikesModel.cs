@@ -7,10 +7,10 @@ using EffectiveWebProg.Models;
 
 public class FoodListLikesModel
 {
-    [Key, Column(Order = 0)]
+    [Key, Column(Order = 0, TypeName = "char(36)")]
     public Guid FoodListID { get; set; } // Composite Primary Key and Foreign Key From FoodListsModel
 
-    [Key, Column(Order = 1)]
+    [Key, Column(Order = 1, TypeName = "char(36)")]
     public Guid UserID { get; set; } // Composite Primary Key and Foreign Key From UsersModel
 
     [Required]
