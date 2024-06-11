@@ -39,9 +39,16 @@ public class PostsController : Controller
     }
 
     public async Task<IActionResult> Index() {
+        var userID = Guid.Parse("10bb4451-19aa-11ef-ad56-662ef0370963"); // Temporary variable.
         var posts = await GetAllPostsAsync();
+        var postViewModels = new List<PostViewModel>();
+        foreach (var post in posts) {
+            var like = await _db.PostLikesUser.FirstOrDefaultAsync(l => l.PostID == post.PostID && l.UserID == userID);
+            var isLiked = like != null ? true : false;
+            postViewModels.Add(new PostViewModel{Post = post, IsLikedByUser = isLiked});
+        }
         var viewModel = new MainFeedViewModel{
-            PostLists = posts,
+            PostLists = postViewModels,
         };
         return View(viewModel);
     }
@@ -60,25 +67,15 @@ public class PostsController : Controller
         return RedirectToAction("");
     }
 
-    [HttpGet]
-    public IActionResult EditPosts() {
-        return View();
+    [HttpPost]
+    public async Task<IActionResult> EditPosts(PostsModel post) {
+        _db.Posts.Update(post);
+        await _db.SaveChangesAsync();
+        return RedirectToAction("SpecificPost", new { id = post.PostID });
     }
 
     [HttpPost]
-    public IActionResult EditPosts(String postID, String postTitle, String postContent) {
-        var post = _db.Posts.Find(System.Guid.Parse(postID));
-        if (post != null) {
-            post.PostTitle = postTitle;
-            post.PostContent = postContent;
-            _db.Posts.Update(post);
-            _db.SaveChanges();
-        }
-        return RedirectToAction("Posts");
-    }
-
-    [HttpPost]
-    async public Task<JsonResult> GetInfo(string id)
+    public async Task<JsonResult> GetInfo(string id)
     {
         var post = await _db.Posts.FindAsync(Guid.Parse(id));
         List<string> ImageUrl = new List<string>();
@@ -90,7 +87,6 @@ public class PostsController : Controller
 
     [HttpGet]
     public async Task<IActionResult> SpecificPost(Guid id) {
-        Console.WriteLine(id.ToString());
         var post = await _db.Posts.FirstOrDefaultAsync(p => p.PostID == id);
         var comments = await GetSpecificPostCommentsAsync(id);
         if (post == null) {
@@ -99,5 +95,26 @@ public class PostsController : Controller
         CompletePostObject(post);
         var model = new IndividualPostViewModel{Post=post, CommentsList=comments};
         return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> LikePost(Guid postId, Guid userId)
+    {
+        var like = _db.PostLikesUser.FirstOrDefault(l => l.PostID == postId && l.UserID == userId);
+        if (like == null)
+        {
+            // Add a new like
+            var post = await _db.Posts.FirstOrDefaultAsync(p => p.PostID == postId);
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.UserID == userId);
+            like = new PostLikesUserModel{Post = post, User = user};
+            await _db.PostLikesUser.AddAsync(like);
+        }
+        else
+        {
+            _db.PostLikesUser.Remove(like);
+        }
+
+        await _db.SaveChangesAsync();
+        return RedirectToAction("");
     }
 }
