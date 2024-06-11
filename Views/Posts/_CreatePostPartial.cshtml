@@ -5,7 +5,7 @@
     var userID = Guid.Parse("10bb4451-19aa-11ef-ad56-662ef0370963");
 }
 
-<div class="post">
+<div>
     <form asp-action="CreatePosts" asp-controller="Posts" method="post">
         <input type="hidden" name="UserId" value="@userID" />
         <label for="title">Title:</label>
