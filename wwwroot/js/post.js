@@ -8,7 +8,6 @@ allPost.forEach(function(e) {
                 data: { id: e.id },
                 success: function(response) {
                     $('#carouselInner').empty();
-                    console.log(response)
                     if (response.imageUrl.length > 1) {
                         $('#imageCarousel').append(`
                             <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
@@ -47,10 +46,18 @@ allPost.forEach(function(e) {
     })
 });
 
-likeButton = document.querySelectorAll('.post-footer > button');
-likeButton.forEach(function(e) {
-    e.addEventListener('click', function(obj) {3
+Buttons = document.querySelectorAll('.post-footer > button');
+Buttons.forEach(function(e) {
+    e.addEventListener('click', function(obj) {
         obj.stopPropagation()
-        console.log("Yses")
+        if (e.textContent == "Like") {
+            
+        }
+        else if (e.textContent == "Comment") {
+            
+        }
+        else if (e.textContent == "Share") {
+            navigator.clipboard.writeText("https://localhost:5001/Posts");
+        }
     })
 });
