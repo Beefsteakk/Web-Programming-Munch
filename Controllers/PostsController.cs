@@ -1,8 +1,8 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using EffectiveWebProg.Models;
 using EffectiveWebProg.Data;
-using Microsoft.Extensions.ObjectPool;
+using Microsoft.EntityFrameworkCore;
+using EffectiveWebProg.ViewModels;
 
 namespace EffectiveWebProg.Controllers;
 
@@ -13,29 +13,33 @@ public class PostsController : Controller
     public PostsController(ApplicationDbContext db)
     {
         _db = db;
-
     }
 
-    public IActionResult Index(){
-        return View();
+    private async Task<List<PostsModel>> GetAllPostsAsync() {
+        var posts = await _db.Posts.OrderByDescending(p => p.PostCreatedAt).ToListAsync();
+        foreach (var post in posts) {
+            if (post.UserID != null) {
+                post.User = await _db.Users.FindAsync(post.UserID);
+            } else if (post.RestID != null) {
+                post.Restaurant = await _db.Restaurants.FindAsync(post.RestID);
+            }
+        }
+        return posts;
     }
 
-    public IActionResult Posts(){
-        var posts = _db.Posts.ToList();
-        return View(posts);
-    }
-
-    [HttpGet]
-    public IActionResult CreatePosts(){
-        return View();
+    public async Task<IActionResult> Index() {
+        var posts = await GetAllPostsAsync();
+        var viewModel = new MainFeedViewModel{
+            PostLists = posts,
+        };
+        return View(viewModel);
     }
 
     [HttpPost]
-    public IActionResult CreatePosts(PostsModel post){
-        _db.Posts.Add(post);
-        _db.SaveChanges();
-
-        return RedirectToAction("Posts");
+    public async Task<IActionResult> CreatePosts(PostsModel post) {
+        await _db.Posts.AddAsync(post);
+        await _db.SaveChangesAsync();
+        return RedirectToAction("");
     }
 
     [HttpGet]

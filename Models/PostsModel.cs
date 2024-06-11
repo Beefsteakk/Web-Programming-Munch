@@ -16,10 +16,8 @@ public class PostsModel
     public required string PostContent { get; set; }
     [StringLength(255)]
     public string? PostImageURL { get; set; }
-    [StringLength(255)]
-    public string? PostLocation { get; set; }
-
     public DateTime PostCreatedAt { get; set; }
+    public Guid? TaggedRest { get; set; } // Foreign Key From RestaurantsModel
 
 
     // Navigation properties
@@ -27,10 +25,13 @@ public class PostsModel
     public UsersModel? User { get; set; }
     [ForeignKey("RestID")]
     public RestaurantsModel? Restaurant { get; set; }
+    [ForeignKey("TaggedRest")]
+    public RestaurantsModel? TaggedRestaurant { get; set; }
 
     public ICollection<CommentsModel> Comment { get; set; }
     public ICollection<PostLikesUserModel> PostLikeUser { get; set; }
     public ICollection<PostLikesRestModel> PostLikeRest { get; set; }
+    public ICollection<ReviewsModel> Review { get; set; }
 
 
     public PostsModel()
@@ -40,5 +41,6 @@ public class PostsModel
         Comment = new List<CommentsModel>();
         PostLikeUser = new List<PostLikesUserModel>();
         PostLikeRest = new List<PostLikesRestModel>();
+        Review = new List<ReviewsModel>();
     }
 }
