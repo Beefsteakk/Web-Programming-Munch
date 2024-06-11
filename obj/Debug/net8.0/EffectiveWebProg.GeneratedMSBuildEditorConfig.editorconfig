@@ -34,6 +34,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxSZXN0YXVyYW50UmVnLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/junji/Desktop/School/EffectiveWebProg/Views/Foodlist/CreateFoodLists.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9vZGxpc3RcQ3JlYXRlRm9vZExpc3RzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/junji/Desktop/School/EffectiveWebProg/Views/Foodlist/FoodListEntries.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9vZGxpc3RcRm9vZExpc3RFbnRyaWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/junji/Desktop/School/EffectiveWebProg/Views/Foodlist/index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9vZGxpc3RcaW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -54,10 +62,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFwXFRlc3REYXRhYmFzZUNvbm5lY3Rpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/junji/Desktop/School/EffectiveWebProg/Views/Posts/CreatePosts.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdHNcQ3JlYXRlUG9zdHMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/junji/Desktop/School/EffectiveWebProg/Views/Posts/EditPosts.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdHNcRWRpdFBvc3RzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -72,6 +76,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/junji/Desktop/School/EffectiveWebProg/Views/Posts/Posts.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdHNcUG9zdHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/junji/Desktop/School/EffectiveWebProg/Views/Posts/_CreatePostPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdHNcX0NyZWF0ZVBvc3RQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/junji/Desktop/School/EffectiveWebProg/Views/Profile/Index.cshtml]
