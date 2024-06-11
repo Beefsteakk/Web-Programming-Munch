@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <a asp-action="CreateFoodLists" asp-controller="FoodList" class="btn btn-success">Create FoodList</a>
+        <button class="btn btn-primary btn-modal" data-url="@Url.Action("CreateFoodLists", "FoodList")">Create New Food List</button>
     </div>
 </div>
 
@@ -34,8 +34,7 @@
                         <td>@item.FoodListDescription</td>
                         <td>@item.FoodListCreatedAt</td>
                         <td>
-                            <a asp-action="ViewFoodList" asp-route-id="FoodListID" class="btn btn-primary">View</a>
-                            <a asp-action="EditFoodList" asp-route-id="FoodListID" class="btn btn-warning">Edit</a>
+                            <a asp-action="ViewFoodList" asp-route-id="@item.FoodListID" class="btn btn-info">View</a>
                             <a asp-action="DeleteFoodList" asp-route-id="FoodListID" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')">Delete</a>
                         </td>
                     </tr>
@@ -43,7 +42,54 @@
             </tbody>
         </table>
     </div>
-    <div class="foodlist-container">
-        
+</div>
+
+@* Modal *@
+<div class="modal fade" id="modalFoodList" tabindex="-1" role="dialog" aria-labelledby="modalFoodListLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFoodListLabel">Food List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary save-changes">Save Changes</button>
+            </div>
+        </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.btn-modal').click(function () {
+                var url = $(this).data('url'); 
+                $.get(url, function (data) {
+                    $('#modalFoodList .modal-body').html(data);
+                    $('#modalFoodList').modal('show');
+                });
+            });
+
+            $('.save-changes').click(function () {
+                var form = $('#modalFoodList form');
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    success: function (result) {
+                        $('#modalFoodList').modal('hide');
+                        location.reload(); // Simple refresh, can be improved
+                    }
+                });
+            });
+        });
+    </script>
+}
