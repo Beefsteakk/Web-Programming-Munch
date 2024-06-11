@@ -7,6 +7,11 @@
     }
 }
 
+@*temporary variable*@
+@{
+    var userID = Guid.Parse("10bb4451-19aa-11ef-ad56-662ef0370963");
+}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,7 +33,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body modal-post-body">
-                    @await Html.PartialAsync("_CreatePostPartial", Model.NewPost)
                 </div>
             </div>
         </div>
@@ -51,6 +55,7 @@
             </div>
         </div>
     </div>
+
     <div class="container">
         <div class="main-content">
             <div class="content">
@@ -60,6 +65,7 @@
                         <div class="input-area">
                             <div class="profile-pic"></div>
                             <div class="input-field" data-bs-toggle="modal" data-bs-target="#postModal">Want to share something?</div>
+                            @await Html.PartialAsync("_CreatePostPartial", Model.NewPost)
                         </div>
                     </div>
                     <div class="col-lg-2"></div>
@@ -68,20 +74,23 @@
                     <div class="col-lg-2"></div>
                     <div class="col-8">
                         @foreach(var item in Model.PostLists) {
-                        <div class="posts" id=@item.PostID>
+                        <div class="posts" id=@item.Post.PostID>
+                            <h3><a asp-controller="Posts" asp-action="SpecificPost" asp-route-id=@item.Post.PostID>@item.Post.PostTitle</a></h3>
                             <div class="post-header">
                                 <img src="~/Images/xunyin.jpg" alt="Xun Yin">
                                 <div class="post-info">
-                                    @if (item.User != null) {
-                                        <h4>@item.User.UserName</h4>
-                                    } else if (item.Restaurant != null) {
-                                        <h4>@item.Restaurant.RestName</h4>
+                                    @if (item.Post.User != null) {
+                                        <h4>@item.Post.User.UserName</h4>
+                                    } else if (item.Post.Restaurant != null) {
+                                        <h4>@item.Post.Restaurant.RestName</h4>
                                     }
-                                    <span>@item.PostCreatedAt</span>
+                                    <span>@item.Post.PostCreatedAt</span>
+                            </div>
+                        </div>
                                 </div>
                             </div>
                             <div class="post-content">
-                                <p style="max-height: 200px;overflow-y:auto">@item.PostContent</p>
+                                <p style="max-height: 200px;overflow-y:auto">@item.Post.PostContent</p>
                                 <!-- TODO: Generate the image table dynamically, currently randomizing amount of photos -->
                                 <div class="images-table">
                                     @for (var i=0; i<randomNum(); i++) {
@@ -92,11 +101,15 @@
                                 </div>
                             </div>
                             <div class="post-footer">
-                                <button><i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="icon-text">Like</span></button>
+                                <form asp-action="LikePost" method="post">
+                                  <input type="hidden" name="postId" value="@item.Post.PostID" />
+                                  <input type="hidden" name="userId" value="@userID" />
+                                  <button type="submit"><i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="icon-text">Like</span></button>
                                 <button><i class="fa fa-comment" aria-hidden="true"></i><span class="icon-text">Comments</span></button>
                                 <button><i class="fa fa-share" aria-hidden="true"></i><span class="icon-text">Share</span></button>
                             </div>
                         </div>
+                        @await Html.PartialAsync("/Views/Comments/_CommentFormPartial.cshtml", new CommentsModel{UserID=userID, PostID=item.Post.PostID})
                         }
                     </div>
                     <div class="col-lg-2"></div>

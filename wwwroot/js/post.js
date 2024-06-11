@@ -1,13 +1,15 @@
 allPost = document.querySelectorAll('.posts');
 allPost.forEach(function(e) {
     e.addEventListener('click', function(obj) {
-        if (obj.target.localName != "button") {
+        console.log(e.id)
+        if (obj.target.localName != "button" && obj.target.localName != "input" && obj.target.localName != "span") {
             $.ajax({
                 url: '/Posts/GetInfo',
                 type: 'POST',
                 data: { id: e.id },
                 success: function(response) {
                     $('#carouselInner').empty();
+
                     if (response.imageUrl.length > 1) {
                         $('#imageCarousel').append(`
                             <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"

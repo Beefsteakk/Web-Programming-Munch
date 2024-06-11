@@ -17,14 +17,14 @@ public class CommentsModel
     public Guid? RestID { get; set; } // Foreign Key From RestaurantsModel
 
     [Required]
-    public required string CommentContent { get; set; }
+    public string CommentContent { get; set; }
 
     public DateTime CommentCreatedAt { get; set; }
 
 
     // Navigation properties
     [ForeignKey("PostID")]
-    public required PostsModel Post { get; set; }
+    public PostsModel? Post { get; set; }
 
     [ForeignKey("UserID")]
     public UsersModel? User { get; set; }
