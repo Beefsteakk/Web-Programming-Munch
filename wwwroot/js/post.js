@@ -2,7 +2,7 @@ allPost = document.querySelectorAll('.post');
 allPost.forEach(function(e) {
     e.addEventListener('click', function(obj) {
         console.log(e.id)
-        if (obj.target.localName != "button") {
+        if (obj.target.localName != "button" && obj.target.localName != "input" && obj.target.localName != "span") {
             $.ajax({
                 url: '/Posts/GetInfo',
                 type: 'POST',
