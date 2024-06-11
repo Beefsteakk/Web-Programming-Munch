@@ -33,7 +33,7 @@ body {
     margin: 0 10px;
 }
 
-.content .post {
+.content .posts {
     background-color: #fff;
     padding: 15px;
     border-style: solid;
@@ -41,7 +41,7 @@ body {
     border-color: rgba(0, 0, 0, 0.03);
 }
 
-.content .post:hover {
+.content .posts:hover {
     background-color: rgba(0, 0, 0, 0.03);
     cursor: pointer;
 }
@@ -80,6 +80,10 @@ body {
     background: none;
     border: none;
     color: #1877f2;
+}
+
+.icon-text {
+    margin-left: 5px;
 }
 
 aside {
@@ -268,12 +272,41 @@ aside .recommended ul li span {
     justify-content: flex-end;
 }
 
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+.form-group {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
 }
 
-.btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
+.input-area {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 20px auto;
+    background-color: #f0f2f5;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.input-area:hover {
+    background-color: #e0e2e5;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    background-color: #000;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.input-field {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #888;
 }
