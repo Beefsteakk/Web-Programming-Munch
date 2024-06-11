@@ -1,6 +1,11 @@
 ﻿@using EffectiveWebProg.ViewModels;
 @model MainFeedViewModel
 
+@*temporary variable*@
+@{
+    var userID = Guid.Parse("10bb4451-19aa-11ef-ad56-662ef0370963");
+}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +29,7 @@
                 <div class="modal-body modal-post-body">
                     <form asp-action="CreatePosts" asp-controller="Posts" method="post">
                         <div class="form-group">
+    using System.Reflection.Metadata;
                             <label>Author ID (This input is only here for testing purposes and should be removed in the
                                 long run)</label>
                             <input asp-for="UserID" type="text" class="form-control" required>
@@ -109,6 +115,7 @@
                 @await Html.PartialAsync("_CreatePostPartial", Model.NewPost)
                 @foreach(var item in Model.PostLists) {
                     <div class="post" id=@item.PostID>
+                        <h3><a asp-controller="Posts" asp-action="SpecificPost" asp-route-id=@item.PostID>@item.PostTitle</a></h3>
                         <div class="post-header">
                             <img src="~/Images/xunyin.jpg" alt="Xun Yin">
                             <div class="post-info">
@@ -137,6 +144,7 @@
                             <button>Comment</button>
                             <button>Share</button>
                         </div>
+                        @await Html.PartialAsync("/Views/Comments/_CommentFormPartial.cshtml", new CommentsModel{UserID=userID, PostID=item.PostID})
                     </div>
                 }
             </div>
