@@ -1,6 +1,7 @@
 allPost = document.querySelectorAll('.post');
 allPost.forEach(function(e) {
     e.addEventListener('click', function(obj) {
+        console.log(e.id)
         if (obj.target.localName != "button") {
             $.ajax({
                 url: '/Posts/GetInfo',
@@ -17,7 +18,8 @@ allPost.forEach(function(e) {
                                 </div>
                             `);
                         });
-                    $('#modalMessage').text(response.info);
+                    $('#modalTitle').text(response.title);
+                    $('#modalMessage').text(response.message);
                     $('#infoModal').modal('show');
                 },
                 error: function() {
