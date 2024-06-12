@@ -61,7 +61,7 @@
                 </a>
             </li>
             <li class="left-nav-item">
-                <a class="left-nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="left-nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">
                     <span class="left-link-text">Log out</span>
                 </a>
             </li>
@@ -85,6 +85,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-</body>
+    <script src="/_framework/aspnetcore-browser-refresh.js"></script>
 
+</body>
 </html>

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using EffectiveWebProg.Models;
 
+namespace EffectiveWebProg.Models;
+
 public class UsersModel
 {
     [Key]
@@ -31,6 +33,7 @@ public class UsersModel
     public int? AccountToken { get; set; } // nullable
     public bool? AccountVerified { get; set; } // nullable
     public DateTime UserCreatedAt { get; set; }
+    public bool RememberMe { get; set; }
 
 
 
@@ -48,7 +51,6 @@ public class UsersModel
     public ICollection<ForumsModel> Forum { get; set; }
     public ICollection<ForumVotesModel> ForumVote { get; set; }
     public ICollection<ForumCommentsModel> ForumComment { get; set; }
-
 
     public UsersModel()
     {

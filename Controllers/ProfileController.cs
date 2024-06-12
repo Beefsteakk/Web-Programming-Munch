@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
-namespace YourNamespace.Controllers
+namespace EffectiveWebProg.Controllers
 {
     public class ProfileController : Controller
     {
