@@ -18,6 +18,11 @@ body {
   overflow: hidden;
 }
 
+.btn:hover {
+    background-color: rgb(50, 52, 53);
+    color: white;
+}
+
 .search-bar {
     margin-top: 2rem;
     margin-bottom: 2rem;
@@ -35,6 +40,7 @@ body {
     border-radius: 10px;
     border: 1px solid #ccc;
     font-size: 1rem;
+    padding-left: 1rem;
 }
 
 .foodlist-container {
@@ -59,6 +65,7 @@ body {
 .card:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    color: black;
 }
 
 .card img {
@@ -80,8 +87,75 @@ body {
     margin-top: 0.2rem;
 }
 
+
 .card-text {
     font-size: 0.875rem;
     color: black;
     margin-top: 0.2rem;
+}
+
+/* Header styling for Foodlist view */
+.foodlist-top-header {
+    padding-bottom: 20px;
+    background: linear-gradient(to bottom, rgb(234, 234, 20), rgb(170, 170, 9)); /* Add gradient background for effect */
+    
+}
+
+.header-top-row {
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    margin-left: 2rem;
+}
+
+.header-top-row a {
+    margin-right: 1rem;
+}
+.foodlist-header {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+.foodlist-details {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-left: 2rem;
+}
+
+.foodlist-details p{
+    height: 2rem;
+    margin-bottom: 0;
+    font-size: 1rem; /* Adjust the size as needed */
+}
+
+.foodlist-details h2 {
+    font-size: 3.5rem; /* Adjust the size as needed */
+    font-weight: 800;
+}
+
+.foodlist-header img {
+    width: 15rem;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-left: 2rem;
+}
+
+.foodlist-functions button {
+    margin-left: 2rem;
+}
+
+.restaurant-image {
+    width: 5rem;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.table td {
+    vertical-align: middle;
 }

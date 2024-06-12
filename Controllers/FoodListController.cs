@@ -100,4 +100,21 @@ public class FoodListController : Controller
 
         return RedirectToAction("ViewFoodList", new {id = foodListId});
     }
+
+    [HttpPost]
+    public IActionResult DeleteRestaurantFromFoodList(Guid foodListId, Guid restaurantId)
+    {
+        var entry = _db.FoodListEntries
+            .FirstOrDefault(e => e.FoodListID == foodListId && e.RestID == restaurantId);
+
+        if (entry == null)
+        {
+            return NotFound();
+        }
+
+        _db.FoodListEntries.Remove(entry);
+        _db.SaveChanges();
+
+        return RedirectToAction("ViewFoodList", new { id = foodListId });
+    }
 }
