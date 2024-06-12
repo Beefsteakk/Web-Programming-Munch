@@ -2,7 +2,7 @@ allPost = document.querySelectorAll('.posts');
 allPost.forEach(function(e) {
     e.addEventListener('click', function(obj) {
         console.log(e.id)
-        if (obj.target.localName != "button" && obj.target.localName != "input" && obj.target.localName != "span") {
+        if (obj.target.localName != "button" && obj.target.localName != "textarea" && obj.target.localName != "span") {
             $.ajax({
                 url: '/Posts/GetInfo',
                 type: 'POST',
@@ -35,6 +35,7 @@ allPost.forEach(function(e) {
                     $('#modalTitle').text(response.post.postTitle);
                     $('#modalMessage').text(response.post.postContent);
                     $('#modalComments').empty();
+                    console.log(response.post)
                     response.post.comment.forEach((url, index) => {
                         $('#modalComments').append(`${url.commentContent}`)
                     });
