@@ -33,6 +33,7 @@ body[b-ugu0mftuqp]::-webkit-scrollbar-thumb {
   text-align: center;
   padding-top: 0.5rem;
   border-style: border-box;
+
 }
 
 .left-sidebar[b-ugu0mftuqp] {
@@ -41,6 +42,7 @@ body[b-ugu0mftuqp]::-webkit-scrollbar-thumb {
   position: fixed;
   background-color: #f7f7f7;
   border-right: 1px solid #e7e7e7;
+  
 }
 
 .left-sidebar-nav[b-ugu0mftuqp] {

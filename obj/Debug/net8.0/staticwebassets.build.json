@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "+36gyaPTP/RDc3XjQEI1rY7iYGS9HulZKVqF5n43CII=",
+  "Hash": "Jvv1w0AEjeyalmQTyue0ptyXQInBSFo8kXFpbhpLfnA=",
   "Source": "EffectiveWebProg",
   "BasePath": "_content/EffectiveWebProg",
   "Mode": "Default",
@@ -832,6 +832,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/assets/ytplayer/index.js"
+    },
+    {
+      "Identity": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/wwwroot/css/editprofile.css",
+      "SourceId": "EffectiveWebProg",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/wwwroot/",
+      "BasePath": "_content/EffectiveWebProg",
+      "RelativePath": "css/editprofile.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/editprofile.css"
     },
     {
       "Identity": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/wwwroot/css/foodlist.css",

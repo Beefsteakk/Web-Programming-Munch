@@ -249,6 +249,10 @@
       "PackagePath": "staticwebassets/assets/ytplayer/index.js"
     },
     {
+      "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/wwwroot/css/editprofile.css",
+      "PackagePath": "staticwebassets/css/editprofile.css"
+    },
+    {
       "Id": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/wwwroot/css/foodlist.css",
       "PackagePath": "staticwebassets/css/foodlist.css"
     },
