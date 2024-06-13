@@ -3,7 +3,7 @@
     ViewData["Title"] = "Restaurant Profile";
     var details = ViewBag.RestaurantDetails as RestaurantsModel;
     var followerCounts = ViewBag.FollowerCounts as Dictionary<string, int>;
-    var restaurantId = "12345"; // Replace with your specific restaurant ID
+    var restaurantId = ""; // Replace with your specific restaurant ID
     var followerCount = followerCounts.ContainsKey(restaurantId) ? followerCounts[restaurantId] : 0;
 }
 

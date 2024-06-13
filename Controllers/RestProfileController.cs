@@ -1,5 +1,6 @@
 using EffectiveWebProg.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,14 +14,14 @@ namespace EffectiveWebProg.Controllers
         private async Task<RestaurantsModel> GetRestaurantDetailsByUserIdAsync(string userId)
         {
             RestaurantsModel restaurantDetails = null;
-            string query = "SELECT * FROM Restaurants WHERE RestID = @UserId"; // Updated query
+            string query = "SELECT * FROM Restaurants WHERE RestEmail = @RestEmail"; // Updated query
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 await conn.OpenAsync();
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    cmd.Parameters.AddWithValue("@RestEmail", userId);
 
                     using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
                     {
@@ -73,8 +74,14 @@ namespace EffectiveWebProg.Controllers
 
         public async Task<IActionResult> Index()
         {
+
+            string sessionID=HttpContext.Session.GetString("SSName");
+
+
+            // use the current email to query sql to get the user's other info
+
             string userId = "deab13da-1e6b-11ef-ad56-662ef0370963"; // example userId
-            RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(userId);
+            RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(sessionID);
 
             ViewBag.RestaurantDetails = restaurantDetails;
 
