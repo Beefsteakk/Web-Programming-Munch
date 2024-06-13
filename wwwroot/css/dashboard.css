@@ -1,0 +1,61 @@
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.sidebar {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    padding-top: 20px;
+}
+
+.sidebar .nav-link {
+    color: #333;
+}
+
+.sidebar .nav-link.active {
+    font-weight: bold;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+}
+
+.card-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.content {
+    padding: 20px;
+}
+
+.btn-toolbar {
+    margin-top: 10px;
+}
+
+.badge {
+    font-size: 0.9rem;
+    padding: 0.5em;
+}
+
+.container-fluid {
+    width: 100%;
+    padding: 0;
+}
+
+/* Main content width adjustment */
+.main-content {
+    width: 100%;
+    padding: 20px;
+}
+
+@media (max-width: 900px) {
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+}

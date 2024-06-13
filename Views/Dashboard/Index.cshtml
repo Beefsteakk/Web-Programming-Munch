@@ -1,0 +1,112 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    var restaurantDetails = ViewBag.RestaurantDetails as RestaurantsModel;
+}
+
+<div class="container-fluid">
+    <div class="row no-gutters">
+        <aside class="col-auto sidebar">
+            <!-- Sidebar content here -->
+        </aside>
+        <main role="main" class="col main-content">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2">Dashboard</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <button class="btn btn-sm btn-outline-secondary">Share</button>
+                        <button class="btn btn-sm btn-outline-secondary">Export</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Restaurant Ratings</h5>
+                            <p class="card-text">@restaurantDetails.RestRatings</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Followers</h5>
+                            <p class="card-text">200</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Posts</h5>
+                            <p class="card-text">10</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Reservations</h5>
+                            <p class="card-text">3,298</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-8">
+                    <canvas id="visitsChart"></canvas>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h5 class="card-title">Upcoming Reservations</h5>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <p><strong>James Anderson</strong> - 17:00 5 Pax <span class="badge bg-success">Confirmed</span></p>
+                                <p><strong>Missipi</strong> - 19:30 5 Pax <span class="badge bg-warning">Pending</span></p>
+                                <p><strong>Ton Chek Bok</strong> - 20:30 5 Pax <span class="badge bg-danger">Cancelled</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Activity</h5>
+                            <p>Activity details go here...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('visitsChart').getContext('2d');
+        var visitsChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1', '5', '10', '15', '20', '25', '30'],
+                datasets: [{
+                    label: 'Total visits',
+                    data: [220000000, 240000000, 230000000, 260000000, 270000000, 250000000, 240000000],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+}

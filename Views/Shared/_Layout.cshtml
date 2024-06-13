@@ -56,7 +56,13 @@
                 </a>
             </li>
             <li class="left-nav-item">
-                <a class="left-nav-link text-dark" asp-area="" asp-controller="FoodList" asp-action="Index">
+                <a class="left-nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">
+                    <i class="fa-solid fa-tachometer-alt"></i>
+                    <span class="left-link-text">Dashboard</span>
+                </a>
+            </li>
+            <li class="left-nav-item">
+                <a class="left-nav-link text-dark" asp-area="" asp-controller="Foodlist" asp-action="Index">
                     <i class="fa-solid fa-utensils"></i>
                     <span class="left-link-text">Foodlist</span>
                 </a>
@@ -73,13 +79,13 @@
         @RenderBody()
     </main>
 
-    <nav class="right-sidebar">
+    @* <nav class="right-sidebar">
         <div class="right-sidebar-container">
             <div class="right-sidebar-title">
                 Explore
             </div>
         </div>
-    </nav>
+    </nav> *@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
