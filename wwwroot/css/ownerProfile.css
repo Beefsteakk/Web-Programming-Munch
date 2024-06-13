@@ -172,8 +172,8 @@ button {
 
 .f-btn {
   display: inline-block;
-  background-color: #00e600;
-  color: black;
+  background-color: #2000FF;
+  color: white;
   text-decoration: none;
   padding: 5px 10px;
   border: none;
@@ -194,8 +194,8 @@ button {
 
 .e-btn {
   display: inline-block;
-  background-color: #4d94ff;
-  color: black;
+  background-color: black;
+  color: white;
   text-decoration: none;
   padding: 5px 10px;
   border: none;
@@ -262,6 +262,28 @@ button {
   color: rgb(255, 255, 255);
 }
 
+.fav-btn {
+  display: inline-block;
+  background-color: #FFD700;
+  color: black;
+  text-decoration: none;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  width: 120px;
+  transition: all 0.3s ease-out;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-left: 10px; /* Add margin to create space between buttons */
+}
+
+.fav-btn:hover {
+  background-color: rgb(0, 0, 0);
+  transition: width 1s;
+  color: rgb(255, 255, 255);
+}
 .img-fluid {
   width: 300px;
   height: 300px;

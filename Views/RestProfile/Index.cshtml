@@ -38,7 +38,15 @@
                                         {
                                         <button class="f-btn btn btn-primary">Follow</button>
                                         } *@
-                                        <button class="f-btn btn btn-primary">Follow</button>
+                                        <button class="f-btn btn btn-primary">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM11 17V13H7V11H11V7H13V11H17V13H13V17H11Z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                            Follow
+                                        </button>
                                         @if (restaurantId == "12345")
                                         {
                                             <a asp-area="" asp-controller="RestProfile" asp-action="EditProfile"
@@ -89,9 +97,33 @@
                             <div class="col-2">
                             </div>
                             <div class="col-2">
-                                <button class="r-btn btn btn-primary ml-auto d-block"
-                                    onclick="openReservationPopup()">Reserve</button>
-                                <button class="m-btn btn btn-primary">Message</button>
+                                <button class="r-btn btn btn-primary ml-auto d-block" onclick="openReservationPopup()">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M7 2H5V4H2V22H22V4H19V2H17V4H7V2ZM4 6V20H20V6H4ZM7 9H9V11H7V9ZM11 9H13V11H11V9ZM15 9H17V11H15V9ZM7 13H9V15H7V13ZM11 13H13V15H11V13ZM15 13H17V15H15V13ZM7 17H9V19H7V17ZM11 17H13V19H11V17ZM15 17H17V19H15V17Z"
+                                            fill="currentColor" />
+                                    </svg>
+                                    Reserve
+                                </button>
+                                <button class="m-btn btn btn-primary">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M2 4C2 2.89543 2.89543 2 4 2H20C21.1046 2 22 2.89543 22 4V20C22 21.1046 21.1046 22 20 22H4C2.89543 22 2 21.1046 2 20V4ZM4 4V6L12 11L20 6V4H4ZM20 8L12 13L4 8V20H20V8Z"
+                                            fill="currentColor" />
+                                    </svg>
+                                    Message
+                                </button>
+                                <button class="fav-btn btn btn-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                        width="24" height="24">
+                                        <path d="M0 0h24v24H0z" fill="none" />
+                                        <path
+                                            d="M12 2l3.09 6.31 6.91.99-5 4.86 1.18 6.88L12 17.25l-6.09 3.89 1.18-6.88-5-4.86 6.91-.99L12 2zm0 2.27l-2.76 5.63-6.22.89 4.51 4.41-1.07 6.23L12 18.77l5.54 2.86-1.07-6.23 4.51-4.41-6.22-.89L12 4.27z" />
+                                    </svg>
+                                    Favorite
+                                </button></button>
                             </div>
                         </div>
 
@@ -232,8 +264,8 @@
         <div class="modal-content">
             <div class="row" style="  border-bottom: 1px solid #ddd;">
                 <div class="col-3">
-                
-                    <button  class="noselect closebutton"  onclick="closeReservationPopup()"><span class="icon"><svg
+
+                    <button class="noselect closebutton" onclick="closeReservationPopup()"><span class="icon"><svg
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path
                                     d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z">
