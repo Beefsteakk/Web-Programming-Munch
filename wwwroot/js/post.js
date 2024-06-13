@@ -36,8 +36,8 @@ allPost.forEach(function(e) {
                     $('#modalMessage').text(response.post.postContent);
                     $('#modalComments').empty();
                     console.log(response.post)
-                    response.post.comment.forEach((url, index) => {
-                        $('#modalComments').append(`${url.commentContent}`)
+                    response.comments.forEach((url, index) => {
+                        $('#modalComments').append(`${url}`)
                     });
                     $('#infoModal').modal('show');
                 },

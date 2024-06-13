@@ -91,12 +91,18 @@ public class PostsController : Controller
     [HttpPost]
     public async Task<JsonResult> GetInfo(string id)
     {
-        var post = await _db.Posts.FindAsync(Guid.Parse(id));
+        var Gid = Guid.Parse(id);
+        var post = await _db.Posts.FirstOrDefaultAsync(p => p.PostID == Gid);
+        var comments = await GetSpecificPostCommentsAsync(Gid);
+        if (post == null)
+        {
+            return Json(new { success = false });
+        }
         List<string> ImageUrl = new List<string>();
         ImageUrl.Add("/assets/images/photo-1556008531-57e6eefc7be4.jpeg");
         ImageUrl.Add("/assets/images/photo-1557684387-08927d28c72a.jpeg");
         ImageUrl.Add("/assets/images/photo-1526016650454-68a6f488910a.jpeg");
-        return Json(new {imageUrl = ImageUrl, post = post});
+        return Json(new {imageUrl = ImageUrl, post = post, comments = comments, success = true});
     }
 
     [HttpGet]
