@@ -1,0 +1,87 @@
+@model EffectiveWebProg.ViewModels.FoodListViewModel
+@{
+    ViewData["Title"] = "FoodLists Page";
+    <link href="~/css/foodlist.css" rel="stylesheet"/>
+}
+<div class="foodlist-top-header">
+    <div class="header-top-row">
+        <a href="@Url.Action("Index", "FoodList")" class="btn btn-secondary" style="border-radius: 50%; height: 40px; width: 40px; align-items: center; display: flex; justify-content: center; background-color: rgb(26, 25, 25); color: white">
+            <i class="fa-solid fa-angle-left"></i>
+        </a>
+        <button class="btn btn-success add-button" title="Add Restaurant" style="border-radius: 50%; height: 40px; width: 40px; align-items: center; display: flex; justify-content: center; background-color: rgb(26, 25, 25); color: white">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
+    <div class="foodlist-header">
+        <img src="@(!string.IsNullOrEmpty(Model.FoodList.FoodListImage) ? Model.FoodList.FoodListImage : Url.Content("~/Images/defaultfoodlist.jpg"))" class="header-image" alt="Food List Image">
+        <div class="foodlist-details">
+            <h2>@Model.FoodList.FoodListTitle</h2>
+            <p>@Model.FoodList.FoodListDescription</p>
+            <p>@Model.FoodList.User.UserName</p>
+            <p>@Model.FoodListEntries.Count restaurants</p>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>Restaurant Name</td>
+            <td>Address</td>
+            <td>Actions</td>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var item in Model.FoodListEntries)
+    {
+        <tr>
+            <td>
+                <img src="@(!string.IsNullOrEmpty(item.Restaurant.RestPic) ? item.Restaurant.RestPic : Url.Content("~/Images/defaultfoodlist.jpg"))" class="restaurant-image" alt="Restaurant Image">
+                @item.Restaurant.RestName
+            </td>
+            <td class="restaurant-address">@item.Restaurant.RestAddress</td>
+            <td>
+                <form asp-action="DeleteRestaurantFromFoodList" method="post" style="display:inline;">
+                    <input type="hidden" name="foodListId" value="@Model.FoodList.FoodListID" />
+                    <input type="hidden" name="restaurantId" value="@item.Restaurant.RestID" />
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<!-- Add Restaurant Modal -->
+<div id="addRestaurantModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addRestaurantModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addRestaurantModalLabel">Add Restaurant</h5>
+            </div>
+            <div class="modal-body">
+                <form asp-action="AddRestaurantToFoodList" method="post">
+                    <input type="hidden" name="foodListId" value="@Model.FoodList.FoodListID" />
+                    <div class="form-group">
+                        <label for="restaurantId">Select Restaurant</label>
+                        <select id="restaurantId" name="restaurantId" class="form-control" asp-items="Model.Restaurants"></select>
+                    </div>
+                    <div class="modal-buttons">
+                        <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Add</button>
+                        <button type="button" class="btn btn-cancel" data-dismiss="modal" style="margin-top: 1rem; margin-left: 1rem;">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.add-button').on('click', function() {
+                $('#addRestaurantModal').modal('show');
+            });
+        });
+    </script>
+}

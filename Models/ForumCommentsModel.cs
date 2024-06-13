@@ -7,17 +7,23 @@ namespace EffectiveWebProg.Models;
 public class ForumCommentsModel
 {
     [Key]
+    [Column(TypeName = "char(36)")]
     public Guid CommentID { get; set; } // Primary Key
 
     [Required]
+    [Column(TypeName = "char(36)")]
     public Guid ForumID { get; set; } // Foreign Key From ForumsModel
 
+    [Column(TypeName = "char(36)")]
     public Guid? UserID { get; set; } // Foreign Key From UsersModel
 
+    [Column(TypeName = "char(36)")]
     public Guid? RestID { get; set; } // Foreign Key From RestaurantsModel
 
+    
     [Required]
-    public required string Comments { get; set; }
+    [Column(TypeName = "text")]
+    public string Comments { get; set; }
 
 
 

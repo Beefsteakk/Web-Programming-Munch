@@ -9,24 +9,36 @@ using Org.BouncyCastle.Asn1.Cms;
 public class ReservationsModel
 {
     [Key]
+    [Column(TypeName = "char(36)")]
     public Guid ReservationID { get; set; } // Primary Key
     
     [Required]
+    [Column(TypeName = "char(36)")]
     public Guid UserID { get; set; } // Foreign Key From UsersModel
 
     [Required]
+    [Column(TypeName = "char(36)")]
     public Guid RestID { get; set; } // Foreign Key From RestaurantModel
 
     [Required]
     public int NumOfGuests { get; set; }
+    
     [StringLength(255)] 
+    [Column(TypeName = "varchar(255)")]
     public string? SpecialRequest { get; set; }
+    
     [StringLength(255)] 
+    [Column(TypeName = "varchar(255)")]
     public string? ReservationStatus { get; set; }
-    public required DateOnly ReservationDate { get; set; }
-    public required TimeSpan ReservationTime { get; set; }
 
-    [StringLength(255)] 
+    [Required]
+    public DateOnly ReservationDate { get; set; }
+
+    [Required]
+    public TimeSpan ReservationTime { get; set; }
+
+    [StringLength(255)]
+    [Column(TypeName = "varchar(255)")] 
     public string? ReservedName { get; set; }
 
 

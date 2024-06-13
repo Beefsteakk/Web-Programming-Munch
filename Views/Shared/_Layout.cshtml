@@ -14,14 +14,13 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" 
-</head>
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <style>
         a {
             text-decoration: none;
         }
     </style>
+</head>
 
 <body>
     @{
@@ -57,23 +56,13 @@
                 </a>
             </li>
             <li class="left-nav-item">
-                <a class="left-nav-link text-dark" asp-area="" asp-controller="Foodlist" asp-action="Index">
+                <a class="left-nav-link text-dark" asp-area="" asp-controller="FoodList" asp-action="Index">
                     <i class="fa-solid fa-utensils"></i>
                     <span class="left-link-text">Foodlist</span>
                 </a>
             </li>
-            @if (controller == "Posts")
-            {
-                <li class="left-nav-item">
-                    <a class="left-nav-link text-dark" data-bs-toggle="modal" data-bs-target="#postModal">
-                        <i class="fa-solid fa-utensils"></i>
-                        <span class="left-link-text">Post</span>
-                    </a>
-                </li>
-                <!-- add more list items as needed -->
-            }
             <li class="left-nav-item">
-                <a class="left-nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="left-nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">
                     <span class="left-link-text">Log out</span>
                 </a>
             </li>
@@ -92,11 +81,11 @@
         </div>
     </nav>
 
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
-</body>
+    <script src="/_framework/aspnetcore-browser-refresh.js"></script>
 
+</body>
 </html>

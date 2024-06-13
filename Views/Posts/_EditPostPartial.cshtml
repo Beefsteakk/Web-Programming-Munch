@@ -1,0 +1,25 @@
+@model PostsModel
+
+@*temporary variable*@
+@{
+    var userID = Guid.Parse("10bb4451-19aa-11ef-ad56-662ef0370963");
+}
+
+
+<form asp-action="EditPosts" asp-controller="Posts" method="post">
+    <h1>Edit Post:</h1>
+    <input type="hidden" name="UserId" value="@userID" />
+    <input type="hidden" name="PostId" value="@Model.PostID" />
+    <label for="title">Title:</label>
+    <input asp-for="PostTitle" type="text" class="form-control" required>
+
+    <label for="post">Post:</label>
+    <input asp-for="PostContent" type="text" class="form-control" required>
+
+    @*<label for="location">Location:</label>
+    <input type="text" id="location" name="location" class="form-control">
+
+    <label for="pictures">Pictures:</label>
+    <input type="file" id="pictures" name="pictures" accept="image/*" multiple class="form-control">*@
+    <button type="submit" class="btn btn-primary">Edit Post</button>
+</form>

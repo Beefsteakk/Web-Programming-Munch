@@ -1,5 +1,16 @@
 ﻿@using EffectiveWebProg.ViewModels;
 @model MainFeedViewModel
+@functions {
+    public int randomNum() {
+        Random rand = new Random();
+        return rand.Next(1, 5);
+    }
+}
+
+@*temporary variable*@
+@{
+    var userID = Guid.Parse("10bb4451-19aa-11ef-ad56-662ef0370963");
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,6 +21,7 @@
     <title>Friends</title>
     <link rel="stylesheet" href="~/css/post.css">
     <script type="text/javascript" src="~/js/post.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body class="bg-white">
@@ -20,56 +32,21 @@
                     <h5 class="modal-title modal-post-title" id="postModalLabel">New Post</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <!--
                 <div class="modal-body modal-post-body">
-                    <form asp-action="CreatePosts" asp-controller="Posts" method="post">
-                        <div class="form-group">
-                            <label>Author ID (This input is only here for testing purposes and should be removed in the
-                                long run)</label>
-                            <input asp-for="UserID" type="text" class="form-control" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Restaurant ID (This input is only here for testing purposes and should be removed in
-                                the long run)</label>
-                            <input asp-for="RestID" type="text" class="form-control" required>
-                        </div>
-                        <label for="title">Title:</label>
-                        <input asp-for="PostTitle" type="text" class="form-control" required>
-                        <label for="post">Post:</label>
-                        <input asp-for="PostContent" type="text" class="form-control" required>
-                        <label for="location">Location:</label>
-                        <input type="text" id="location" name="location">
-                        <label for="pictures">Pictures:</label>
-                        <input type="file" id="pictures" name="pictures" accept="image/*" multiple>
-                    </form>
-                </div>
-                -->
-                <div class="modal-footer modal-post-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Post</button>
+                    @await Html.PartialAsync("_CreatePostPartial", Model.NewPost)
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-info-dialog">
             <div class="modal-content modal-info-content">
                 <div class="modal-image">
                     <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner" id="carouselInner">
-                            <!-- Slides will be inserted here -->
+                            <!-- Photos will be inserted here from the database -->
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
                     </div>
                 </div>
                 <div class="modal-details modal-info-details">
@@ -80,83 +57,72 @@
             </div>
         </div>
     </div>
-    <div class="container mb-6">
-        @* <div class="col-2 d-none d-lg-block">
 
-        </div>
-        <nav class="sidebar position-fixed d-none d-lg-block">
-            <ul class="sidebar-main-header">
-                <li><a href="#"><span class="d-none d-lg-block">Home</span></a></li>
-                <li><a href="#"><span class="d-none d-lg-block">Search</span></a></li>
-                <li><a href="#"><span class="d-none d-lg-block">Explore</span></a></li>
-                <li><a href="#" data-bs-toggle="modal" data-bs-target="#postModal"><span
-                            class="d-none d-lg-block">Post</span></a></li>
-            </ul>
-            <h5><span class="d-none d-lg-block">Your Following</span></h5>
-            <ul class="sidebar-second-header">
-                <li><a href="#"><span class="d-none d-lg-block">Lolla</span></a></li>
-                <li><a href="#"><span class="d-none d-lg-block">Seroja</span></a></li>
-                <li><a href="#"><span class="d-none d-lg-block">Seroja</span></a></li>
-                <li><a href="#"><span class="d-none d-lg-block">Burnt Ends</span></a></li>
-                <li><a href="#"><span class="d-none d-lg-block">Fiz</span></a></li>
-                <li><a href="#"><span class="d-none d-lg-block">Path</span></a></li>
-                <li><a href="#"><span class="d-none d-lg-block">Odette</span></a></li>
-                <li><a href="#"><span class="d-none d-lg-block">Claudine</span></a></li>
-            </ul>
-        </nav> *@
-        <div class="main-content col-8">
+    <div class="container">
+        <div class="main-content">
             <div class="content">
-                @await Html.PartialAsync("_CreatePostPartial", Model.NewPost)
-                @foreach(var item in Model.PostLists) {
-                    <div class="post" id=@item.PostID>
-                        <div class="post-header">
-                            <img src="~/Images/xunyin.jpg" alt="Xun Yin">
-                            <div class="post-info">
-                                @if (item.User != null) {
-                                    <h4>@item.User.UserName</h4>
-                                } else if (item.Restaurant != null) {
-                                    <h4>@item.Restaurant.RestName</h4>
-                                }
-                                <span>@item.PostCreatedAt</span>
-                            </div>
-                        </div>
-                        <div class="post-content">
-                            <p style="max-height: 200px;overflow-y:auto">@item.PostContent</p>
-                            <!-- TODO: Generate the image table dynamically. -->
-                            <div class="images-table">
-                                <div class="test">
-                                    <img src="/Images/Food1.jpeg" alt="Post Image">
-                                </div>
-                                <div class="test">
-                                    <img src="/Images/Food1.jpeg" alt="Post Image">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-footer">
-                            <button type="like">Like</button>
-                            <button>Comment</button>
-                            <button>Share</button>
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-8">
+                        <div class="input-area">
+                            <div class="profile-pic"></div>
+                            <div class="input-field" data-bs-toggle="modal" data-bs-target="#postModal">Want to share something?</div>
                         </div>
                     </div>
-                }
+                    <div class="col-lg-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-8">
+                        @foreach(var item in Model.PostLists) {
+                        <div class="posts" id="@item.Post.PostID">
+                            <h3><a asp-controller="Posts" asp-action="SpecificPost" asp-route-id="@item.Post.PostID">@item.Post.PostTitle</a></h3>
+                            <div class="post-header">
+                                <img src="~/Images/xunyin.jpg" alt="Xun Yin">
+                                <div class="post-info">
+                                    @if (item.Post.User != null) {
+                                        <h4>@item.Post.User.UserName</h4>
+                                    } else if (item.Post.Restaurant != null) {
+                                        <h4>@item.Post.Restaurant.RestName</h4>
+                                    }
+                                    <span>@item.Post.PostCreatedAt</span>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <p style="max-height: 200px;overflow-y:auto">@item.Post.PostContent</p>
+                                <!-- TODO: Generate the image table dynamically, currently randomizing amount of photos -->
+                                <div class="images-table">
+                                    @for (var i=0; i<randomNum(); i++) {
+                                    <div class="test">
+                                        <img src="/Images/Food1.jpeg" alt="Post Image">
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="post-footer">
+                                <form asp-action="LikePost" method="post">
+                                    <input type="hidden" name="postId" value="@item.Post.PostID" />
+                                    <input type="hidden" name="userId" value="@userID" />
+                                    <button type="submit"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                        @if (item.IsLikedByUser) {
+                                            <span class="icon-text">Unike</span>
+                                        } else {
+                                            <span class="icon-text">Like</span>
+                                        }
+                                    </button>
+                                </form>
+                                <button><i class="fa fa-comment" aria-hidden="true"></i><span class="icon-text">Comments</span></button>
+                                <button><i class="fa fa-share" aria-hidden="true"></i><span class="icon-text">Share</span></button>
+                            </div>
+                            @await Html.PartialAsync("/Views/Comments/_CommentFormPartial.cshtml", new CommentsModel { UserID = userID, PostID = item.Post.PostID })
+                        </div>
+                        }
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
             </div>
         </div>
-        @* <aside class="col-2 d-none d-lg-block">
-            <div class="recommended">
-                <h3>Recommended</h3>
-                <ul>
-                    <li>Jaden Chance</li>
-                    <li>Arezki Williams</li>
-                    <li>Rose James</li>
-                    <li>Tman Mats</li>
-                    <li>Alex Andrew</li>
-                    <li>Kaixi Cark</li>
-                    <li>Hamid Oskip</li>
-                    <li>Serena Lewis</li>
-                    <li>April Sky</li>
-                </ul>
-            </div>
-        </aside> *@
     </div>
 </body>
 

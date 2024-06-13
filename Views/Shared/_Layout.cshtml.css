@@ -27,9 +27,9 @@ body::-webkit-scrollbar-thumb {
 /* ---------- Navbar ---------- */
 
 .left-sidebar-munch {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 600;
-  height: 3rem;
+  height: 4rem;
   text-align: center;
   padding-top: 0.5rem;
   border-style: border-box;
@@ -79,6 +79,7 @@ body::-webkit-scrollbar-thumb {
 .left-link-text {
   margin-left: 0.2rem;
   text-decoration: none;
+  font-size: 1.2rem;
 }
 
 .fa-solid {
