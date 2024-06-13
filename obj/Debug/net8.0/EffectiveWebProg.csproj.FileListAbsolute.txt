@@ -1206,3 +1206,5 @@ C:/Project/WebProg_G8/EffectiveWebProg/obj/Debug/net8.0/ref/EffectiveWebProg.dll
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.pdb
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.genruntimeconfig.cache
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/ref/EffectiveWebProg.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/BCrypt.Net.dll
+/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/bin/Debug/net8.0/BCrypt.Net.dll
