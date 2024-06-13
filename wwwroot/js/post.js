@@ -35,10 +35,10 @@ allPost.forEach(function(e) {
                     });
                     $('#modalTitle').text(response.post.postTitle);
                     $('#modalMessage').text(response.post.postContent);
-                    // $('#modalComments').empty();
-                    // response.comments.forEach((url, index) => {
-                    //     $('#modalComments').append(`${url}`)
-                    // });
+                    $('#modalComments').empty();
+                    response.comments.forEach((comment, _) => {
+                        $('#modalComments').append(`${comment["commentAuthor"]["username"]}: ${comment["commentContent"]}<br>`)
+                    });
                     $('#infoModal').modal('show');
                 },
                 error: function() {

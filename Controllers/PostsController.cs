@@ -3,6 +3,7 @@ using EffectiveWebProg.Models;
 using EffectiveWebProg.Data;
 using Microsoft.EntityFrameworkCore;
 using EffectiveWebProg.ViewModels;
+using EffectiveWebProg.DTOs.Posts;
 
 namespace EffectiveWebProg.Controllers;
 
@@ -40,6 +41,7 @@ public class PostsController : Controller
     private async Task<List<CommentsModel>> GetSpecificPostCommentsAsync(Guid postID)
     {
         var comments = await _db.Comments
+            .OrderBy(c => c.CommentCreatedAt)
             .Where(c => c.PostID == postID)
             .ToListAsync();
 
@@ -93,16 +95,23 @@ public class PostsController : Controller
     {
         var Gid = Guid.Parse(id);
         var post = await _db.Posts.FirstOrDefaultAsync(p => p.PostID == Gid);
-        var comments = await GetSpecificPostCommentsAsync(Gid);
         if (post == null)
         {
             return Json(new { success = false });
+        }
+
+        var postDTO = new PostDTO(post.PostID, (Guid)post.UserID, post.PostContent);
+        var comments = await GetSpecificPostCommentsAsync(Gid);
+        var commentDTOList = new List<CommentDTO>();
+        foreach (var comment in comments) {
+            var author = await _db.Users.FirstOrDefaultAsync(u => u.UserID == comment.UserID);
+            commentDTOList.Add(new CommentDTO(comment.CommentID, comment.PostID, new CommentAuthorDTO(author.UserID, author.UserUsername), comment.CommentContent));
         }
         List<string> ImageUrl = new List<string>();
         ImageUrl.Add("/assets/images/photo-1556008531-57e6eefc7be4.jpeg");
         ImageUrl.Add("/assets/images/photo-1557684387-08927d28c72a.jpeg");
         ImageUrl.Add("/assets/images/photo-1526016650454-68a6f488910a.jpeg");
-        return Json(new {imageUrl = ImageUrl, post = post, comments = comments, success = true});
+        return Json(new {imageUrl = ImageUrl, post = postDTO, comments = commentDTOList, success = true});
     }
 
     [HttpGet]
