@@ -310,3 +310,8 @@ aside .recommended ul li span {
     font-size: 16px;
     color: #888;
 }
+
+.look-text {
+    box-shadow: none;
+    resize: none;
+}
