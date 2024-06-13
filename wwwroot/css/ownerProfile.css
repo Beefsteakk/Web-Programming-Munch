@@ -172,7 +172,7 @@ button {
 
 .f-btn {
   display: inline-block;
-  background-color: #2000FF;
+  background-color:  rgb(32, 210, 255);
   color: white;
   text-decoration: none;
   padding: 5px 10px;
@@ -241,7 +241,7 @@ button {
 
 .r-btn {
   display: inline-block;
-  background-color: #ff8533;
+  background-color: lightgrey;
   color: black;
   text-decoration: none;
   padding: 5px 10px;
@@ -264,7 +264,7 @@ button {
 
 .fav-btn {
   display: inline-block;
-  background-color: #FFD700;
+  background-color: lightgrey;
   color: black;
   text-decoration: none;
   padding: 5px 10px;
