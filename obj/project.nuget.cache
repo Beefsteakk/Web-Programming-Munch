@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "STrDzhncE/U=",
+  "dgSpecHash": "Ti1CGowH6Rw=",
   "success": true,
   "projectFilePath": "/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/EffectiveWebProg.csproj",
   "expectedPackageFiles": [
     "/Users/ayers/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/Users/ayers/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",
-    "/Users/ayers/.nuget/packages/bcrypt.net/0.1.0/bcrypt.net.0.1.0.nupkg.sha512",
+    "/Users/ayers/.nuget/packages/bcrypt.net-next/4.0.2/bcrypt.net-next.4.0.2.nupkg.sha512",
     "/Users/ayers/.nuget/packages/bouncycastle.cryptography/2.2.1/bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "/Users/ayers/.nuget/packages/google.protobuf/3.25.1/google.protobuf.3.25.1.nupkg.sha512",
     "/Users/ayers/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
@@ -110,22 +110,5 @@
     "/Users/ayers/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512",
     "/Users/ayers/.nuget/packages/zstdsharp.port/0.7.1/zstdsharp.port.0.7.1.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'BCrypt.Net 0.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
-      "libraryId": "BCrypt.Net",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  "logs": []
 }

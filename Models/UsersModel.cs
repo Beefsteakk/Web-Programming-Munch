@@ -41,7 +41,6 @@ public class UsersModel
     public int? AccountToken { get; set; } // nullable
     public bool? AccountVerified { get; set; } // nullable
     public DateTime UserCreatedAt { get; set; }
-    public bool RememberMe { get; set; }
 
     // Navigation properties
     public ICollection<PostsModel> Post { get; set; }

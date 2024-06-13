@@ -1055,6 +1055,7 @@ C:/Project/WebProg_G8/EffectiveWebProg/obj/Debug/net8.0/refint/EffectiveWebProg.
 C:/Project/WebProg_G8/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.pdb
 C:/Project/WebProg_G8/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.genruntimeconfig.cache
 C:/Project/WebProg_G8/EffectiveWebProg/obj/Debug/net8.0/ref/EffectiveWebProg.dll
+/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/BCrypt.Net.dll
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/bin/Debug/net8.0/appsettings.Development.json
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/bin/Debug/net8.0/appsettings.json
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/bin/Debug/net8.0/EffectiveWebProg.staticwebassets.runtime.json
@@ -1065,6 +1066,7 @@ C:/Project/WebProg_G8/EffectiveWebProg/obj/Debug/net8.0/ref/EffectiveWebProg.dll
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/bin/Debug/net8.0/EffectiveWebProg.pdb
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/bin/Debug/net8.0/Azure.Core.dll
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/bin/Debug/net8.0/Azure.Identity.dll
+/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/bin/Debug/net8.0/BCrypt.Net-Next.dll
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/bin/Debug/net8.0/BouncyCastle.Cryptography.dll
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/bin/Debug/net8.0/Google.Protobuf.dll
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/bin/Debug/net8.0/Humanizer.dll
@@ -1206,5 +1208,3 @@ C:/Project/WebProg_G8/EffectiveWebProg/obj/Debug/net8.0/ref/EffectiveWebProg.dll
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.pdb
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/EffectiveWebProg.genruntimeconfig.cache
 /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/Debug/net8.0/ref/EffectiveWebProg.dll
-/Users/User/Documents/A_University Y1/CSC1106-Web_Programming/EffectiveWebProg/bin/Debug/net8.0/BCrypt.Net.dll
-/Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/bin/Debug/net8.0/BCrypt.Net.dll

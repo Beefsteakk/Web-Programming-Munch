@@ -46,16 +46,16 @@
           }
         }
       },
-      "BCrypt.Net/0.1.0": {
+      "BCrypt.Net-Next/4.0.2": {
         "type": "package",
         "compile": {
-          "lib/net35/BCrypt.Net.dll": {
-            "related": ".XML"
+          "lib/net5.0/BCrypt.Net-Next.dll": {
+            "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net35/BCrypt.Net.dll": {
-            "related": ".XML"
+          "lib/net5.0/BCrypt.Net-Next.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -2034,17 +2034,37 @@
         "lib/netstandard2.0/Azure.Identity.xml"
       ]
     },
-    "BCrypt.Net/0.1.0": {
-      "sha512": "sST2w361Dxt9GGMfpOTiK50wXGV64Ybb1hiX3xjEWnhVYZNF43NuySGwADJa7X1R+bA53NsFR+tuDxcYiJeIOA==",
+    "BCrypt.Net-Next/4.0.2": {
+      "sha512": "LyNKpIpr4GraRD9+xlTviyxxbZpF6J4xJf7DvraC1mR8PSN/KonGc4rt8C/fjkD3vaEvgA7BcvsbHFCOjgczyQ==",
       "type": "package",
-      "path": "bcrypt.net/0.1.0",
+      "path": "bcrypt.net-next/4.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "bcrypt.net.0.1.0.nupkg.sha512",
-        "bcrypt.net.nuspec",
-        "lib/net35/BCrypt.Net.XML",
-        "lib/net35/BCrypt.Net.dll"
+        "bcrypt.net-next.4.0.2.nupkg.sha512",
+        "bcrypt.net-next.nuspec",
+        "lib/net20/BCrypt.Net-Next.dll",
+        "lib/net20/BCrypt.Net-Next.xml",
+        "lib/net35/BCrypt.Net-Next.dll",
+        "lib/net35/BCrypt.Net-Next.xml",
+        "lib/net40/BCrypt.Net-Next.dll",
+        "lib/net40/BCrypt.Net-Next.xml",
+        "lib/net452/BCrypt.Net-Next.dll",
+        "lib/net452/BCrypt.Net-Next.xml",
+        "lib/net462/BCrypt.Net-Next.dll",
+        "lib/net462/BCrypt.Net-Next.xml",
+        "lib/net472/BCrypt.Net-Next.dll",
+        "lib/net472/BCrypt.Net-Next.xml",
+        "lib/net48/BCrypt.Net-Next.dll",
+        "lib/net48/BCrypt.Net-Next.xml",
+        "lib/net5.0/BCrypt.Net-Next.dll",
+        "lib/net5.0/BCrypt.Net-Next.xml",
+        "lib/netcoreapp3.1/BCrypt.Net-Next.dll",
+        "lib/netcoreapp3.1/BCrypt.Net-Next.xml",
+        "lib/netstandard2.0/BCrypt.Net-Next.dll",
+        "lib/netstandard2.0/BCrypt.Net-Next.xml",
+        "lib/netstandard2.1/BCrypt.Net-Next.dll",
+        "lib/netstandard2.1/BCrypt.Net-Next.xml"
       ]
     },
     "BouncyCastle.Cryptography/2.2.1": {
@@ -5375,7 +5395,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "BCrypt.Net >= 0.1.0",
+      "BCrypt.Net-Next >= 4.0.2",
       "Microsoft.AspNetCore.Session >= 2.2.0",
       "Microsoft.EntityFrameworkCore >= 8.0.6",
       "Microsoft.EntityFrameworkCore.Design >= 8.0.6",
@@ -5428,9 +5448,9 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
-          "BCrypt.Net": {
+          "BCrypt.Net-Next": {
             "target": "Package",
-            "version": "[0.1.0, )"
+            "version": "[4.0.2, )"
           },
           "Microsoft.AspNetCore.Session": {
             "target": "Package",
@@ -5491,23 +5511,5 @@
         "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file /Users/ayers/Coding For School/Yr 1 Tri 3/CSC 1106 - Web Programming/Untitled/EffectiveWebProg/obj/project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'BCrypt.Net 0.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
-      "libraryId": "BCrypt.Net",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  }
 }
