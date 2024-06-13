@@ -35,18 +35,10 @@ allPost.forEach(function(e) {
                     });
                     $('#modalTitle').text(response.post.postTitle);
                     $('#modalMessage').text(response.post.postContent);
-<<<<<<< Updated upstream
-                    $('#modalComments').empty();
-                    console.log(response.post)
-                    response.post.comment.forEach((url, index) => {
-                        $('#modalComments').append(`${url.commentContent}`)
-                    });
-=======
                     // $('#modalComments').empty();
                     // response.comments.forEach((url, index) => {
                     //     $('#modalComments').append(`${url}`)
                     // });
->>>>>>> Stashed changes
                     $('#infoModal').modal('show');
                 },
                 error: function() {
