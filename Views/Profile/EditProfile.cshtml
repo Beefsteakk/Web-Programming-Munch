@@ -1,0 +1,138 @@
+@{
+    ViewData["Title"] = "Edit User Profile";
+    var details = ViewBag.UserDetails as UsersModel;
+}
+
+<div class="container mt-5">
+    <form action="/Profile/SaveProfile" method="post" enctype="multipart/form-data" class="p-4 shadow-sm rounded" style="background: #fff;">
+        <div class="row mb-4">
+            <div class="col-sm-10">
+                <h1 class="display-4">Edit User Profile</h1>
+            </div>
+            <div class="col-sm-2 text-center">
+                <div class="profile-picture">
+                    <img src="~/images/picture.png" alt="Profile Photo" id="profilePhoto" class="rounded-circle img-thumbnail" style="cursor: pointer;">
+                    <input type="file" id="fileInput" style="display:none" accept="image/*">
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="UserID" value="@details.UserID" />
+
+        <div class="form-group">
+            <label for="UserName">User Name</label>
+            <input type="text" id="UserName" name="UserName" class="form-control" value="@details.UserName" required />
+        </div>
+
+        <div class="form-group">
+            <label for="UserEmail">User Email</label>
+            <input type="email" id="UserEmail" name="UserEmail" class="form-control" value="@details.UserEmail" required />
+            <span class="valid-icon"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="UserContactNum">User Contact Number</label>
+            <input type="tel" id="UserContactNum" name="UserContactNum" class="form-control" value="@details.UserContactNum" required />
+        </div>
+
+        <div class="form-group">
+            <label for="UserUsername">User Username</label>
+            <input type="text" id="UserUsername" name="UserUsername" class="form-control" value="@details.UserUsername" required />
+        </div>
+
+        <div class="form-group">
+            <label for="UserPassword">User Password</label>
+            <input type="password" id="UserPassword" name="UserPassword" class="form-control" value="@details.UserPassword" required />
+        </div>
+
+        <div class="form-group">
+            <label for="UserBio">User Bio</label>
+            <textarea id="UserBio" name="UserBio" class="form-control" rows="3" required>@details.UserBio</textarea>
+        </div>
+
+        <div class="form-row">
+            <button type="submit" class="btn btn-primary btn-block">Save</button>
+            <button type="button" class="btn btn-secondary btn-block" onclick="window.location.href='/Profile/Index'">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.getElementById('profilePhoto').addEventListener('click', function () {
+        document.getElementById('fileInput').click();
+    });
+
+    document.getElementById('fileInput').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            uploadProfilePhoto(file);
+        }
+    });
+
+    function uploadProfilePhoto(file) {
+        const formData = new FormData();
+        formData.append('profilePhoto', file);
+
+        fetch('/upload-profile-photo', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('profilePhoto').src = data.newPhotoUrl;
+                } else {
+                    alert('Failed to upload photo.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while uploading the photo.');
+            });
+    }
+</script>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    .container {
+        max-width: 800px;
+    }
+
+    .display-4 {
+        font-weight: 300;
+    }
+
+    .form-control,
+    .form-control-file {
+        border-radius: 0.375rem;
+    }
+
+    .btn {
+        border-radius: 0.375rem;
+    }
+
+    .profile-picture img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+
+    #pac-input {
+        margin-top: 10px;
+        width: calc(100% - 20px);
+        padding: 10px;
+        z-index: 1050;
+        position: relative;
+    }
+
+    .pac-container {
+        z-index: 2000 !important;
+    }
+</style>

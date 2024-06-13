@@ -57,6 +57,12 @@
                 </a>
             </li>
             <li class="left-nav-item">
+                <a class="left-nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">
+                    <i class="fa-solid fa-tachometer-alt"></i>
+                    <span class="left-link-text">Dashboard</span>
+                </a>
+            </li>
+            <li class="left-nav-item">
                 <a class="left-nav-link text-dark" asp-area="" asp-controller="Foodlist" asp-action="Index">
                     <i class="fa-solid fa-utensils"></i>
                     <span class="left-link-text">Foodlist</span>
@@ -84,13 +90,13 @@
         @RenderBody()
     </main>
 
-    <nav class="right-sidebar">
+    @* <nav class="right-sidebar">
         <div class="right-sidebar-container">
             <div class="right-sidebar-title">
                 Explore
             </div>
         </div>
-    </nav>
+    </nav> *@
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
