@@ -1,7 +1,8 @@
 ﻿@using EffectiveWebProg.ViewModels;
 @model MainFeedViewModel
 @functions {
-    public int randomNum() {
+    public int randomNum()
+    {
         Random rand = new Random();
         return rand.Next(1, 5);
     }
@@ -51,7 +52,7 @@
                         <div class="modal-info-poster">
                             <h4 class="post-info-name">Darren</h4>
                             <span class="post-info-time">13/6/2024 9:08:41 am</span>
-                         </div>
+                        </div>
                     </div>
                     <div class="modal-title modal-info-title" id="modalTitle">Title</div>
                     <div class="modal-message modal-info-message" id="modalMessage">Message</div>
@@ -93,50 +94,65 @@
                 <div class="row">
                     <div class="col-lg-2"></div>
                     <div class="col-8">
-                        @foreach(var item in Model.PostLists) {
-                        <div class="posts" id="@item.Post.PostID">
-                            <a class="float-end" asp-controller="Posts" asp-action="SpecificPost" asp-route-id="@item.Post.PostID"><i class="fa-regular fa-clipboard"></i></a>
-                            <div class="post-header">
-                                <img src="~/Images/xunyin.jpg" alt="Xun Yin">
-                                <div class="post-info">
-                                    @if (item.Post.User != null) {
-                                        <h4>@item.Post.User.UserName</h4>
-                                    } else if (item.Post.Restaurant != null) {
-                                        <h4>@item.Post.Restaurant.RestName</h4>
-                                    }
-                                    <span>@item.Post.PostCreatedAt</span>
-                                </div>
-                            </div>
-                            <div class="post-content">
-                                <h3>@item.Post.PostTitle</h3>
-                                <p style="max-height: 200px;overflow-y:auto">@item.Post.PostContent</p>
-                                <!-- TODO: Generate the image table dynamically, currently randomizing amount of photos -->
-                                <div class="images-table">
-                                    @for (var i=0; i<randomNum(); i++) {
-                                    <div class="test">
-                                        <img src="/Images/Food1.jpeg" alt="Post Image">
-                                    </div>
-                                    }
-                                </div>
-                            </div>
-
-                            <div class="post-footer">
-                                <form asp-action="LikePost" method="post">
-                                    <input type="hidden" name="postId" value="@item.Post.PostID" />
-                                    <input type="hidden" name="userId" value="@userID" />
-                                    <button type="submit"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                        @if (item.IsLikedByUser) {
-                                            <span class="icon-text">Unlike</span>
-                                        } else {
-                                            <span class="icon-text">Like</span>
+                        @foreach (var item in Model.PostLists)
+                        {
+                            <div class="posts" id="@item.Post.PostID">
+                                <a class="float-end" asp-controller="Posts" asp-action="SpecificPost"
+                                    asp-route-id="@item.Post.PostID"><i class="fa-regular fa-clipboard"></i></a>
+                                <div class="post-header">
+                                    <img src="~/Images/xunyin.jpg" alt="Xun Yin">
+                                    <div class="post-info">
+                                        @if (item.Post.User != null)
+                                        {
+                                            <h4>@item.Post.User.UserName</h4>
                                         }
-                                    </button>
-                                </form>
-                                <button><i class="fa fa-comment" aria-hidden="true"></i><span class="icon-text">Comments</span></button>
-                                <button><i class="fa fa-share" aria-hidden="true"></i><span class="icon-text">Share</span></button>
+                                        else if (item.Post.Restaurant != null)
+                                        {
+                                            <h4>@item.Post.Restaurant.RestName</h4>
+                                        }
+                                        <span>@item.Post.PostCreatedAt</span>
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    <h3>@item.Post.PostTitle</h3>
+                                    <p style="max-height: 200px;overflow-y:auto">@item.Post.PostContent</p>
+                                    <!-- TODO: Generate the image table dynamically, currently randomizing amount of photos -->
+                                    <div class="images-table">
+                                        @for (var i = 0; i < randomNum(); i++)
+                                        {
+                                            <div class="test">
+                                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="post-footer">
+                                    <form asp-action="LikePost" method="post">
+                                        <input type="hidden" name="postId" value="@item.Post.PostID" />
+                                        <input type="hidden" name="userId" value="@userID" />
+                                        <button type="submit"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                            @if (item.IsLikedByUser)
+                                            {
+                                                <span class="icon-text">Unlike</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="icon-text">Like</span>
+                                            }
+                                        </button>
+                                    </form>
+                                    <button><i class="fa fa-comment" aria-hidden="true"></i><span
+                                            class="icon-text">Comments</span></button>
+                                    <button><i class="fa fa-share" aria-hidden="true"></i><span
+                                            class="icon-text">Share</span></button>
+                                </div>
+                                @await Html.PartialAsync("/Views/Comments/_CommentFormPartial.cshtml", new CommentsModel
+                       {
+                           UserID = userID,
+                           PostID = item.Post.PostID
+                       })
                             </div>
-                            @await Html.PartialAsync("/Views/Comments/_CommentFormPartial.cshtml", new CommentsModel { UserID = userID, PostID = item.Post.PostID })
-                        </div>
                         }
                     </div>
                     <div class="col-lg-2"></div>
@@ -144,6 +160,13 @@
             </div>
         </div>
     </div>
+    <nav class="right-sidebar">
+        <div class="right-sidebar-container">
+            <div class="right-sidebar-title">
+                Explore
+            </div>
+        </div>
+    </nav>
 </body>
 
 </html>
