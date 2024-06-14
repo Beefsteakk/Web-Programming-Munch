@@ -100,7 +100,7 @@ public class PostsController : Controller
             return Json(new { success = false });
         }
 
-        var postDTO = new PostDTO(post.PostID, (Guid)post.UserID, post.PostContent);
+        var postDTO = new PostDTO(post.PostID, (Guid)post.UserID, post.PostTitle, post.PostContent);
         var comments = await GetSpecificPostCommentsAsync(Gid);
         var commentDTOList = new List<CommentDTO>();
         foreach (var comment in comments) {

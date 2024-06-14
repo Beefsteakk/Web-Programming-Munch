@@ -37,7 +37,13 @@ allPost.forEach(function(e) {
                     $('#modalMessage').text(response.post.postContent);
                     $('#modalComments').empty();
                     response.comments.forEach((comment, _) => {
-                        $('#modalComments').append(`${comment["commentAuthor"]["username"]}: ${comment["commentContent"]}<br>`)
+                        $('#modalComments').append(`
+                            <div class="row">
+                                <div class="d-inline">
+                                    <span class="fw-bold">${comment["commentAuthor"]["username"]}</span><span class="text-break"> ${comment["commentContent"]}</span>
+                                </div>
+                            </div>
+                        `)
                     });
                     $('#infoModal').modal('show');
                 },
