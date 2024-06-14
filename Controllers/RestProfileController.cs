@@ -93,8 +93,9 @@ namespace EffectiveWebProg.Controllers
 
         public async Task<IActionResult> EditProfile()
         {
-            string userId = "deab13da-1e6b-11ef-ad56-662ef0370963"; // example userId
-            RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(userId);
+            string sessionID=HttpContext.Session.GetString("SSName");
+            // string userId = "deab13da-1e6b-11ef-ad56-662ef0370963"; // example userId
+            RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(sessionID);
 
             ViewBag.RestaurantDetails = restaurantDetails;
 
