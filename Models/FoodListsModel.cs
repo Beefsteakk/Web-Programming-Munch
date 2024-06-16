@@ -32,6 +32,7 @@ public class FoodListsModel
 
     public ICollection<FoodListEntriesModel> FoodListEntry { get; set; }
     public ICollection<FoodListLikesModel> FoodListLike { get; set; }
+    public ICollection<FoodListCategoryModel> FoodListCat { get; set; }
 
     public FoodListsModel()
     {
@@ -39,5 +40,6 @@ public class FoodListsModel
         FoodListCreatedAt = DateTime.UtcNow;
         FoodListEntry = new List<FoodListEntriesModel>();
         FoodListLike = new List<FoodListLikesModel>();
+        FoodListCat = new List<FoodListCategoryModel>();
     }
 }

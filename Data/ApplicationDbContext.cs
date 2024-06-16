@@ -27,6 +27,10 @@ namespace EffectiveWebProg.Data
         public DbSet<ForumsModel> Forums { get; set; }
         public DbSet<ForumVotesModel> ForumVotes { get; set; }
         public DbSet<ForumCommentsModel> ForumComments { get; set; }
+        public DbSet<PostPicsModel> PostPics { get; set; }
+        public DbSet<CategoryModel> Category { get; set; }
+        public DbSet<RestCategoryModel> RestCategory { get; set; }
+        public DbSet<FoodListCategoryModel> FoodListCategory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -53,6 +57,12 @@ namespace EffectiveWebProg.Data
 
             modelBuilder.Entity<ForumVotesModel>()
                 .HasKey(fv => new { fv.ForumID, fv.UserID });
+
+            modelBuilder.Entity<RestCategoryModel>()
+                .HasKey(rc => new { rc.RestID, rc.CatID });
+
+            modelBuilder.Entity<FoodListCategoryModel>()
+                .HasKey(fc => new { fc.FoodListID, fc.CatID });
 
             // Foreign Key Constraints
             modelBuilder.Entity<ForumCommentsModel>()
@@ -119,6 +129,54 @@ namespace EffectiveWebProg.Data
                 .HasOne(rf => rf.FollowedRest)
                 .WithMany(r => r.FollowedBy)
                 .HasForeignKey(rf => rf.FollowedRestID)
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            modelBuilder.Entity<PostPicsModel>()
+                .HasOne(p => p.Post)
+                .WithMany(p => p.PostPic)
+                .HasForeignKey(p => p.PostID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RestCategoryModel>()
+                .HasOne(rc => rc.Restaurant)
+                .WithMany(r => r.RestCat)
+                .HasForeignKey(rc => rc.RestID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RestCategoryModel>()
+                .HasOne(rc => rc.Category)
+                .WithMany(c => c.RestCat)
+                .HasForeignKey(rc => rc.CatID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<FoodListCategoryModel>()
+                .HasOne(fc => fc.FoodList)
+                .WithMany(f => f.FoodListCat)
+                .HasForeignKey(fc => fc.FoodListID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<FoodListCategoryModel>()
+                .HasOne(fc => fc.Category)
+                .WithMany(c => c.FoodListCat)
+                .HasForeignKey(fc => fc.CatID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<SearchHistoryModel>()
+                .HasOne(s => s.User)
+                .WithMany(u => u.SearchHistory)
+                .HasForeignKey(s => s.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RestViewHistoryModel>()
+                .HasOne(r => r.User)
+                .WithMany(u => u.RestViewHistory)
+                .HasForeignKey(r => r.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RestViewHistoryModel>()
+                .HasOne(r => r.Restaurant)
+                .WithMany(res => res.RestViewHistory)
+                .HasForeignKey(r => r.RestID)
                 .OnDelete(DeleteBehavior.Cascade);
 
         }

@@ -55,6 +55,8 @@ public class UsersModel
     public ICollection<ForumsModel> Forum { get; set; }
     public ICollection<ForumVotesModel> ForumVote { get; set; }
     public ICollection<ForumCommentsModel> ForumComment { get; set; }
+    public ICollection<SearchHistoryModel> SearchHistory { get; set; }
+    public ICollection<RestViewHistoryModel> RestViewHistory { get; set; }
 
     public UsersModel()
     {
@@ -72,5 +74,7 @@ public class UsersModel
         Forum = new List<ForumsModel>();
         ForumVote = new List<ForumVotesModel>();
         ForumComment = new List<ForumCommentsModel>();
+        SearchHistory = new List<SearchHistoryModel>();
+        RestViewHistory = new List<RestViewHistoryModel>();
     }
 }

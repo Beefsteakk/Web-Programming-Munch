@@ -53,6 +53,8 @@ namespace EffectiveWebProg.Models
         public ICollection<PostLikesRestModel> PostLikesRest { get; set; }
         public ICollection<PostsModel> Post { get; set; }
         public ICollection<ForumCommentsModel> ForumComment { get; set; }
+        public ICollection<RestViewHistoryModel> RestViewHistory { get; set; }
+        public ICollection<RestCategoryModel> RestCat { get; set; }
 
         public RestaurantsModel()
         {
@@ -64,6 +66,8 @@ namespace EffectiveWebProg.Models
             PostLikesRest = new List<PostLikesRestModel>();
             Post = new List<PostsModel>();
             ForumComment = new List<ForumCommentsModel>();
+            RestViewHistory = new List<RestViewHistoryModel>();
+            RestCat = new List<RestCategoryModel>();
         }
     }
 }
