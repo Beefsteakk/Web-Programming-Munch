@@ -1,0 +1,85 @@
+@using EffectiveWebProg.ViewModels;
+@model IndividualPostViewModel
+
+<!-- This could be here temporarily depending on the design choice. It's just here for me to test out. -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends</title>
+    <link rel="stylesheet" href="~/css/post.css">
+    <script type="text/javascript" src="~/js/post.js" defer></script>
+</head>
+
+<body class="bg-white">
+    <div class="container">
+        <div class="row w-100">
+            <div class="col-2"></div>
+            <div class="main-content">
+                <div class="content">
+                    <div class="post-header">
+                        <img src="~/Images/xunyin.jpg" alt="Xun Yin">
+                        <div class="post-info">
+                            @if (Model.Post.User != null)
+                            {
+                                <h4>@Model.Post.User.UserName</h4>
+                            }
+                            else if (Model.Post.Restaurant != null)
+                            {
+                                <h4>@Model.Post.Restaurant.RestName</h4>
+                            }
+                            <span>@Model.Post.PostCreatedAt</span>
+                        </div>
+                    </div>
+                    <div class="post-content mb-5">
+                        <p style="max-height: 200px;overflow-y:auto">@Model.Post.PostContent</p>
+                        <!-- TODO: Generate the image table dynamically. -->
+                        <div class="images-table">
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                            <div class="test">
+                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                            </div>
+                        </div>
+                    </div>
+                    @await Html.PartialAsync("_EditPostPartial", Model.Post)
+                    @if (Model.CommentsList.Count != 0)
+                    {
+                        <h2 class="mt-5">Comments:</h2>
+                        @foreach (var item in Model.CommentsList)
+                        {
+                            <div class="comment" id=@item.CommentID>
+                                <div class="post-header">
+                                    <img src="~/Images/xunyin.jpg" alt="Xun Yin">
+                                    <div class="post-info">
+                                        @if (item.User != null)
+                                        {
+                                            <h4>@item.User.UserName</h4>
+                                        }
+                                        else if (item.Restaurant != null)
+                                        {
+                                            <h4>@item.Restaurant.RestName</h4>
+                                        }
+                                        <span>@item.CommentCreatedAt</span>
+                                    </div>
+                                </div>
+                                <div class="post-content">
+                                    <p style="max-height: 200px;overflow-y:auto">@item.CommentContent</p>
+                                    <!-- TODO: Generate the image table dynamically. -->
+                                </div>
+                                <div class="post-footer">
+                                    <button type="like">Like</button>
+                                    <button>Comment</button>
+                                    <button>Share</button>
+                                </div>
+                            </div>
+                            <hr>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+</body>

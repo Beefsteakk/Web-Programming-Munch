@@ -1,0 +1,9 @@
+@model FoodListsModel
+
+<a href="@Url.Action("ViewFoodList", "FoodList", new { id = Model.FoodListID })" class="card">
+    <img src="@(!string.IsNullOrEmpty(Model.FoodListImage) ? Model.FoodListImage : Url.Content("~/Images/defaultfoodlist.jpg"))" class="card-img-top foodlist-image" alt="Food List Image">
+    <div class="card-body">
+        <h5 class="card-title">@Model.FoodListTitle</h5>
+        <p class="card-text">@Model.FoodListDescription</p>
+    </div>
+</a>

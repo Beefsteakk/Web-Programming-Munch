@@ -7,16 +7,29 @@ namespace EffectiveWebProg.Models;
 public class PostsModel
 {
     [Key]
+    [Column(TypeName = "char(36)")]
     public Guid PostID { get; set; } // Primary Key
+
+    [Column(TypeName = "char(36)")]
     public Guid? UserID { get; set; } // Foreign Key From UsersModel
+
+    [Column(TypeName = "char(36)")]
     public Guid? RestID { get; set; } // Foreign Key From RestaurantsModel
+    
     [Required]
-    public required string PostTitle { get; set; }
-    [Required, StringLength(255)]
-    public required string PostContent { get; set; }
+    [Column(TypeName = "varchar(255)")]
+    public string PostTitle { get; set; }
+    
+    [Required]
+    [Column(TypeName = "varchar(255)")]
+    public string PostContent { get; set; }
+    
     [StringLength(255)]
+    [Column(TypeName = "varchar(255)")]
     public string? PostImageURL { get; set; }
     public DateTime PostCreatedAt { get; set; }
+
+    [Column(TypeName = "char(36)")]
     public Guid? TaggedRest { get; set; } // Foreign Key From RestaurantsModel
 
 

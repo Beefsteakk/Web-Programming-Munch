@@ -17,10 +17,13 @@ public class FoodListController : Controller
         _db = db;
     }
 
-    public IActionResult Index(){
-        var foodlists = _db.FoodLists.ToList();
+    public IActionResult Index(string searchQuery = ""){
+        var foodlists = string.IsNullOrEmpty(searchQuery) 
+            ? _db.FoodLists.ToList() 
+            : _db.FoodLists.Where(fl => fl.FoodListTitle.Contains(searchQuery)).ToList();
         return View(foodlists);
     }
+
 
     [HttpGet]
     public IActionResult CreateFoodLists(){
@@ -34,7 +37,17 @@ public class FoodListController : Controller
     }
 
     [HttpPost]
-    public IActionResult CreateFoodLists(FoodListsModel foodlist){
+    public IActionResult CreateFoodLists(FoodListsModel foodlist, IFormFile? foodListImage){
+        if (foodListImage != null)
+        {
+            var imagePath = Path.Combine("wwwroot/Images", foodListImage.FileName);  
+            using (var stream = new FileStream(imagePath, FileMode.Create))
+            {
+                foodListImage.CopyTo(stream);
+            }
+            foodlist.FoodListImage = $"/Images/{foodListImage.FileName}";
+        }
+
         _db.FoodLists.Add(foodlist);
         _db.SaveChanges();
 
@@ -86,5 +99,22 @@ public class FoodListController : Controller
         _db.SaveChanges();
 
         return RedirectToAction("ViewFoodList", new {id = foodListId});
+    }
+
+    [HttpPost]
+    public IActionResult DeleteRestaurantFromFoodList(Guid foodListId, Guid restaurantId)
+    {
+        var entry = _db.FoodListEntries
+            .FirstOrDefault(e => e.FoodListID == foodListId && e.RestID == restaurantId);
+
+        if (entry == null)
+        {
+            return NotFound();
+        }
+
+        _db.FoodListEntries.Remove(entry);
+        _db.SaveChanges();
+
+        return RedirectToAction("ViewFoodList", new { id = foodListId });
     }
 }

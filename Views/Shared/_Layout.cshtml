@@ -8,23 +8,24 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EffectiveWebProg.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/profile.css" />
-    <link rel="stylesheet" href="~/css/ownerProfile.css" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
 </head>
 
-<style>
-    a {
-        text-decoration: none;
-    }
-</style>
-
 <body>
+    @{
+        var controller = (string)ViewContext.RouteData.Values["controller"];
+    }
     <nav class="left-sidebar">
         <ul class="left-sidebar-nav">
             <li class="left-sidebar-munch">
@@ -55,13 +56,19 @@
                 </a>
             </li>
             <li class="left-nav-item">
+                <a class="left-nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">
+                    <i class="fa-solid fa-tachometer-alt"></i>
+                    <span class="left-link-text">Dashboard</span>
+                </a>
+            </li>
+            <li class="left-nav-item">
                 <a class="left-nav-link text-dark" asp-area="" asp-controller="Foodlist" asp-action="Index">
                     <i class="fa-solid fa-utensils"></i>
                     <span class="left-link-text">Foodlist</span>
                 </a>
             </li>
             <li class="left-nav-item">
-                <a class="left-nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="left-nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">
                     <span class="left-link-text">Log out</span>
                 </a>
             </li>
@@ -72,19 +79,13 @@
         @RenderBody()
     </main>
 
-    <nav class="right-sidebar">
-        <div class="right-sidebar-container">
-            <div class="right-sidebar-title">
-                Explore
-            </div>
-        </div>
-    </nav>
 
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
-</body>
+    <script src="/_framework/aspnetcore-browser-refresh.js"></script>
 
+</body>
 </html>

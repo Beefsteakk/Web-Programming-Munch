@@ -17,100 +17,151 @@ namespace EffectiveWebProg.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
             modelBuilder.Entity("EffectiveWebProg.Models.CommentsModel", b =>
                 {
                     b.Property<Guid>("CommentID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
-                    b.Property<Guid>("AuthorID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CommentContent")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("CommentCreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Comments")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<Guid>("PostID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("RestID")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("UserID")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("CommentID");
 
-                    b.HasIndex("AuthorID");
-
                     b.HasIndex("PostID");
+
+                    b.HasIndex("RestID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("EffectiveWebProg.Models.PostLikesModel", b =>
+            modelBuilder.Entity("EffectiveWebProg.Models.ForumCommentsModel", b =>
                 {
-                    b.Property<Guid>("PostLikeID")
+                    b.Property<Guid>("CommentID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("LikeCreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Comments")
+                        .IsRequired()
+                        .HasColumnType("Text");
 
-                    b.Property<Guid>("PostID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<Guid>("ForumID")
+                        .HasColumnType("char(36)");
 
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<Guid?>("RestID")
+                        .HasColumnType("char(36)");
 
-                    b.HasKey("PostLikeID");
+                    b.Property<Guid?>("UserID")
+                        .HasColumnType("char(36)");
 
-                    b.HasIndex("PostID");
+                    b.HasKey("CommentID");
+
+                    b.HasIndex("ForumID");
+
+                    b.HasIndex("RestID");
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("PostLikes");
+                    b.ToTable("ForumComments");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.PostLikesRestModel", b =>
+                {
+                    b.Property<Guid>("PostID")
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(0);
+
+                    b.Property<Guid>("RestID")
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<DateTime>("LikeCreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("PostID", "RestID");
+
+                    b.HasIndex("RestID");
+
+                    b.ToTable("PostLikesRest");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.PostLikesUserModel", b =>
+                {
+                    b.Property<Guid>("PostID")
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(0);
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<DateTime>("LikeCreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("PostID", "UserID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("PostLikesUser");
                 });
 
             modelBuilder.Entity("EffectiveWebProg.Models.PostsModel", b =>
                 {
                     b.Property<Guid>("PostID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AuthorID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("PostContent")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("PostCreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("PostImageURL")
-                        .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("PostLocation")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("PostTitle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(255)");
 
-                    b.Property<DateTime>("PostUpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<Guid?>("RestID")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("TaggedRest")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("UserID")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("PostID");
 
-                    b.HasIndex("AuthorID");
+                    b.HasIndex("RestID");
+
+                    b.HasIndex("TaggedRest");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("Posts");
                 });
@@ -119,84 +170,83 @@ namespace EffectiveWebProg.Migrations
                 {
                     b.Property<Guid>("RestID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
-                    b.Property<Guid>("OwnerID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("RestAddress")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("RestBio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<int?>("RestContact")
+                        .HasColumnType("int");
 
                     b.Property<string>("RestEmail")
-                        .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("varchar(255)");
 
-                    b.Property<double>("RestLat")
-                        .HasColumnType("float");
+                    b.Property<double?>("RestLat")
+                        .HasColumnType("double");
 
-                    b.Property<double>("RestLong")
-                        .HasColumnType("float");
+                    b.Property<double?>("RestLong")
+                        .HasColumnType("double");
 
                     b.Property<string>("RestName")
-                        .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("RestPassword")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("RestPic")
-                        .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<float?>("RestRatings")
+                        .HasColumnType("float");
 
                     b.Property<string>("RestWebsite")
-                        .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("RestID");
-
-                    b.HasIndex("OwnerID");
 
                     b.ToTable("Restaurants");
                 });
 
             modelBuilder.Entity("FoodListEntriesModel", b =>
                 {
-                    b.Property<Guid>("FoodListEntriesID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("FoodListID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(0);
 
-                    b.Property<Guid>("RestaurantID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<Guid>("RestID")
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(1);
 
-                    b.HasKey("FoodListEntriesID");
+                    b.HasKey("FoodListID", "RestID");
 
-                    b.HasIndex("FoodListID");
-
-                    b.HasIndex("RestaurantID");
+                    b.HasIndex("RestID");
 
                     b.ToTable("FoodListEntries");
                 });
 
             modelBuilder.Entity("FoodListLikesModel", b =>
                 {
-                    b.Property<Guid>("FoodListLikeID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("FoodListID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(0);
 
                     b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(1);
 
-                    b.HasKey("FoodListLikeID");
+                    b.Property<DateTime>("LikeCreatedAt")
+                        .HasColumnType("datetime(6)");
 
-                    b.HasIndex("FoodListID");
+                    b.HasKey("FoodListID", "UserID");
 
                     b.HasIndex("UserID");
 
@@ -207,58 +257,115 @@ namespace EffectiveWebProg.Migrations
                 {
                     b.Property<Guid>("FoodListID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("FoodListCreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("FoodListDescription")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("FoodListImage")
+                        .HasColumnType("text");
 
                     b.Property<string>("FoodListTitle")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("varchar(100)");
 
-                    b.Property<Guid>("OwnerID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("FoodListID");
 
-                    b.HasIndex("OwnerID");
+                    b.HasIndex("UserID");
 
                     b.ToTable("FoodLists");
+                });
+
+            modelBuilder.Entity("ForumVotesModel", b =>
+                {
+                    b.Property<Guid>("ForumID")
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(0);
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<bool>("VoteType")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("ForumID", "UserID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("ForumVotes");
+                });
+
+            modelBuilder.Entity("ForumsModel", b =>
+                {
+                    b.Property<Guid>("ForumID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("ForumCreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ForumDesc")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("ForumName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("ForumID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Forums");
                 });
 
             modelBuilder.Entity("ReservationsModel", b =>
                 {
                     b.Property<Guid>("ReservationID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("NumOfGuests")
                         .HasColumnType("int");
 
-                    b.Property<string>("ReservationStatus")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<DateOnly>("ReservationDate")
+                        .HasColumnType("date");
 
-                    b.Property<DateTime>("ReservationTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ReservationStatus")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<TimeSpan>("ReservationTime")
+                        .HasColumnType("time(6)");
+
+                    b.Property<string>("ReservedName")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("RestID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("SpecialRequest")
-                        .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.HasKey("ReservationID");
 
@@ -269,76 +376,116 @@ namespace EffectiveWebProg.Migrations
                     b.ToTable("Reservations");
                 });
 
-            modelBuilder.Entity("RestaurantRatingsModel", b =>
+            modelBuilder.Entity("RestaurantFollowingsModel", b =>
                 {
-                    b.Property<Guid>("RatingID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(0);
 
-                    b.Property<DateTime>("RatingCreatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<Guid>("FollowedRestID")
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<DateTime>("FollowCreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("UserID", "FollowedRestID");
+
+                    b.HasIndex("FollowedRestID");
+
+                    b.ToTable("RestaurantFollowings");
+                });
+
+            modelBuilder.Entity("ReviewsModel", b =>
+                {
+                    b.Property<Guid>("ReviewID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("PostID")
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("RatingValue")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("RestID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ReviewComments")
+                        .HasColumnType("text");
 
+                    b.Property<DateTime>("ReviewCreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("ReviewID");
+
+                    b.HasIndex("PostID");
+
+                    b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("UserFollowingsModel", b =>
+                {
                     b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(0);
 
-                    b.HasKey("RatingID");
+                    b.Property<Guid>("FollowedUserID")
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(1);
 
-                    b.HasIndex("RestID");
+                    b.Property<DateTime>("FollowCreatedAt")
+                        .HasColumnType("datetime(6)");
 
-                    b.HasIndex("UserID");
+                    b.HasKey("UserID", "FollowedUserID");
 
-                    b.ToTable("RestaurantRatings");
+                    b.HasIndex("FollowedUserID");
+
+                    b.ToTable("UserFollowings");
                 });
 
             modelBuilder.Entity("UsersModel", b =>
                 {
                     b.Property<Guid>("UserID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
-                    b.Property<string>("UserAccountType")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int?>("AccountToken")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("AccountVerified")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("UserBio")
-                        .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("UserContactNum")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UserCreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("UserEmail")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("UserPassword")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("UserProfilePic")
-                        .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("UserUsername")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("UserID");
 
@@ -347,35 +494,82 @@ namespace EffectiveWebProg.Migrations
 
             modelBuilder.Entity("EffectiveWebProg.Models.CommentsModel", b =>
                 {
-                    b.HasOne("UsersModel", "Author")
+                    b.HasOne("EffectiveWebProg.Models.PostsModel", "Post")
                         .WithMany("Comment")
-                        .HasForeignKey("AuthorID")
+                        .HasForeignKey("PostID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EffectiveWebProg.Models.PostsModel", "Post")
+                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
                         .WithMany("Comment")
-                        .HasForeignKey("PostID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("RestID");
 
-                    b.Navigation("Author");
+                    b.HasOne("UsersModel", "User")
+                        .WithMany("Comment")
+                        .HasForeignKey("UserID");
 
                     b.Navigation("Post");
+
+                    b.Navigation("Restaurant");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EffectiveWebProg.Models.PostLikesModel", b =>
+            modelBuilder.Entity("EffectiveWebProg.Models.ForumCommentsModel", b =>
+                {
+                    b.HasOne("ForumsModel", "Forum")
+                        .WithMany("ForumComment")
+                        .HasForeignKey("ForumID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
+                        .WithMany("ForumComment")
+                        .HasForeignKey("RestID");
+
+                    b.HasOne("UsersModel", "User")
+                        .WithMany("ForumComment")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Forum");
+
+                    b.Navigation("Restaurant");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.PostLikesRestModel", b =>
                 {
                     b.HasOne("EffectiveWebProg.Models.PostsModel", "Post")
-                        .WithMany("PostLike")
+                        .WithMany("PostLikeRest")
                         .HasForeignKey("PostID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
+                        .WithMany("PostLikesRest")
+                        .HasForeignKey("RestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.PostLikesUserModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.PostsModel", "Post")
+                        .WithMany("PostLikeUser")
+                        .HasForeignKey("PostID")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("UsersModel", "User")
-                        .WithMany("PostLike")
+                        .WithMany("PostLikeUser")
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Post");
@@ -385,24 +579,25 @@ namespace EffectiveWebProg.Migrations
 
             modelBuilder.Entity("EffectiveWebProg.Models.PostsModel", b =>
                 {
-                    b.HasOne("UsersModel", "Author")
+                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
                         .WithMany("Post")
-                        .HasForeignKey("AuthorID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("RestID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("Author");
-                });
+                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "TaggedRestaurant")
+                        .WithMany()
+                        .HasForeignKey("TaggedRest");
 
-            modelBuilder.Entity("EffectiveWebProg.Models.RestaurantsModel", b =>
-                {
-                    b.HasOne("UsersModel", "Owner")
-                        .WithMany("Restaurant")
-                        .HasForeignKey("OwnerID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                    b.HasOne("UsersModel", "User")
+                        .WithMany("Post")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("Owner");
+                    b.Navigation("Restaurant");
+
+                    b.Navigation("TaggedRestaurant");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FoodListEntriesModel", b =>
@@ -410,13 +605,13 @@ namespace EffectiveWebProg.Migrations
                     b.HasOne("FoodListsModel", "FoodList")
                         .WithMany("FoodListEntry")
                         .HasForeignKey("FoodListID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
                         .WithMany("FoodEntry")
-                        .HasForeignKey("RestaurantID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("RestID")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("FoodList");
@@ -429,13 +624,13 @@ namespace EffectiveWebProg.Migrations
                     b.HasOne("FoodListsModel", "FoodList")
                         .WithMany("FoodListLike")
                         .HasForeignKey("FoodListID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("UsersModel", "User")
                         .WithMany("FoodListLike")
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("FoodList");
@@ -445,13 +640,43 @@ namespace EffectiveWebProg.Migrations
 
             modelBuilder.Entity("FoodListsModel", b =>
                 {
-                    b.HasOne("UsersModel", "Owner")
+                    b.HasOne("UsersModel", "User")
                         .WithMany("FoodList")
-                        .HasForeignKey("OwnerID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Owner");
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ForumVotesModel", b =>
+                {
+                    b.HasOne("ForumsModel", "Forum")
+                        .WithMany("ForumVote")
+                        .HasForeignKey("ForumID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UsersModel", "User")
+                        .WithMany("ForumVote")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Forum");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ForumsModel", b =>
+                {
+                    b.HasOne("UsersModel", "User")
+                        .WithMany("Forum")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ReservationsModel", b =>
@@ -459,13 +684,13 @@ namespace EffectiveWebProg.Migrations
                     b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
                         .WithMany("Reservation")
                         .HasForeignKey("RestID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("UsersModel", "User")
                         .WithMany("Reservation")
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Restaurant");
@@ -473,21 +698,51 @@ namespace EffectiveWebProg.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RestaurantRatingsModel", b =>
+            modelBuilder.Entity("RestaurantFollowingsModel", b =>
                 {
-                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
-                        .WithMany("RestaurantRating")
-                        .HasForeignKey("RestID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "FollowedRest")
+                        .WithMany("FollowedBy")
+                        .HasForeignKey("FollowedRestID")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("UsersModel", "User")
-                        .WithMany("RestaurantRating")
+                        .WithMany("RestaurantFollowings")
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Restaurant");
+                    b.Navigation("FollowedRest");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ReviewsModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.PostsModel", "Post")
+                        .WithMany("Review")
+                        .HasForeignKey("PostID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("UserFollowingsModel", b =>
+                {
+                    b.HasOne("UsersModel", "FollowedUser")
+                        .WithMany("Followers")
+                        .HasForeignKey("FollowedUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UsersModel", "User")
+                        .WithMany("Followings")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FollowedUser");
 
                     b.Navigation("User");
                 });
@@ -496,16 +751,28 @@ namespace EffectiveWebProg.Migrations
                 {
                     b.Navigation("Comment");
 
-                    b.Navigation("PostLike");
+                    b.Navigation("PostLikeRest");
+
+                    b.Navigation("PostLikeUser");
+
+                    b.Navigation("Review");
                 });
 
             modelBuilder.Entity("EffectiveWebProg.Models.RestaurantsModel", b =>
                 {
+                    b.Navigation("Comment");
+
+                    b.Navigation("FollowedBy");
+
                     b.Navigation("FoodEntry");
 
-                    b.Navigation("Reservation");
+                    b.Navigation("ForumComment");
 
-                    b.Navigation("RestaurantRating");
+                    b.Navigation("Post");
+
+                    b.Navigation("PostLikesRest");
+
+                    b.Navigation("Reservation");
                 });
 
             modelBuilder.Entity("FoodListsModel", b =>
@@ -515,23 +782,38 @@ namespace EffectiveWebProg.Migrations
                     b.Navigation("FoodListLike");
                 });
 
+            modelBuilder.Entity("ForumsModel", b =>
+                {
+                    b.Navigation("ForumComment");
+
+                    b.Navigation("ForumVote");
+                });
+
             modelBuilder.Entity("UsersModel", b =>
                 {
                     b.Navigation("Comment");
+
+                    b.Navigation("Followers");
+
+                    b.Navigation("Followings");
 
                     b.Navigation("FoodList");
 
                     b.Navigation("FoodListLike");
 
+                    b.Navigation("Forum");
+
+                    b.Navigation("ForumComment");
+
+                    b.Navigation("ForumVote");
+
                     b.Navigation("Post");
 
-                    b.Navigation("PostLike");
+                    b.Navigation("PostLikeUser");
 
                     b.Navigation("Reservation");
 
-                    b.Navigation("Restaurant");
-
-                    b.Navigation("RestaurantRating");
+                    b.Navigation("RestaurantFollowings");
                 });
 #pragma warning restore 612, 618
         }

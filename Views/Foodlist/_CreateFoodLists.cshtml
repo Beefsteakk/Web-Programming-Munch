@@ -1,6 +1,6 @@
 @model FoodListsModel
 
-<form asp-action="CreateFoodLists" asp-controller="FoodList" method="post">
+<form asp-action="CreateFoodLists" asp-controller="FoodList" method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="col-lg-12">
             <div class="form-group">
@@ -18,13 +18,17 @@
                 <input asp-for="FoodListDescription" type="text" class="form-control" required>
             </div>
 
-            <div class="card-footer">
-                <center>
-                    <button type="submit" class="btn btn-primary">Create FoodList</button>
-                    <a asp-action="FoodLists" asp-controller="FoodLists" class="btn btn-secondary">Cancel</a>
-                </center>
+            <div class="form-group">
+                <label for="foodListImage">FoodList Image</label>
+                <input type="file" id="foodListImage" name="foodListImage" class="form-control">
             </div>
 
+            <div class="card-footer">
+                <center>
+                    <button type="submit" class="btn btn-primary" style="margin-right: 1rem;">Create FoodList</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </center>
+            </div>
         </div>
     </div>
 </form>
