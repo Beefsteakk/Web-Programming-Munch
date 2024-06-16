@@ -10,7 +10,7 @@ public class RestViewHistoryModel
 {
     [Key]
     [Column(TypeName = "char(36)")]
-    public Guid ReservationID { get; set; } // Primary Key
+    public Guid ViewID { get; set; } // Primary Key
     
     [Required]
     [Column(TypeName = "char(36)")]
@@ -33,7 +33,7 @@ public class RestViewHistoryModel
 
     public RestViewHistoryModel()
     {
-        ReservationID = Guid.NewGuid();
+        ViewID = Guid.NewGuid();
         ViewedAt = DateTime.UtcNow;
     }
 

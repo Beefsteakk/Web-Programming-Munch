@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Org.BouncyCastle.Asn1.Cms;
 
 namespace EffectiveWebProg.Models
 {
@@ -44,6 +45,12 @@ namespace EffectiveWebProg.Models
         public string? RestWebsite { get; set; } // nullable
 
         public float? RestRatings { get; set; }
+        public TimeSpan? RestOpenHr {get; set;}
+        public TimeSpan? RestCloseHr {get; set;}
+
+        [StringLength(255)]
+        [Column(TypeName = "varchar(255)")]
+        public string? RestCoverPic { get; set; } // nullable
 
         // Navigation properties
         public ICollection<FoodListEntriesModel> FoodEntry { get; set; }

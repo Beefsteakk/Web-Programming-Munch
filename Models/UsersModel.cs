@@ -41,6 +41,10 @@ public class UsersModel
     public int? AccountToken { get; set; } // nullable
     public bool? AccountVerified { get; set; } // nullable
     public DateTime UserCreatedAt { get; set; }
+    
+    [StringLength(255)]
+    [Column(TypeName = "varchar(255)")]
+    public string? UserCoverPic { get; set; } // nullable
 
     // Navigation properties
     public ICollection<PostsModel> Post { get; set; }

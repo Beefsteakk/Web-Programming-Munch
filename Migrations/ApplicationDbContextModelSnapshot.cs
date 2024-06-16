@@ -187,8 +187,15 @@ namespace EffectiveWebProg.Migrations
                     b.Property<string>("RestBio")
                         .HasColumnType("text");
 
+                    b.Property<TimeSpan?>("RestCloseHr")
+                        .HasColumnType("time(6)");
+
                     b.Property<int?>("RestContact")
                         .HasColumnType("int");
+
+                    b.Property<string>("RestCoverPic")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("RestEmail")
                         .HasMaxLength(255)
@@ -203,6 +210,9 @@ namespace EffectiveWebProg.Migrations
                     b.Property<string>("RestName")
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
+
+                    b.Property<TimeSpan?>("RestOpenHr")
+                        .HasColumnType("time(6)");
 
                     b.Property<string>("RestPassword")
                         .HasMaxLength(255)
@@ -242,6 +252,10 @@ namespace EffectiveWebProg.Migrations
 
                     b.Property<int>("UserContactNum")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserCoverPic")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("UserCreatedAt")
                         .HasColumnType("datetime(6)");
@@ -492,7 +506,7 @@ namespace EffectiveWebProg.Migrations
 
             modelBuilder.Entity("RestViewHistoryModel", b =>
                 {
-                    b.Property<Guid>("ReservationID")
+                    b.Property<Guid>("ViewID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -505,7 +519,7 @@ namespace EffectiveWebProg.Migrations
                     b.Property<DateTime>("ViewedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.HasKey("ReservationID");
+                    b.HasKey("ViewID");
 
                     b.HasIndex("RestID");
 
@@ -612,11 +626,13 @@ namespace EffectiveWebProg.Migrations
 
                     b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
                         .WithMany("Comment")
-                        .HasForeignKey("RestID");
+                        .HasForeignKey("RestID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("Comment")
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Post");
 
@@ -635,11 +651,13 @@ namespace EffectiveWebProg.Migrations
 
                     b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
                         .WithMany("ForumComment")
-                        .HasForeignKey("RestID");
+                        .HasForeignKey("RestID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("ForumComment")
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Forum");
 

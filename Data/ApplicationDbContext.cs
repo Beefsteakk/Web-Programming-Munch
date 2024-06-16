@@ -34,6 +34,7 @@ namespace EffectiveWebProg.Data
         public DbSet<RestViewHistoryModel> RestViewHistory { get; set; }
         public DbSet<SearchHistoryModel> SearchHistory { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -215,6 +216,48 @@ namespace EffectiveWebProg.Data
                 .HasOne(p => p.TaggedRestaurant)
                 .WithMany(r => r.TaggedRest)
                 .HasForeignKey(p => p.TaggedRest)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ForumCommentsModel>()
+                .HasOne(fc => fc.Forum)
+                .WithMany(f => f.ForumComment)
+                .HasForeignKey(fc => fc.ForumID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ForumCommentsModel>()
+                .HasOne(fc => fc.User)
+                .WithMany(u => u.ForumComment)
+                .HasForeignKey(fc => fc.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ForumCommentsModel>()
+                .HasOne(fc => fc.Restaurant)
+                .WithMany(r => r.ForumComment)
+                .HasForeignKey(fc => fc.RestID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CommentsModel>()
+                .HasOne(c => c.Post)
+                .WithMany(p => p.Comment)
+                .HasForeignKey(c => c.PostID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CommentsModel>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Comment)
+                .HasForeignKey(c => c.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CommentsModel>()
+                .HasOne(c => c.Restaurant)
+                .WithMany(r => r.Comment)
+                .HasForeignKey(c => c.RestID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<FoodListsModel>()
+                .HasOne(f => f.User)
+                .WithMany(u => u.FoodList)
+                .HasForeignKey(f => f.UserID)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
