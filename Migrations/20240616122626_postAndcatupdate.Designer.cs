@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EffectiveWebProg.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240616120030_postAndcatupdate")]
+    [Migration("20240616122626_postAndcatupdate")]
     partial class postAndcatupdate
     {
         /// <inheritdoc />
@@ -514,7 +514,7 @@ namespace EffectiveWebProg.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("RestViewHistoryModel");
+                    b.ToTable("RestViewHistory");
                 });
 
             modelBuilder.Entity("RestaurantFollowingsModel", b =>
@@ -582,7 +582,7 @@ namespace EffectiveWebProg.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("SearchHistoryModel");
+                    b.ToTable("SearchHistory");
                 });
 
             modelBuilder.Entity("UserFollowingsModel", b =>
@@ -642,8 +642,7 @@ namespace EffectiveWebProg.Migrations
 
                     b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("ForumComment")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserID");
 
                     b.Navigation("Forum");
 
@@ -698,8 +697,9 @@ namespace EffectiveWebProg.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "TaggedRestaurant")
-                        .WithMany()
-                        .HasForeignKey("TaggedRest");
+                        .WithMany("TaggedRest")
+                        .HasForeignKey("TaggedRest")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("Post")
@@ -977,6 +977,8 @@ namespace EffectiveWebProg.Migrations
                     b.Navigation("RestCat");
 
                     b.Navigation("RestViewHistory");
+
+                    b.Navigation("TaggedRest");
                 });
 
             modelBuilder.Entity("EffectiveWebProg.Models.UsersModel", b =>
