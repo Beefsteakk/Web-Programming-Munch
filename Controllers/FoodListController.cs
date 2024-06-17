@@ -17,27 +17,55 @@ public class FoodListController : Controller
         _db = db;
     }
 
-    public IActionResult Index(string searchQuery = ""){
-        var foodlists = string.IsNullOrEmpty(searchQuery) 
-            ? _db.FoodLists.ToList() 
-            : _db.FoodLists.Where(fl => fl.FoodListTitle.Contains(searchQuery)).ToList();
+    private Guid? GetUserIdFromSession()
+    {
+        string sessionEmail = HttpContext.Session.GetString("SSName");
+
+        if (string.IsNullOrEmpty(sessionEmail))
+        {
+            return null;
+        }
+
+        var user = _db.Users.SingleOrDefault(u => u.UserEmail == sessionEmail);
+        return user?.UserID;
+    }
+
+    public IActionResult Index(string searchQuery = "")
+    {
+        var userId = GetUserIdFromSession();
+
+        if (userId == null)
+        {
+            return RedirectToAction("Login", "Auth");
+        }
+
+        var foodlists = string.IsNullOrEmpty(searchQuery)
+            ? _db.FoodLists.Where(fl => fl.UserID == userId).ToList() // Filter food lists based on UserID
+            : _db.FoodLists.Where(fl => fl.UserID == userId && fl.FoodListTitle.Contains(searchQuery)).ToList();
+
         return View(foodlists);
     }
 
 
+
     [HttpGet]
     public IActionResult CreateFoodLists(){
-        // Fetch users from the database
-        var users = _db.Users.Select(u => new {u.UserID, u.UserName}).ToList();
-
-        // Pass the user list to the view via a ViewBag
-        ViewBag.Users = new SelectList(users, "UserID", "UserName");
 
         return PartialView("_CreateFoodLists");
     }
 
     [HttpPost]
     public IActionResult CreateFoodLists(FoodListsModel foodlist, IFormFile? foodListImage){
+        
+        var userId = GetUserIdFromSession();
+
+        if (userId == null)
+        {
+            return RedirectToAction("Login", "Auth");
+        }
+
+        foodlist.UserID = userId.Value;
+        
         if (foodListImage != null)
         {
             var imagePath = Path.Combine("wwwroot/Images", foodListImage.FileName);  
