@@ -41,6 +41,10 @@ public class UsersModel
     public int? AccountToken { get; set; } // nullable
     public bool? AccountVerified { get; set; } // nullable
     public DateTime UserCreatedAt { get; set; }
+    
+    [StringLength(255)]
+    [Column(TypeName = "varchar(255)")]
+    public string? UserCoverPic { get; set; } // nullable
 
     // Navigation properties
     public ICollection<PostsModel> Post { get; set; }
@@ -55,6 +59,8 @@ public class UsersModel
     public ICollection<ForumsModel> Forum { get; set; }
     public ICollection<ForumVotesModel> ForumVote { get; set; }
     public ICollection<ForumCommentsModel> ForumComment { get; set; }
+    public ICollection<SearchHistoryModel> SearchHistory { get; set; }
+    public ICollection<RestViewHistoryModel> RestViewHistory { get; set; }
 
     public UsersModel()
     {
@@ -72,5 +78,7 @@ public class UsersModel
         Forum = new List<ForumsModel>();
         ForumVote = new List<ForumVotesModel>();
         ForumComment = new List<ForumCommentsModel>();
+        SearchHistory = new List<SearchHistoryModel>();
+        RestViewHistory = new List<RestViewHistoryModel>();
     }
 }

@@ -1,0 +1,36 @@
+@model List<CategoryModel>
+
+@{
+    ViewData["Title"] = "Category Page";
+}
+
+<h2>Categories</h2>
+
+<br>
+<div class="row">
+    <div class = "col-md-12">
+        <a asp-action="Create" asp-controller="Category" class="btn btn-success">Create New Category</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class = "table">
+            <thead>
+                <tr>
+                    <td>Category ID</td>
+                    <td>Category Type</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model){
+                    <tr>
+                        <td>@item.CatID</td>
+                        <td>@item.CatType</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

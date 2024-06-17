@@ -18,15 +18,8 @@ public class PostsModel
     
     [Required]
     [Column(TypeName = "varchar(255)")]
-    public string PostTitle { get; set; }
-    
-    [Required]
-    [Column(TypeName = "varchar(255)")]
     public string PostContent { get; set; }
     
-    [StringLength(255)]
-    [Column(TypeName = "varchar(255)")]
-    public string? PostImageURL { get; set; }
     public DateTime PostCreatedAt { get; set; }
 
     [Column(TypeName = "char(36)")]
@@ -45,6 +38,7 @@ public class PostsModel
     public ICollection<PostLikesUserModel> PostLikeUser { get; set; }
     public ICollection<PostLikesRestModel> PostLikeRest { get; set; }
     public ICollection<ReviewsModel> Review { get; set; }
+    public ICollection<PostPicsModel> PostPic { get; set; }
 
 
     public PostsModel()
@@ -55,5 +49,6 @@ public class PostsModel
         PostLikeUser = new List<PostLikesUserModel>();
         PostLikeRest = new List<PostLikesRestModel>();
         Review = new List<ReviewsModel>();
+        PostPic = new List<PostPicsModel>();
     }
 }

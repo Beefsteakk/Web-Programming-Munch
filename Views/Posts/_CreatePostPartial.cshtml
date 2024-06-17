@@ -9,8 +9,6 @@
     <form asp-action="CreatePosts" asp-controller="Posts" method="post">
         <div class="form-group">
             <input type="hidden" name="UserId" value="@userID" />
-            <label for="title">Title:</label>
-            <input asp-for="PostTitle" type="text" class="form-control" required>
 
             <label for="post">Post:</label>
             <input asp-for="PostContent" type="text" class="form-control" required>

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Org.BouncyCastle.Asn1.Cms;
 
 namespace EffectiveWebProg.Models
 {
@@ -44,6 +45,12 @@ namespace EffectiveWebProg.Models
         public string? RestWebsite { get; set; } // nullable
 
         public float? RestRatings { get; set; }
+        public TimeSpan? RestOpenHr {get; set;}
+        public TimeSpan? RestCloseHr {get; set;}
+
+        [StringLength(255)]
+        [Column(TypeName = "varchar(255)")]
+        public string? RestCoverPic { get; set; } // nullable
 
         // Navigation properties
         public ICollection<FoodListEntriesModel> FoodEntry { get; set; }
@@ -52,7 +59,10 @@ namespace EffectiveWebProg.Models
         public ICollection<CommentsModel> Comment { get; set; }
         public ICollection<PostLikesRestModel> PostLikesRest { get; set; }
         public ICollection<PostsModel> Post { get; set; }
+        public ICollection<PostsModel> TaggedRest { get; set; }
         public ICollection<ForumCommentsModel> ForumComment { get; set; }
+        public ICollection<RestViewHistoryModel> RestViewHistory { get; set; }
+        public ICollection<RestCategoryModel> RestCat { get; set; }
 
         public RestaurantsModel()
         {
@@ -63,7 +73,10 @@ namespace EffectiveWebProg.Models
             Comment = new List<CommentsModel>();
             PostLikesRest = new List<PostLikesRestModel>();
             Post = new List<PostsModel>();
+            TaggedRest = new List<PostsModel>();
             ForumComment = new List<ForumCommentsModel>();
+            RestViewHistory = new List<RestViewHistoryModel>();
+            RestCat = new List<RestCategoryModel>();
         }
     }
 }

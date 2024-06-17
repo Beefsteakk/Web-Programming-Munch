@@ -22,6 +22,22 @@ namespace EffectiveWebProg.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("EffectiveWebProg.Models.CategoryModel", b =>
+                {
+                    b.Property<Guid>("CatID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("CatType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("CatID");
+
+                    b.ToTable("Category");
+                });
+
             modelBuilder.Entity("EffectiveWebProg.Models.CommentsModel", b =>
                 {
                     b.Property<Guid>("CommentID")
@@ -30,7 +46,7 @@ namespace EffectiveWebProg.Migrations
 
                     b.Property<string>("CommentContent")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CommentCreatedAt")
                         .HasColumnType("datetime(6)");
@@ -63,7 +79,7 @@ namespace EffectiveWebProg.Migrations
 
                     b.Property<string>("Comments")
                         .IsRequired()
-                        .HasColumnType("Text");
+                        .HasColumnType("text");
 
                     b.Property<Guid>("ForumID")
                         .HasColumnType("char(36)");
@@ -138,14 +154,6 @@ namespace EffectiveWebProg.Migrations
                     b.Property<DateTime>("PostCreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("PostImageURL")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("PostTitle")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
                     b.Property<Guid?>("RestID")
                         .HasColumnType("char(36)");
 
@@ -179,8 +187,15 @@ namespace EffectiveWebProg.Migrations
                     b.Property<string>("RestBio")
                         .HasColumnType("text");
 
+                    b.Property<TimeSpan?>("RestCloseHr")
+                        .HasColumnType("time(6)");
+
                     b.Property<int?>("RestContact")
                         .HasColumnType("int");
+
+                    b.Property<string>("RestCoverPic")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("RestEmail")
                         .HasMaxLength(255)
@@ -195,6 +210,9 @@ namespace EffectiveWebProg.Migrations
                     b.Property<string>("RestName")
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
+
+                    b.Property<TimeSpan?>("RestOpenHr")
+                        .HasColumnType("time(6)");
 
                     b.Property<string>("RestPassword")
                         .HasMaxLength(255)
@@ -214,6 +232,78 @@ namespace EffectiveWebProg.Migrations
                     b.HasKey("RestID");
 
                     b.ToTable("Restaurants");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.UsersModel", b =>
+                {
+                    b.Property<Guid>("UserID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<int?>("AccountToken")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("AccountVerified")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("UserBio")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("UserContactNum")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserCoverPic")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime>("UserCreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("UserPassword")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("UserProfilePic")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("UserUsername")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("UserID");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("FoodListCategoryModel", b =>
+                {
+                    b.Property<Guid>("FoodListID")
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(0);
+
+                    b.Property<Guid>("CatID")
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(1);
+
+                    b.HasKey("FoodListID", "CatID");
+
+                    b.HasIndex("CatID");
+
+                    b.ToTable("FoodListCategory");
                 });
 
             modelBuilder.Entity("FoodListEntriesModel", b =>
@@ -334,6 +424,27 @@ namespace EffectiveWebProg.Migrations
                     b.ToTable("Forums");
                 });
 
+            modelBuilder.Entity("PostPicsModel", b =>
+                {
+                    b.Property<Guid>("PicID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<Guid?>("PostID")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("PicID");
+
+                    b.HasIndex("PostID");
+
+                    b.ToTable("PostPics");
+                });
+
             modelBuilder.Entity("ReservationsModel", b =>
                 {
                     b.Property<Guid>("ReservationID")
@@ -374,6 +485,47 @@ namespace EffectiveWebProg.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("RestCategoryModel", b =>
+                {
+                    b.Property<Guid>("RestID")
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(0);
+
+                    b.Property<Guid>("CatID")
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(1);
+
+                    b.HasKey("RestID", "CatID");
+
+                    b.HasIndex("CatID");
+
+                    b.ToTable("RestCategory");
+                });
+
+            modelBuilder.Entity("RestViewHistoryModel", b =>
+                {
+                    b.Property<Guid>("ViewID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("RestID")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("ViewedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("ViewID");
+
+                    b.HasIndex("RestID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("RestViewHistory");
                 });
 
             modelBuilder.Entity("RestaurantFollowingsModel", b =>
@@ -421,6 +573,29 @@ namespace EffectiveWebProg.Migrations
                     b.ToTable("Reviews");
                 });
 
+            modelBuilder.Entity("SearchHistoryModel", b =>
+                {
+                    b.Property<Guid>("SearchID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("SearchCreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("UserSearch")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("SearchID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("SearchHistory");
+                });
+
             modelBuilder.Entity("UserFollowingsModel", b =>
                 {
                     b.Property<Guid>("UserID")
@@ -441,57 +616,6 @@ namespace EffectiveWebProg.Migrations
                     b.ToTable("UserFollowings");
                 });
 
-            modelBuilder.Entity("UsersModel", b =>
-                {
-                    b.Property<Guid>("UserID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<int?>("AccountToken")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("AccountVerified")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("UserBio")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int>("UserContactNum")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UserCreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("UserEmail")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("UserPassword")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("UserProfilePic")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("UserUsername")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("UserID");
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("EffectiveWebProg.Models.CommentsModel", b =>
                 {
                     b.HasOne("EffectiveWebProg.Models.PostsModel", "Post")
@@ -502,11 +626,13 @@ namespace EffectiveWebProg.Migrations
 
                     b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
                         .WithMany("Comment")
-                        .HasForeignKey("RestID");
+                        .HasForeignKey("RestID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("UsersModel", "User")
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("Comment")
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Post");
 
@@ -525,9 +651,10 @@ namespace EffectiveWebProg.Migrations
 
                     b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
                         .WithMany("ForumComment")
-                        .HasForeignKey("RestID");
+                        .HasForeignKey("RestID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("UsersModel", "User")
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("ForumComment")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -566,7 +693,7 @@ namespace EffectiveWebProg.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UsersModel", "User")
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("PostLikeUser")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -585,10 +712,11 @@ namespace EffectiveWebProg.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "TaggedRestaurant")
-                        .WithMany()
-                        .HasForeignKey("TaggedRest");
+                        .WithMany("TaggedRest")
+                        .HasForeignKey("TaggedRest")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("UsersModel", "User")
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("Post")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -598,6 +726,25 @@ namespace EffectiveWebProg.Migrations
                     b.Navigation("TaggedRestaurant");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FoodListCategoryModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.CategoryModel", "Category")
+                        .WithMany("FoodListCat")
+                        .HasForeignKey("CatID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FoodListsModel", "FoodList")
+                        .WithMany("FoodListCat")
+                        .HasForeignKey("FoodListID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("FoodList");
                 });
 
             modelBuilder.Entity("FoodListEntriesModel", b =>
@@ -627,7 +774,7 @@ namespace EffectiveWebProg.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UsersModel", "User")
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("FoodListLike")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -640,7 +787,7 @@ namespace EffectiveWebProg.Migrations
 
             modelBuilder.Entity("FoodListsModel", b =>
                 {
-                    b.HasOne("UsersModel", "User")
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("FoodList")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -657,7 +804,7 @@ namespace EffectiveWebProg.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UsersModel", "User")
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("ForumVote")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -670,13 +817,23 @@ namespace EffectiveWebProg.Migrations
 
             modelBuilder.Entity("ForumsModel", b =>
                 {
-                    b.HasOne("UsersModel", "User")
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("Forum")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PostPicsModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.PostsModel", "Post")
+                        .WithMany("PostPic")
+                        .HasForeignKey("PostID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("ReservationsModel", b =>
@@ -687,8 +844,46 @@ namespace EffectiveWebProg.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UsersModel", "User")
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("Reservation")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RestCategoryModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.CategoryModel", "Category")
+                        .WithMany("RestCat")
+                        .HasForeignKey("CatID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
+                        .WithMany("RestCat")
+                        .HasForeignKey("RestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("RestViewHistoryModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
+                        .WithMany("RestViewHistory")
+                        .HasForeignKey("RestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
+                        .WithMany("RestViewHistory")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -706,7 +901,7 @@ namespace EffectiveWebProg.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UsersModel", "User")
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("RestaurantFollowings")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -728,15 +923,26 @@ namespace EffectiveWebProg.Migrations
                     b.Navigation("Post");
                 });
 
+            modelBuilder.Entity("SearchHistoryModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
+                        .WithMany("SearchHistory")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("UserFollowingsModel", b =>
                 {
-                    b.HasOne("UsersModel", "FollowedUser")
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "FollowedUser")
                         .WithMany("Followers")
                         .HasForeignKey("FollowedUserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UsersModel", "User")
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("Followings")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -747,6 +953,13 @@ namespace EffectiveWebProg.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("EffectiveWebProg.Models.CategoryModel", b =>
+                {
+                    b.Navigation("FoodListCat");
+
+                    b.Navigation("RestCat");
+                });
+
             modelBuilder.Entity("EffectiveWebProg.Models.PostsModel", b =>
                 {
                     b.Navigation("Comment");
@@ -754,6 +967,8 @@ namespace EffectiveWebProg.Migrations
                     b.Navigation("PostLikeRest");
 
                     b.Navigation("PostLikeUser");
+
+                    b.Navigation("PostPic");
 
                     b.Navigation("Review");
                 });
@@ -773,23 +988,15 @@ namespace EffectiveWebProg.Migrations
                     b.Navigation("PostLikesRest");
 
                     b.Navigation("Reservation");
+
+                    b.Navigation("RestCat");
+
+                    b.Navigation("RestViewHistory");
+
+                    b.Navigation("TaggedRest");
                 });
 
-            modelBuilder.Entity("FoodListsModel", b =>
-                {
-                    b.Navigation("FoodListEntry");
-
-                    b.Navigation("FoodListLike");
-                });
-
-            modelBuilder.Entity("ForumsModel", b =>
-                {
-                    b.Navigation("ForumComment");
-
-                    b.Navigation("ForumVote");
-                });
-
-            modelBuilder.Entity("UsersModel", b =>
+            modelBuilder.Entity("EffectiveWebProg.Models.UsersModel", b =>
                 {
                     b.Navigation("Comment");
 
@@ -813,7 +1020,27 @@ namespace EffectiveWebProg.Migrations
 
                     b.Navigation("Reservation");
 
+                    b.Navigation("RestViewHistory");
+
                     b.Navigation("RestaurantFollowings");
+
+                    b.Navigation("SearchHistory");
+                });
+
+            modelBuilder.Entity("FoodListsModel", b =>
+                {
+                    b.Navigation("FoodListCat");
+
+                    b.Navigation("FoodListEntry");
+
+                    b.Navigation("FoodListLike");
+                });
+
+            modelBuilder.Entity("ForumsModel", b =>
+                {
+                    b.Navigation("ForumComment");
+
+                    b.Navigation("ForumVote");
                 });
 #pragma warning restore 612, 618
         }

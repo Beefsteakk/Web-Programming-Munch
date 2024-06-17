@@ -16,63 +16,96 @@
     }       
 </style>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCln59tQOKYJfWz1ywTtqzuQLG8Cj5m1yg&callback=initMap" async defer></script>
-
 <h1>@ViewData["meow"]</h1> <!-- Display the title -->
-<div id="map" class="map">
+
+<div>
+    <input type="text" id="searchQuery" placeholder="Search Restaurants By Name .."/>
+    <label for="minRating">Min Rating:</label>
+    <input type="number" id="minRating" step="0.1" min="0" max="5"/>
+    <label for="maxRating">Max Rating:</label>
+    <input type="number" id="maxRating" step="0.1" min="0" max="5"/>
+    <button onclick="filterRestaurants()">Search</button>
+</div>
+
+<div id="map" class="map"></div>
+
+@section Scripts {
     <script>
+        let map;
+        let markers = [];
+
         function initMap() {
-            // Create a map centered at a default location in singapore 
-            
-            var map = new google.maps.Map(document.getElementById('map'), {
+            // Create a map centered at a default location in Singapore
+            map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 8,
                 center: { lat: 1.3521, lng: 103.8198 }
             });
 
-            // Fetch locations data from the server
-            fetch('/Map/GetLocations')
+            // Initial fetch of all locations
+            filterRestaurants();
+        }
+
+        function clearMarkers() {
+            for (let marker of markers) {
+                marker.setMap(null);
+            }
+            markers = [];
+        }
+
+        function addMarker(lat, lng, name, rating) {
+            const latLng = { lat: lat, lng: lng };
+            const marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+                title: name
+            });
+
+            const infowindow = new google.maps.InfoWindow({
+                content: '<h3>' + name + '</h3><p>Rating: ' + (rating !== null ? rating : 'N/A') + '</p>'
+            });
+
+            marker.addListener('click', function() {
+                infowindow.open(map, marker);
+            });
+
+            markers.push(marker);
+        }
+
+        function filterRestaurants() {
+            const searchQuery = document.getElementById('searchQuery').value;
+            const minRating = document.getElementById('minRating').value;
+            const maxRating = document.getElementById('maxRating').value;
+
+            console.log(`Search Query: ${searchQuery}, Min Rating: ${minRating}, Max Rating: ${maxRating}`);
+
+            fetch(`/Map/GetLocations?searchQuery=${searchQuery}&minRating=${minRating}&maxRating=${maxRating}`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data); // Log the fetched data
-                    // Set bounds to fit all markers
-                    var bounds = new google.maps.LatLngBounds();
+                    console.log('Filtered data:', data);
+                    clearMarkers();
 
-                                            @* var test coordinates = { lat: -25.344, lng: 131.036 }; *@
-
-
-                    // Loop through the locations and add them to the map
-                    data.forEach(function(location) {
-                        var lat = parseFloat(location.lat);
-                        var lng = parseFloat(location.lng);
-
-                        // Validate latitude and longitude
-                        if (!isNaN(lat) && !isNaN(lng)) {
-                            var latLng = { lat: lat, lng: lng };
-                            bounds.extend(latLng);
-
-                            var marker = new google.maps.Marker({
-                                position: latLng,
-                                map: map,
-                                title: location.name
-                            });
-
-                            // Optionally add info windows
-                            var infowindow = new google.maps.InfoWindow({
-                                content: '<h3>' + location.name + '</h3>'
-                            });
-
-                            marker.addListener('click', function() {
-                                infowindow.open(map, marker);
-                            });
-                        } else {
-                            console.error('Invalid coordinates:', location);
-                        }
-                    });
-
-                    // Adjust map to fit all markers
-                    map.fitBounds(bounds);
+                    if (data.length > 0) {
+                        const bounds = new google.maps.LatLngBounds();
+                        data.forEach(location => {
+                            const lat = parseFloat(location.lat);
+                            const lng = parseFloat(location.lng);
+                            console.log(`Adding marker: ${location.name} at [${lat}, ${lng}]`);
+                            addMarker(lat, lng, location.name, location.rating);
+                            bounds.extend({ lat: lat, lng: lng });
+                        });
+                        map.fitBounds(bounds);
+                    } else {
+                        console.log('No locations found');
+                    }
                 })
-                .catch(error => console.log('Error:', error));
+                .catch(error => console.error('Error:', error));
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initializing the map after the DOM content is loaded
+            initMap();
+        });
     </script>
-</div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCln59tQOKYJfWz1ywTtqzuQLG8Cj5m1yg&callback=initMap" async defer></script>
+}

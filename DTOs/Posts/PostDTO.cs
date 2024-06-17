@@ -5,12 +5,10 @@ namespace EffectiveWebProg.DTOs.Posts
         public Guid PostID { get; }
         public Guid? RestID { get; }
         public Guid? UserID { get; }
-        public string PostTitle { get; }
         public string PostContent { get; }
 
-        public PostDTO(Guid PostID, Guid UserID, string PostTitle, string PostContent)
+        public PostDTO(Guid PostID, Guid UserID, string PostContent)
         {
-            this.PostTitle = PostTitle;
             this.PostID = PostID;
             this.UserID = UserID;
             this.PostContent = PostContent;
