@@ -60,22 +60,22 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="main-content">
-            <div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-9">
                 <div class="row">
-                    <div class="col-lg-2"></div>
-                    <div class="col-8">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10 col-12">
                         <div class="input-area" data-bs-toggle="modal" data-bs-target="#postModal">
                             <div class="profile-pic"></div>
                             <div class="input-field">Want to share something?</div>
                         </div>
                     </div>
-                    <div class="col-lg-2"></div>
+                    <div class="col-lg-1"></div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-2"></div>
-                    <div class="col-8">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10 col-12">
                         @foreach (var item in Model.PostLists)
                         {
                             <div class="posts" id="@item.Post.PostID">
@@ -136,18 +136,20 @@
                             </div>
                         }
                     </div>
-                    <div class="col-lg-2"></div>
+                    <div class="col-lg-1"></div>
                 </div>
+            </div>
+            <div class="col-xl-3" id="sidebar-container">
+                <nav class="right-sidebar">
+                    <div class="right-sidebar-container">
+                        <div class="right-sidebar-title">
+                            Explore
+                        </div>
+                    </div>
+                </nav>
             </div>
         </div>
     </div>
-    <nav class="right-sidebar">
-        <div class="right-sidebar-container">
-            <div class="right-sidebar-title">
-                Explore
-            </div>
-        </div>
-    </nav>
 </body>
 
 </html>

@@ -1,39 +1,4 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f2f5;
-}
-
-.container {
-    margin-top: 0px;
-    display: flex;
-}
-
-.main-content {
-    flex: 1;
-    padding: 20px;
-}
-
-.main-content header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.main-content header input {
-    width: 50%;
-    padding: 10px;
-    border-radius: 20px;
-    border: 1px solid #ccc;
-}
-
-.main-content header .user-options a {
-    margin: 0 10px;
-}
-
-.content .posts {
+.posts {
     background-color: #fff;
     padding: 15px;
     border-style: solid;
@@ -41,42 +6,41 @@ body {
     border-color: rgba(0, 0, 0, 0.03);
 }
 
-.content .posts:hover {
+.posts:hover {
     background-color: rgba(0, 0, 0, 0.03);
     cursor: pointer;
 }
-
-.content .post-header {
+.post-header {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.content .post-header img {
+.post-header img {
     border-radius: 50%;
     width: 50px;
     height: 50px;
     margin-right: 15px;
 }
 
-.content .post-header .post-info h4 {
+.post-header .post-info h4 {
     margin: 0;
 }
 
-.content .post-header .post-info span {
+.post-header .post-info span {
     color: #777;
 }
 
-.content .post-content p {
+.post-content p {
     margin: 0 0 15px 0;
 }
 
-.content .post-footer {
+.post-footer {
     display: flex;
     justify-content: space-between;
 }
 
-.content .post-footer button {
+.post-footer button {
     background: none;
     border: none;
     color: #1877f2;
@@ -333,29 +297,32 @@ aside .recommended ul li span {
     margin-right: 15px;
 }
 
-/* ---------- left Navbar ---------- */
+/* Right Nav Bar */
 .right-sidebar {
-    width: 23rem;
+    width: 20%; /* Ensure it takes the full width of the parent */
     height: 100vh;
     position: fixed;
-    right: 0;
-    top: 0;
+    right: 0; /* Align to the right of the viewport */
     background-color: #f7f7f7;
     border-left: 1px solid #e7e7e7;
     padding: 1rem;
-  }
-  
-  .right-sidebar-container {
+}
+
+.right-sidebar-container {
     display: flex;
     flex-direction: column;
     height: 100%;
     align-items: center;
-  }
-  
-  .right-sidebar-title {
+}
+
+.right-sidebar-title {
     margin-top: 4rem;
     font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 1rem;
-  }
-  
+}
+
+#sidebar-container {
+    position: relative;
+    width: 20%;
+}
