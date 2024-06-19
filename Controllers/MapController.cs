@@ -2,15 +2,26 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using System.Diagnostics;
+using EffectiveWebProg.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using EffectiveWebProg.Models;
+using System;
+using System.Linq;
 
 namespace EffectiveWebProg.Controllers
 {
     public class MapController : Controller
     {
+        private readonly ApplicationDbContext _db;
         private const string connectionString = "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
 
+        public MapController(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
         [HttpGet]
-        public JsonResult GetLocations(string searchQuery = "", float? minRating = null, float? maxRating = null)
+        public JsonResult GetLocations(string searchQuery = "", float? minRating = null, float? maxRating = null, Guid? categoryID = null)
         {
             List<object> locations = new List<object>();
 
@@ -20,21 +31,28 @@ namespace EffectiveWebProg.Controllers
                 {
                     connection.Open();
 
-                    string query = "SELECT RestName, RestLong, RestLat, RestRatings FROM Restaurants WHERE 1=1";
+                    string query = "SELECT r.RestName, r.RestLong, r.RestLat, r.RestRatings FROM Restaurants r " +
+                                    "LEFT JOIN RestCategory rc ON r.RestID = rc.RestID " + 
+                                    "LEFT JOIN Category c ON rc.CatID = c.CatID WHERE 1=1";
 
                     if (!string.IsNullOrEmpty(searchQuery))
                     {
-                        query += " AND RestName LIKE @searchQuery";
+                        query += " AND r.RestName LIKE @searchQuery";
                     }
 
                     if (minRating.HasValue)
                     {
-                        query += " AND RestRatings >= @minRating";
+                        query += " AND r.RestRatings >= @minRating";
                     }
 
                     if (maxRating.HasValue)
                     {
-                        query += " AND RestRatings <= @maxRating";
+                        query += " AND r.RestRatings <= @maxRating";
+                    }
+
+                    if (categoryID.HasValue)
+                    {
+                        query += " AND c.CatID = @categoryID";
                     }
 
                     using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -52,6 +70,11 @@ namespace EffectiveWebProg.Controllers
                         if (maxRating.HasValue)
                         {
                             command.Parameters.AddWithValue("@maxRating", maxRating.Value);
+                        }
+
+                        if (categoryID.HasValue)
+                        {
+                            command.Parameters.AddWithValue("@categoryID", categoryID.Value);
                         }
 
                         using (MySqlDataReader reader = command.ExecuteReader())
@@ -83,6 +106,10 @@ namespace EffectiveWebProg.Controllers
         public IActionResult Index()
         {
             ViewData["meow"] = "Restaurants On Munch";
+
+            var categories = _db.Category.ToList();
+            ViewBag.Category = new SelectList(categories, "CatID", "CatType");
+            
             return View();
         }
     }

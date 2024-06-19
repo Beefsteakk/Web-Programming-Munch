@@ -24,6 +24,14 @@
     <input type="number" id="minRating" step="0.1" min="0" max="5"/>
     <label for="maxRating">Max Rating:</label>
     <input type="number" id="maxRating" step="0.1" min="0" max="5"/>
+    <label for="category">Category:</label>
+    <select id="category">
+        <option value="">All</option>
+        @foreach (var category in ViewBag.Category)
+        {
+            <option value="@category.Value">@category.Text</option>
+        }
+    </select>
     <button onclick="filterRestaurants()">Search</button>
 </div>
 
@@ -75,10 +83,11 @@
             const searchQuery = document.getElementById('searchQuery').value;
             const minRating = document.getElementById('minRating').value;
             const maxRating = document.getElementById('maxRating').value;
+            const categoryID = document.getElementById('category').value;
 
-            console.log(`Search Query: ${searchQuery}, Min Rating: ${minRating}, Max Rating: ${maxRating}`);
+            console.log(`Search Query: ${searchQuery}, Min Rating: ${minRating}, Max Rating: ${maxRating}, Category: ${categoryID}`);
 
-            fetch(`/Map/GetLocations?searchQuery=${searchQuery}&minRating=${minRating}&maxRating=${maxRating}`)
+            fetch(`/Map/GetLocations?searchQuery=${searchQuery}&minRating=${minRating}&maxRating=${maxRating}&categoryID=${categoryID}`)
                 .then(response => response.json())
                 .then(data => {
                     console.log('Filtered data:', data);
