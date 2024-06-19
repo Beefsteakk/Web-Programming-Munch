@@ -31,7 +31,7 @@ namespace EffectiveWebProg.Controllers
                 {
                     connection.Open();
 
-                    string query = "SELECT r.RestName, r.RestLong, r.RestLat, r.RestRatings FROM Restaurants r " +
+                    string query = "SELECT r.RestID, r.RestName, r.RestLong, r.RestLat, r.RestRatings FROM Restaurants r " +
                                     "LEFT JOIN RestCategory rc ON r.RestID = rc.RestID " + 
                                     "LEFT JOIN Category c ON rc.CatID = c.CatID WHERE 1=1";
 
@@ -83,6 +83,7 @@ namespace EffectiveWebProg.Controllers
                             {
                                 var location = new
                                 {
+                                    RestID = reader["RestID"].ToString(),
                                     Name = reader["RestName"].ToString(),
                                     Lat = reader["RestLat"] != DBNull.Value ? Convert.ToDouble(reader["RestLat"]) : (double?)null,
                                     Lng = reader["RestLong"] != DBNull.Value ? Convert.ToDouble(reader["RestLong"]) : (double?)null,

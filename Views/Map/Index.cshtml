@@ -60,7 +60,7 @@
             markers = [];
         }
 
-        function addMarker(lat, lng, name, rating) {
+        function addMarker(lat, lng, name, rating, restID) {
             const latLng = { lat: lat, lng: lng };
             const marker = new google.maps.Marker({
                 position: latLng,
@@ -68,8 +68,16 @@
                 title: name
             });
 
+            const contentString = `
+                <div>
+                    <h3>${name}</h3>
+                    <p>Rating: ${rating !== null ? rating : 'N/A'}</p>
+                    <a href="/Restaurant/RestProfile/${restID}" target="_blank">Go to Restaurant Page</a>
+                </div>
+            `;
+
             const infowindow = new google.maps.InfoWindow({
-                content: '<h3>' + name + '</h3><p>Rating: ' + (rating !== null ? rating : 'N/A') + '</p>'
+                content: contentString
             });
 
             marker.addListener('click', function() {
@@ -99,7 +107,7 @@
                             const lat = parseFloat(location.lat);
                             const lng = parseFloat(location.lng);
                             console.log(`Adding marker: ${location.name} at [${lat}, ${lng}]`);
-                            addMarker(lat, lng, location.name, location.rating);
+                            addMarker(lat, lng, location.name, location.rating, location.restID);
                             bounds.extend({ lat: lat, lng: lng });
                         });
                         map.fitBounds(bounds);
