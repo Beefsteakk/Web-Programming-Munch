@@ -7,35 +7,13 @@ using EffectiveWebProg.DTOs.Posts;
 
 namespace EffectiveWebProg.Controllers;
 
-public class PostsController : Controller
+public class PostsController : BaseController
 {
     private readonly ApplicationDbContext _db;
 
     public PostsController(ApplicationDbContext db)
     {
         _db = db;
-    }
-
-    private void CompletePostObject(PostsModel post)
-    {
-        if (post.UserID != null)
-        {
-            post.User = _db.Users.Find(post.UserID);
-        }
-        else if (post.RestID != null)
-        {
-            post.Restaurant = _db.Restaurants.Find(post.RestID);
-        }
-    }
-
-    private async Task<List<PostsModel>> GetAllPostsAsync()
-    {
-        var posts = await _db.Posts.OrderByDescending(p => p.PostCreatedAt).ToListAsync();
-        foreach (var post in posts)
-        {
-            CompletePostObject(post);
-        }
-        return posts;
     }
 
     private async Task<List<CommentsModel>> GetSpecificPostCommentsAsync(Guid postID)
@@ -50,20 +28,46 @@ public class PostsController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var userID = Guid.Parse("10bb4451-19aa-11ef-ad56-662ef0370963"); // Temporary variable.
-        var posts = await GetAllPostsAsync();
+        var sessionID = HttpContext.Session.GetString("SSID") ?? "";
+        var posts = await FetchUserViewablePosts();
         var postViewModels = new List<PostViewModel>();
         foreach (var post in posts)
         {
-            var like = await _db.PostLikesUser.FirstOrDefaultAsync(l => l.PostID == post.PostID && l.UserID == userID);
-            var isLiked = like != null;
-            postViewModels.Add(new PostViewModel { Post = post, IsLikedByUser = isLiked });
+            var like = await _db.PostLikesUser.FirstOrDefaultAsync(
+                l => l.PostID == post.PostID && l.UserID == Guid.Parse(sessionID)
+            );
+            postViewModels.Add(new PostViewModel { Post = post, IsLikedByUser = like != null });
         }
-        var viewModel = new MainFeedViewModel
+        ViewBag.UserID = sessionID;
+        return View(new MainFeedViewModel(postViewModels));
+    }
+
+    /// <summary>
+    /// Returns a list of posts that the logged in user can see. (This means the user's own posts,
+    /// and the posts of other users that are being followed by the currently logged in user.)
+    /// </summary>
+    public async Task<List<PostsModel>> FetchUserViewablePosts()
+    {
+        // TODO: Implement logic for restaurants too.
+        var sessionID = HttpContext.Session.GetString("SSID");
+        if (sessionID == null)
         {
-            PostLists = postViewModels,
-        };
-        return View(viewModel);
+            return new List<PostsModel>();
+        }
+
+        var posts = await _db.Posts.FromSqlRaw(
+            "SELECT Posts.* FROM Posts WHERE Posts.UserID = {0} " +
+            "UNION " +
+            "SELECT Posts.* FROM Posts JOIN UserFollowings ON Posts.UserID = UserFollowings.FollowedUserID " +
+            "WHERE UserFollowings.UserID = {0}",
+            sessionID
+        ).OrderByDescending(p => p.PostCreatedAt).ToListAsync();
+
+        foreach (var post in posts)
+        {
+            CompletePostObject(post);
+        }
+        return posts;
     }
 
     [HttpPost]
@@ -99,11 +103,13 @@ public class PostsController : Controller
         {
             return Json(new { success = false });
         }
+        CompletePostObject(post);
 
-        var postDTO = new PostDTO(post.PostID, (Guid)post.UserID, post.PostContent);
+        var postDTO = new PostDTO(post.PostID, new PostAuthorDTO(post.User.UserID, post.User.UserUsername), post.PostContent, post.PostCreatedAt.ToString("G"));
         var comments = await GetSpecificPostCommentsAsync(Gid);
         var commentDTOList = new List<CommentDTO>();
-        foreach (var comment in comments) {
+        foreach (var comment in comments)
+        {
             var author = await _db.Users.FirstOrDefaultAsync(u => u.UserID == comment.UserID);
             commentDTOList.Add(new CommentDTO(comment.CommentID, comment.PostID, new CommentAuthorDTO(author.UserID, author.UserUsername), comment.CommentContent));
         }
@@ -111,7 +117,7 @@ public class PostsController : Controller
         ImageUrl.Add("/assets/images/photo-1556008531-57e6eefc7be4.jpeg");
         ImageUrl.Add("/assets/images/photo-1557684387-08927d28c72a.jpeg");
         ImageUrl.Add("/assets/images/photo-1526016650454-68a6f488910a.jpeg");
-        return Json(new {imageUrl = ImageUrl, post = postDTO, comments = commentDTOList, success = true});
+        return Json(new { imageUrl = ImageUrl, post = postDTO, comments = commentDTOList, success = true });
     }
 
     [HttpGet]
@@ -147,5 +153,17 @@ public class PostsController : Controller
 
         await _db.SaveChangesAsync();
         return RedirectToAction("");
+    }
+
+    private void CompletePostObject(PostsModel post)
+    {
+        if (post.UserID != null)
+        {
+            post.User = _db.Users.Find(post.UserID);
+        }
+        else if (post.RestID != null)
+        {
+            post.Restaurant = _db.Restaurants.Find(post.RestID);
+        }
     }
 }

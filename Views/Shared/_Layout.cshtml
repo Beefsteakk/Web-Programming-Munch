@@ -26,58 +26,66 @@
     @{
         var controller = (string)ViewContext.RouteData.Values["controller"];
     }
-    <nav class="left-sidebar">
-        <ul class="left-sidebar-nav">
-            <li class="left-sidebar-munch">
-                Munch
-            </li>
-            <li class="left-nav-item">
-                <a class="left-nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">
-                    <i class="fa-solid fa-user"></i>
-                    <span class="left-link-text">Profile</span>
-                </a>
-            </li>
-            <li class="left-nav-item">
-                <a class="left-nav-link text-dark" asp-area="" asp-controller="RestProfile" asp-action="Index">
-                    <i class="fa-solid fa-bowl-food"></i>
-                    <span class="left-link-text">Restaurant Profile</span>
-                </a>
-            </li>
-            <li class="left-nav-item">
-                <a class="left-nav-link text-dark" asp-area="" asp-controller="Map" asp-action="Index">
-                    <i class="fa-solid fa-map"></i>
-                    <span class="left-link-text">Map</span>
-                </a>
-            </li>
-            <li class="left-nav-item">
-                <a class="left-nav-link text-dark" asp-area="" asp-controller="Posts" asp-action="Index">
-                    <i class="fa-solid fa-house"></i>
-                    <span class="left-link-text">Main Feed</span>
-                </a>
-            </li>
-            <li class="left-nav-item">
-                <a class="left-nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">
-                    <i class="fa-solid fa-tachometer-alt"></i>
-                    <span class="left-link-text">Dashboard</span>
-                </a>
-            </li>
-            <li class="left-nav-item">
-                <a class="left-nav-link text-dark" asp-area="" asp-controller="Foodlist" asp-action="Index">
-                    <i class="fa-solid fa-utensils"></i>
-                    <span class="left-link-text">Foodlist</span>
-                </a>
-            </li>
-            <li class="left-nav-item">
-                <a class="left-nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">
-                    <span class="left-link-text">Log out</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-    <main role="main">
-        @RenderBody()
-    </main>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-2 col-1">
+                <nav class="left-sidebar">
+                    <ul class="left-sidebar-nav">
+                        <li class="left-sidebar-munch">
+                            <span class="d-none d-xl-inline">Munch</span>
+                        </li>
+                        <li class="left-nav-item">
+                            <a class="left-nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">
+                                <i class="fa-solid fa-user"></i>
+                                <span class="left-link-text d-none d-xl-inline">Profile</span>
+                            </a>
+                        </li>
+                        <li class="left-nav-item">
+                            <a class="left-nav-link text-dark" asp-area="" asp-controller="RestProfile" asp-action="Index">
+                                <i class="fa-solid fa-bowl-food"></i>
+                                <span class="left-link-text d-none d-xl-inline">Restaurant Profile</span>
+                            </a>
+                        </li>
+                        <li class="left-nav-item">
+                            <a class="left-nav-link text-dark" asp-area="" asp-controller="Map" asp-action="Index">
+                                <i class="fa-solid fa-map"></i>
+                                <span class="left-link-text d-none d-xl-inline">Map</span>
+                            </a>
+                        </li>
+                        <li class="left-nav-item">
+                            <a class="left-nav-link text-dark" asp-area="" asp-controller="Posts" asp-action="Index">
+                                <i class="fa-solid fa-house"></i>
+                                <span class="left-link-text d-none d-xl-inline">Main Feed</span>
+                            </a>
+                        </li>
+                        <li class="left-nav-item">
+                            <a class="left-nav-link text-dark" asp-area="" asp-controller="Dashboard"
+                                asp-action="Index">
+                                <i class="fa-solid fa-tachometer-alt"></i>
+                                <span class="left-link-text d-none d-xl-inline">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="left-nav-item">
+                            <a class="left-nav-link text-dark" asp-area="" asp-controller="Foodlist" asp-action="Index">
+                                <i class="fa-solid fa-utensils"></i>
+                                <span class="left-link-text d-none d-xl-inline">Foodlist</span>
+                            </a>
+                        </li>
+                        <li class="left-nav-item">
+                            <a class="left-nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">
+                                <span class="left-link-text">Log out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-xl-10 col-11">
+                <main role="main">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -88,4 +96,5 @@
     <script src="/_framework/aspnetcore-browser-refresh.js"></script>
 
 </body>
+
 </html>

@@ -33,7 +33,8 @@ allPost.forEach(function(e) {
                             </div>
                         `);
                     });
-                    $('#modalTitle').text(response.post.postTitle);
+                    $('#modalUsername').text(response.post.postAuthor.username);
+                    $('#modalCreatedAt').text(response.post.postCreatedAt);
                     $('#modalMessage').text(response.post.postContent);
                     $('#modalComments').empty();
                     response.comments.forEach((comment, _) => {

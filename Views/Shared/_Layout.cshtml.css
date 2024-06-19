@@ -24,6 +24,10 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-thumb {
   background: var(--text-secondary);
 }
+
+.container-fluid {
+  padding: 0;
+}
 /* ---------- Navbar ---------- */
 
 .left-sidebar-munch {
@@ -37,7 +41,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .left-sidebar {
-  width: 15rem;
+  width: inherit;
   height: 100vh;
   position: fixed;
   background-color: #f7f7f7;
@@ -87,17 +91,24 @@ body::-webkit-scrollbar-thumb {
   transition: 600ms;
 }
 
+@media screen and (max-width: 1199px){
+  .left-nav-item {
+    justify-content: center;
+    padding-left: 0;
+  }
+}
+
 /* ---------- Main ---------- */
 main {
-  margin-left: 15rem;
+  /* margin-left: 15rem;
   padding: 1px;
   margin-bottom: 3rem;
-  margin-right: 23rem;
+  margin-right: 23rem; */
 }
 
 /* ---------- left Navbar ---------- */
 .right-sidebar {
-  width: 23rem;
+   width: inherit;
   height: 100vh;
   position: fixed;
   right: 0;

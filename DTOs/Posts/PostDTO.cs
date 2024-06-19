@@ -1,18 +1,17 @@
 namespace EffectiveWebProg.DTOs.Posts
 {
-    public class PostDTO
+    public class PostDTO(Guid PostID, PostAuthorDTO PostAuthor, string PostContent, string PostCreatedAt)
     {
-        public Guid PostID { get; }
-        public Guid? RestID { get; }
-        public Guid? UserID { get; }
-        public string PostContent { get; }
+        public Guid PostID { get; } = PostID;
+        public PostAuthorDTO PostAuthor { get; } = PostAuthor;
+        public string PostContent { get; } = PostContent;
+        public string PostCreatedAt { get; } = PostCreatedAt;
+    }
 
-        public PostDTO(Guid PostID, Guid UserID, string PostContent)
-        {
-            this.PostID = PostID;
-            this.UserID = UserID;
-            this.PostContent = PostContent;
-        }
+    public class PostAuthorDTO(Guid UserID, string Username)
+    {
+        public Guid UserID { get; } = UserID;
+        public string Username { get; } = Username;
     }
 
     public class CommentDTO
@@ -31,15 +30,10 @@ namespace EffectiveWebProg.DTOs.Posts
         }
     }
 
-    public class CommentAuthorDTO
+    public class CommentAuthorDTO(Guid UserID, string Username)
     {
-        public Guid UserID { get; }
-        public string Username { get; }
+        public Guid UserID { get; } = UserID;
+        public string Username { get; } = Username;
         public string? ProfilePicURL { get; }
-
-        public CommentAuthorDTO (Guid UserID, string Username) {
-            this.UserID = UserID;
-            this.Username = Username;
-        }
     }
 }

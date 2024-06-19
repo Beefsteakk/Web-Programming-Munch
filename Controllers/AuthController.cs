@@ -1,11 +1,6 @@
 using EffectiveWebProg.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace EffectiveWebProg.Controllers
 {
@@ -117,13 +112,22 @@ namespace EffectiveWebProg.Controllers
 
                             if (storedPassword != null && BCrypt.Net.BCrypt.Verify(model.UserPassword, storedPassword))
                             {
-                                Console.WriteLine($"Debugging works! UserEmail: {model.UserEmail}");
-                                Console.WriteLine($"Debugging works! Password: {model.UserPassword}");
+                                using (MySqlCommand cmd2 = new MySqlCommand(
+                                    "SELECT UserID as ID FROM Users WHERE UserEmail = @UserEmail " +
+                                    "UNION " +
+                                    "SELECT RestID as ID FROM Restaurants WHERE RestEmail = @UserEmail", conn
+                                )) {
+                                    cmd2.Parameters.AddWithValue("@UserEmail", model.UserEmail);
+                                    string id = cmd2.ExecuteScalar()?.ToString();
+                                    HttpContext.Session.SetString("SSName", model.UserEmail);
+                                    HttpContext.Session.SetString("SSID", id);
+                                    Console.WriteLine($"Debugging works! UserEmail: {model.UserEmail}");
+                                    Console.WriteLine($"Debugging works! Password: {model.UserPassword}");
+                                    return RedirectToAction("Index", "Posts");
+                                }
 
-                                HttpContext.Session.SetString("SSName", model.UserEmail);
 
                                 // Redirect to Home Index page on successful login
-                                return RedirectToAction("Index", "Posts");
 
                                 // HttpContext.Session.SetString("user", currentUser.Trim());
                                 // _svc.retrieveuserid(HttpContext.Session.GetString("user"));
