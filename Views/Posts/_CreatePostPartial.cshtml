@@ -14,10 +14,13 @@
             <input asp-for="PostContent" type="text" class="form-control" required>
 
             <label for="location">Location:</label>
-            <input type="text" id="location" name="location" class="form-control">
+            <input id="restaurant-search" name="restaurant-search" type="text" class="form-control"/>
+            <input type="hidden" name="TaggedRest" id="itemId" />
 
             <label for="pictures">Pictures:</label>
-            <input type="file" id="pictures" name="pictures" accept="image/*" multiple class="form-control">
+            <input type="file" id="pictures" name="pictures" accept="image/*" multiple onchange="previewImages();" class="form-control">
+
+            <div id="imagePreview"></div>
         </div>
         <button type="submit" class="btn btn-primary float-end">Create Post</button>
     </form>

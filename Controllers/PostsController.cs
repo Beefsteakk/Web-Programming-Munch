@@ -7,14 +7,9 @@ using EffectiveWebProg.DTOs.Posts;
 
 namespace EffectiveWebProg.Controllers;
 
-public class PostsController : BaseController
+public class PostsController(ApplicationDbContext db) : BaseController
 {
-    private readonly ApplicationDbContext _db;
-
-    public PostsController(ApplicationDbContext db)
-    {
-        _db = db;
-    }
+    private readonly ApplicationDbContext _db = db;
 
     private async Task<List<CommentsModel>> GetSpecificPostCommentsAsync(Guid postID)
     {
@@ -29,7 +24,7 @@ public class PostsController : BaseController
     public async Task<IActionResult> Index()
     {
         var sessionID = HttpContext.Session.GetString("SSID") ?? "";
-        var posts = await FetchUserViewablePosts();
+        var posts = await FetchViewablePostsByIDAsync(Guid.Parse(sessionID));
         var postViewModels = new List<PostViewModel>();
         foreach (var post in posts)
         {
@@ -40,34 +35,6 @@ public class PostsController : BaseController
         }
         ViewBag.UserID = sessionID;
         return View(new MainFeedViewModel(postViewModels));
-    }
-
-    /// <summary>
-    /// Returns a list of posts that the logged in user can see. (This means the user's own posts,
-    /// and the posts of other users that are being followed by the currently logged in user.)
-    /// </summary>
-    public async Task<List<PostsModel>> FetchUserViewablePosts()
-    {
-        // TODO: Implement logic for restaurants too.
-        var sessionID = HttpContext.Session.GetString("SSID");
-        if (sessionID == null)
-        {
-            return new List<PostsModel>();
-        }
-
-        var posts = await _db.Posts.FromSqlRaw(
-            "SELECT Posts.* FROM Posts WHERE Posts.UserID = {0} " +
-            "UNION " +
-            "SELECT Posts.* FROM Posts JOIN UserFollowings ON Posts.UserID = UserFollowings.FollowedUserID " +
-            "WHERE UserFollowings.UserID = {0}",
-            sessionID
-        ).OrderByDescending(p => p.PostCreatedAt).ToListAsync();
-
-        foreach (var post in posts)
-        {
-            CompletePostObject(post);
-        }
-        return posts;
     }
 
     [HttpPost]
@@ -103,7 +70,7 @@ public class PostsController : BaseController
         {
             return Json(new { success = false });
         }
-        CompletePostObject(post);
+        await CompletePostObject(post);
 
         var postDTO = new PostDTO(post.PostID, new PostAuthorDTO(post.User.UserID, post.User.UserUsername), post.PostContent, post.PostCreatedAt.ToString("G"));
         var comments = await GetSpecificPostCommentsAsync(Gid);
@@ -129,7 +96,7 @@ public class PostsController : BaseController
         {
             return NotFound();
         }
-        CompletePostObject(post);
+        await CompletePostObject(post);
         var model = new IndividualPostViewModel { Post = post, CommentsList = comments };
         return View(model);
     }
@@ -155,15 +122,94 @@ public class PostsController : BaseController
         return RedirectToAction("");
     }
 
-    private void CompletePostObject(PostsModel post)
+    [HttpGet]
+    public async Task<JsonResult> SearchRestaurant(string term) {
+        var restaurants = await _db.Restaurants
+            .Where(r => r.RestName.Contains(term))
+            .Select(r => new { r.RestID, r.RestName })
+            .ToListAsync();
+
+        return Json(restaurants);
+    }
+
+    /// <summary>
+    /// Returns a list of posts that the logged in user can see. (This means the user's own posts,
+    /// and the posts of other users that are being followed by the currently logged in user.)
+    /// </summary>
+    private async Task<List<PostsModel>> FetchViewablePostsByIDAsync(Guid id)
+    {
+        var posts = new List<PostsModel>();
+        var restaurant = await _db.Restaurants.FirstOrDefaultAsync(r => r.RestID == id);
+        if (restaurant != null)
+        {
+            posts = await _db.Posts.FromSqlRaw(
+                "SELECT Posts.* FROM Posts WHERE Posts.RestID = {0}", id
+            ).OrderByDescending(p => p.PostCreatedAt).ToListAsync();
+        }
+        else
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.UserID == id);
+            if (user == null) return posts;
+            posts = await _db.Posts.FromSqlRaw(
+                "SELECT Posts.* FROM Posts WHERE Posts.UserID = {0} " +
+                "UNION " +
+                "SELECT Posts.* FROM Posts JOIN UserFollowings ON Posts.UserID = UserFollowings.FollowedUserID " +
+                "WHERE UserFollowings.UserID = {0} " +
+                "UNION " +
+                "SELECT Posts.* FROM Posts JOIN RestaurantFollowings ON Posts.RestID = RestaurantFollowings.FollowedRestID " +
+                "WHERE RestaurantFollowings.UserID = {0} ",
+                user.UserID
+            ).OrderByDescending(p => p.PostCreatedAt).ToListAsync();
+        }
+
+        foreach (var post in posts)
+        {
+            await CompletePostObject(post);
+        }
+        return posts;
+    }
+
+    private async Task CompletePostObject(PostsModel post)
     {
         if (post.UserID != null)
         {
-            post.User = _db.Users.Find(post.UserID);
+            post.User = await _db.Users.FindAsync(post.UserID);
         }
         else if (post.RestID != null)
         {
-            post.Restaurant = _db.Restaurants.Find(post.RestID);
+            post.Restaurant = await _db.Restaurants.FindAsync(post.RestID);
         }
+
+        /* This is commented out because the below information are unused for now and adds a considerable loading time.
+        if (post.TaggedRest != null)
+        {
+            post.TaggedRestaurant = await _db.Restaurants.FindAsync(post.TaggedRest);
+        }
+
+        post.Comment = await _db.Comments.FromSqlRaw(
+            "SELECT * FROM Comments WHERE PostID = {0}",
+            post.PostID
+        ).OrderByDescending(c => c.CommentCreatedAt).ToListAsync();
+
+        post.PostLikeUser = await _db.PostLikesUser.FromSqlRaw(
+            "SELECT * FROM PostLikesUser WHERE PostID = {0}",
+            post.PostID
+        ).ToListAsync();
+
+        post.PostLikeRest = await _db.PostLikesRest.FromSqlRaw(
+            "SELECT * FROM PostLikesRest WHERE PostID = {0}",
+            post.PostID
+        ).ToListAsync();
+
+        post.Review = await _db.Reviews.FromSqlRaw(
+            "SELECT * FROM Reviews WHERE PostID = {0}",
+            post.PostID
+        ).ToListAsync();
+
+        post.PostPic = await _db.PostPics.FromSqlRaw(
+            "SELECT * FROM PostPics WHERE PostID = {0}",
+            post.PostID
+        ).ToListAsync();
+        */
     }
 }
