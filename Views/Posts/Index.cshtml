@@ -90,7 +90,7 @@
                                     <div class="post-info">
                                         @if (item.Post.User != null)
                                         {
-                                            <h4>@item.Post.User.UserName</h4>
+                                            <h4>@item.Post.User.UserUsername</h4>
                                         }
                                         else if (item.Post.Restaurant != null)
                                         {
@@ -111,7 +111,11 @@
                                         }
                                     </div>
                                 </div>
-
+                                @if (item.Post.TaggedRest != null) {
+                                    var link = $"/Restaurant/RestProfile/{item.Post.TaggedRest}";
+                                    <div><a href="@link">Go to Restaurant Page</a></div>
+                                }
+                                
                                 <div class="post-footer">
                                     <form asp-action="LikePost" method="post">
                                         <input type="hidden" name="postId" value="@item.Post.PostID" />
