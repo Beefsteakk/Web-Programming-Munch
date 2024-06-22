@@ -1,15 +1,8 @@
 @model PostsModel
 
-@*temporary variable*@
-@{
-    var userID = Guid.Parse(ViewBag.UserID);
-}
-
 <div>
-    <form asp-action="CreatePosts" asp-controller="Posts" method="post">
+    <form asp-action="CreatePost" asp-controller="Posts" method="post">
         <div class="form-group">
-            <input type="hidden" name="UserId" value="@userID" />
-
             <label for="post">Post:</label>
             <input asp-for="PostContent" type="text" class="form-control" required>
 

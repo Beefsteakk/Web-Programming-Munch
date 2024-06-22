@@ -11,16 +11,6 @@ public class PostsController(ApplicationDbContext db) : BaseController
 {
     private readonly ApplicationDbContext _db = db;
 
-    private async Task<List<CommentsModel>> GetSpecificPostCommentsAsync(Guid postID)
-    {
-        var comments = await _db.Comments
-            .OrderBy(c => c.CommentCreatedAt)
-            .Where(c => c.PostID == postID)
-            .ToListAsync();
-
-        return comments;
-    }
-
     public async Task<IActionResult> Index()
     {
         var sessionID = HttpContext.Session.GetString("SSID") ?? "";
@@ -39,17 +29,23 @@ public class PostsController(ApplicationDbContext db) : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreatePosts(PostsModel post)
+    [Route("Posts/CreatePost")]
+    public async Task<IActionResult> CreatePostAsync(PostsModel post)
     {
-        await _db.Posts.AddAsync(post);
-        await _db.SaveChangesAsync();
-        return RedirectToAction("");
-    }
+        var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
+        var user = await _db.Users.FindAsync(sessionID);
+        if (user != null)
+        {
+            post.UserID = user.UserID;
+        }
+        else
+        {
+            var restaurant = await _db.Restaurants.FindAsync(sessionID);
+            if (restaurant == null) return Forbid();
 
-    [HttpPost]
-    public async Task<IActionResult> AddComment(CommentsModel comment)
-    {
-        await _db.Comments.AddAsync(comment);
+            post.RestID = restaurant.RestID;
+        }
+        await _db.Posts.AddAsync(post);
         await _db.SaveChangesAsync();
         return RedirectToAction("");
     }
@@ -61,7 +57,7 @@ public class PostsController(ApplicationDbContext db) : BaseController
         var post = await FetchPostByIDAsync(postID);
         if (post == null) return NotFound();
         if (!CheckOperationIsPermitted(post)) return Forbid();
-        
+
         post.PostContent = content;
         post.TaggedRest = taggedRestID;
         _db.Posts.Update(post);
@@ -78,6 +74,28 @@ public class PostsController(ApplicationDbContext db) : BaseController
         if (!CheckOperationIsPermitted(post)) return Forbid();
 
         _db.Posts.Remove(post);
+        await _db.SaveChangesAsync();
+        return RedirectToAction("");
+    }
+
+    [HttpPost]
+    [Route("Posts/AddComment")]
+    public async Task<IActionResult> AddCommentAsync(CommentsModel comment)
+    {
+        var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
+        var user = await _db.Users.FindAsync(sessionID);
+        if (user != null)
+        {
+            comment.UserID = user.UserID;
+        }
+        else
+        {
+            var restaurant = await _db.Restaurants.FindAsync(sessionID);
+            if (restaurant == null) return Forbid();
+
+            comment.RestID = restaurant.RestID;
+        }
+        await _db.Comments.AddAsync(comment);
         await _db.SaveChangesAsync();
         return RedirectToAction("");
     }
@@ -122,20 +140,42 @@ public class PostsController(ApplicationDbContext db) : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> LikePost(Guid postId, Guid userId)
+    [Route("Posts/LikePost")]
+    public async Task<IActionResult> LikePostAsync(Guid postId)
     {
-        var like = _db.PostLikesUser.FirstOrDefault(l => l.PostID == postId && l.UserID == userId);
-        if (like == null)
+        var post = await FetchPostByIDAsync(postId);
+        var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
+        if (post == null) return NotFound();
+
+        var user = await _db.Users.FindAsync(sessionID);
+        if (user != null)
         {
-            // Add a new like
-            var post = await _db.Posts.FirstOrDefaultAsync(p => p.PostID == postId);
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.UserID == userId);
-            like = new PostLikesUserModel { Post = post, User = user };
-            await _db.PostLikesUser.AddAsync(like);
+            var like = await _db.PostLikesUser.FirstOrDefaultAsync(l => l.PostID == postId && l.UserID == sessionID);
+            if (like == null)
+            {
+                like = new PostLikesUserModel { Post = post, User = user };
+                await _db.PostLikesUser.AddAsync(like);
+            }
+            else
+            {
+                _db.PostLikesUser.Remove(like);
+            }
         }
         else
         {
-            _db.PostLikesUser.Remove(like);
+            var restaurant = await _db.Restaurants.FindAsync(sessionID);
+            if (restaurant == null) return Forbid();
+
+            var like = await _db.PostLikesRest.FirstOrDefaultAsync(l => l.PostID == postId && l.RestID == sessionID);
+            if (like == null)
+            {
+                like = new PostLikesRestModel { Post = post, Restaurant = restaurant };
+                await _db.PostLikesRest.AddAsync(like);
+            }
+            else
+            {
+                _db.PostLikesRest.Remove(like);
+            }
         }
 
         await _db.SaveChangesAsync();
@@ -244,5 +284,15 @@ public class PostsController(ApplicationDbContext db) : BaseController
             post.PostID
         ).ToListAsync();
         */
+    }
+
+    private async Task<List<CommentsModel>> GetSpecificPostCommentsAsync(Guid postID)
+    {
+        var comments = await _db.Comments
+            .OrderBy(c => c.CommentCreatedAt)
+            .Where(c => c.PostID == postID)
+            .ToListAsync();
+
+        return comments;
     }
 }

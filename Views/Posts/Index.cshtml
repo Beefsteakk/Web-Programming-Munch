@@ -8,13 +8,8 @@
     }
 }
 
-@{
-    var userID = Guid.Parse(ViewBag.UserID);
-}
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <link rel="stylesheet" href="~/css/post.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -121,7 +116,6 @@
                                 <div class="post-footer">
                                     <form asp-action="LikePost" method="post">
                                         <input type="hidden" name="postId" value="@item.Post.PostID" />
-                                        <input type="hidden" name="userId" value="@userID" />
                                         <button type="submit"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
                                             @if (item.IsLikedByUser)
                                             {
@@ -138,11 +132,7 @@
                                     <button><i class="fa fa-share" aria-hidden="true"></i><span
                                             class="icon-text">Share</span></button>
                                 </div>
-                                @await Html.PartialAsync("/Views/Comments/_CommentFormPartial.cshtml", new CommentsModel
-                       {
-                           UserID = userID,
-                           PostID = item.Post.PostID
-                       })
+                                @await Html.PartialAsync("/Views/Comments/_CommentFormPartial.cshtml", new CommentsModel { PostID = item.Post.PostID })
                             </div>
                         }
                     </div>
