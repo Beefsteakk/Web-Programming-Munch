@@ -83,8 +83,10 @@
                         @foreach (var item in Model.PostLists)
                         {
                             <div class="posts" id="@item.Post.PostID">
-                                <a class="float-end" asp-controller="Posts" asp-action="SpecificPost"
+                                @if (item.IsOwnPost) {
+                                    <a class="float-end" asp-controller="Posts" asp-action="SpecificPost"
                                     asp-route-id="@item.Post.PostID"><i class="fa-regular fa-clipboard"></i></a>
+                                }
                                 <div class="post-header">
                                     <img src="~/Images/xunyin.jpg" alt="Xun Yin">
                                     <div class="post-info">

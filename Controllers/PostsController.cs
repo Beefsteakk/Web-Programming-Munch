@@ -28,10 +28,11 @@ public class PostsController(ApplicationDbContext db) : BaseController
         var postViewModels = new List<PostViewModel>();
         foreach (var post in posts)
         {
+            // TODO: Need to handle logic related to restaurants too.
             var like = await _db.PostLikesUser.FirstOrDefaultAsync(
                 l => l.PostID == post.PostID && l.UserID == Guid.Parse(sessionID)
             );
-            postViewModels.Add(new PostViewModel { Post = post, IsLikedByUser = like != null });
+            postViewModels.Add(new PostViewModel { Post = post, IsLikedByUser = like != null, IsOwnPost = post.UserID == Guid.Parse(sessionID) });
         }
         ViewBag.UserID = sessionID;
         return View(new MainFeedViewModel(postViewModels));
@@ -54,11 +55,31 @@ public class PostsController(ApplicationDbContext db) : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> EditPosts(PostsModel post)
+    [Route("Posts/EditPost")]
+    public async Task<IActionResult> EditPostByIDAsync(Guid postID, string content, Guid taggedRestID)
     {
+        var post = await FetchPostByIDAsync(postID);
+        if (post == null) return NotFound();
+        if (!CheckOperationIsPermitted(post)) return Forbid();
+        
+        post.PostContent = content;
+        post.TaggedRest = taggedRestID;
         _db.Posts.Update(post);
         await _db.SaveChangesAsync();
         return RedirectToAction("SpecificPost", new { id = post.PostID });
+    }
+
+    [HttpPost]
+    [Route("Posts/DeletePost")]
+    public async Task<IActionResult> DeletePostByIDAsync(Guid postID)
+    {
+        var post = await FetchPostByIDAsync(postID);
+        if (post == null) return NotFound();
+        if (!CheckOperationIsPermitted(post)) return Forbid();
+
+        _db.Posts.Remove(post);
+        await _db.SaveChangesAsync();
+        return RedirectToAction("");
     }
 
     [HttpPost]
@@ -90,12 +111,11 @@ public class PostsController(ApplicationDbContext db) : BaseController
     [HttpGet]
     public async Task<IActionResult> SpecificPost(Guid id)
     {
-        var post = await _db.Posts.FirstOrDefaultAsync(p => p.PostID == id);
+        var post = await FetchPostByIDAsync(id);
+        if (post == null) return NotFound();
+        if (!CheckOperationIsPermitted(post)) return Forbid();
+
         var comments = await GetSpecificPostCommentsAsync(id);
-        if (post == null)
-        {
-            return NotFound();
-        }
         await CompletePostObject(post);
         var model = new IndividualPostViewModel { Post = post, CommentsList = comments };
         return View(model);
@@ -123,13 +143,20 @@ public class PostsController(ApplicationDbContext db) : BaseController
     }
 
     [HttpGet]
-    public async Task<JsonResult> SearchRestaurant(string term) {
+    public async Task<JsonResult> SearchRestaurant(string term)
+    {
         var restaurants = await _db.Restaurants
             .Where(r => r.RestName.Contains(term))
             .Select(r => new { r.RestID, r.RestName })
             .ToListAsync();
 
         return Json(restaurants);
+    }
+
+    private bool CheckOperationIsPermitted(PostsModel post)
+    {
+        var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
+        return post.UserID == sessionID || post.RestID == sessionID;
     }
 
     /// <summary>
@@ -169,6 +196,12 @@ public class PostsController(ApplicationDbContext db) : BaseController
         return posts;
     }
 
+    private async Task<PostsModel?> FetchPostByIDAsync(Guid postID)
+    {
+        var post = await _db.Posts.FirstOrDefaultAsync(p => p.PostID == postID);
+        return post;
+    }
+
     private async Task CompletePostObject(PostsModel post)
     {
         if (post.UserID != null)
@@ -180,12 +213,12 @@ public class PostsController(ApplicationDbContext db) : BaseController
             post.Restaurant = await _db.Restaurants.FindAsync(post.RestID);
         }
 
-        /* This is commented out because the below information are unused for now and adds a considerable loading time.
         if (post.TaggedRest != null)
         {
             post.TaggedRestaurant = await _db.Restaurants.FindAsync(post.TaggedRest);
         }
 
+        /* This is commented out because the below information are unused for now and adds a considerable loading time.
         post.Comment = await _db.Comments.FromSqlRaw(
             "SELECT * FROM Comments WHERE PostID = {0}",
             post.PostID

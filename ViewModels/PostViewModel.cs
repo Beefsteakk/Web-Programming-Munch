@@ -6,5 +6,6 @@ namespace EffectiveWebProg.ViewModels
     {
         required public PostsModel Post { get; set; }
         required public bool IsLikedByUser { get; set; }
+        required public bool IsOwnPost { get; set; }
     }
 }
