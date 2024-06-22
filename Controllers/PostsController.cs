@@ -111,13 +111,32 @@ public class PostsController(ApplicationDbContext db) : BaseController
         }
         await CompletePostObject(post);
 
-        var postDTO = new PostDTO(post.PostID, new PostAuthorDTO(post.User.UserID, post.User.UserUsername), post.PostContent, post.PostCreatedAt.ToString("G"));
+        var postDTO = new PostDTO(post.PostID, post.PostContent, post.PostCreatedAt.ToString("G"));
+        if (post.User != null)
+        {
+            postDTO.PostAuthorUser = new PostUserAuthorDTO(post.User.UserID, post.User.UserUsername);
+        }
+        if (post.Restaurant != null)
+        {
+            postDTO.PostAuthorRestaurant = new PostRestaurantAuthorDTO(post.Restaurant.RestID, post.Restaurant.RestName);
+        }
+
         var comments = await GetSpecificPostCommentsAsync(Gid);
         var commentDTOList = new List<CommentDTO>();
         foreach (var comment in comments)
         {
-            var author = await _db.Users.FirstOrDefaultAsync(u => u.UserID == comment.UserID);
-            commentDTOList.Add(new CommentDTO(comment.CommentID, comment.PostID, new CommentAuthorDTO(author.UserID, author.UserUsername), comment.CommentContent));
+            var commentDTO = new CommentDTO(comment.CommentID, comment.PostID, comment.CommentContent);
+            if (comment.UserID != null)
+            {
+                var author = await _db.Users.FirstOrDefaultAsync(u => u.UserID == comment.UserID);
+                commentDTO.CommentAuthorUser = new CommentUserAuthorDTO(author.UserID, author.UserUsername);
+            }
+            if (comment.RestID != null)
+            {
+                var author = await _db.Restaurants.FirstOrDefaultAsync(r => r.RestID == comment.RestID);
+                commentDTO.CommentAuthorRestaurant = new CommentRestaurantAuthorDTO(author.RestID, author.RestName);
+            }
+            commentDTOList.Add(commentDTO);
         }
         List<string> ImageUrl = new List<string>();
         ImageUrl.Add("/assets/images/photo-1556008531-57e6eefc7be4.jpeg");
