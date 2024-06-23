@@ -37,15 +37,16 @@
                     </div>
                     <div class="post-content mb-5">
                         <p style="max-height: 200px;overflow-y:auto">@Model.Post.PostContent</p>
-                        <!-- TODO: Generate the image table dynamically. -->
-                        <div class="images-table">
-                            <div class="test">
-                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                        @if (@Model.PostImageURLs != null)
+                        {
+                            <div class="images-table">
+                                @foreach (var imageURL in @Model.PostImageURLs) {
+                                    <div class="test">
+                                        <img src="/Images/PostPics/@imageURL" alt="Post Image">
+                                    </div>
+                                }
                             </div>
-                            <div class="test">
-                                <img src="/Images/Food1.jpeg" alt="Post Image">
-                            </div>
-                        </div>
+                        }
                     </div>
                     @await Html.PartialAsync("_EditPostPartial", Model.Post)
                     <form asp-action="DeletePost" asp-controller="Posts" method="post">
@@ -74,7 +75,6 @@
                                 </div>
                                 <div class="post-content">
                                     <p style="max-height: 200px;overflow-y:auto">@item.CommentContent</p>
-                                    <!-- TODO: Generate the image table dynamically. -->
                                 </div>
                                 <div class="post-footer">
                                     <button type="like">Like</button>

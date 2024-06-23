@@ -7,6 +7,8 @@ namespace EffectiveWebProg.DTOs.Posts
         public PostRestaurantAuthorDTO? PostAuthorRestaurant { get; set; }
         public string PostContent { get; } = PostContent;
         public string PostCreatedAt { get; } = PostCreatedAt;
+
+        public List<string?>? PostPictureURLs { get; set; }
     }
 
     public class PostUserAuthorDTO(Guid UserID, string Username)

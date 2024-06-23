@@ -1,5 +1,3 @@
-@model PostsModel
-
 <form asp-action="EditPost" asp-controller="Posts" method="post">
     <h1>Edit Post:</h1>
     <input type="hidden" name="postID" value=@Model.PostID />
@@ -18,9 +16,5 @@
         <input id="restaurant-search" name="restaurant-search" type="text" class="form-control" />
     }
     <input type="hidden" name="taggedRestID" id="itemId" value="@Model.TaggedRest" />
-
-    @*
-    <label for="pictures">Pictures:</label>
-    <input type="file" id="pictures" name="pictures" accept="image/*" multiple class="form-control">*@
     <button type="submit" class="btn btn-primary float-end mt-3">Edit Post</button>
 </form>

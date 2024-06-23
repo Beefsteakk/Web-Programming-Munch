@@ -13,25 +13,53 @@ public class PostsController(ApplicationDbContext db) : BaseController
 
     public async Task<IActionResult> Index()
     {
-        var sessionID = HttpContext.Session.GetString("SSID") ?? "";
-        var posts = await FetchViewablePostsByIDAsync(Guid.Parse(sessionID));
+        var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
+        var posts = await FetchViewablePostsByIDAsync(sessionID);
         var postViewModels = new List<PostViewModel>();
         foreach (var post in posts)
         {
-            // TODO: Need to handle logic related to restaurants too.
-            var like = await _db.PostLikesUser.FirstOrDefaultAsync(
-                l => l.PostID == post.PostID && l.UserID == Guid.Parse(sessionID)
-            );
-            postViewModels.Add(new PostViewModel { Post = post, IsLikedByUser = like != null, IsOwnPost = post.UserID == Guid.Parse(sessionID) });
+            var imageURLs = await _db.PostPics
+                .Where(p => p.PostID == post.PostID)
+                .Select(p => p.ImageURL)
+                .ToListAsync();
+
+            var user = await _db.Users.FindAsync(sessionID);
+            if (user != null){
+                var like = await _db.PostLikesUser.FirstOrDefaultAsync(
+                    l => l.PostID == post.PostID && l.UserID == user.UserID
+                );
+                postViewModels.Add(new PostViewModel(post, like != null, post.UserID == user.UserID, imageURLs));
+            }
+            else {
+                var like = await _db.PostLikesRest.FirstOrDefaultAsync(
+                    l => l.PostID == post.PostID && l.RestID == sessionID
+                );
+                postViewModels.Add(new PostViewModel(post, like != null, post.RestID == sessionID, imageURLs));
+            }
         }
-        ViewBag.UserID = sessionID;
         return View(new MainFeedViewModel(postViewModels));
     }
 
     [HttpPost]
     [Route("Posts/CreatePost")]
-    public async Task<IActionResult> CreatePostAsync(PostsModel post)
+    public async Task<IActionResult> CreatePostAsync(string postContent, Guid taggedRestaurantID, List<IFormFile> pictures)
     {
+        var post = new PostsModel() { PostContent = postContent };
+        if (await _db.Restaurants.FindAsync(taggedRestaurantID) != null) {
+            post.TaggedRest = taggedRestaurantID;
+        }
+
+        if (pictures.Count > 0) {
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "PostPics");
+            foreach (var picture in pictures) {
+                var postPicture = new PostPicsModel(picture.FileName) {PostID = post.PostID};
+                var filePath = Path.Combine(uploadsFolder, postPicture.ImageURL);
+                using var fileStream = new FileStream(filePath, FileMode.Create);
+                await picture.CopyToAsync(fileStream);
+                await _db.PostPics.AddAsync(postPicture);
+            }
+        }
+    
         var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
         var user = await _db.Users.FindAsync(sessionID);
         if (user != null)
@@ -73,6 +101,14 @@ public class PostsController(ApplicationDbContext db) : BaseController
         if (post == null) return NotFound();
         if (!CheckOperationIsPermitted(post)) return Forbid();
 
+        var pictures = await _db.PostPics.Where(p => p.PostID == postID).ToListAsync();
+        if (pictures != null && pictures.Count > 0) {
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "PostPics");
+            foreach (var picture in pictures) {
+                var filePath = Path.Combine(uploadsFolder, picture.ImageURL);
+                System.IO.File.Delete(filePath);
+            }
+        }
         _db.Posts.Remove(post);
         await _db.SaveChangesAsync();
         return RedirectToAction("");
@@ -138,11 +174,18 @@ public class PostsController(ApplicationDbContext db) : BaseController
             }
             commentDTOList.Add(commentDTO);
         }
-        List<string> ImageUrl = new List<string>();
-        ImageUrl.Add("/assets/images/photo-1556008531-57e6eefc7be4.jpeg");
-        ImageUrl.Add("/assets/images/photo-1557684387-08927d28c72a.jpeg");
-        ImageUrl.Add("/assets/images/photo-1526016650454-68a6f488910a.jpeg");
-        return Json(new { imageUrl = ImageUrl, post = postDTO, comments = commentDTOList, success = true });
+
+        var imageURLs = await _db.PostPics
+            .Where(p => p.PostID == Gid)
+            .Select(p => p.ImageURL)
+            .ToListAsync();
+
+        if (imageURLs != null)
+        {
+            postDTO.PostPictureURLs = imageURLs;
+        }
+
+        return Json(new { post = postDTO, comments = commentDTOList, success = true });
     }
 
     [HttpGet]
@@ -154,7 +197,12 @@ public class PostsController(ApplicationDbContext db) : BaseController
 
         var comments = await GetSpecificPostCommentsAsync(id);
         await CompletePostObject(post);
-        var model = new IndividualPostViewModel { Post = post, CommentsList = comments };
+        var imageURLs = await _db.PostPics
+            .Where(p => p.PostID == id)
+            .Select(p => p.ImageURL)
+            .ToListAsync();
+
+        var model = new IndividualPostViewModel { Post = post, CommentsList = comments, PostImageURLs = imageURLs };
         return View(model);
     }
 
