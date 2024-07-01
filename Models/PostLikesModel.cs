@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EffectiveWebProg.Models;
 
-public class PostLikesRestModel
+public class PostLikesModel
 {
     [Key, Column(Order = 0, TypeName = "char(36)")]
     public Guid PostID { get; set; } // Composite Primary Key and Foreign Key From PostsModel
 
     [Key, Column(Order = 1, TypeName = "char(36)")]
-    public Guid RestID { get; set; } // Composite Primary Key and Foreign Key From RestaurantsModel
+    public Guid UserID { get; set; } // Composite Primary Key and Foreign Key From UsersModel
 
     public DateTime LikeCreatedAt { get; set; }
 
@@ -19,11 +19,11 @@ public class PostLikesRestModel
     [ForeignKey("PostID")]
     public required PostsModel Post { get; set; }
 
-    [ForeignKey("RestID")]
-    public required RestaurantsModel Restaurant { get; set; }
+    [ForeignKey("UserID")]
+    public required UsersModel User { get; set; }
 
 
-    public PostLikesRestModel()
+    public PostLikesModel()
     {
         LikeCreatedAt = DateTime.UtcNow;
     }

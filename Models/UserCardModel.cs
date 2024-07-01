@@ -1,30 +1,31 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EffectiveWebProg.Models;
+using EffectiveWebProg.Models;
 
-public class PostLikesUserModel
+public class UserCardModel
 {
     [Key, Column(Order = 0, TypeName = "char(36)")]
-    public Guid PostID { get; set; } // Composite Primary Key and Foreign Key From PostsModel
+    public Guid CardID { get; set; } // Composite Primary Key and Foreign Key From CreditCardModel
 
     [Key, Column(Order = 1, TypeName = "char(36)")]
     public Guid UserID { get; set; } // Composite Primary Key and Foreign Key From UsersModel
 
-    public DateTime LikeCreatedAt { get; set; }
 
 
     // Navigation properties
-    [ForeignKey("PostID")]
-    public required PostsModel Post { get; set; }
+    [ForeignKey("CardID")]
+    public required CreditCardModel Card { get; set; }
 
     [ForeignKey("UserID")]
     public required UsersModel User { get; set; }
 
 
-    public PostLikesUserModel()
+
+    public UserCardModel()
     {
-        LikeCreatedAt = DateTime.UtcNow;
+
     }
 }

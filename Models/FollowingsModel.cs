@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 using EffectiveWebProg.Models;
 
-public class UserFollowingsModel
+public class FollowingsModel
 {
     [Key, Column(Order = 0, TypeName = "char(36)")]
     public Guid UserID { get; set; } // Composite Primary Key and Foreign Key From UsersModel
 
     [Key, Column(Order = 1, TypeName = "char(36)")]
-    public Guid FollowedUserID { get; set; } // Composite Primary Key and Foreign Key From UsersModel
+    public Guid RestID { get; set; } // Composite Primary Key and Foreign Key From RestauarantsModel
 
     [Required]
     public DateTime FollowCreatedAt { get; set; }
@@ -20,10 +20,10 @@ public class UserFollowingsModel
     [ForeignKey("UserID")]
     public required UsersModel User { get; set; }
 
-    [ForeignKey("FollowedUserID")]
-    public required UsersModel FollowedUser { get; set; }
+    [ForeignKey("RestID")]
+    public required RestaurantsModel Rest { get; set; }
 
-    public UserFollowingsModel()
+    public FollowingsModel()
     {
         FollowCreatedAt = DateTime.UtcNow;
     }

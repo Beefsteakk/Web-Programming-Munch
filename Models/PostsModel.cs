@@ -35,9 +35,7 @@ public class PostsModel
     public RestaurantsModel? TaggedRestaurant { get; set; }
 
     public ICollection<CommentsModel> Comment { get; set; }
-    public ICollection<PostLikesUserModel> PostLikeUser { get; set; }
-    public ICollection<PostLikesRestModel> PostLikeRest { get; set; }
-    public ICollection<ReviewsModel> Review { get; set; }
+    public ICollection<PostLikesModel> PostLike { get; set; }
     public ICollection<PostPicsModel> PostPic { get; set; }
 
 
@@ -46,9 +44,7 @@ public class PostsModel
         PostID = Guid.NewGuid();
         PostCreatedAt = DateTime.UtcNow;
         Comment = new List<CommentsModel>();
-        PostLikeUser = new List<PostLikesUserModel>();
-        PostLikeRest = new List<PostLikesRestModel>();
-        Review = new List<ReviewsModel>();
+        PostLike = new List<PostLikesModel>();
         PostPic = new List<PostPicsModel>();
     }
 }

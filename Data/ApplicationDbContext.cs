@@ -4,6 +4,8 @@ using EffectiveWebProg.Models;
 
 namespace EffectiveWebProg.Data
 {
+    using Microsoft.EntityFrameworkCore;
+
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -12,253 +14,234 @@ namespace EffectiveWebProg.Data
         }
 
         public DbSet<UsersModel> Users { get; set; }
+        public DbSet<UserCardModel> UserCards { get; set; }
+        public DbSet<TimeSheetModel> TimeSheets { get; set; }
+        public DbSet<RestCardModel> RestCards { get; set; }
         public DbSet<RestaurantsModel> Restaurants { get; set; }
-        public DbSet<PostsModel> Posts { get; set; }
-        public DbSet<CommentsModel> Comments { get; set; }
-        public DbSet<PostLikesUserModel> PostLikesUser { get; set; }
-        public DbSet<PostLikesRestModel> PostLikesRest { get; set; }
-        public DbSet<UserFollowingsModel> UserFollowings { get; set; }
-        public DbSet<RestaurantFollowingsModel> RestaurantFollowings { get; set; }
-        public DbSet<ReviewsModel> Reviews { get; set; }
         public DbSet<ReservationsModel> Reservations { get; set; }
-        public DbSet<FoodListsModel> FoodLists { get; set; }
-        public DbSet<FoodListLikesModel> FoodListLikes { get; set; }
-        public DbSet<FoodListEntriesModel> FoodListEntries { get; set; }
-        public DbSet<ForumsModel> Forums { get; set; }
-        public DbSet<ForumVotesModel> ForumVotes { get; set; }
-        public DbSet<ForumCommentsModel> ForumComments { get; set; }
+        public DbSet<PostsModel> Posts { get; set; }
         public DbSet<PostPicsModel> PostPics { get; set; }
-        public DbSet<CategoryModel> Category { get; set; }
-        public DbSet<RestCategoryModel> RestCategory { get; set; }
-        public DbSet<FoodListCategoryModel> FoodListCategory { get; set; }
-        public DbSet<RestViewHistoryModel> RestViewHistory { get; set; }
-        public DbSet<SearchHistoryModel> SearchHistory { get; set; }
-
+        public DbSet<PostLikesModel> PostLikes { get; set; }
+        public DbSet<ItemsModel> Items { get; set; }
+        public DbSet<ItemCatModel> ItemCats { get; set; }
+        public DbSet<InventoryModel> Inventories { get; set; }
+        public DbSet<InventoryItemsModel> InventoryItems { get; set; }
+        public DbSet<FollowingsModel> Followings { get; set; }
+        public DbSet<EmployeesModel> Employees { get; set; }
+        public DbSet<CreditCardModel> CreditCards { get; set; }
+        public DbSet<CommentsModel> Comments { get; set; }
+        public DbSet<CartModel> Carts { get; set; }
+        public DbSet<CartItemsModel> CartItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            // UsersModel relationships
+            modelBuilder.Entity<UsersModel>()
+                .HasMany(u => u.Post)
+                .WithOne(p => p.User)
+                .HasForeignKey(p => p.UserID);
 
-            // Composite keys
-            modelBuilder.Entity<RestCategoryModel>()
-                .HasKey(rc => new { rc.RestID, rc.CatID });
+            modelBuilder.Entity<UsersModel>()
+                .HasMany(u => u.Comment)
+                .WithOne(c => c.User)
+                .HasForeignKey(c => c.UserID);
 
-            modelBuilder.Entity<FoodListCategoryModel>()
-                .HasKey(fc => new { fc.FoodListID, fc.CatID });
+            modelBuilder.Entity<UsersModel>()
+                .HasMany(u => u.PostLike)
+                .WithOne(pl => pl.User)
+                .HasForeignKey(pl => pl.UserID);
 
-            modelBuilder.Entity<FoodListEntriesModel>()
-                .HasKey(fe => new { fe.FoodListID, fe.RestID });
+            modelBuilder.Entity<UsersModel>()
+                .HasMany(u => u.Reservation)
+                .WithOne(r => r.User)
+                .HasForeignKey(r => r.UserID);
 
-            modelBuilder.Entity<ForumVotesModel>()
-                .HasKey(fv => new { fv.ForumID, fv.UserID });
+            modelBuilder.Entity<UsersModel>()
+                .HasMany(u => u.Followings)
+                .WithOne(f => f.User)
+                .HasForeignKey(f => f.UserID);
 
-            modelBuilder.Entity<PostLikesRestModel>()
-                .HasKey(plr => new { plr.PostID, plr.RestID });
+            modelBuilder.Entity<UsersModel>()
+                .HasMany(u => u.UserCard)
+                .WithOne(uc => uc.User)
+                .HasForeignKey(uc => uc.UserID);
 
-            modelBuilder.Entity<PostLikesUserModel>()
-                .HasKey(plu => new { plu.PostID, plu.UserID });
+            // UserCardModel composite key
+            modelBuilder.Entity<UserCardModel>()
+                .HasKey(uc => new { uc.CardID, uc.UserID });
 
-            modelBuilder.Entity<FoodListLikesModel>()
-                .HasKey(fll => new { fll.FoodListID, fll.UserID });
+            // TimeSheetModel relationships
+            modelBuilder.Entity<TimeSheetModel>()
+                .HasOne(ts => ts.Employees)
+                .WithMany(e => e.TimeSheets)
+                .HasForeignKey(ts => ts.EmployeeID);
 
-            modelBuilder.Entity<RestaurantFollowingsModel>()
-                .HasKey(rf => new { rf.UserID, rf.FollowedRestID });
+            // RestCardModel composite key
+            modelBuilder.Entity<RestCardModel>()
+                .HasKey(rc => new { rc.CardID, rc.RestID });
 
-            modelBuilder.Entity<UserFollowingsModel>()
-                .HasKey(uf => new { uf.UserID, uf.FollowedUserID });
+            // RestaurantsModel relationships
+            modelBuilder.Entity<RestaurantsModel>()
+                .HasMany(r => r.Reservation)
+                .WithOne(rs => rs.Restaurant)
+                .HasForeignKey(rs => rs.RestID);
 
-            // Define relationships
-            modelBuilder.Entity<PostPicsModel>()
-                .HasOne(p => p.Post)
-                .WithMany(p => p.PostPic)
-                .HasForeignKey(p => p.PostID)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<RestaurantsModel>()
+                .HasMany(r => r.Comment)
+                .WithOne(c => c.Restaurant)
+                .HasForeignKey(c => c.RestID);
 
-            modelBuilder.Entity<RestCategoryModel>()
-                .HasOne(rc => rc.Restaurant)
-                .WithMany(r => r.RestCat)
-                .HasForeignKey(rc => rc.RestID)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<RestaurantsModel>()
+                .HasMany(r => r.Post)
+                .WithOne(p => p.Restaurant)
+                .HasForeignKey(p => p.RestID);
 
-            modelBuilder.Entity<RestCategoryModel>()
-                .HasOne(rc => rc.Category)
-                .WithMany(c => c.RestCat)
-                .HasForeignKey(rc => rc.CatID)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<RestaurantsModel>()
+                .HasMany(r => r.TaggedRest)
+                .WithOne(p => p.TaggedRestaurant)
+                .HasForeignKey(p => p.TaggedRest);
 
-            modelBuilder.Entity<FoodListCategoryModel>()
-                .HasOne(fc => fc.FoodList)
-                .WithMany(f => f.FoodListCat)
-                .HasForeignKey(fc => fc.FoodListID)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<RestaurantsModel>()
+                .HasMany(r => r.Followings)
+                .WithOne(f => f.Rest)
+                .HasForeignKey(f => f.RestID);
 
-            modelBuilder.Entity<FoodListCategoryModel>()
-                .HasOne(fc => fc.Category)
-                .WithMany(c => c.FoodListCat)
-                .HasForeignKey(fc => fc.CatID)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<RestaurantsModel>()
+                .HasMany(r => r.RestCard)
+                .WithOne(rc => rc.Rest)
+                .HasForeignKey(rc => rc.RestID);
 
-            modelBuilder.Entity<SearchHistoryModel>()
-                .HasOne(s => s.User)
-                .WithMany(u => u.SearchHistory)
-                .HasForeignKey(s => s.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<RestaurantsModel>()
+                .HasMany(r => r.Inventory)
+                .WithOne(i => i.Rest)
+                .HasForeignKey(i => i.RestID);
 
-            modelBuilder.Entity<RestViewHistoryModel>()
-                .HasOne(r => r.User)
-                .WithMany(u => u.RestViewHistory)
-                .HasForeignKey(r => r.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<RestaurantsModel>()
+                .HasMany(r => r.Cart)
+                .WithOne(c => c.Rest)
+                .HasForeignKey(c => c.RestID);
 
-            modelBuilder.Entity<RestViewHistoryModel>()
-                .HasOne(r => r.Restaurant)
-                .WithMany(res => res.RestViewHistory)
-                .HasForeignKey(r => r.RestID)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<RestaurantsModel>()
+                .HasMany(r => r.Employee)
+                .WithOne(e => e.Restaurant)
+                .HasForeignKey(e => e.RestID);
 
-            modelBuilder.Entity<FoodListEntriesModel>()
-                .HasOne(fe => fe.FoodList)
-                .WithMany(f => f.FoodListEntry)
-                .HasForeignKey(fe => fe.FoodListID)
-                .OnDelete(DeleteBehavior.Cascade);
+            // ReservationsModel relationships
+            modelBuilder.Entity<ReservationsModel>()
+                .HasOne(rs => rs.User)
+                .WithMany(u => u.Reservation)
+                .HasForeignKey(rs => rs.UserID);
 
-            modelBuilder.Entity<FoodListEntriesModel>()
-                .HasOne(fe => fe.Restaurant)
-                .WithMany(r => r.FoodEntry)
-                .HasForeignKey(fe => fe.RestID)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ReservationsModel>()
+                .HasOne(rs => rs.Restaurant)
+                .WithMany(r => r.Reservation)
+                .HasForeignKey(rs => rs.RestID);
 
-            modelBuilder.Entity<ForumVotesModel>()
-                .HasOne(fv => fv.Forum)
-                .WithMany(f => f.ForumVote)
-                .HasForeignKey(fv => fv.ForumID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<ForumVotesModel>()
-                .HasOne(fv => fv.User)
-                .WithMany(u => u.ForumVote)
-                .HasForeignKey(fv => fv.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<PostLikesRestModel>()
-                .HasOne(plr => plr.Post)
-                .WithMany(p => p.PostLikeRest)
-                .HasForeignKey(plr => plr.PostID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<PostLikesRestModel>()
-                .HasOne(plr => plr.Restaurant)
-                .WithMany(r => r.PostLikesRest)
-                .HasForeignKey(plr => plr.RestID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<PostLikesUserModel>()
-                .HasOne(plu => plu.Post)
-                .WithMany(p => p.PostLikeUser)
-                .HasForeignKey(plu => plu.PostID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<PostLikesUserModel>()
-                .HasOne(plu => plu.User)
-                .WithMany(u => u.PostLikeUser)
-                .HasForeignKey(plu => plu.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<FoodListLikesModel>()
-                .HasOne(fll => fll.FoodList)
-                .WithMany(f => f.FoodListLike)
-                .HasForeignKey(fll => fll.FoodListID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<FoodListLikesModel>()
-                .HasOne(fll => fll.User)
-                .WithMany(u => u.FoodListLike)
-                .HasForeignKey(fll => fll.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<RestaurantFollowingsModel>()
-                .HasOne(rf => rf.User)
-                .WithMany(u => u.RestaurantFollowings)
-                .HasForeignKey(rf => rf.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<RestaurantFollowingsModel>()
-                .HasOne(rf => rf.FollowedRest)
-                .WithMany(r => r.FollowedBy)
-                .HasForeignKey(rf => rf.FollowedRestID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<UserFollowingsModel>()
-                .HasOne(uf => uf.User)
-                .WithMany(u => u.Followings)
-                .HasForeignKey(uf => uf.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<UserFollowingsModel>()
-                .HasOne(uf => uf.FollowedUser)
-                .WithMany(u => u.Followers)
-                .HasForeignKey(uf => uf.FollowedUserID)
-                .OnDelete(DeleteBehavior.Cascade);
+            // PostsModel relationships
+            modelBuilder.Entity<PostsModel>()
+                .HasMany(p => p.Comment)
+                .WithOne(c => c.Post)
+                .HasForeignKey(c => c.PostID);
 
             modelBuilder.Entity<PostsModel>()
-                .HasOne(p => p.User)
-                .WithMany(u => u.Post)
-                .HasForeignKey(p => p.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasMany(p => p.PostLike)
+                .WithOne(pl => pl.Post)
+                .HasForeignKey(pl => pl.PostID);
 
             modelBuilder.Entity<PostsModel>()
-                .HasOne(p => p.Restaurant)
-                .WithMany(r => r.Post)
-                .HasForeignKey(p => p.RestID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasMany(p => p.PostPic)
+                .WithOne(pp => pp.Post)
+                .HasForeignKey(pp => pp.PostID);
 
-            modelBuilder.Entity<PostsModel>()
-                .HasOne(p => p.TaggedRestaurant)
-                .WithMany(r => r.TaggedRest)
-                .HasForeignKey(p => p.TaggedRest)
-                .OnDelete(DeleteBehavior.Cascade);
+            // PostLikesModel composite key
+            modelBuilder.Entity<PostLikesModel>()
+                .HasKey(pl => new { pl.PostID, pl.UserID });
 
-            modelBuilder.Entity<ForumCommentsModel>()
-                .HasOne(fc => fc.Forum)
-                .WithMany(f => f.ForumComment)
-                .HasForeignKey(fc => fc.ForumID)
-                .OnDelete(DeleteBehavior.Cascade);
+            // ItemsModel relationships
+            modelBuilder.Entity<ItemsModel>()
+                .HasOne(i => i.ItemCat)
+                .WithMany(ic => ic.Item)
+                .HasForeignKey(i => i.CatID);
 
-            modelBuilder.Entity<ForumCommentsModel>()
-                .HasOne(fc => fc.User)
-                .WithMany(u => u.ForumComment)
-                .HasForeignKey(fc => fc.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ItemsModel>()
+                .HasMany(i => i.InventoryItem)
+                .WithOne(ii => ii.Items)
+                .HasForeignKey(ii => ii.ItemID);
 
-            modelBuilder.Entity<ForumCommentsModel>()
-                .HasOne(fc => fc.Restaurant)
-                .WithMany(r => r.ForumComment)
-                .HasForeignKey(fc => fc.RestID)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ItemsModel>()
+                .HasMany(i => i.CartItem)
+                .WithOne(ci => ci.Items)
+                .HasForeignKey(ci => ci.ItemID);
 
+            // InventoryItemsModel composite key
+            modelBuilder.Entity<InventoryItemsModel>()
+                .HasKey(ii => new { ii.InventoryID, ii.ItemID });
+
+            // InventoryModel relationships
+            modelBuilder.Entity<InventoryModel>()
+                .HasMany(i => i.InventoryItem)
+                .WithOne(ii => ii.Inventory)
+                .HasForeignKey(ii => ii.InventoryID);
+
+            // FollowingsModel composite key
+            modelBuilder.Entity<FollowingsModel>()
+                .HasKey(f => new { f.UserID, f.RestID });
+
+            // EmployeesModel relationships
+            modelBuilder.Entity<EmployeesModel>()
+                .HasMany(e => e.TimeSheets)
+                .WithOne(ts => ts.Employees)
+                .HasForeignKey(ts => ts.EmployeeID);
+
+            modelBuilder.Entity<EmployeesModel>()
+                .HasOne(e => e.Restaurant)
+                .WithMany(r => r.Employee)
+                .HasForeignKey(e => e.RestID);
+
+            // CreditCardModel relationships
+            modelBuilder.Entity<CreditCardModel>()
+                .HasMany(cc => cc.UserCard)
+                .WithOne(uc => uc.Card)
+                .HasForeignKey(uc => uc.CardID);
+
+            modelBuilder.Entity<CreditCardModel>()
+                .HasMany(cc => cc.RestCard)
+                .WithOne(rc => rc.Card)
+                .HasForeignKey(rc => rc.CardID);
+
+            // CommentsModel relationships
             modelBuilder.Entity<CommentsModel>()
                 .HasOne(c => c.Post)
                 .WithMany(p => p.Comment)
-                .HasForeignKey(c => c.PostID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(c => c.PostID);
 
             modelBuilder.Entity<CommentsModel>()
                 .HasOne(c => c.User)
                 .WithMany(u => u.Comment)
-                .HasForeignKey(c => c.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(c => c.UserID);
 
             modelBuilder.Entity<CommentsModel>()
                 .HasOne(c => c.Restaurant)
                 .WithMany(r => r.Comment)
-                .HasForeignKey(c => c.RestID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(c => c.RestID);
 
-            modelBuilder.Entity<FoodListsModel>()
-                .HasOne(f => f.User)
-                .WithMany(u => u.FoodList)
-                .HasForeignKey(f => f.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
+            // CartModel relationships
+            modelBuilder.Entity<CartModel>()
+                .HasMany(c => c.CartItem)
+                .WithOne(ci => ci.Cart)
+                .HasForeignKey(ci => ci.CartID);
+
+            modelBuilder.Entity<CartModel>()
+                .HasOne(c => c.Rest)
+                .WithMany(r => r.Cart)
+                .HasForeignKey(c => c.RestID);
+
+            // CartItemsModel composite key
+            modelBuilder.Entity<CartItemsModel>()
+                .HasKey(ci => new { ci.CartID, ci.ItemID });
+
+            base.OnModelCreating(modelBuilder);
         }
     }
+
 }

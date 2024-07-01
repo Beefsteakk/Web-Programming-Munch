@@ -6,26 +6,26 @@ using EffectiveWebProg.Models;
 
 namespace EffectiveWebProg.Models;
 
-public class CategoryModel
+public class ItemCatModel
 {
     [Key]
     [Column(TypeName = "char(36)")]
     public Guid CatID { get; set; } // Primary Key
 
-    [Required, StringLength(50)]
+    [Required, StringLength(100)]
     [Column(TypeName = "varchar(255)")]
-    public required string CatType { get; set; }
+    public required string CatName { get; set; }
 
-
+    
 
     // Navigation properties
-    public ICollection<FoodListCategoryModel> FoodListCat { get; set; }
-    public ICollection<RestCategoryModel> RestCat { get; set; }
+    public ICollection<ItemsModel> Item { get; set; }
 
-    public CategoryModel()
+
+
+    public ItemCatModel()
     {
         CatID = Guid.NewGuid();
-        FoodListCat = new List<FoodListCategoryModel>();
-        RestCat = new List<RestCategoryModel>();
+        Item = new List<ItemsModel>();
     }
 }

@@ -53,30 +53,28 @@ namespace EffectiveWebProg.Models
         public string? RestCoverPic { get; set; } // nullable
 
         // Navigation properties
-        public ICollection<FoodListEntriesModel> FoodEntry { get; set; }
         public ICollection<ReservationsModel> Reservation { get; set; }
-        public ICollection<RestaurantFollowingsModel> FollowedBy { get; set; }
         public ICollection<CommentsModel> Comment { get; set; }
-        public ICollection<PostLikesRestModel> PostLikesRest { get; set; }
         public ICollection<PostsModel> Post { get; set; }
         public ICollection<PostsModel> TaggedRest { get; set; }
-        public ICollection<ForumCommentsModel> ForumComment { get; set; }
-        public ICollection<RestViewHistoryModel> RestViewHistory { get; set; }
-        public ICollection<RestCategoryModel> RestCat { get; set; }
+        public ICollection<FollowingsModel> Followings { get; set; }
+        public ICollection<RestCardModel> RestCard { get; set; }
+        public ICollection<InventoryModel> Inventory { get; set; }
+        public ICollection<CartModel> Cart { get; set; }
+        public ICollection<EmployeesModel> Employee { get; set; }
 
         public RestaurantsModel()
         {
             RestID = Guid.NewGuid();
-            FoodEntry = new List<FoodListEntriesModel>();
             Reservation = new List<ReservationsModel>();
-            FollowedBy = new List<RestaurantFollowingsModel>();
             Comment = new List<CommentsModel>();
-            PostLikesRest = new List<PostLikesRestModel>();
             Post = new List<PostsModel>();
             TaggedRest = new List<PostsModel>();
-            ForumComment = new List<ForumCommentsModel>();
-            RestViewHistory = new List<RestViewHistoryModel>();
-            RestCat = new List<RestCategoryModel>();
+            Followings = new List<FollowingsModel>();
+            RestCard = new List<RestCardModel>();
+            Inventory = new List<InventoryModel>();
+            Cart = new List<CartModel>();
+            Employee = new List<EmployeesModel>();
         }
     }
 }
