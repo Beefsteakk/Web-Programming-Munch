@@ -13,4 +13,17 @@ public class BaseController : Controller
             context.Result = new RedirectToActionResult("Index", "Home", null);
         }
     }
+
+    new public ContentResult Forbid()
+    {
+        Response.StatusCode = 403;
+        return Content("Forbidden: You are not authorised to access this resource.");
+    }
+
+    new public ContentResult NotFound()
+    {
+        Response.StatusCode = 404;
+        return Content("Not Found: This resource does not exist.");
+    }
+
 }

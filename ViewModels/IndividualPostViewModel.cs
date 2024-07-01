@@ -6,5 +6,6 @@ namespace EffectiveWebProg.ViewModels
     {
         required public PostsModel Post { get; set; }
         required public List<CommentsModel> CommentsList { get; set; }
+        required public List<string?>? PostImageURLs { get; set; }
     }
 }

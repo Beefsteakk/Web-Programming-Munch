@@ -7,6 +7,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Friends</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" defer></script>
+    <script type="text/javascript" src="~/js/searchRestaurant.js" defer></script>
     <link rel="stylesheet" href="~/css/post.css">
     <script type="text/javascript" src="~/js/post.js" defer></script>
 </head>
@@ -33,17 +37,22 @@
                     </div>
                     <div class="post-content mb-5">
                         <p style="max-height: 200px;overflow-y:auto">@Model.Post.PostContent</p>
-                        <!-- TODO: Generate the image table dynamically. -->
-                        <div class="images-table">
-                            <div class="test">
-                                <img src="/Images/Food1.jpeg" alt="Post Image">
+                        @if (@Model.PostImageURLs != null)
+                        {
+                            <div class="images-table">
+                                @foreach (var imageURL in @Model.PostImageURLs) {
+                                    <div class="test">
+                                        <img src="/Images/PostPics/@imageURL" alt="Post Image">
+                                    </div>
+                                }
                             </div>
-                            <div class="test">
-                                <img src="/Images/Food1.jpeg" alt="Post Image">
-                            </div>
-                        </div>
+                        }
                     </div>
                     @await Html.PartialAsync("_EditPostPartial", Model.Post)
+                    <form asp-action="DeletePost" asp-controller="Posts" method="post">
+                        <input type="hidden" name="postID" value=@Model.Post.PostID />
+                        <button type="submit" class="btn btn-danger float-end mt-3">Delete Post</button>
+                    </form>
                     @if (Model.CommentsList.Count != 0)
                     {
                         <h2 class="mt-5">Comments:</h2>
@@ -66,7 +75,6 @@
                                 </div>
                                 <div class="post-content">
                                     <p style="max-height: 200px;overflow-y:auto">@item.CommentContent</p>
-                                    <!-- TODO: Generate the image table dynamically. -->
                                 </div>
                                 <div class="post-footer">
                                     <button type="like">Like</button>

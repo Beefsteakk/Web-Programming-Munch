@@ -11,7 +11,7 @@ allPost.forEach(function(e) {
                     console.log(response)
                     $('#carouselInner').empty();
 
-                    if (response.imageUrl.length > 1) {
+                    if (response.post.postPictureURLs.length > 1) {
                         $('#imageCarousel').append(`
                             <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
                             data-bs-slide="prev">
@@ -25,15 +25,15 @@ allPost.forEach(function(e) {
                         </button>
                         `);
                     }
-                    response.imageUrl.forEach((url, index) => {
+                    response.post.postPictureURLs.forEach((url, index) => {
                         const isActive = index === 0 ? 'active' : '';
                         $('#carouselInner').append(`
                             <div class="carousel-item ${isActive}">
-                                <img src="${url}" class="d-block w-100" alt="Image ${index + 1}">
+                                <img src="Images/PostPics/${url}" class="d-block w-100" alt="Image ${index + 1}">
                             </div>
                         `);
                     });
-                    $('#modalUsername').text(response.post.postAuthor.username);
+                    $('#modalUsername').text(response.post.postAuthorUser != null ? response.post.postAuthorUser.username : response.post.postAuthorRestaurant.restName);
                     $('#modalCreatedAt').text(response.post.postCreatedAt);
                     $('#modalMessage').text(response.post.postContent);
                     $('#modalComments').empty();
@@ -41,7 +41,7 @@ allPost.forEach(function(e) {
                         $('#modalComments').append(`
                             <div class="row">
                                 <div class="d-inline">
-                                    <span class="fw-bold">${comment["commentAuthor"]["username"]}</span><span class="text-break"> ${comment["commentContent"]}</span>
+                                    <span class="fw-bold">${comment.commentAuthorUser != null ? comment.commentAuthorUser.username : comment.commentAuthorRestaurant.restName}</span><span class="text-break"> ${comment.commentContent}</span>
                                 </div>
                             </div>
                         `)

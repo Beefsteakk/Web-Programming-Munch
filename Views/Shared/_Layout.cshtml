@@ -1,4 +1,8 @@
-﻿﻿<!DOCTYPE html>
+﻿﻿@using Microsoft.AspNetCore.Http;
+@using MySql.Data.MySqlClient;  
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -23,9 +27,11 @@
 </head>
 
 <body>
+    
     @{
         var controller = (string)ViewContext.RouteData.Values["controller"];
     }
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-2 col-1">
@@ -34,18 +40,95 @@
                         <li class="left-sidebar-munch">
                             <span class="d-none d-xl-inline">Munch</span>
                         </li>
-                        <li class="left-nav-item">
-                            <a class="left-nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">
-                                <i class="fa-solid fa-user"></i>
-                                <span class="left-link-text d-none d-xl-inline">Profile</span>
-                            </a>
-                        </li>
-                        <li class="left-nav-item">
-                            <a class="left-nav-link text-dark" asp-area="" asp-controller="RestProfile" asp-action="Index">
-                                <i class="fa-solid fa-bowl-food"></i>
-                                <span class="left-link-text d-none d-xl-inline">Restaurant Profile</span>
-                            </a>
-                        </li>
+                        @{ 
+                            string connectionString = "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
+
+                            // SQL query to fetch user or restaurant information based on email
+                            string query = @"
+                                SELECT UserPassword AS Password, UserEmail AS Email, UserID AS UserID, NULL AS RestID
+                                FROM Munch.Users
+                                WHERE UserEmail = @UserEmail
+                                
+                                UNION
+                                
+                                SELECT RestPassword AS Password, RestEmail AS Email, NULL AS UserID, RestID AS RestID
+                                FROM Munch.Restaurants
+                                WHERE RestEmail = @UserEmail
+                                ";
+
+                            Console.WriteLine("Fetching account information...");
+
+                            try
+                            {
+                                // Assuming you're using ASP.NET Core, getting session value
+                                var current_user_email = @Context.Session.GetString("SSName");
+
+                                Console.WriteLine($"Current user email: {current_user_email}");
+
+                                // Wrap MySqlConnection in using statement to ensure disposal
+                                using (MySqlConnection con = new MySqlConnection(connectionString))
+                                {
+                                    con.Open(); // Open the connection
+
+                                    using (MySqlCommand cmd = new MySqlCommand(query, con))
+                                    {
+                                        // Add parameters to the command
+                                        cmd.Parameters.AddWithValue("@UserEmail", current_user_email);
+
+                                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                                        {
+                                            if (reader.Read())
+                                            {
+                                                var userId = reader["UserID"] as Guid?;
+                                                var restId = reader["RestID"] as Guid?;
+
+                                                if (userId.HasValue)
+                                                {
+                                                    <li class="left-nav-item">
+                                                        <a class="left-nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">
+                                                            <i class="fa-solid fa-user"></i>
+                                                            <span class="left-link-text d-none d-xl-inline">Profile</span>
+                                                        </a>
+                                                    </li>
+
+                                                    Console.WriteLine($"User account found: UserID = {userId}");
+                                                }
+                                                else if (restId.HasValue)
+                                                {
+                                                    <li class="left-nav-item">
+                                                        <a class="left-nav-link text-dark" asp-area="" asp-controller="RestProfile" asp-action="Index">
+                                                            <i class="fa-solid fa-bowl-food"></i>
+                                                            <span class="left-link-text d-none d-xl-inline">Restaurant Profile</span>
+                                                        </a>
+                                                    </li>
+
+                                                    // Handle restaurant account
+                                                    Console.WriteLine($"Restaurant account found: RestID = {restId}");
+                                                }
+                                                else
+                                                {
+
+                                                    HttpContextAccessor.HttpContext.Session.Clear();
+                                                    Console.WriteLine("No account found for the given email.");
+                                                    HttpContextAccessor.HttpContext.Response.Redirect("/Auth/Login");
+
+                                                }
+                                            }
+                                            else
+                                            {
+                                                
+                                                Console.WriteLine("No rows returned.");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Error: {ex.Message}");
+                            }
+                                    
+                        }  
                         <li class="left-nav-item">
                             <a class="left-nav-link text-dark" asp-area="" asp-controller="Map" asp-action="Index">
                                 <i class="fa-solid fa-map"></i>
@@ -83,10 +166,15 @@
                 <main role="main">
                     @RenderBody()
                 </main>
+
+    @* <nav class="right-sidebar">
+        <div class="right-sidebar-container">
+            <div class="right-sidebar-title">
+                Explore
             </div>
         </div>
     </div>
-
+    *@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

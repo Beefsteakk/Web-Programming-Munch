@@ -15,7 +15,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
 
-        
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddSession();
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseMySql(Configuration.GetConnectionString("DefaultConnection"),
