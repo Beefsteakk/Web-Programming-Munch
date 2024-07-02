@@ -1,4 +1,4 @@
-@model List<CategoryModel>
+@model List<EffectiveWebProg.Models.ItemCatModel>
 
 @{
     ViewData["Title"] = "Category Page";
@@ -8,29 +8,29 @@
 
 <br>
 <div class="row">
-    <div class = "col-md-12">
+    <div class="col-md-12">
         <a asp-action="Create" asp-controller="Category" class="btn btn-success">Create New Category</a>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-12">
-        <table class = "table">
+        <table class="table">
             <thead>
                 <tr>
-                    <td>Category ID</td>
-                    <td>Category Type</td>
+                    <th>Category ID</th>
+                    <th>Category Name</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach(var item in Model){
+                @foreach (var item in Model)
+                {
                     <tr>
                         <td>@item.CatID</td>
-                        <td>@item.CatType</td>
+                        <td>@item.CatName</td>
                     </tr>
                 }
             </tbody>
         </table>
-
     </div>
 </div>
