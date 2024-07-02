@@ -1,17 +1,14 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EffectiveWebProg.Models;
+
 
 public class PostsModel
 {
     [Key]
     [Column(TypeName = "char(36)")]
     public Guid PostID { get; set; } // Primary Key
-
-    [Column(TypeName = "char(36)")]
-    public Guid? UserID { get; set; } // Foreign Key From UsersModel
 
     [Column(TypeName = "char(36)")]
     public Guid? RestID { get; set; } // Foreign Key From RestaurantsModel
@@ -22,17 +19,9 @@ public class PostsModel
     
     public DateTime PostCreatedAt { get; set; }
 
-    [Column(TypeName = "char(36)")]
-    public Guid? TaggedRest { get; set; } // Foreign Key From RestaurantsModel
-
-
     // Navigation properties
-    [ForeignKey("UserID")]
-    public UsersModel? User { get; set; }
     [ForeignKey("RestID")]
     public RestaurantsModel? Restaurant { get; set; }
-    [ForeignKey("TaggedRest")]
-    public RestaurantsModel? TaggedRestaurant { get; set; }
 
     public ICollection<CommentsModel> Comment { get; set; }
     public ICollection<PostLikesModel> PostLike { get; set; }

@@ -1,5 +1,3 @@
-using System;
-using Microsoft.EntityFrameworkCore;
 using EffectiveWebProg.Models;
 
 namespace EffectiveWebProg.Data
@@ -36,11 +34,6 @@ namespace EffectiveWebProg.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // UsersModel relationships
-            modelBuilder.Entity<UsersModel>()
-                .HasMany(u => u.Post)
-                .WithOne(p => p.User)
-                .HasForeignKey(p => p.UserID);
-
             modelBuilder.Entity<UsersModel>()
                 .HasMany(u => u.Comment)
                 .WithOne(c => c.User)
@@ -95,16 +88,6 @@ namespace EffectiveWebProg.Data
                 .HasMany(r => r.Post)
                 .WithOne(p => p.Restaurant)
                 .HasForeignKey(p => p.RestID);
-
-            modelBuilder.Entity<RestaurantsModel>()
-                .HasMany(r => r.TaggedRest)
-                .WithOne(p => p.TaggedRestaurant)
-                .HasForeignKey(p => p.TaggedRest);
-
-            modelBuilder.Entity<RestaurantsModel>()
-                .HasMany(r => r.Followings)
-                .WithOne(f => f.Rest)
-                .HasForeignKey(f => f.RestID);
 
             modelBuilder.Entity<RestaurantsModel>()
                 .HasMany(r => r.RestCard)
