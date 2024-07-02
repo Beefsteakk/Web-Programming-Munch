@@ -1,12 +1,7 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using System.Diagnostics;
 using EffectiveWebProg.Data;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using EffectiveWebProg.Models;
-using System;
-using System.Linq;
 
 namespace EffectiveWebProg.Controllers
 {
@@ -107,10 +102,6 @@ namespace EffectiveWebProg.Controllers
         public IActionResult Index()
         {
             ViewData["meow"] = "Restaurants On Munch";
-
-            var categories = _db.Category.ToList();
-            ViewBag.Category = new SelectList(categories, "CatID", "CatType");
-            
             return View();
         }
     }
