@@ -10,17 +10,18 @@ namespace EffectiveWebProg.Models
         public Guid PicID { get; set; } // Primary Key
         
         [Column(TypeName = "char(36)")]
-        public Guid? PostID { get; set; } // Foreign Key From PostsModel
-
+        public Guid PostID { get; set; } // Foreign Key From PostsModel
 
         [StringLength(255)]
-        public string? ImageURL { get; set; }
+        [Column(TypeName = "varchar(255)")]
+        public string ImageURL { get; set; }
 
         // Navigation properties
         [ForeignKey("PostID")]
         public PostsModel? Post { get; set; }
 
-        public PostPicsModel() {
+        public PostPicsModel()
+        {
             PicID = Guid.NewGuid();
         }
         public PostPicsModel(string filename)
