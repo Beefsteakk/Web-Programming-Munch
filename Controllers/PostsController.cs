@@ -13,6 +13,7 @@ public class PostsController(ApplicationDbContext db) : BaseController
 
     public async Task<IActionResult> Index()
     {
+        if (HttpContext.Session.GetString("SSUserType") != "User") return Forbid();
         var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
         var posts = await FetchViewablePostsByIDAsync(sessionID);
         var postViewModels = new List<PostViewModel>();
@@ -25,16 +26,10 @@ public class PostsController(ApplicationDbContext db) : BaseController
 
             var user = await _db.Users.FindAsync(sessionID);
             if (user != null){
-                var like = await _db.PostLikesUser.FirstOrDefaultAsync(
+                var like = await _db.PostLikes.FirstOrDefaultAsync(
                     l => l.PostID == post.PostID && l.UserID == user.UserID
                 );
-                postViewModels.Add(new PostViewModel(post, like != null, post.UserID == user.UserID, imageURLs));
-            }
-            else {
-                var like = await _db.PostLikesRest.FirstOrDefaultAsync(
-                    l => l.PostID == post.PostID && l.RestID == sessionID
-                );
-                postViewModels.Add(new PostViewModel(post, like != null, post.RestID == sessionID, imageURLs));
+                postViewModels.Add(new PostViewModel(post, like != null, false, imageURLs));
             }
         }
         return View(new MainFeedViewModel(postViewModels));
@@ -42,13 +37,14 @@ public class PostsController(ApplicationDbContext db) : BaseController
 
     [HttpPost]
     [Route("Posts/CreatePost")]
-    public async Task<IActionResult> CreatePostAsync(string postContent, Guid taggedRestaurantID, List<IFormFile> pictures)
+    public async Task<IActionResult> CreatePostAsync(string postContent, List<IFormFile> pictures)
     {
-        var post = new PostsModel() { PostContent = postContent };
-        if (await _db.Restaurants.FindAsync(taggedRestaurantID) != null) {
-            post.TaggedRest = taggedRestaurantID;
-        }
+        if (HttpContext.Session.GetString("SSUserType") != "Restaurant") return Forbid();
+        var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
+        var restaurant = await _db.Restaurants.FindAsync(sessionID);
+        if (restaurant == null) return Forbid();
 
+        var post = new PostsModel() { PostContent = postContent };
         if (pictures.Count > 0) {
             var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "PostPics");
             foreach (var picture in pictures) {
@@ -60,19 +56,7 @@ public class PostsController(ApplicationDbContext db) : BaseController
             }
         }
     
-        var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
-        var user = await _db.Users.FindAsync(sessionID);
-        if (user != null)
-        {
-            post.UserID = user.UserID;
-        }
-        else
-        {
-            var restaurant = await _db.Restaurants.FindAsync(sessionID);
-            if (restaurant == null) return Forbid();
-
-            post.RestID = restaurant.RestID;
-        }
+        post.RestID = restaurant.RestID;
         await _db.Posts.AddAsync(post);
         await _db.SaveChangesAsync();
         return RedirectToAction("");
@@ -80,14 +64,13 @@ public class PostsController(ApplicationDbContext db) : BaseController
 
     [HttpPost]
     [Route("Posts/EditPost")]
-    public async Task<IActionResult> EditPostByIDAsync(Guid postID, string content, Guid taggedRestID)
+    public async Task<IActionResult> EditPostByIDAsync(Guid postID, string content)
     {
         var post = await FetchPostByIDAsync(postID);
         if (post == null) return NotFound();
         if (!CheckOperationIsPermitted(post)) return Forbid();
 
         post.PostContent = content;
-        post.TaggedRest = taggedRestID;
         _db.Posts.Update(post);
         await _db.SaveChangesAsync();
         return RedirectToAction("SpecificPost", new { id = post.PostID });
@@ -148,10 +131,6 @@ public class PostsController(ApplicationDbContext db) : BaseController
         await CompletePostObject(post);
 
         var postDTO = new PostDTO(post.PostID, post.PostContent, post.PostCreatedAt.ToString("G"));
-        if (post.User != null)
-        {
-            postDTO.PostAuthorUser = new PostUserAuthorDTO(post.User.UserID, post.User.UserUsername);
-        }
         if (post.Restaurant != null)
         {
             postDTO.PostAuthorRestaurant = new PostRestaurantAuthorDTO(post.Restaurant.RestID, post.Restaurant.RestName);
@@ -217,32 +196,21 @@ public class PostsController(ApplicationDbContext db) : BaseController
         var user = await _db.Users.FindAsync(sessionID);
         if (user != null)
         {
-            var like = await _db.PostLikesUser.FirstOrDefaultAsync(l => l.PostID == postId && l.UserID == sessionID);
+            var like = await _db.PostLikes.FirstOrDefaultAsync(l => l.PostID == postId && l.UserID == sessionID);
             if (like == null)
             {
-                like = new PostLikesUserModel { Post = post, User = user };
-                await _db.PostLikesUser.AddAsync(like);
+                like = new PostLikesModel { Post = post, User = user };
+                await _db.PostLikes.AddAsync(like);
             }
             else
             {
-                _db.PostLikesUser.Remove(like);
+                _db.PostLikes.Remove(like);
             }
         }
         else
         {
             var restaurant = await _db.Restaurants.FindAsync(sessionID);
             if (restaurant == null) return Forbid();
-
-            var like = await _db.PostLikesRest.FirstOrDefaultAsync(l => l.PostID == postId && l.RestID == sessionID);
-            if (like == null)
-            {
-                like = new PostLikesRestModel { Post = post, Restaurant = restaurant };
-                await _db.PostLikesRest.AddAsync(like);
-            }
-            else
-            {
-                _db.PostLikesRest.Remove(like);
-            }
         }
 
         await _db.SaveChangesAsync();
@@ -263,38 +231,19 @@ public class PostsController(ApplicationDbContext db) : BaseController
     private bool CheckOperationIsPermitted(PostsModel post)
     {
         var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
-        return post.UserID == sessionID || post.RestID == sessionID;
+        return post.RestID == sessionID;
     }
 
-    /// <summary>
-    /// Returns a list of posts that the logged in user can see. (This means the user's own posts,
-    /// and the posts of other users that are being followed by the currently logged in user.)
-    /// </summary>
     private async Task<List<PostsModel>> FetchViewablePostsByIDAsync(Guid id)
     {
         var posts = new List<PostsModel>();
-        var restaurant = await _db.Restaurants.FirstOrDefaultAsync(r => r.RestID == id);
-        if (restaurant != null)
-        {
-            posts = await _db.Posts.FromSqlRaw(
-                "SELECT Posts.* FROM Posts WHERE Posts.RestID = {0}", id
-            ).OrderByDescending(p => p.PostCreatedAt).ToListAsync();
-        }
-        else
-        {
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.UserID == id);
-            if (user == null) return posts;
-            posts = await _db.Posts.FromSqlRaw(
-                "SELECT Posts.* FROM Posts WHERE Posts.UserID = {0} " +
-                "UNION " +
-                "SELECT Posts.* FROM Posts JOIN UserFollowings ON Posts.UserID = UserFollowings.FollowedUserID " +
-                "WHERE UserFollowings.UserID = {0} " +
-                "UNION " +
-                "SELECT Posts.* FROM Posts JOIN RestaurantFollowings ON Posts.RestID = RestaurantFollowings.FollowedRestID " +
-                "WHERE RestaurantFollowings.UserID = {0} ",
-                user.UserID
-            ).OrderByDescending(p => p.PostCreatedAt).ToListAsync();
-        }
+        var user = await _db.Users.FirstOrDefaultAsync(u => u.UserID == id);
+        if (user == null) return posts;
+        posts = await _db.Posts.FromSqlRaw(
+            "SELECT Posts.* FROM Posts JOIN Followings ON Posts.RestID = Followings.RestID " +
+            "WHERE Followings.UserID = {0} ",
+            user.UserID
+        ).OrderByDescending(p => p.PostCreatedAt).ToListAsync();
 
         foreach (var post in posts)
         {
@@ -311,19 +260,7 @@ public class PostsController(ApplicationDbContext db) : BaseController
 
     private async Task CompletePostObject(PostsModel post)
     {
-        if (post.UserID != null)
-        {
-            post.User = await _db.Users.FindAsync(post.UserID);
-        }
-        else if (post.RestID != null)
-        {
-            post.Restaurant = await _db.Restaurants.FindAsync(post.RestID);
-        }
-
-        if (post.TaggedRest != null)
-        {
-            post.TaggedRestaurant = await _db.Restaurants.FindAsync(post.TaggedRest);
-        }
+        post.Restaurant = await _db.Restaurants.FindAsync(post.RestID);
 
         /* This is commented out because the below information are unused for now and adds a considerable loading time.
         post.Comment = await _db.Comments.FromSqlRaw(

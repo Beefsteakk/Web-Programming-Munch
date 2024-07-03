@@ -24,11 +24,7 @@
                     <div class="post-header">
                         <img src="~/Images/xunyin.jpg" alt="Xun Yin">
                         <div class="post-info">
-                            @if (Model.Post.User != null)
-                            {
-                                <h4>@Model.Post.User.UserName</h4>
-                            }
-                            else if (Model.Post.Restaurant != null)
+                            @if (Model.Post.Restaurant != null)
                             {
                                 <h4>@Model.Post.Restaurant.RestName</h4>
                             }

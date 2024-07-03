@@ -40,7 +40,6 @@ public class UsersModel
     
 
     // Navigation properties
-    public ICollection<PostsModel> Post { get; set; }
     public ICollection<CommentsModel> Comment { get; set; }
     public ICollection<PostLikesModel> PostLike { get; set; }
     public ICollection<ReservationsModel> Reservation { get; set; }
@@ -53,7 +52,6 @@ public class UsersModel
     {
         UserID = Guid.NewGuid();
         UserCreatedAt = DateTime.UtcNow;
-        Post = new List<PostsModel>();
         Comment = new List<CommentsModel>();
         PostLike = new List<PostLikesModel>();
         Reservation = new List<ReservationsModel>();

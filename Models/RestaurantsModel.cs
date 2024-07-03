@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Org.BouncyCastle.Asn1.Cms;
 
 namespace EffectiveWebProg.Models
 {
@@ -56,8 +53,6 @@ namespace EffectiveWebProg.Models
         public ICollection<ReservationsModel> Reservation { get; set; }
         public ICollection<CommentsModel> Comment { get; set; }
         public ICollection<PostsModel> Post { get; set; }
-        public ICollection<PostsModel> TaggedRest { get; set; }
-        public ICollection<FollowingsModel> Followings { get; set; }
         public ICollection<RestCardModel> RestCard { get; set; }
         public ICollection<InventoryModel> Inventory { get; set; }
         public ICollection<CartModel> Cart { get; set; }
@@ -69,8 +64,6 @@ namespace EffectiveWebProg.Models
             Reservation = new List<ReservationsModel>();
             Comment = new List<CommentsModel>();
             Post = new List<PostsModel>();
-            TaggedRest = new List<PostsModel>();
-            Followings = new List<FollowingsModel>();
             RestCard = new List<RestCardModel>();
             Inventory = new List<InventoryModel>();
             Cart = new List<CartModel>();

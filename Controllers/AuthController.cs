@@ -1,80 +1,46 @@
 using EffectiveWebProg.Models;
 using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
+using EffectiveWebProg.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace EffectiveWebProg.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController(ApplicationDbContext db) : Controller
     {
-        private readonly string connectionString = "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
+        private readonly ApplicationDbContext _db = db;
 
-        // GET: /Auth/Register
         [HttpGet("Auth/Register")]
         public IActionResult Register()
         {
             return View();
         }
 
-        // POST: /Auth/Register
         [HttpPost("Auth/Register")]
         public async Task<IActionResult> Register(UsersModel user)
         {
             if (ModelState.IsValid)
             {
-                string query = "INSERT INTO Users (UserID, UserName, UserEmail, UserContactNum, UserUsername, UserPassword, UserProfilePic, UserBio, AccountToken, AccountVerified, UserCreatedAt) " +
-                               "VALUES (@UserID, @UserName, @UserEmail, @UserContactNum, @UserUsername, @UserPassword, @UserProfilePic, @UserBio, @AccountToken, @AccountVerified, @UserCreatedAt)";
-
-                try
-                {
-                    using (MySqlConnection conn = new MySqlConnection(connectionString))
-                    {
-                        await conn.OpenAsync();
-                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                        {
-                            cmd.Parameters.AddWithValue("@UserID", user.UserID);
-                            cmd.Parameters.AddWithValue("@UserName", user.UserName);
-                            cmd.Parameters.AddWithValue("@UserEmail", user.UserEmail);
-                            cmd.Parameters.AddWithValue("@UserContactNum", user.UserContactNum);
-                            cmd.Parameters.AddWithValue("@UserUsername", user.UserUsername);
-                            cmd.Parameters.AddWithValue("@UserPassword", BCrypt.Net.BCrypt.HashPassword(user.UserPassword)); // Hash the password
-                            cmd.Parameters.AddWithValue("@UserProfilePic", user.UserProfilePic ?? (object)DBNull.Value);
-                            cmd.Parameters.AddWithValue("@UserBio", user.UserBio ?? (object)DBNull.Value);
-                            cmd.Parameters.AddWithValue("@AccountToken", user.AccountToken ?? (object)DBNull.Value);
-                            cmd.Parameters.AddWithValue("@AccountVerified", user.AccountVerified ?? (object)DBNull.Value);
-                            cmd.Parameters.AddWithValue("@UserCreatedAt", user.UserCreatedAt);
-
-                            await cmd.ExecuteNonQueryAsync();
-                        }
-                    }
-
-                    return RedirectToAction("Login");
-                }
-                catch (MySqlException ex)
-                {
-                    // Log the error (you can use a logging framework like Serilog, NLog, etc.)
-                    ModelState.AddModelError("", "An error occurred while saving data: " + ex.Message);
-                }
+                user.UserPassword = BCrypt.Net.BCrypt.HashPassword(user.UserPassword);
+                await _db.Users.AddAsync(user);
+                await _db.SaveChangesAsync();
+                return RedirectToAction("Login");
             }
 
             // If we got this far, something failed, redisplay form
             return View(user);
         }
 
-        // GET: /Auth/Login
         [HttpGet("Auth/Login")]
         public IActionResult Login()
         {
             return View();
         }
 
-        // POST: /Auth/Login
         [HttpPost("Auth/Login")]
-
-        public IActionResult Login(LoginModel model)
+        public async Task<IActionResult> Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
-
                 Console.WriteLine("hey chimponga");
                 // Check if model is null
                 if (model == null)
@@ -90,67 +56,31 @@ namespace EffectiveWebProg.Controllers
                     return View(model);
                 }
 
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                var user = await _db.Users.Where(u => u.UserEmail == model.UserEmail).FirstOrDefaultAsync();
+                if (user != null)
                 {
-                    try
+                    if (user.UserPassword != null && BCrypt.Net.BCrypt.Verify(model.UserPassword, user.UserPassword))
                     {
-                        conn.Open();
-
-                        // Modify the query to select the hashed password using UserEmail
-                        using (MySqlCommand cmd = new MySqlCommand(
-                            "SELECT UserPassword AS Password, UserEmail AS Email " +
-                            "FROM Users " +
-                            "WHERE UserEmail = @UserEmail " +
-                            "UNION " +
-                            "SELECT RestPassword AS Password, RestEmail AS Email " +
-                            "FROM Restaurants " +
-                            "WHERE RestEmail = @UserEmail", conn))
-                            {
-                            cmd.Parameters.AddWithValue("@UserEmail", model.UserEmail);
-
-                            string storedPassword = cmd.ExecuteScalar()?.ToString();
-
-                            if (storedPassword != null && BCrypt.Net.BCrypt.Verify(model.UserPassword, storedPassword))
-                            {
-                                using (MySqlCommand cmd2 = new MySqlCommand(
-                                    "SELECT UserID as ID FROM Users WHERE UserEmail = @UserEmail " +
-                                    "UNION " +
-                                    "SELECT RestID as ID FROM Restaurants WHERE RestEmail = @UserEmail", conn
-                                )) {
-                                    cmd2.Parameters.AddWithValue("@UserEmail", model.UserEmail);
-                                    string id = cmd2.ExecuteScalar()?.ToString();
-                                    HttpContext.Session.SetString("SSName", model.UserEmail);
-                                    HttpContext.Session.SetString("SSID", id);
-                                    Console.WriteLine($"Debugging works! UserEmail: {model.UserEmail}");
-                                    Console.WriteLine($"Debugging works! Password: {model.UserPassword}");
-                                    return RedirectToAction("Index", "Posts");
-                                }
-
-
-                                // Redirect to Home Index page on successful login
-
-                                // HttpContext.Session.SetString("user", currentUser.Trim());
-                                // _svc.retrieveuserid(HttpContext.Session.GetString("user"));
-
-                                                    // Create session
-
-
-
-                            }
-                            else
-                            {
-                                Console.WriteLine("Error, user not found or invalid password!");
-                                ModelState.AddModelError(string.Empty, "User not found or invalid password.");
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // Log or handle the exception as needed
-                        Console.WriteLine($"Exception: {ex.Message}");
-                        ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
+                        HttpContext.Session.SetString("SSName", user.UserEmail);
+                        HttpContext.Session.SetString("SSID", user.UserID.ToString());
+                        HttpContext.Session.SetString("SSUserType", "User");
+                        return RedirectToAction("Index", "Posts");
                     }
                 }
+
+                var restaurant = await _db.Restaurants.Where(r => r.RestEmail == model.UserEmail).FirstOrDefaultAsync();
+                if (restaurant != null)
+                {
+                    if (restaurant.RestPassword != null && BCrypt.Net.BCrypt.Verify(model.UserPassword, restaurant.RestPassword))
+                    {
+                        HttpContext.Session.SetString("SSName", restaurant.RestEmail);
+                        HttpContext.Session.SetString("SSID", restaurant.RestID.ToString());
+                        HttpContext.Session.SetString("SSUserType", "Restaurant");
+                        return RedirectToAction("Index", "Dashboard");
+                    }
+                }
+
+                ModelState.AddModelError(string.Empty, "User not found or invalid password.");
             }
 
             return View(model);
@@ -160,19 +90,9 @@ namespace EffectiveWebProg.Controllers
         // Logout action to clear session
         public IActionResult Logout()
         {
-
-
-        
-
             HttpContext.Session.Clear();
             return RedirectToAction("Login", "Auth");
         }
-
-
-
-
-
-
 
             // if (ModelState.IsValid)
             // {
@@ -229,14 +149,12 @@ namespace EffectiveWebProg.Controllers
         //     return View(model);
         // }
 
-        // GET: /Auth/RestaurantReg
         [HttpGet("Auth/RestaurantReg")]
         public IActionResult RestaurantReg()
         {
             return View();
         }
 
-        // GET: /Auth/ForgotPassword
         [HttpGet("Auth/ForgotPassword")]
         public IActionResult ForgotPassword()
         {

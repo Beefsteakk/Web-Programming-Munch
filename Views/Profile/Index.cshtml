@@ -3,34 +3,38 @@
     
     <link href="~/css/Profile.css" rel="stylesheet" />
 }
+@using EffectiveWebProg.ViewModels;
+@model ProfileViewModel;
 
 <div class="profile-container">
     <div class="profile-header">
         <div class="profile-picture">
-            <img src="~/images/picture.png" alt="Profile Picture">
+            @if (Model.user.UserProfilePic == null)
+            {
+                <img src="~/images/chef.png" alt="Profile Picture">
+            } 
+            else
+            {
+                var path = $"~/images/UserProfilePics/{Model.user.UserProfilePic}"; 
+                <img src=@path alt = "Profile Picture">
+            }
         </div>
         <div class="profile-info">
             <div class="profile-username">
-                <h2>just._deva</h2>
-                <button>Edit Profile</button>
+                <h2>@Model.user.UserUsername</h2>
+                <form method="get" asp-controller="Profile" asp-action="EditProfile">
+                    <button type="submit">Edit Profile</button>
+                </form>
             </div>
             <div class="profile-stats">
-                <span><strong>0</strong> posts</span>
-                <span><strong>129</strong> followers</span>
-                <span><strong>107</strong> following</span>
-            </div>
-            <div class="profile-bio">
-                <p>deva Bio</p>
+                <a onclick="">
+                    <span><strong>@Model.followingCount</strong> following</span>
+                </a>
             </div>
         </div>
     </div>
         <div class="profile-tabs">
-        <button class="tab-link active" onclick="openTab(event, 'posts')">My Posts</button>
-        <button class="tab-link" onclick="openTab(event, 'reservations')">My Reservations</button>
-    </div>
-    <div id="posts" class="tab-content">
-        <h3>My Posts</h3>
-        <!-- Add content for My Posts here -->
+        <button class="tab-link active" onclick="openTab(event, 'reservations')">My Reservations</button>
     </div>
     <div id="reservations" class="tab-content" style="display:none;">
         <h3>My Reservations</h3>
@@ -70,6 +74,7 @@
         </div>
     </div>
 </div>
+
 @section Scripts {
     <script>
         function openTab(evt, tabName) {
