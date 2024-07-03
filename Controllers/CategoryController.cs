@@ -19,7 +19,7 @@ public class CategoryController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var cat = await _db.Category.ToListAsync();
+        var cat = await _db.ItemCats.ToListAsync();
         return View(cat);
     }
 
@@ -30,7 +30,7 @@ public class CategoryController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("CatType")] CategoryModel categoryModel)
+    public async Task<IActionResult> Create([Bind("CatType")] ItemCatModel categoryModel)
     {
         if (ModelState.IsValid)
         {
