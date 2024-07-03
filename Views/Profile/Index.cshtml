@@ -3,29 +3,33 @@
     
     <link href="~/css/Profile.css" rel="stylesheet" />
 }
-@using EffectiveWebProg.Models;
-@model UsersModel;
+@using EffectiveWebProg.ViewModels;
+@model ProfileViewModel;
 
 <div class="profile-container">
     <div class="profile-header">
         <div class="profile-picture">
-            @if (Model.UserProfilePic == null)
+            @if (Model.user.UserProfilePic == null)
             {
                 <img src="~/images/chef.png" alt="Profile Picture">
             } 
             else
             {
-                var path = $"~/images/UserProfilePics/{Model.UserProfilePic}"; 
+                var path = $"~/images/UserProfilePics/{Model.user.UserProfilePic}"; 
                 <img src=@path alt = "Profile Picture">
             }
         </div>
         <div class="profile-info">
             <div class="profile-username">
-                <h2>@Model.UserUsername</h2>
-                <button>Edit Profile</button>
+                <h2>@Model.user.UserUsername</h2>
+                <form method="get" asp-controller="Profile" asp-action="EditProfile">
+                    <button type="submit">Edit Profile</button>
+                </form>
             </div>
             <div class="profile-stats">
-                <span><strong>107</strong> following</span>
+                <a onclick="">
+                    <span><strong>@Model.followingCount</strong> following</span>
+                </a>
             </div>
         </div>
     </div>
@@ -70,6 +74,7 @@
         </div>
     </div>
 </div>
+
 @section Scripts {
     <script>
         function openTab(evt, tabName) {
