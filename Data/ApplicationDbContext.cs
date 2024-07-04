@@ -21,12 +21,12 @@ namespace EffectiveWebProg.Data
         public DbSet<PostPicsModel> PostPics { get; set; }
         public DbSet<PostLikesModel> PostLikes { get; set; }
         public DbSet<ItemsModel> Items { get; set; }
-        public DbSet<ItemCatModel> ItemCats { get; set; }
-        public DbSet<InventoryModel> Inventories { get; set; }
+        public DbSet<ItemCatModel> ItemCat { get; set; }
+        public DbSet<InventoryModel> Inventory { get; set; }
         public DbSet<InventoryItemsModel> InventoryItems { get; set; }
         public DbSet<FollowingsModel> Followings { get; set; }
         public DbSet<EmployeesModel> Employees { get; set; }
-        public DbSet<CreditCardModel> CreditCards { get; set; }
+        public DbSet<CreditCardModel> CreditCard { get; set; }
         public DbSet<CommentsModel> Comments { get; set; }
         public DbSet<CartModel> Carts { get; set; }
         public DbSet<CartItemsModel> CartItems { get; set; }

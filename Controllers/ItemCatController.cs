@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EffectiveWebProg.Controllers;
 
-public class CategoryController : Controller
+public class ItemCatController : Controller
 {
     private ApplicationDbContext _db;
 
-    public CategoryController(ApplicationDbContext db)
+    public ItemCatController(ApplicationDbContext db)
     {
         _db = db;
     }
 
     public async Task<IActionResult> Index()
     {
-        var cat = await _db.ItemCats.ToListAsync();
+        var cat = await _db.ItemCat.ToListAsync();
         return View(cat);
     }
 
@@ -30,16 +30,16 @@ public class CategoryController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("CatType")] ItemCatModel categoryModel)
+    public async Task<IActionResult> Create([Bind("CatName")] ItemCatModel itemCatModel)
     {
         if (ModelState.IsValid)
         {
-            categoryModel.CatID = Guid.NewGuid();
-            _db.Add(categoryModel);
+            itemCatModel.CatID = Guid.NewGuid();
+            _db.Add(itemCatModel);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(categoryModel);
+        return View(itemCatModel);
     }
 
 }
