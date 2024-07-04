@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EffectiveWebProg.Controllers
-{
+namespace EffectiveWebProg.Controllers;
+
     public class ItemsController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -133,4 +133,4 @@ namespace EffectiveWebProg.Controllers
             return _db.Items.Any(e => e.ItemID == id);
         }
     }
-}
+
