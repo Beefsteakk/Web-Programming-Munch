@@ -17,6 +17,8 @@ public class InventoryItemsModel
 
     public int StockCount { get; set; }
 
+    public double TotalPrice { get; set; }
+
     public DateTime LastUpdated { get; set; }
 
 

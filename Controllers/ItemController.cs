@@ -57,7 +57,7 @@ namespace EffectiveWebProg.Controllers
                     return View(model);
                 }
 
-                // Save the uploaded file and get the file path
+                // Save the uploaded file and get the file path, handle null case
                 var itemPicPath = await SaveFile(model.ItemPic);
                 
                 var item = new ItemsModel
@@ -65,8 +65,9 @@ namespace EffectiveWebProg.Controllers
                     ItemID = Guid.NewGuid(),
                     CatID = model.CatID,
                     ItemName = model.ItemName,
-                    ItemPic = itemPicPath,
-                    ItemCat = category // Set the ItemCat property
+                    ItemPic = itemPicPath, // Can be null if no file is uploaded
+                    ItemCat = category,
+                    Price = model.Price
                 };
 
                 _db.Items.Add(item);
@@ -77,7 +78,7 @@ namespace EffectiveWebProg.Controllers
             return View(model);
         }
 
-        private async Task<string> SaveFile(IFormFile file)
+        private async Task<string?> SaveFile(IFormFile? file) // Allow returning null
         {
             if (file == null || file.Length == 0)
             {

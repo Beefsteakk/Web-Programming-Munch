@@ -57,6 +57,7 @@ namespace EffectiveWebProg.Models
         public ICollection<InventoryModel> Inventory { get; set; }
         public ICollection<CartModel> Cart { get; set; }
         public ICollection<EmployeesModel> Employee { get; set; }
+        public ICollection<FollowingsModel> Followings { get; set; }
 
         public RestaurantsModel()
         {

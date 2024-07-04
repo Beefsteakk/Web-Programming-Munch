@@ -16,6 +16,8 @@ namespace EffectiveWebProg.ViewModels
         [StringLength(255)]
         public string ItemName { get; set; }
 
+        public double Price { get; set; }
+
         public IFormFile? ItemPic { get; set; }
 
         public List<ItemCatModel> Categories { get; set; }

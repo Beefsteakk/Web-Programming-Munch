@@ -25,6 +25,8 @@ public class ItemsModel
     [Column(TypeName = "varchar(255)")] 
     public string? ItemPic { get; set; }
 
+    public double Price { get; set; }
+
 
     // Navigation properties
     [ForeignKey("CatID")]
