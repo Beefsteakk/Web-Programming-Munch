@@ -1,5 +1,5 @@
 ﻿﻿@using Microsoft.AspNetCore.Http;
-@using MySql.Data.MySqlClient;  
+@using MySql.Data.MySqlClient;
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
 </head>
 
 <body>
-    
+
     @{
         var controller = (string)ViewContext.RouteData.Values["controller"];
     }
@@ -40,21 +40,22 @@
                         <li class="left-sidebar-munch">
                             <span class="d-none d-xl-inline">Munch</span>
                         </li>
-                        @{ 
-                            string connectionString = "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
+                        @{
+                            string connectionString =
+                            "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
 
                             // SQL query to fetch user or restaurant information based on email
                             string query = @"
-                                SELECT UserPassword AS Password, UserEmail AS Email, UserID AS UserID, NULL AS RestID
-                                FROM Munch.Users
-                                WHERE UserEmail = @UserEmail
-                                
-                                UNION
-                                
-                                SELECT RestPassword AS Password, RestEmail AS Email, NULL AS UserID, RestID AS RestID
-                                FROM Munch.Restaurants
-                                WHERE RestEmail = @UserEmail
-                                ";
+                        SELECT UserPassword AS Password, UserEmail AS Email, UserID AS UserID, NULL AS RestID
+                        FROM Munch.Users
+                        WHERE UserEmail = @UserEmail
+
+                        UNION
+
+                        SELECT RestPassword AS Password, RestEmail AS Email, NULL AS UserID, RestID AS RestID
+                        FROM Munch.Restaurants
+                        WHERE RestEmail = @UserEmail
+                        ";
 
                             Console.WriteLine("Fetching account information...");
 
@@ -82,6 +83,7 @@
                                                 var userId = reader["UserID"] as Guid?;
                                                 var restId = reader["RestID"] as Guid?;
 
+
                                                 if (userId.HasValue)
                                                 {
                                                     <li class="left-nav-item">
@@ -96,11 +98,13 @@
                                                 else if (restId.HasValue)
                                                 {
                                                     <li class="left-nav-item">
-                                                        <a class="left-nav-link text-dark" asp-area="" asp-controller="RestProfile" asp-action="Index">
+                                                        <a class="left-nav-link text-dark" asp-area="" asp-controller="RestProfile"
+                                                            asp-action="SelectRestaurant" asp-route-restID="@restId">
                                                             <i class="fa-solid fa-bowl-food"></i>
                                                             <span class="left-link-text d-none d-xl-inline">Restaurant Profile</span>
                                                         </a>
                                                     </li>
+
 
                                                     // Handle restaurant account
                                                     Console.WriteLine($"Restaurant account found: RestID = {restId}");
@@ -116,7 +120,7 @@
                                             }
                                             else
                                             {
-                                                
+
                                                 Console.WriteLine("No rows returned.");
                                             }
                                         }
@@ -127,8 +131,8 @@
                             {
                                 Console.WriteLine($"Error: {ex.Message}");
                             }
-                                    
-                        }  
+
+                        }
                         <li class="left-nav-item">
                             <a class="left-nav-link text-dark" asp-area="" asp-controller="Map" asp-action="Index">
                                 <i class="fa-solid fa-map"></i>
@@ -161,21 +165,21 @@
                     @RenderBody()
                 </main>
 
-    @* <nav class="right-sidebar">
-        <div class="right-sidebar-container">
-            <div class="right-sidebar-title">
+                @* <nav class="right-sidebar">
+                <div class="right-sidebar-container">
+                <div class="right-sidebar-title">
                 Explore
-            </div>
-        </div>
-    </div>
-    *@
+                </div>
+                </div>
+                </div>
+                *@
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-    <script src="/_framework/aspnetcore-browser-refresh.js"></script>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+                @await RenderSectionAsync("Scripts", required: false)
+                <script src="/_framework/aspnetcore-browser-refresh.js"></script>
 
 </body>
 
