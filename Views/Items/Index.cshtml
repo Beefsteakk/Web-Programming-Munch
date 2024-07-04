@@ -1,0 +1,152 @@
+@using EffectiveWebProg.Models
+@model IEnumerable<ItemsModel>
+
+@{
+    ViewData["Title"] = "Items";
+}
+
+<h2>Items</h2>
+
+<p>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal">
+        Create New
+    </button>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().ItemPic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().ItemCat.CatName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemPic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemCat.CatName)
+            </td>
+            <td>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#viewModal" data-url="@Url.Action("Details", new { id = item.ItemID })">
+                    View
+                </button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-url="@Url.Action("Edit", new { id = item.ItemID })">
+                    Edit
+                </button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-url="@Url.Action("Delete", new { id = item.ItemID })">
+                    Delete
+                </button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<!-- Create Modal -->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLabel">Create New Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("_CreateModal")
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- View Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModalLabel">View Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#viewModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var url = button.data('url');
+                var modal = $(this);
+                modal.find('.modal-body').load(url);
+            });
+
+            $('#editModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var url = button.data('url');
+                var modal = $(this);
+                modal.find('.modal-body').load(url);
+            });
+
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var url = button.data('url');
+                var modal = $(this);
+                modal.find('.modal-body').load(url);
+            });
+        });
+    </script>
+}
