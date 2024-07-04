@@ -44,7 +44,7 @@ namespace EffectiveWebProg.Controllers
 
             ViewBag.CatName = item.ItemCat.CatName;
 
-            return PartialView("_DetailsModal", item);
+            return PartialView("_ViewModal", item);
         }
 
         // GET: Items/Create
@@ -78,7 +78,7 @@ namespace EffectiveWebProg.Controllers
                 return NotFound();
             }
 
-            var itemsModel = await _db.Items.FindAsync(id);
+            var itemsModel = await _db.Items.Include(i => i.ItemCat).FirstOrDefaultAsync(i => i.ItemID == id);
             if (itemsModel == null)
             {
                 return NotFound();

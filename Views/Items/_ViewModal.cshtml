@@ -1,5 +1,4 @@
-@using EffectiveWebProg.Models
-@model ItemsModel
+@model EffectiveWebProg.Models.ItemsModel
 
 <div>
     <h4>Item Details</h4>
@@ -18,10 +17,10 @@
             @Html.DisplayFor(model => model.ItemPic)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => ViewBag.CatName)
+            @Html.DisplayNameFor(model => model.ItemCat.CatName)
         </dt>
         <dd class="col-sm-10">
-            @ViewBag.CatName
+            @Html.DisplayFor(model => model.ItemCat.CatName)
         </dd>
     </dl>
 </div>
