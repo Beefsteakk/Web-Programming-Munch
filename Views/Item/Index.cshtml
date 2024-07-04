@@ -1,0 +1,40 @@
+@model List<EffectiveWebProg.Models.ItemsModel>
+
+@{
+    ViewData["Title"] = "Items Page";
+}
+
+<h2>Items</h2>
+
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <a asp-action="Create" asp-controller="Item" class="btn btn-success">Create New Item</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Category ID</th>
+                    <th>Item ID</th>
+                    <th>Item Name</th>
+                    <th>Item Pic</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.CatID</td>
+                        <td>@item.ItemID</td>
+                        <td>@item.ItemName</td>
+                        <td><img src="@item.ItemPic" alt="@item.ItemName" style="max-width: 100px;" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
