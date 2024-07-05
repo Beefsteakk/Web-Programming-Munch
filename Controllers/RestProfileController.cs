@@ -1,27 +1,24 @@
 using EffectiveWebProg.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 using MySql.Data.MySqlClient;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace EffectiveWebProg.Controllers
 {
-    public class RestProfileController : Controller
+    public class RestProfileController : BaseController
     {
-        private readonly string connectionString =  "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
+        private readonly string connectionString = "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
 
-        private async Task<RestaurantsModel> GetRestaurantDetailsByUserIdAsync(string userId)
+        private async Task<RestaurantsModel> GetRestaurantDetailsByUserIdAsync(string restID)
         {
             RestaurantsModel restaurantDetails = null;
-            string query = "SELECT * FROM Restaurants WHERE RestEmail = @RestEmail"; // Updated query
+            string query = "SELECT * FROM Restaurants WHERE RestID = @RestID";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 await conn.OpenAsync();
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@RestEmail", userId);
+                    cmd.Parameters.AddWithValue("@RestID", restID);
 
                     using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
                     {
@@ -39,7 +36,7 @@ namespace EffectiveWebProg.Controllers
                                 RestLong = !string.IsNullOrEmpty(reader["RestLong"].ToString()) ? double.Parse(reader["RestLong"].ToString()) : 0.0,
                                 RestPic = reader["RestPic"]?.ToString(),
                                 RestWebsite = reader["RestWebsite"]?.ToString(),
-                                RestRatings = !string.IsNullOrEmpty(reader["RestRatings"].ToString()) ? int.Parse(reader["RestRatings"].ToString()) : 0
+                                RestRatings = !string.IsNullOrEmpty(reader["RestRatings"].ToString()) ? float.Parse(reader["RestRatings"].ToString()) : 0
                             };
                         }
                     }
@@ -48,55 +45,81 @@ namespace EffectiveWebProg.Controllers
             return restaurantDetails;
         }
 
-        private async Task<Dictionary<string, int>> GetFollowerCountsAsync()
+
+        private async Task<PostPicsModel> GetRestaurantPostsAsync(string restID)
         {
-            var followerCounts = new Dictionary<string, int>();
-            string query = "SELECT FollowedRestID, COUNT(UserID) AS FollowerCount FROM Munch.RestaurantFollowings GROUP BY FollowedRestID";
+            PostPicsModel postDetails  = null;
+            string query = "SELECT pp.PicID , pp.ImageURL FROM PostPics pp JOIN Posts p on pp.PostID = p.PostID WHERE p.RestID = @RestID ORDER BY p.PostCreatedAt DESC LIMIT 1";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 await conn.OpenAsync();
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
+                    cmd.Parameters.AddWithValue("@RestID", restID);
+
                     using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
                     {
-                        while (await reader.ReadAsync())
+                        if (await reader.ReadAsync())
                         {
-                            string restaurantId = reader["FollowedRestID"].ToString();
-                            int followerCount = int.Parse(reader["FollowerCount"].ToString());
-                            followerCounts[restaurantId] = followerCount;
+                            postDetails  = new PostPicsModel
+                            {
+                                PicID = Guid.Parse(reader["PicID"].ToString()??""),
+                                ImageURL = reader["ImageURL"].ToString()??"",
+                            };
                         }
                     }
                 }
+                // Console.WriteLine("PostDetails: " + postDetails.ImageURL);
             }
-            return followerCounts;
+            return postDetails ;
+        }
+        public async Task<IActionResult> SelectRestaurant(string restID)
+        {
+            // Store the restID in session
+            HttpContext.Session.SetString("RestID", restID);
+
+            // Redirect to the restaurant profile or any other page
+            return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
+            string restID = HttpContext.Session.GetString("RestID") ?? "";
+            if (string.IsNullOrEmpty(restID))
+            {
+                Console.WriteLine("RestID is null" + restID);
+                // Handle the case where the restID is not available in the session
+                return RedirectToAction("Error", "Home");
+            }
+            RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(restID);
+            PostPicsModel restaurantPosts = await GetRestaurantPostsAsync(restID);
+            string sessionemail = HttpContext.Session.GetString("SSName") ?? "";
+           
+            string sessionType = HttpContext.Session.GetString("SSUserType") ?? "";
+            bool isOwnRestaurant = false;
 
-            string sessionID=HttpContext.Session.GetString("SSName");
+            // Check if sessionID matches restaurantEmail
+            if (sessionemail == restaurantDetails.RestEmail)
+            {
+                isOwnRestaurant = true;
+            }
 
 
-            // use the current email to query sql to get the user's other info
-
-            string userId = "deab13da-1e6b-11ef-ad56-662ef0370963"; // example userId
-            RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(sessionID);
-
+            ViewBag.sessionemail = sessionemail;
             ViewBag.RestaurantDetails = restaurantDetails;
+            ViewBag.IsOwnRestaurant = isOwnRestaurant;
+            ViewBag.RestaurantPosts = restaurantPosts;
 
-            var followerCounts = await GetFollowerCountsAsync();
-            ViewBag.FollowerCounts = followerCounts;
-            
             return View();
         }
-
         public async Task<IActionResult> EditProfile()
         {
-            string sessionID=HttpContext.Session.GetString("SSName");
-            // string userId = "deab13da-1e6b-11ef-ad56-662ef0370963"; // example userId
-            RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(sessionID);
+            string sessionID = HttpContext.Session.GetString("SSName") ?? "";
+            string restID = HttpContext.Session.GetString("RestID") ?? "";
 
+            RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(restID);
             ViewBag.RestaurantDetails = restaurantDetails;
 
             return View();

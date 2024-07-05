@@ -2,9 +2,13 @@
     <link href="~/css/ownerProfile.css" rel="stylesheet" />
     ViewData["Title"] = "Restaurant Profile";
     var details = ViewBag.RestaurantDetails as RestaurantsModel;
-    var followerCounts = ViewBag.FollowerCounts as Dictionary<string, int>;
-    var restaurantId = "12345"; // Replace with your specific restaurant ID
-    var followerCount = followerCounts.ContainsKey(restaurantId) ? followerCounts[restaurantId] : 0;
+    var sessionEmail = ViewBag.sessionemail as string;
+    var postDetails = ViewBag.RestaurantPosts ;
+    
+    
+
+    var restaurantId = details.RestID; // Replace with your specific restaurant ID
+    @* var followerCount = followerCounts.ContainsKey(restaurantId) ? followerCounts[restaurantId] : 0; *@
 }
 
 
@@ -48,41 +52,59 @@
                                             </svg>
                                             Follow
                                         </button>
-                                        @if (restaurantId == "12345")
+                                        @if (sessionEmail == details.RestEmail)
                                         {
                                             <a asp-area="" asp-controller="RestProfile" asp-action="EditProfile"
                                                 class="btn btn-primary e-btn">Edit Profile</a>
-
                                         }
+
 
                                     </div>
                                 </div>
-
-
-
                                 <p>Rating:
-                                    <span class="star-rating">
+                            
+                                                                   <span class="star-rating">
                                         @{
-                                            float rating = details.RestRatings ?? 0f;
-                                            int fullStars = (int)rating;
-                                            bool hasHalfStar = rating - fullStars >= 0.5;
-                                            int emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-
+                                            double rating = details.RestRatings ?? 0.0;
+                                            int fullStars = (int)Math.Floor(rating);
+                                            double decimalPart = rating - fullStars;
+                                            int emptyStars = 5 - fullStars - 1; // 1 for the last float star
 
                                             for (int i = 0; i < fullStars; i++)
                                             {
                                                 @:<i class="fas fa-star"></i>
                                             }
-                                            if (hasHalfStar)
+
+                                            // Handling float star style for ratings between 2.0 and 2.9
+                                            if (decimalPart > 0)
                                             {
-                                                @:<i class="fas fa-star-half-alt"></i>
+                                                if (decimalPart <= 0.3)
+                                                {
+                                                   @:<i class="far fa-star"></i>
+                                                }
+                                                else if (decimalPart <= 0.7)
+                                                {
+                                                    @:<i style="color:gold" class="fas fa-star-half-alt"></i>
+                                                }
+                                                else
+                                                {
+                                                    @:<i class="fas fa-star"></i>
+                                                }
                                             }
+                                            else
+                                            {
+                                                // If the rating is a whole number
+                                                emptyStars += 1;
+                                            }
+
                                             for (int i = 0; i < emptyStars; i++)
                                             {
                                                 @:<i class="far fa-star"></i>
                                             }
                                         }
+
                                     </span>
+
                                     @details.RestRatings
                                 </p>
                                 <div class="profile-bio">
@@ -155,7 +177,7 @@
                         <span><strong>0</strong> posts</span>
                     </div>
                     <div class="col-md text-center ">
-                        <span><strong>@followerCount</strong> followers</span>
+                        @* <span><strong>@followerCount</strong> followers</span> *@
                     </div>
                     <div class="col-md text-center">
                         <span><strong>107</strong> following</span>
@@ -195,10 +217,11 @@
                 </div>
                 <div class="row">
                     <div class="col-md">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img src="~/assets/RestaurantStuff/Post1.jpg" alt="Post 1" class="img-fluid">
-                            </div>
+                         <div class="row">
+                              <div class="col-md-4">
+                                 <img src="~/assets/RestaurantStuff/Post2.jpg" alt="Post 2" class="img-fluid">
+                                    <img src="@postDetails.ImageURL"  id="@postDetails.PicID" class="img-fluid">
+                                </div>
                             <div class="col-md-4">
                                 <img src="~/assets/RestaurantStuff/Post2.jpg" alt="Post 2" class="img-fluid">
                             </div>
@@ -216,6 +239,11 @@
                             <div class="col-md-4">
                                 <img src="~/assets/RestaurantStuff/Post6.jpg" alt="Post 6" class="img-fluid">
                             </div>
+                        </div>
+                        <div class="row">
+                         
+                              
+                           
                         </div>
                     </div>
 
