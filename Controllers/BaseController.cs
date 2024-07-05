@@ -12,6 +12,9 @@ public class BaseController : Controller
         {
             context.Result = new RedirectToActionResult("Index", "Home", null);
         }
+        else {
+            ViewBag.UserType = HttpContext.Session.GetString("SSUserType");
+        }
     }
 
     new public ContentResult Forbid()

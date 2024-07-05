@@ -1,14 +1,11 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using EffectiveWebProg.Models;
-using EffectiveWebProg.ViewModels;
 using EffectiveWebProg.Data;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace EffectiveWebProg.Controllers;
 
-public class ItemCatController : Controller
+public class ItemCatController : BaseController
 {
     private ApplicationDbContext _db;
 

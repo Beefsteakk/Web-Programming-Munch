@@ -14,20 +14,6 @@
 </head>
 
 <body class="bg-white">
-    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-post-dialog">
-            <div class="modal-content modal-post-content">
-                <div class="modal-header modal-post-header">
-                    <h5 id="postModalLabel">New Post</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body modal-post-body">
-                    @await Html.PartialAsync("_CreatePostPartial", Model.NewPost)
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-info-dialog">
             <div class="modal-content modal-info-content">
@@ -56,16 +42,6 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-9">
-                <div class="row">
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-10 col-12">
-                        <div class="input-area" data-bs-toggle="modal" data-bs-target="#postModal">
-                            <div class="profile-pic"></div>
-                            <div class="input-field">Want to share something?</div>
-                        </div>
-                    </div>
-                    <div class="col-lg-1"></div>
-                </div>
                 <div class="row">
                     <div class="col-lg-1"></div>
                     <div class="col-lg-10 col-12">
