@@ -3,15 +3,10 @@ using EffectiveWebProg.Models;
 using EffectiveWebProg.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EffectiveWebProg.Controllers
 {
-    public class ItemController : Controller
+    public class ItemController : BaseController
     {
         private readonly ApplicationDbContext _db;
 

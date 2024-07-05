@@ -1,12 +1,10 @@
 using EffectiveWebProg.Models;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
-using System;
-using System.Threading.Tasks;
 
 namespace EffectiveWebProg.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : BaseController
     {
         private readonly string connectionString = "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
 
