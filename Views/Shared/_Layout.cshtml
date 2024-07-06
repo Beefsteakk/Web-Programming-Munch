@@ -72,7 +72,7 @@
                         @if (ViewBag.UserType == "Restaurant")
                         {
                             <li class="left-nav-item">
-                                <a class="left-nav-link text-dark" asp-area="" asp-controller="RestProfile" asp-action="SelectRestaurant" asp-route-restID="deab13da-1e6b-11ef-ad56-662ef0370963">
+                                <a class="left-nav-link text-dark" asp-area="" asp-controller="RestProfile" asp-action="SelectRestaurant" asp-route-restID=@ViewBag.SSID>
                                     <i class="fa-solid fa-bowl-food"></i>
                                     <span class="left-link-text d-none d-xl-inline">Restaurant Profile</span>
                                 </a>

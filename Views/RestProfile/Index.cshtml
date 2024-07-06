@@ -3,9 +3,9 @@
     ViewData["Title"] = "Restaurant Profile";
     var details = ViewBag.RestaurantDetails as RestaurantsModel;
     var sessionEmail = ViewBag.sessionemail as string;
-    var postDetails = ViewBag.RestaurantPosts ;
-    
-    
+    var postDetails = ViewBag.RestaurantPosts;
+
+
 
     var restaurantId = details.RestID; // Replace with your specific restaurant ID
     @* var followerCount = followerCounts.ContainsKey(restaurantId) ? followerCounts[restaurantId] : 0; *@
@@ -62,8 +62,8 @@
                                     </div>
                                 </div>
                                 <p>Rating:
-                            
-                                                                   <span class="star-rating">
+
+                                    <span class="star-rating">
                                         @{
                                             double rating = details.RestRatings ?? 0.0;
                                             int fullStars = (int)Math.Floor(rating);
@@ -80,7 +80,7 @@
                                             {
                                                 if (decimalPart <= 0.3)
                                                 {
-                                                   @:<i class="far fa-star"></i>
+                                                    @:<i class="far fa-star"></i>
                                                 }
                                                 else if (decimalPart <= 0.7)
                                                 {
@@ -217,33 +217,14 @@
                 </div>
                 <div class="row">
                     <div class="col-md">
-                         <div class="row">
-                              <div class="col-md-4">
-                                 <img src="~/assets/RestaurantStuff/Post2.jpg" alt="Post 2" class="img-fluid">
-                                    <img src="@postDetails.ImageURL"  id="@postDetails.PicID" class="img-fluid">
+                        <div class="row">
+                            @foreach (var post in postDetails)
+                            {
+                                <div class="col-md-4">
+                                    
+                                    <img src="/Images/PostPics/@post.ImageURL" id="@post.PicID" class="img-fluid">
                                 </div>
-                            <div class="col-md-4">
-                                <img src="~/assets/RestaurantStuff/Post2.jpg" alt="Post 2" class="img-fluid">
-                            </div>
-                            <div class="col-md-4">
-                                <img src="~/assets/RestaurantStuff/Post3.jpg" alt="Post 3" class="img-fluid">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img src="~/assets/RestaurantStuff/Post4.jpg" alt="Post 4" class="img-fluid">
-                            </div>
-                            <div class="col-md-4">
-                                <img src="~/assets/RestaurantStuff/Post5.jpg" alt="Post 5" class="img-fluid">
-                            </div>
-                            <div class="col-md-4">
-                                <img src="~/assets/RestaurantStuff/Post6.jpg" alt="Post 6" class="img-fluid">
-                            </div>
-                        </div>
-                        <div class="row">
-                         
-                              
-                           
+                            }
                         </div>
                     </div>
 
@@ -273,18 +254,7 @@
                     </div>
                 </div>
             </div>
-            <div id="Reels" class="tab-content" style="display: none">
-                <h3>Reels</h3>
-                <!-- Add content for Reels here -->
-            </div>
-            <div id="Photos" class="tab-content" style="display: none">
-                <h3>Photos</h3>
-                <!-- Add content for Photos here -->
-            </div>
-            <div id="Videos" class="tab-content" style="display: none">
-                <h3>Videos</h3>
-                <!-- Add content for Videos here -->
-            </div>
+
 
         </div>
 
