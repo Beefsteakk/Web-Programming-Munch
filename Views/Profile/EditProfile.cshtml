@@ -9,8 +9,15 @@
             </div>
             <div class="col-sm-2 text-center">
                 <div class="profile-picture">
-                    <img src="~/images/picture.png" alt="Profile Photo" id="profilePhoto" class="rounded-circle img-thumbnail" style="cursor: pointer;">
-                    <input type="file" id="fileInput" style="display:none" accept="image/*">
+                    @if (Model.UserProfilePic == null)
+                    {
+                        <img src="~/images/chef.png" alt="Profile Photo" id="profilePhoto" class="rounded-circle img-thumbnail" style="cursor: pointer;">
+                        <input type="file" id="fileInput" name="UserProfilePic" style="display:none" accept="image/*">
+                    } else
+                    {
+                        <img src="/Images/UserProfilePics/@Model.UserProfilePic" alt="Profile Photo" id="profilePhoto" class="rounded-circle img-thumbnail" style="cursor: pointer;">
+                        <input type="file" id="fileInput" name="UserProfilePic" style="display:none" accept="image/*">
+                    }
                 </div>
             </div>
         </div>
@@ -61,32 +68,12 @@
 
     document.getElementById('fileInput').addEventListener('change', function (event) {
         const file = event.target.files[0];
-        if (file) {
-            uploadProfilePhoto(file);
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('profilePhoto').src = e.target.result;
         }
+        reader.readAsDataURL(file);
     });
-
-    function uploadProfilePhoto(file) {
-        const formData = new FormData();
-        formData.append('profilePhoto', file);
-
-        fetch('/upload-profile-photo', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('profilePhoto').src = data.newPhotoUrl;
-                } else {
-                    alert('Failed to upload photo.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while uploading the photo.');
-            });
-    }
 </script>
 
 <style>
