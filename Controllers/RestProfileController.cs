@@ -46,10 +46,10 @@ namespace EffectiveWebProg.Controllers
         }
 
 
-        private async Task<PostPicsModel> GetRestaurantPostsAsync(string restID)
+        private async Task<List<PostPicsModel>> GetRestaurantPostsAsync(string restID)
         {
-            PostPicsModel postDetails  = null;
-            string query = "SELECT pp.PicID , pp.ImageURL FROM PostPics pp JOIN Posts p on pp.PostID = p.PostID WHERE p.RestID = @RestID ORDER BY p.PostCreatedAt DESC LIMIT 1";
+            List<PostPicsModel> postDetailsList = new List<PostPicsModel>();
+            string query = "SELECT pp.PicID, pp.ImageURL FROM PostPics pp JOIN Posts p on pp.PostID = p.PostID WHERE p.RestID = @RestID ORDER BY p.PostCreatedAt DESC";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -60,19 +60,25 @@ namespace EffectiveWebProg.Controllers
 
                     using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
                     {
-                        if (await reader.ReadAsync())
+                        while (await reader.ReadAsync())
                         {
-                            postDetails  = new PostPicsModel
+                            PostPicsModel postDetails = new PostPicsModel
                             {
-                                PicID = Guid.Parse(reader["PicID"].ToString()??""),
-                                ImageURL = reader["ImageURL"].ToString()??"",
+                                PicID = Guid.Parse(reader["PicID"].ToString() ?? ""),
+                                ImageURL = reader["ImageURL"].ToString() ?? "",
                             };
+                            postDetailsList.Add(postDetails);
                         }
                     }
                 }
-                // Console.WriteLine("PostDetails: " + postDetails.ImageURL);
             }
-            return postDetails ;
+
+            foreach (var post in postDetailsList)
+            {
+                Console.WriteLine("PostDetails lol: " + post.ImageURL);
+            }
+
+            return postDetailsList;
         }
         public async Task<IActionResult> SelectRestaurant(string restID)
         {
@@ -89,31 +95,26 @@ namespace EffectiveWebProg.Controllers
             string restID = HttpContext.Session.GetString("RestID") ?? "";
             if (string.IsNullOrEmpty(restID))
             {
-                Console.WriteLine("RestID is null" + restID);
+                Console.WriteLine("RestID is null or empty: " + restID);
                 // Handle the case where the restID is not available in the session
                 return RedirectToAction("Error", "Home");
             }
+
             RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(restID);
-            PostPicsModel restaurantPosts = await GetRestaurantPostsAsync(restID);
+            List<PostPicsModel> restaurantPosts = await GetRestaurantPostsAsync(restID);
             string sessionemail = HttpContext.Session.GetString("SSName") ?? "";
-           
+
             string sessionType = HttpContext.Session.GetString("SSUserType") ?? "";
-            bool isOwnRestaurant = false;
+            bool isOwnRestaurant = sessionemail == restaurantDetails.RestEmail;
 
-            // Check if sessionID matches restaurantEmail
-            if (sessionemail == restaurantDetails.RestEmail)
-            {
-                isOwnRestaurant = true;
-            }
-
-
-            ViewBag.sessionemail = sessionemail;
+            ViewBag.SessionEmail = sessionemail;
             ViewBag.RestaurantDetails = restaurantDetails;
             ViewBag.IsOwnRestaurant = isOwnRestaurant;
             ViewBag.RestaurantPosts = restaurantPosts;
 
             return View();
         }
+
         public async Task<IActionResult> EditProfile()
         {
             string sessionID = HttpContext.Session.GetString("SSName") ?? "";

@@ -7,6 +7,7 @@ public class BaseController : Controller
     public override void OnActionExecuting(ActionExecutingContext context)
     {
         base.OnActionExecuting(context);
+        var session_SSID= HttpContext.Session.GetString("SSID");
         var session_user_email = HttpContext.Session.GetString("SSName");
         if (session_user_email == null)
         {
@@ -14,6 +15,7 @@ public class BaseController : Controller
         }
         else {
             ViewBag.UserType = HttpContext.Session.GetString("SSUserType");
+            ViewBag.SSID = session_SSID;
         }
     }
 
