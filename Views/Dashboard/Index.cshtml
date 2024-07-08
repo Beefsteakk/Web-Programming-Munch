@@ -1,6 +1,8 @@
 @{
     ViewData["Title"] = "Dashboard";
     var restaurantDetails = ViewBag.RestaurantDetails as RestaurantsModel;
+    var upcomingReservations = ViewBag.UpcomingReservations as List<ReservationsModel>;
+    var totalReservations = ViewBag.TotalReservations;
 }
 
 <div class="container-fluid">
@@ -47,7 +49,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Total Reservations</h5>
-                            <p class="card-text">3,298</p>
+                            <p class="card-text">@totalReservations</p>
                         </div>
                     </div>
                 </div>
@@ -61,12 +63,25 @@
                         <div class="card-header">
                             <h5 class="card-title">Upcoming Reservations</h5>
                         </div>
-                        <div class="card-body">
-                            <div>
-                                <p><strong>James Anderson</strong> - 17:00 5 Pax <span class="badge bg-success">Confirmed</span></p>
-                                <p><strong>Missipi</strong> - 19:30 5 Pax <span class="badge bg-warning">Pending</span></p>
-                                <p><strong>Ton Chek Bok</strong> - 20:30 5 Pax <span class="badge bg-danger">Cancelled</span></p>
-                            </div>
+                       <div class="card-body">
+                            @foreach (var reservation in upcomingReservations)
+                            {
+                                var statusClass = reservation.ReservationStatus.ToLower();
+                                if (string.IsNullOrEmpty(statusClass))
+                                {
+                                    statusClass = "pending";
+                                    reservation.ReservationStatus = "Pending";
+                                }
+                                
+                                <div>
+                                    <p>
+                                        <strong>@reservation.ReservedName</strong> - @reservation.ReservationTime.ToString(@"hh\:mm") @reservation.NumOfGuests Pax 
+                                        <span class="badge status-badge @statusClass" data-reservation-id="@reservation.ReservationID" style="cursor: pointer;">
+                                            @reservation.ReservationStatus
+                                        </span>
+                                    </p>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div class="card">
@@ -80,10 +95,36 @@
         </main>
     </div>
 </div>
-
+<div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="statusModalLabel">Update Reservation Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="statusForm">
+                    <input type="hidden" id="reservationId" name="reservationId" />
+                    <div class="form-group">
+                        <label for="newStatus">New Status</label>
+                        <select class="form-control" id="newStatus" name="newStatus">
+                            <option value="Pending">Pending</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script>
         var ctx = document.getElementById('visitsChart').getContext('2d');
         var visitsChart = new Chart(ctx, {
@@ -108,5 +149,47 @@
                 }
             }
         });
+
+        $(document).ready(function () {
+            $('.status-badge').on('click', function () {
+                var reservationId = $(this).data('reservation-id');
+                var currentStatus = $(this).text().trim();
+                $('#reservationId').val(reservationId);
+                $('#newStatus').val(currentStatus);
+                $('#statusModal').modal('show');
+            });
+
+            $('#statusForm').on('submit', function (e) {
+                e.preventDefault();
+
+                var formData = $(this).serialize();
+
+                $.post('/Dashboard/UpdateReservationStatus', formData, function (response) {
+                    if (response.success) {
+                        location.reload(); // Refresh the page to show the updated status
+                    } else {
+                        alert('Failed to update status');
+                    }
+                });
+            });
+        });
     </script>
 }
+<style>
+    .status-badge {
+        padding: 0.5em;
+        border-radius: 0.25em;
+        color: white;
+        font-weight: bold;
+    }
+    .pending {
+        background-color: yellow;
+        color: black;
+    }
+    .confirmed {
+        background-color: green;
+    }
+    .cancelled {
+        background-color: red;
+    }
+</style>

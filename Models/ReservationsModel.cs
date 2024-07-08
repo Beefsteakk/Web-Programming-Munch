@@ -37,6 +37,8 @@ public class ReservationsModel
     [Required]
     public TimeSpan ReservationTime { get; set; }
 
+
+
     [StringLength(255)]
     [Column(TypeName = "varchar(255)")] 
     public string? ReservedName { get; set; }
