@@ -3,9 +3,8 @@
     <link href="~/css/ownerProfile.css" rel="stylesheet" />
     ViewData["Title"] = "Restaurant Profile";
     var details = ViewBag.RestaurantDetails as RestaurantsModel;
-    var followerCounts = ViewBag.FollowerCounts as Dictionary<string, int>;
+    var postDetails = ViewBag.RestaurantPosts;
     var restaurantId = "12345"; // Replace with your specific restaurant ID
-    var followerCount = followerCounts.ContainsKey(restaurantId) ? followerCounts[restaurantId] : 0;
 }
 
 <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
@@ -63,13 +62,13 @@
                                             }
 
                                             // Handling float star style for ratings between 2.0 and 2.9
-                                            if (decimalPart > 0)
+                                            if (rating - fullStars > 0)
                                             {
-                                                if (decimalPart <= 0.3)
+                                                if (rating - fullStars <= 0.3)
                                                 {
                                                     @:<i class="far fa-star"></i>
                                                 }
-                                                else if (decimalPart <= 0.7)
+                                                else if (rating - fullStars <= 0.7)
                                                 {
                                                     @:<i style="color:gold" class="fas fa-star-half-alt"></i>
                                                 }
@@ -148,7 +147,7 @@
                         <span><strong>0</strong> posts</span>
                     </div>
                     <div class="col-md text-center ">
-                        <span><strong>@followerCount</strong> followers</span>
+                        @* <span><strong>@followerCount</strong> followers</span> *@
                     </div>
                     <div class="col-md text-center">
                         <span><strong>107</strong> following</span>

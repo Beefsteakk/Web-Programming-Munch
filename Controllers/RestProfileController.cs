@@ -53,30 +53,15 @@ namespace EffectiveWebProg.Controllers
 
             return postDetailsList;
         }
-
-        private async Task<Dictionary<string, int>> GetFollowerCountsAsync()
+        public async Task<IActionResult> SelectRestaurant(string restID)
         {
-            var followerCounts = new Dictionary<string, int>();
-            string query = "SELECT FollowedRestID, COUNT(UserID) AS FollowerCount FROM Munch.RestaurantFollowings GROUP BY FollowedRestID";
+            // Store the restID in session
+            HttpContext.Session.SetString("RestID", restID);
 
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                await conn.OpenAsync();
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
-                    {
-                        while (await reader.ReadAsync())
-                        {
-                            string restaurantId = reader["FollowedRestID"].ToString();
-                            int followerCount = int.Parse(reader["FollowerCount"].ToString());
-                            followerCounts[restaurantId] = followerCount;
-                        }
-                    }
-                }
-            }
-            return followerCounts;
+            // Redirect to the restaurant profile or any other page
+            return RedirectToAction("Index");
         }
+
 
         public async Task<IActionResult> Index()
         {
@@ -98,8 +83,7 @@ namespace EffectiveWebProg.Controllers
             ViewBag.SessionEmail = sessionemail;
             ViewBag.RestaurantDetails = restaurantDetails;
 
-            var followerCounts = await GetFollowerCountsAsync();
-            ViewBag.FollowerCounts = followerCounts;
+            ViewBag.RestaurantPosts = restaurantPosts;
             
             return View();
         }
