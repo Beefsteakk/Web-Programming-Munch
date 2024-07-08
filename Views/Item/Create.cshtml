@@ -1,0 +1,39 @@
+@model EffectiveWebProg.ViewModels.ItemCreateViewModel
+
+@{
+    ViewData["Title"] = "Create Item";
+}
+
+<h2>Create New Item</h2>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="CatID" class="control-label">Category</label>
+        <select asp-for="CatID" class="form-control" asp-items="@(new SelectList(Model.Categories, "CatID", "CatName"))">
+            <option value="">-- Select Category --</option>
+        </select>
+        <span asp-validation-for="CatID" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ItemName" class="control-label">Item Name</label>
+        <input asp-for="ItemName" class="form-control" />
+        <span asp-validation-for="ItemName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ItemPic" class="control-label">Item Picture</label>
+        <input asp-for="ItemPic" class="form-control" type="file" />
+        <span asp-validation-for="ItemPic" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="control-label">Price</label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

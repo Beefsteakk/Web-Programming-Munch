@@ -9,25 +9,9 @@
     <script type="text/javascript" src="~/js/post.js" defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" defer></script>
-    <script type="text/javascript" src="~/js/searchRestaurant.js" defer></script>
-    <script type="text/javascript" src="~/js/postImages.js" defer></script>
 </head>
 
 <body class="bg-white">
-    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-post-dialog">
-            <div class="modal-content modal-post-content">
-                <div class="modal-header modal-post-header">
-                    <h5 id="postModalLabel">New Post</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body modal-post-body">
-                    @await Html.PartialAsync("_CreatePostPartial", Model.NewPost)
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-info-dialog">
             <div class="modal-content modal-info-content">
@@ -41,6 +25,7 @@
                 <div class="modal-details modal-info-details">
                     <div class="modal-info-header">
                         <img src="~/Images/xunyin.jpg" alt="Xun Yin">
+                        
                         <div class="modal-info-poster">
                             <h4 class="post-info-name" id="modalUsername"></h4>
                             <span class="post-info-time" id="modalCreatedAt"></span>
@@ -59,16 +44,6 @@
                 <div class="row">
                     <div class="col-lg-1"></div>
                     <div class="col-lg-10 col-12">
-                        <div class="input-area" data-bs-toggle="modal" data-bs-target="#postModal">
-                            <div class="profile-pic"></div>
-                            <div class="input-field">Want to share something?</div>
-                        </div>
-                    </div>
-                    <div class="col-lg-1"></div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-10 col-12">
                         @foreach (var item in Model.PostLists)
                         {
                             <div class="posts" id="@item.Post.PostID">
@@ -76,16 +51,18 @@
                                     <a class="float-end" asp-controller="Posts" asp-action="SpecificPost"
                                     asp-route-id="@item.Post.PostID"><i class="fa-regular fa-clipboard"></i></a>
                                 }
-                                <div class="post-header">
-                                    <img src="~/Images/xunyin.jpg" alt="Xun Yin">
-                                    <div class="post-info">
-                                        @if (item.Post.Restaurant != null)
-                                        {
-                                            <h4>@item.Post.Restaurant.RestName</h4>
-                                        }
-                                        <span>@item.Post.PostCreatedAt</span>
+                                <a class="left-nav-link text-dark" asp-area="" asp-controller="RestProfile" asp-action="SelectRestaurant" asp-route-restID=@item.Post.Restaurant.RestID>
+                                    <div class="post-header">
+                                            <img src="~/Images/xunyin.jpg" alt="Xun Yin">
+                                            <div class="post-info">
+                                                @if (item.Post.Restaurant != null)
+                                                {
+                                                    <h4>@item.Post.Restaurant.RestName</h4>
+                                                }
+                                                <span>@item.Post.PostCreatedAt</span>
+                                            </div>
                                     </div>
-                                </div>
+                                </a>
                                 <div class="post-content">
                                     <p style="max-height: 200px;overflow-y:auto">@item.Post.PostContent</p>
                                     <!-- TODO: Generate the image table dynamically, currently randomizing amount of photos -->
@@ -127,15 +104,6 @@
                     </div>
                     <div class="col-lg-1"></div>
                 </div>
-            </div>
-            <div class="col-xl-3" id="sidebar-container">
-                <nav class="right-sidebar">
-                    <div class="right-sidebar-container">
-                        <div class="right-sidebar-title">
-                            Explore
-                        </div>
-                    </div>
-                </nav>
             </div>
         </div>
     </div>

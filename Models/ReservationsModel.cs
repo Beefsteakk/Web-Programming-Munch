@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 using EffectiveWebProg.Models;
 using Org.BouncyCastle.Asn1.Cms;
+namespace EffectiveWebProg.Models;
+
 
 public class ReservationsModel
 {

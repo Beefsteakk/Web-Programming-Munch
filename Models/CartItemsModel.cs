@@ -15,6 +15,8 @@ public class CartItemsModel
 
     public int Quantity { get; set; }
 
+    public double TotalPrice { get; set; }
+
 
 
     // Navigation properties

@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using EffectiveWebProg.Models;
+namespace EffectiveWebProg.Models;
+
 
 public class UserCardModel
 {

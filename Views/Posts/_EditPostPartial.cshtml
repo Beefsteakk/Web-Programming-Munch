@@ -5,16 +5,5 @@
     <label for="post">Post:</label>
     <input type="text" name="content" class="form-control" required>
 
-    <label for="location">Location:</label>
-    @if (@Model.TaggedRestaurant != null)
-    {
-        <input id="restaurant-search" name="restaurant-search" type="text" value="@Model.TaggedRestaurant.RestName"
-            class="form-control" />
-    }
-    else
-    {
-        <input id="restaurant-search" name="restaurant-search" type="text" class="form-control" />
-    }
-    <input type="hidden" name="taggedRestID" id="itemId" value="@Model.TaggedRest" />
     <button type="submit" class="btn btn-primary float-end mt-3">Edit Post</button>
 </form>

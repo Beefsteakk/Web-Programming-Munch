@@ -22,27 +22,70 @@ namespace EffectiveWebProg.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("EffectiveWebProg.Models.CategoryModel", b =>
+            modelBuilder.Entity("CartItemsModel", b =>
                 {
-                    b.Property<Guid>("CatID")
+                    b.Property<Guid>("CartID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(0);
+
+                    b.Property<Guid>("ItemID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("double");
+
+                    b.HasKey("CartID", "ItemID");
+
+                    b.HasIndex("ItemID");
+
+                    b.ToTable("CartItems");
+                });
+
+            modelBuilder.Entity("CartModel", b =>
+                {
+                    b.Property<Guid>("CartID")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("CatType")
-                        .IsRequired()
-                        .HasMaxLength(50)
+                    b.Property<string>("CartName")
+                        .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.HasKey("CatID");
+                    b.Property<double>("CartTotal")
+                        .HasColumnType("double");
 
-                    b.ToTable("Category");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("RestID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("CartID");
+
+                    b.HasIndex("RestID");
+
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("EffectiveWebProg.Models.CommentsModel", b =>
                 {
                     b.Property<Guid>("CommentID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)")
+                        .HasDefaultValueSql("uuid()");
 
                     b.Property<string>("CommentContent")
                         .IsRequired()
@@ -52,12 +95,15 @@ namespace EffectiveWebProg.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<Guid>("PostID")
+                        .HasMaxLength(36)
                         .HasColumnType("char(36)");
 
                     b.Property<Guid?>("RestID")
+                        .HasMaxLength(36)
                         .HasColumnType("char(36)");
 
                     b.Property<Guid?>("UserID")
+                        .HasMaxLength(36)
                         .HasColumnType("char(36)");
 
                     b.HasKey("CommentID");
@@ -66,119 +112,342 @@ namespace EffectiveWebProg.Migrations
 
                     b.HasIndex("RestID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserID")
+                        .HasDatabaseName("AuthorID");
 
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("EffectiveWebProg.Models.ForumCommentsModel", b =>
+            modelBuilder.Entity("EffectiveWebProg.Models.CreditCardModel", b =>
                 {
-                    b.Property<Guid>("CommentID")
+                    b.Property<Guid>("CardID")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Comments")
+                    b.Property<double>("CardBalance")
+                        .HasColumnType("double");
+
+                    b.Property<int>("CardCSV")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CardName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(255)");
 
-                    b.Property<Guid>("ForumID")
+                    b.Property<int>("CardNumber")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("ExpiryDate")
+                        .HasColumnType("date");
+
+                    b.HasKey("CardID");
+
+                    b.ToTable("CreditCard");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.EmployeesModel", b =>
+                {
+                    b.Property<Guid>("EmployeeID")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("RestID")
+                    b.Property<string>("EmployeeName")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("EmployeePic")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateOnly>("HireDate")
+                        .HasColumnType("date");
+
+                    b.Property<TimeSpan>("ReservationTime")
+                        .HasColumnType("time(6)");
+
+                    b.Property<Guid>("RestID")
+                        .HasMaxLength(36)
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("UserID")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("Role")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
-                    b.HasKey("CommentID");
+                    b.Property<double>("Salary")
+                        .HasColumnType("double");
 
-                    b.HasIndex("ForumID");
+                    b.HasKey("EmployeeID");
 
                     b.HasIndex("RestID");
 
-                    b.HasIndex("UserID");
-
-                    b.ToTable("ForumComments");
+                    b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("EffectiveWebProg.Models.PostLikesRestModel", b =>
+            modelBuilder.Entity("EffectiveWebProg.Models.FollowingsModel", b =>
                 {
-                    b.Property<Guid>("PostID")
+                    b.Property<Guid>("UserID")
+                        .HasMaxLength(36)
                         .HasColumnType("char(36)")
                         .HasColumnOrder(0);
 
                     b.Property<Guid>("RestID")
+                        .HasMaxLength(36)
                         .HasColumnType("char(36)")
                         .HasColumnOrder(1);
 
-                    b.Property<DateTime>("LikeCreatedAt")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateTime>("FollowCreatedAt")
+                        .HasColumnType("datetime");
 
-                    b.HasKey("PostID", "RestID");
+                    b.HasKey("UserID", "RestID");
 
                     b.HasIndex("RestID");
 
-                    b.ToTable("PostLikesRest");
+                    b.ToTable("Followings");
                 });
 
-            modelBuilder.Entity("EffectiveWebProg.Models.PostLikesUserModel", b =>
+            modelBuilder.Entity("EffectiveWebProg.Models.InventoryItemsModel", b =>
+                {
+                    b.Property<Guid>("InventoryID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(0);
+
+                    b.Property<Guid>("ItemID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("StockCount")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("double");
+
+                    b.HasKey("InventoryID", "ItemID");
+
+                    b.HasIndex("ItemID");
+
+                    b.ToTable("InventoryItems");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.InventoryModel", b =>
+                {
+                    b.Property<Guid>("InventoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("InventoryName")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<Guid>("RestID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("InventoryID");
+
+                    b.HasIndex("RestID");
+
+                    b.ToTable("Inventory");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.ItemCatModel", b =>
+                {
+                    b.Property<Guid>("CatID")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("CatName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("CatID");
+
+                    b.ToTable("ItemCat");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.ItemsModel", b =>
+                {
+                    b.Property<Guid>("ItemID")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("CatID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ItemName")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("ItemPic")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double");
+
+                    b.HasKey("ItemID");
+
+                    b.HasIndex("CatID");
+
+                    b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.PostLikesModel", b =>
                 {
                     b.Property<Guid>("PostID")
+                        .HasMaxLength(36)
                         .HasColumnType("char(36)")
                         .HasColumnOrder(0);
 
                     b.Property<Guid>("UserID")
+                        .HasMaxLength(36)
                         .HasColumnType("char(36)")
                         .HasColumnOrder(1);
 
                     b.Property<DateTime>("LikeCreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.HasKey("PostID", "UserID");
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("PostLikesUser");
+                    b.ToTable("PostLikes");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.PostPicsModel", b =>
+                {
+                    b.Property<Guid>("PicID")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<Guid>("PostID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("PicID");
+
+                    b.HasIndex("PostID");
+
+                    b.ToTable("PostPics");
                 });
 
             modelBuilder.Entity("EffectiveWebProg.Models.PostsModel", b =>
                 {
                     b.Property<Guid>("PostID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)")
+                        .HasDefaultValueSql("uuid()");
 
                     b.Property<string>("PostContent")
                         .IsRequired()
+                        .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("PostCreatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<Guid?>("RestID")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("TaggedRest")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("UserID")
+                        .HasMaxLength(36)
                         .HasColumnType("char(36)");
 
                     b.HasKey("PostID");
 
                     b.HasIndex("RestID");
 
-                    b.HasIndex("TaggedRest");
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.ReservationsModel", b =>
+                {
+                    b.Property<Guid>("ReservationID")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)")
+                        .HasDefaultValueSql("uuid()");
+
+                    b.Property<int>("NumOfGuests")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("ReservationDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("ReservationStatus")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<TimeSpan>("ReservationTime")
+                        .HasColumnType("time(6)");
+
+                    b.Property<string>("ReservedName")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<Guid>("RestID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("SpecialRequest")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<Guid>("UserID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("ReservationID");
+
+                    b.HasIndex("RestID");
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.RestCardModel", b =>
+                {
+                    b.Property<Guid>("RestID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<Guid>("CardID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(0);
+
+                    b.HasKey("RestID", "CardID");
+
+                    b.HasIndex("CardID");
+
+                    b.ToTable("RestCards");
                 });
 
             modelBuilder.Entity("EffectiveWebProg.Models.RestaurantsModel", b =>
                 {
                     b.Property<Guid>("RestID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)")
+                        .HasDefaultValueSql("uuid()");
 
                     b.Property<string>("RestAddress")
                         .HasMaxLength(255)
@@ -198,7 +467,7 @@ namespace EffectiveWebProg.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("RestEmail")
-                        .HasMaxLength(255)
+                        .HasMaxLength(50)
                         .HasColumnType("varchar(255)");
 
                     b.Property<double?>("RestLat")
@@ -218,9 +487,9 @@ namespace EffectiveWebProg.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("RestPic")
+                    b.Property<byte[]>("RestPic")
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longblob");
 
                     b.Property<float?>("RestRatings")
                         .HasColumnType("float");
@@ -234,11 +503,60 @@ namespace EffectiveWebProg.Migrations
                     b.ToTable("Restaurants");
                 });
 
+            modelBuilder.Entity("EffectiveWebProg.Models.TimeSheetModel", b =>
+                {
+                    b.Property<Guid>("SheetID")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Day")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<Guid>("EmployeeID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time(6)");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time(6)");
+
+                    b.HasKey("SheetID");
+
+                    b.HasIndex("EmployeeID");
+
+                    b.ToTable("TimeSheets");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.UserCardModel", b =>
+                {
+                    b.Property<Guid>("UserID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(1);
+
+                    b.Property<Guid>("CardID")
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)")
+                        .HasColumnOrder(0);
+
+                    b.HasKey("UserID", "CardID");
+
+                    b.HasIndex("CardID");
+
+                    b.ToTable("UserCards");
+                });
+
             modelBuilder.Entity("EffectiveWebProg.Models.UsersModel", b =>
                 {
                     b.Property<Guid>("UserID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasMaxLength(36)
+                        .HasColumnType("char(36)")
+                        .HasDefaultValueSql("uuid()");
 
                     b.Property<int?>("AccountToken")
                         .HasColumnType("int");
@@ -246,16 +564,8 @@ namespace EffectiveWebProg.Migrations
                     b.Property<bool?>("AccountVerified")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("UserBio")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
                     b.Property<int>("UserContactNum")
                         .HasColumnType("int");
-
-                    b.Property<string>("UserCoverPic")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("UserCreatedAt")
                         .HasColumnType("datetime(6)");
@@ -289,331 +599,37 @@ namespace EffectiveWebProg.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("FoodListCategoryModel", b =>
+            modelBuilder.Entity("CartItemsModel", b =>
                 {
-                    b.Property<Guid>("FoodListID")
-                        .HasColumnType("char(36)")
-                        .HasColumnOrder(0);
-
-                    b.Property<Guid>("CatID")
-                        .HasColumnType("char(36)")
-                        .HasColumnOrder(1);
-
-                    b.HasKey("FoodListID", "CatID");
-
-                    b.HasIndex("CatID");
-
-                    b.ToTable("FoodListCategory");
-                });
-
-            modelBuilder.Entity("FoodListEntriesModel", b =>
-                {
-                    b.Property<Guid>("FoodListID")
-                        .HasColumnType("char(36)")
-                        .HasColumnOrder(0);
-
-                    b.Property<Guid>("RestID")
-                        .HasColumnType("char(36)")
-                        .HasColumnOrder(1);
-
-                    b.HasKey("FoodListID", "RestID");
-
-                    b.HasIndex("RestID");
-
-                    b.ToTable("FoodListEntries");
-                });
-
-            modelBuilder.Entity("FoodListLikesModel", b =>
-                {
-                    b.Property<Guid>("FoodListID")
-                        .HasColumnType("char(36)")
-                        .HasColumnOrder(0);
-
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("char(36)")
-                        .HasColumnOrder(1);
-
-                    b.Property<DateTime>("LikeCreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("FoodListID", "UserID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("FoodListLikes");
-                });
-
-            modelBuilder.Entity("FoodListsModel", b =>
-                {
-                    b.Property<Guid>("FoodListID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("FoodListCreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("FoodListDescription")
+                    b.HasOne("CartModel", "Cart")
+                        .WithMany("CartItem")
+                        .HasForeignKey("CartID")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasConstraintName("CartItems_ibfk_1");
 
-                    b.Property<string>("FoodListImage")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FoodListTitle")
+                    b.HasOne("EffectiveWebProg.Models.ItemsModel", "Items")
+                        .WithMany("CartItem")
+                        .HasForeignKey("ItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasConstraintName("CartItems_ibfk_2");
 
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("char(36)");
+                    b.Navigation("Cart");
 
-                    b.HasKey("FoodListID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("FoodLists");
+                    b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("ForumVotesModel", b =>
+            modelBuilder.Entity("CartModel", b =>
                 {
-                    b.Property<Guid>("ForumID")
-                        .HasColumnType("char(36)")
-                        .HasColumnOrder(0);
-
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("char(36)")
-                        .HasColumnOrder(1);
-
-                    b.Property<bool>("VoteType")
-                        .HasColumnType("tinyint(1)");
-
-                    b.HasKey("ForumID", "UserID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("ForumVotes");
-                });
-
-            modelBuilder.Entity("ForumsModel", b =>
-                {
-                    b.Property<Guid>("ForumID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("ForumCreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("ForumDesc")
+                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Rest")
+                        .WithMany("Cart")
+                        .HasForeignKey("RestID")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasConstraintName("Cart_ibfk_1");
 
-                    b.Property<string>("ForumName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("ForumID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("Forums");
-                });
-
-            modelBuilder.Entity("PostPicsModel", b =>
-                {
-                    b.Property<Guid>("PicID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("ImageURL")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<Guid?>("PostID")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("PicID");
-
-                    b.HasIndex("PostID");
-
-                    b.ToTable("PostPics");
-                });
-
-            modelBuilder.Entity("ReservationsModel", b =>
-                {
-                    b.Property<Guid>("ReservationID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("NumOfGuests")
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly>("ReservationDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("ReservationStatus")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<TimeSpan>("ReservationTime")
-                        .HasColumnType("time(6)");
-
-                    b.Property<string>("ReservedName")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<Guid>("RestID")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("SpecialRequest")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("ReservationID");
-
-                    b.HasIndex("RestID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("Reservations");
-                });
-
-            modelBuilder.Entity("RestCategoryModel", b =>
-                {
-                    b.Property<Guid>("RestID")
-                        .HasColumnType("char(36)")
-                        .HasColumnOrder(0);
-
-                    b.Property<Guid>("CatID")
-                        .HasColumnType("char(36)")
-                        .HasColumnOrder(1);
-
-                    b.HasKey("RestID", "CatID");
-
-                    b.HasIndex("CatID");
-
-                    b.ToTable("RestCategory");
-                });
-
-            modelBuilder.Entity("RestViewHistoryModel", b =>
-                {
-                    b.Property<Guid>("ViewID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("RestID")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("ViewedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("ViewID");
-
-                    b.HasIndex("RestID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("RestViewHistory");
-                });
-
-            modelBuilder.Entity("RestaurantFollowingsModel", b =>
-                {
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("char(36)")
-                        .HasColumnOrder(0);
-
-                    b.Property<Guid>("FollowedRestID")
-                        .HasColumnType("char(36)")
-                        .HasColumnOrder(1);
-
-                    b.Property<DateTime>("FollowCreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("UserID", "FollowedRestID");
-
-                    b.HasIndex("FollowedRestID");
-
-                    b.ToTable("RestaurantFollowings");
-                });
-
-            modelBuilder.Entity("ReviewsModel", b =>
-                {
-                    b.Property<Guid>("ReviewID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("PostID")
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("RatingValue")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ReviewComments")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("ReviewCreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("ReviewID");
-
-                    b.HasIndex("PostID");
-
-                    b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("SearchHistoryModel", b =>
-                {
-                    b.Property<Guid>("SearchID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("SearchCreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("UserSearch")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("SearchID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("SearchHistory");
-                });
-
-            modelBuilder.Entity("UserFollowingsModel", b =>
-                {
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("char(36)")
-                        .HasColumnOrder(0);
-
-                    b.Property<Guid>("FollowedUserID")
-                        .HasColumnType("char(36)")
-                        .HasColumnOrder(1);
-
-                    b.Property<DateTime>("FollowCreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("UserID", "FollowedUserID");
-
-                    b.HasIndex("FollowedUserID");
-
-                    b.ToTable("UserFollowings");
+                    b.Navigation("Rest");
                 });
 
             modelBuilder.Entity("EffectiveWebProg.Models.CommentsModel", b =>
@@ -622,17 +638,18 @@ namespace EffectiveWebProg.Migrations
                         .WithMany("Comment")
                         .HasForeignKey("PostID")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("Comments_ibfk_1");
 
                     b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
                         .WithMany("Comment")
                         .HasForeignKey("RestID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasConstraintName("Comments_ibfk_3");
 
                     b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("Comment")
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasConstraintName("Comments_ibfk_2");
 
                     b.Navigation("Post");
 
@@ -641,406 +658,275 @@ namespace EffectiveWebProg.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EffectiveWebProg.Models.ForumCommentsModel", b =>
+            modelBuilder.Entity("EffectiveWebProg.Models.EmployeesModel", b =>
                 {
-                    b.HasOne("ForumsModel", "Forum")
-                        .WithMany("ForumComment")
-                        .HasForeignKey("ForumID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
-                        .WithMany("ForumComment")
-                        .HasForeignKey("RestID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
-                        .WithMany("ForumComment")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Forum");
-
-                    b.Navigation("Restaurant");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("EffectiveWebProg.Models.PostLikesRestModel", b =>
-                {
-                    b.HasOne("EffectiveWebProg.Models.PostsModel", "Post")
-                        .WithMany("PostLikeRest")
-                        .HasForeignKey("PostID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
-                        .WithMany("PostLikesRest")
+                        .WithMany("Employee")
                         .HasForeignKey("RestID")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
+                        .IsRequired()
+                        .HasConstraintName("Employees_ibfk_1");
 
                     b.Navigation("Restaurant");
                 });
 
-            modelBuilder.Entity("EffectiveWebProg.Models.PostLikesUserModel", b =>
+            modelBuilder.Entity("EffectiveWebProg.Models.FollowingsModel", b =>
                 {
-                    b.HasOne("EffectiveWebProg.Models.PostsModel", "Post")
-                        .WithMany("PostLikeUser")
-                        .HasForeignKey("PostID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
-                        .WithMany("PostLikeUser")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("EffectiveWebProg.Models.PostsModel", b =>
-                {
-                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
-                        .WithMany("Post")
-                        .HasForeignKey("RestID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "TaggedRestaurant")
-                        .WithMany("TaggedRest")
-                        .HasForeignKey("TaggedRest")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
-                        .WithMany("Post")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Restaurant");
-
-                    b.Navigation("TaggedRestaurant");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("FoodListCategoryModel", b =>
-                {
-                    b.HasOne("EffectiveWebProg.Models.CategoryModel", "Category")
-                        .WithMany("FoodListCat")
-                        .HasForeignKey("CatID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FoodListsModel", "FoodList")
-                        .WithMany("FoodListCat")
-                        .HasForeignKey("FoodListID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("FoodList");
-                });
-
-            modelBuilder.Entity("FoodListEntriesModel", b =>
-                {
-                    b.HasOne("FoodListsModel", "FoodList")
-                        .WithMany("FoodListEntry")
-                        .HasForeignKey("FoodListID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
-                        .WithMany("FoodEntry")
+                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Rest")
+                        .WithMany("Followings")
                         .HasForeignKey("RestID")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FoodList");
-
-                    b.Navigation("Restaurant");
-                });
-
-            modelBuilder.Entity("FoodListLikesModel", b =>
-                {
-                    b.HasOne("FoodListsModel", "FoodList")
-                        .WithMany("FoodListLike")
-                        .HasForeignKey("FoodListID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
-                        .WithMany("FoodListLike")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FoodList");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("FoodListsModel", b =>
-                {
-                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
-                        .WithMany("FoodList")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ForumVotesModel", b =>
-                {
-                    b.HasOne("ForumsModel", "Forum")
-                        .WithMany("ForumVote")
-                        .HasForeignKey("ForumID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
-                        .WithMany("ForumVote")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Forum");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ForumsModel", b =>
-                {
-                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
-                        .WithMany("Forum")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PostPicsModel", b =>
-                {
-                    b.HasOne("EffectiveWebProg.Models.PostsModel", "Post")
-                        .WithMany("PostPic")
-                        .HasForeignKey("PostID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Post");
-                });
-
-            modelBuilder.Entity("ReservationsModel", b =>
-                {
-                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
-                        .WithMany("Reservation")
-                        .HasForeignKey("RestID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
-                        .WithMany("Reservation")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Restaurant");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("RestCategoryModel", b =>
-                {
-                    b.HasOne("EffectiveWebProg.Models.CategoryModel", "Category")
-                        .WithMany("RestCat")
-                        .HasForeignKey("CatID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
-                        .WithMany("RestCat")
-                        .HasForeignKey("RestID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Restaurant");
-                });
-
-            modelBuilder.Entity("RestViewHistoryModel", b =>
-                {
-                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
-                        .WithMany("RestViewHistory")
-                        .HasForeignKey("RestID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
-                        .WithMany("RestViewHistory")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Restaurant");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("RestaurantFollowingsModel", b =>
-                {
-                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "FollowedRest")
-                        .WithMany("FollowedBy")
-                        .HasForeignKey("FollowedRestID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
-                        .WithMany("RestaurantFollowings")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FollowedRest");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ReviewsModel", b =>
-                {
-                    b.HasOne("EffectiveWebProg.Models.PostsModel", "Post")
-                        .WithMany("Review")
-                        .HasForeignKey("PostID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-                });
-
-            modelBuilder.Entity("SearchHistoryModel", b =>
-                {
-                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
-                        .WithMany("SearchHistory")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("UserFollowingsModel", b =>
-                {
-                    b.HasOne("EffectiveWebProg.Models.UsersModel", "FollowedUser")
-                        .WithMany("Followers")
-                        .HasForeignKey("FollowedUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("Followings_ibfk_2");
 
                     b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
                         .WithMany("Followings")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("Followings_ibfk_1");
 
-                    b.Navigation("FollowedUser");
+                    b.Navigation("Rest");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EffectiveWebProg.Models.CategoryModel", b =>
+            modelBuilder.Entity("EffectiveWebProg.Models.InventoryItemsModel", b =>
                 {
-                    b.Navigation("FoodListCat");
+                    b.HasOne("EffectiveWebProg.Models.InventoryModel", "Inventory")
+                        .WithMany("InventoryItem")
+                        .HasForeignKey("InventoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("InventoryItems_ibfk_1");
 
-                    b.Navigation("RestCat");
+                    b.HasOne("EffectiveWebProg.Models.ItemsModel", "Items")
+                        .WithMany("InventoryItem")
+                        .HasForeignKey("ItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("InventoryItems_ibfk_2");
+
+                    b.Navigation("Inventory");
+
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.InventoryModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Rest")
+                        .WithMany("Inventory")
+                        .HasForeignKey("RestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("Inventory_ibfk_1");
+
+                    b.Navigation("Rest");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.ItemsModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.ItemCatModel", "ItemCat")
+                        .WithMany("Item")
+                        .HasForeignKey("CatID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("Items_ibfk_1");
+
+                    b.Navigation("ItemCat");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.PostLikesModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.PostsModel", "Post")
+                        .WithMany("PostLike")
+                        .HasForeignKey("PostID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("PostLikes_ibfk_1");
+
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
+                        .WithMany("PostLike")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("PostLikes_ibfk_2");
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.PostPicsModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.PostsModel", "Post")
+                        .WithMany("PostPic")
+                        .HasForeignKey("PostID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("PostPics_ibfk_1");
+
+                    b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.PostsModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
+                        .WithMany("Post")
+                        .HasForeignKey("RestID")
+                        .HasConstraintName("Posts_ibfk_2");
+
+                    b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.ReservationsModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Restaurant")
+                        .WithMany("Reservation")
+                        .HasForeignKey("RestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("Reservations_ibfk_2");
+
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
+                        .WithMany("Reservation")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("Reservations_ibfk_1");
+
+                    b.Navigation("Restaurant");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.RestCardModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.CreditCardModel", "Card")
+                        .WithMany("RestCard")
+                        .HasForeignKey("CardID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("RestCard_ibfk_2");
+
+                    b.HasOne("EffectiveWebProg.Models.RestaurantsModel", "Rest")
+                        .WithMany("RestCard")
+                        .HasForeignKey("RestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("RestCard_ibfk_1");
+
+                    b.Navigation("Card");
+
+                    b.Navigation("Rest");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.TimeSheetModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.EmployeesModel", "Employees")
+                        .WithMany("TimeSheets")
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("TimeSheet_ibfk_1");
+
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.UserCardModel", b =>
+                {
+                    b.HasOne("EffectiveWebProg.Models.CreditCardModel", "Card")
+                        .WithMany("UserCard")
+                        .HasForeignKey("CardID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("UserCard_ibfk_2");
+
+                    b.HasOne("EffectiveWebProg.Models.UsersModel", "User")
+                        .WithMany("UserCard")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("UserCard_ibfk_1");
+
+                    b.Navigation("Card");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CartModel", b =>
+                {
+                    b.Navigation("CartItem");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.CreditCardModel", b =>
+                {
+                    b.Navigation("RestCard");
+
+                    b.Navigation("UserCard");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.EmployeesModel", b =>
+                {
+                    b.Navigation("TimeSheets");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.InventoryModel", b =>
+                {
+                    b.Navigation("InventoryItem");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.ItemCatModel", b =>
+                {
+                    b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("EffectiveWebProg.Models.ItemsModel", b =>
+                {
+                    b.Navigation("CartItem");
+
+                    b.Navigation("InventoryItem");
                 });
 
             modelBuilder.Entity("EffectiveWebProg.Models.PostsModel", b =>
                 {
                     b.Navigation("Comment");
 
-                    b.Navigation("PostLikeRest");
-
-                    b.Navigation("PostLikeUser");
+                    b.Navigation("PostLike");
 
                     b.Navigation("PostPic");
-
-                    b.Navigation("Review");
                 });
 
             modelBuilder.Entity("EffectiveWebProg.Models.RestaurantsModel", b =>
                 {
+                    b.Navigation("Cart");
+
                     b.Navigation("Comment");
 
-                    b.Navigation("FollowedBy");
+                    b.Navigation("Employee");
 
-                    b.Navigation("FoodEntry");
+                    b.Navigation("Followings");
 
-                    b.Navigation("ForumComment");
+                    b.Navigation("Inventory");
 
                     b.Navigation("Post");
 
-                    b.Navigation("PostLikesRest");
-
                     b.Navigation("Reservation");
 
-                    b.Navigation("RestCat");
-
-                    b.Navigation("RestViewHistory");
-
-                    b.Navigation("TaggedRest");
+                    b.Navigation("RestCard");
                 });
 
             modelBuilder.Entity("EffectiveWebProg.Models.UsersModel", b =>
                 {
                     b.Navigation("Comment");
 
-                    b.Navigation("Followers");
-
                     b.Navigation("Followings");
 
-                    b.Navigation("FoodList");
-
-                    b.Navigation("FoodListLike");
-
-                    b.Navigation("Forum");
-
-                    b.Navigation("ForumComment");
-
-                    b.Navigation("ForumVote");
-
-                    b.Navigation("Post");
-
-                    b.Navigation("PostLikeUser");
+                    b.Navigation("PostLike");
 
                     b.Navigation("Reservation");
 
-                    b.Navigation("RestViewHistory");
-
-                    b.Navigation("RestaurantFollowings");
-
-                    b.Navigation("SearchHistory");
-                });
-
-            modelBuilder.Entity("FoodListsModel", b =>
-                {
-                    b.Navigation("FoodListCat");
-
-                    b.Navigation("FoodListEntry");
-
-                    b.Navigation("FoodListLike");
-                });
-
-            modelBuilder.Entity("ForumsModel", b =>
-                {
-                    b.Navigation("ForumComment");
-
-                    b.Navigation("ForumVote");
+                    b.Navigation("UserCard");
                 });
 #pragma warning restore 612, 618
         }

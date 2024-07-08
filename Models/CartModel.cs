@@ -26,6 +26,8 @@ public class CartModel
     [Column(TypeName = "varchar(20)")]
     public string? Status { get; set; }
 
+    public double CartTotal { get; set; }
+
 
     // Navigation properties
     [ForeignKey("RestID")]

@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EffectiveWebProg.Data;
 
-using EffectiveWebProg.Models;
-using Org.BouncyCastle.Asn1.Cms;
+namespace EffectiveWebProg.Models;
+
 
 public class ItemsModel
 {
@@ -23,6 +24,8 @@ public class ItemsModel
     [StringLength(255)]
     [Column(TypeName = "varchar(255)")] 
     public string? ItemPic { get; set; }
+
+    public double Price { get; set; }
 
 
     // Navigation properties

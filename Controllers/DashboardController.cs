@@ -1,12 +1,10 @@
 using EffectiveWebProg.Models;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
-using System;
-using System.Threading.Tasks;
 
 namespace EffectiveWebProg.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : BaseController
     {
         private readonly string connectionString = "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
 
@@ -38,7 +36,7 @@ namespace EffectiveWebProg.Controllers
                                 RestLong = !string.IsNullOrEmpty(reader["RestLong"].ToString()) ? double.Parse(reader["RestLong"].ToString()) : 0.0,
                                 RestPic = reader["RestPic"]?.ToString(),
                                 RestWebsite = reader["RestWebsite"]?.ToString(),
-                                RestRatings = !string.IsNullOrEmpty(reader["RestRatings"].ToString()) ? int.Parse(reader["RestRatings"].ToString()) : 0
+                                RestRatings = !string.IsNullOrEmpty(reader["RestRatings"].ToString()) ? float.Parse(reader["RestRatings"].ToString()) : 0
                             };
                         }
                     }

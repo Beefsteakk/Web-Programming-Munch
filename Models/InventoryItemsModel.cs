@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using EffectiveWebProg.Models;
+namespace EffectiveWebProg.Models;
+
 
 public class InventoryItemsModel
 {
@@ -14,6 +16,8 @@ public class InventoryItemsModel
     public Guid ItemID { get; set; } // Composite Primary Key and Foreign Key From ItemsModel
 
     public int StockCount { get; set; }
+
+    public double TotalPrice { get; set; }
 
     public DateTime LastUpdated { get; set; }
 
