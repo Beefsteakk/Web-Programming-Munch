@@ -1,48 +1,19 @@
 using EffectiveWebProg.Models;
+using EffectiveWebProg.Data;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 
 namespace EffectiveWebProg.Controllers
 {
-    public class RestProfileController : BaseController
+    public class RestProfileController(ApplicationDbContext db) : BaseController
     {
         private readonly string connectionString = "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
+        private readonly ApplicationDbContext _db = db;
 
-        private async Task<RestaurantsModel> GetRestaurantDetailsByUserIdAsync(string restID)
+        private async Task<RestaurantsModel?> GetRestaurantDetailsByUserIdAsync(string restID)
         {
-            RestaurantsModel restaurantDetails = null;
-            string query = "SELECT * FROM Restaurants WHERE RestID = @RestID";
-
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                await conn.OpenAsync();
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@RestID", restID);
-
-                    using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
-                    {
-                        if (await reader.ReadAsync())
-                        {
-                            restaurantDetails = new RestaurantsModel
-                            {
-                                RestID = Guid.Parse(reader["RestID"].ToString()),
-                                RestName = reader["RestName"].ToString(),
-                                RestBio = reader["RestBio"]?.ToString(),
-                                RestContact = !string.IsNullOrEmpty(reader["RestContact"].ToString()) ? int.Parse(reader["RestContact"].ToString()) : 0,
-                                RestEmail = reader["RestEmail"].ToString(),
-                                RestAddress = reader["RestAddress"]?.ToString(),
-                                RestLat = !string.IsNullOrEmpty(reader["RestLat"].ToString()) ? double.Parse(reader["RestLat"].ToString()) : 0.0,
-                                RestLong = !string.IsNullOrEmpty(reader["RestLong"].ToString()) ? double.Parse(reader["RestLong"].ToString()) : 0.0,
-                                RestPic = reader["RestPic"]?.ToString(),
-                                RestWebsite = reader["RestWebsite"]?.ToString(),
-                                RestRatings = !string.IsNullOrEmpty(reader["RestRatings"].ToString()) ? float.Parse(reader["RestRatings"].ToString()) : 0
-                            };
-                        }
-                    }
-                }
-            }
-            return restaurantDetails;
+            var restaurant = await _db.Restaurants.FindAsync(Guid.Parse(restID));
+            return restaurant;
         }
 
 

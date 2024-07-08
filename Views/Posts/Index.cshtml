@@ -9,8 +9,6 @@
     <script type="text/javascript" src="~/js/post.js" defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" defer></script>
-    <script type="text/javascript" src="~/js/searchRestaurant.js" defer></script>
-    <script type="text/javascript" src="~/js/postImages.js" defer></script>
 </head>
 
 <body class="bg-white">
@@ -53,17 +51,18 @@
                                     <a class="float-end" asp-controller="Posts" asp-action="SpecificPost"
                                     asp-route-id="@item.Post.PostID"><i class="fa-regular fa-clipboard"></i></a>
                                 }
-                                <div class="post-header">
-                                    
-                                    <img src="~/Images/xunyin.jpg" alt="Xun Yin">
-                                    <div class="post-info">
-                                        @if (item.Post.Restaurant != null)
-                                        {
-                                            <h4>@item.Post.Restaurant.RestName</h4>
-                                        }
-                                        <span>@item.Post.PostCreatedAt</span>
+                                <a class="left-nav-link text-dark" asp-area="" asp-controller="RestProfile" asp-action="SelectRestaurant" asp-route-restID=@item.Post.Restaurant.RestID>
+                                    <div class="post-header">
+                                            <img src="~/Images/xunyin.jpg" alt="Xun Yin">
+                                            <div class="post-info">
+                                                @if (item.Post.Restaurant != null)
+                                                {
+                                                    <h4>@item.Post.Restaurant.RestName</h4>
+                                                }
+                                                <span>@item.Post.PostCreatedAt</span>
+                                            </div>
                                     </div>
-                                </div>
+                                </a>
                                 <div class="post-content">
                                     <p style="max-height: 200px;overflow-y:auto">@item.Post.PostContent</p>
                                     <!-- TODO: Generate the image table dynamically, currently randomizing amount of photos -->
@@ -105,15 +104,6 @@
                     </div>
                     <div class="col-lg-1"></div>
                 </div>
-            </div>
-            <div class="col-xl-3" id="sidebar-container">
-                <nav class="right-sidebar">
-                    <div class="right-sidebar-container">
-                        <div class="right-sidebar-title">
-                            Explore
-                        </div>
-                    </div>
-                </nav>
             </div>
         </div>
     </div>
