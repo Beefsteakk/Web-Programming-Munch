@@ -1,10 +1,9 @@
-
 @{
     <link href="~/css/ownerProfile.css" rel="stylesheet" />
     ViewData["Title"] = "Restaurant Profile";
     var details = ViewBag.RestaurantDetails as RestaurantsModel;
     var postDetails = ViewBag.RestaurantPosts;
-    var restaurantId = "12345"; // Replace with your specific restaurant ID
+    @* var restaurantId = "12345"; // Replace with your specific restaurant ID *@
 }
 
 <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
@@ -38,12 +37,11 @@
                                             </svg>
                                             Follow
                                         </button>
-                                        @if (restaurantId == "12345")
-                                        {
-                                            <a asp-area="" asp-controller="RestProfile" asp-action="EditProfile"
-                                                class="btn btn-primary e-btn">Edit Profile</a>
-                                        }
-
+                                    @if (ViewBag.isOwnRestaurant)
+                                    {
+                                        <a asp-area="" asp-controller="RestProfile" asp-action="EditProfile" class="btn btn-primary e-btn">Edit Profile</a>
+                                    }
+                                        
                                     </div>
                                 </div>
                                 <p>Rating:
@@ -188,7 +186,7 @@
                             @foreach (var post in postDetails)
                             {
                                 <div class="col-md-4">
-                                    
+
                                     <img src="/Images/PostPics/@post.ImageURL" id="@post.PicID" class="img-fluid">
                                 </div>
                             }
@@ -234,14 +232,16 @@
 
         </div>
     </div>
-   <div id="reservationPopup" class="modal">
+    <div id="reservationPopup" class="modal">
         <div class="modal-content">
             <div class="row" style="border-bottom: 1px solid #ddd;">
                 <div class="col-3">
                     <button class="noselect closebutton" onclick="closeReservationPopup()">
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path>
+                                <path
+                                    d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z">
+                                </path>
                             </svg>
                         </span>
                     </button>
@@ -252,7 +252,7 @@
             </div>
             <form id="reservationForm" action="/RestProfile/SaveReservation" method="post">
                 <input type="hidden" name="RestID" value="@details.RestID" />
-                
+
                 <div class="form-group">
                     <label for="reservedName">Name:</label>
                     <input type="text" class="form-control" id="reservedName" name="ReservedName" required>
@@ -317,7 +317,8 @@
                             </label>
                         </div>
                     </div>
-                    <p class="deposit-info">To reserve, a $5 deposit is required. This amount will be contributed to your total bill at the end.</p>
+                    <p class="deposit-info">To reserve, a $5 deposit is required. This amount will be contributed to
+                        your total bill at the end.</p>
                 </div>
                 <div id="google-pay-button-container"></div>
             </form>
@@ -382,13 +383,13 @@
     function onGooglePayLoaded() {
         const paymentsClient = getGooglePaymentsClient();
         paymentsClient.isReadyToPay(getGoogleIsReadyToPayRequest())
-            .then(function(response) {
+            .then(function (response) {
                 if (response.result && !googlePayButtonAdded) {
                     addGooglePayButton();
                     googlePayButtonAdded = true;
                 }
             })
-            .catch(function(err) {
+            .catch(function (err) {
                 console.error(err);
             });
     }
@@ -414,10 +415,10 @@
 
         const paymentsClient = getGooglePaymentsClient();
         paymentsClient.loadPaymentData(paymentDataRequest)
-            .then(function(paymentData) {
+            .then(function (paymentData) {
                 processPayment(paymentData);
             })
-            .catch(function(err) {
+            .catch(function (err) {
                 console.error(err);
             });
     }

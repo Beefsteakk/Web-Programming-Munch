@@ -79,10 +79,10 @@ namespace EffectiveWebProg.Controllers
 
             string sessionType = HttpContext.Session.GetString("SSUserType") ?? "";
             bool isOwnRestaurant = sessionemail == restaurantDetails.RestEmail;
-
+            
             ViewBag.SessionEmail = sessionemail;
             ViewBag.RestaurantDetails = restaurantDetails;
-
+            ViewBag.isOwnRestaurant = isOwnRestaurant;
             ViewBag.RestaurantPosts = restaurantPosts;
             
             return View();
@@ -134,7 +134,7 @@ namespace EffectiveWebProg.Controllers
         public async Task<IActionResult> SaveReservation(ReservationsModel reservationDetails, string paymentToken)
         {
             // Retrieve the UserID from the claims
-            string userID = "0df6efb3-87e7-411d-adba-d9e26cacc017";
+            string userID = HttpContext.Session.GetString("SSID") ?? "";
             if (string.IsNullOrEmpty(userID))
             {
                 return BadRequest("UserID is not available.");
