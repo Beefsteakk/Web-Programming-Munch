@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Absence Schedule</title>
+    <link rel="stylesheet" href="~/css/timesheet.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Timesheet</h1>
+        <h2>January</h2>
+        <div class="legend">
+            <span class="legend-item morning">M (Morning Shift): 10:30am - 6:30pm</span>
+            <span class="legend-item afternoon">AF (Afternoon Shift): 3:00pm - 11:00pm</span>
+            <span class="legend-item full">F (Full Shift): 10:30am - 10:30pm</span>
+            @* <span class="legend-item leave">L On Leave</span> *@
+        </div>
+        <div class="legend">
+            <span class="legend-item off">OFF (Off Day)</span>
+            <span class="legend-item annual">AL (Annual Leave)</span>
+            <span class="legend-item ph">PH (Public Holiday)</span>
+            @* <span class="legend-item leave">L On Leave</span> *@
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="3">Employee name</th>
+                    <th rowspan="3">Designation</th>
+                    <th rowspan="3">Employee ID</th>
+                </tr>
+                <tr>
+                    <th>12-Jan</th>
+                    <th>13-Jan</th>
+                    <th>14-Jan</th>
+                    <th>15-Jan</th>
+                    <th>16-Jan</th>
+                    <th>17-Jan</th>
+                    <th>18-Jan</th>
+                </tr>
+                <tr>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                    @* <th>Total days</th> *@
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Harsimran Brar</td>
+                    <td>Manager</td>
+                    <td>01287300</td>
+                    <td class="full">F</td>
+                    <td class="morning">M</td>
+                    <td class="afternoon">AF</td>
+                    <td class="off">OFF</td>
+                    <td class="annual">AL</td>
+                    <td class="afternoon">AF</td>
+                    <td class="full">F</td>
+                    @* <td>4</td> *@
+                </tr>
+                <tr>
+                    <td>Jordan Mitchell</td>
+                    <td>Assistant Manager</td>
+                    <td>01287300</td>
+                    <td class="afternoon">AF</td>
+                    <td class="afternoon">AF</td>
+                    <td class="morning">M</td>
+                    <td class="off">OFF</td>
+                    <td class="full">F</td>
+                    <td class="full">F</td>
+                    <td class="afternoon">AF</td>
+                    @* <td>7</td> *@
+                </tr>
+                <tr>
+                    <td>Asaf Karten</td>
+                    <td>Supervisor</td>
+                    <td>01287300</td>
+                    <td class="annual">AL</td>
+                    <td class="full">F</td>
+                    <td class="afternoon">AF</td>
+                    <td class="afternoon">AF</td>
+                    <td class="off">OFF</td>
+                    <td class="morning">M</td>
+                    <td class="afternoon">AF</td>
+                    @* <td>3</td> *@
+                </tr>
+                <tr>
+                    <td>Vanja Jovanovic</td>
+                    <td>Service Agent</td>
+                    <td>01287300</td>
+                    <td class="full">F</td>
+                    <td class="afternoon">AF</td>
+                    <td class="full">F</td>
+                    <td class="afternoon">AF</td>
+                    <td class="afternoon">AF</td>
+                    <td class="morning">M</td>
+                    <td class="off">OFF</td>
+                    @* <td>4</td> *@
+                </tr>
+                <tr>
+                    <td>Madison Butler</td>
+                    <td>Trainee</td>
+                    <td>01287300</td>
+                    <td class="off">OFF</td>
+                    <td class="ph">PH</td>
+                    <td class="off">OFF</td>
+                    <td class="morning">M</td>
+                    <td class="afternoon">AF</td>
+                    <td class="afternoon">AF</td>
+                    <td class="full">F</td>
+                    @* <td>6</td> *@
+                </tr>
+                <tr>
+                    <td>Jordan Mitchell</td>
+                    <td>Part-time</td>
+                    <td>01287300</td>
+                    <td class="afternoon">AF</td>
+                    <td class="morning">M</td>
+                    <td class="morning">M</td>
+                    <td class="afternoon">AF</td>
+                    <td class="full">F</td>
+                    <td class="off">OFF</td>
+                    <td class="afternoon">AF</td>
+                    @* <td>7</td> *@
+                </tr>
+                <tr>
+                    <td>Asaf Karten</td>
+                    <td>Hostess</td>
+                    <td>01287300</td>
+                    <td class="off">OFF</td>
+                    <td class="full">F</td>
+                    <td class="afternoon">AF</td>
+                    <td class="afternoon">AF</td>
+                    <td class="off">OFF</td>
+                    <td class="morning">M</td>
+                    <td class="afternoon">AF</td>
+                    @* <td>3</td> *@
+                </tr>
+                <tr>
+                    <td>Vanja Jovanovic</td>
+                    <td>Trainee</td>
+                    <td>01287300</td>
+                    <td class="full">F</td>
+                    <td class="off">OFF</td>
+                    <td class="full">F</td>
+                    <td class="afternoon">AF</td>
+                    <td class="afternoon">AF</td>
+                    <td class="morning">M</td>
+                    <td class="off">OFF</td>
+                    @* <td>4</td> *@
+                </tr>
+                <tr>
+                    <td>Harsimran Brar</td>
+                    <td>Part-time</td>
+                    <td>01287300</td>
+                    <td class="full">F</td>
+                    <td class="morning">M</td>
+                    <td class="afternoon">AF</td>
+                    <td class="off">OFF</td>
+                    <td class="morning">M</td>
+                    <td class="off">OFF</td>
+                    <td class="full">F</td>
+                    @* <td>4</td> *@
+                </tr>
+                <tr>
+                    <td>Asaf Karten</td>
+                    <td>Part-time</td>
+                    <td>01287300</td>
+                    <td class="morning">M</td>
+                    <td class="full">F</td>
+                    <td class="afternoon">AF</td>
+                    <td class="afternoon">AF</td>
+                    <td class="off">OFF</td>
+                    <td class="morning">M</td>
+                    <td class="afternoon">AF</td>
+                    @* <td>3</td> *@
+                </tr>
+                <tr>
+                    <td>Vanja Jovanovic</td>
+                    <td>Part-time</td>
+                    <td>01287300</td>
+                    <td class="full">F</td>
+                    <td class="morning">M</td>
+                    <td class="full">F</td>
+                    <td class="afternoon">AF</td>
+                    <td class="afternoon">AF</td>
+                    <td class="morning">M</td>
+                    <td class="off">OFF</td>
+                    @* <td>4</td> *@
+                <tr>
+                    <td>Jordan Mitchell</td>
+                    <td>Part-time</td>
+                    <td>01287300</td>
+                    <td class="afternoon">AF</td>
+                    <td class="off">OFF</td>
+                    <td class="morning">M</td>
+                    <td class="off">OFF</td>
+                    <td class="full">F</td>
+                    <td class="full">F</td>
+                    <td class="afternoon">AF</td>
+                    @* <td>7</td> *@
+                </tr>
+                <tr>
+                    <td>Asaf Karten</td>
+                    <td>Part-time</td>
+                    <td>01287300</td>
+                    <td class="morning">M</td>
+                    <td class="full">F</td>
+                    <td class="afternoon">AF</td>
+                    <td class="afternoon">AF</td>
+                    <td class="off">OFF</td>
+                    <td class="morning">M</td>
+                    <td class="afternoon">AF</td>
+                    @* <td>3</td> *@
+                </tr>
+                <tr>
+                    <td>Madison Butler</td>
+                    <td>Trainee</td>
+                    <td>01287344</td>
+                    <td class="off">OFF</td>
+                    <td class="morning">M</td>
+                    <td class="off">OFF</td>
+                    <td class="morning">M</td>
+                    <td class="afternoon">AF</td>
+                    <td class="afternoon">AF</td>
+                    <td class="full">F</td>
+                    @* <td>6</td> *@
+                </tr>
+            </tbody>
+        </table>
+        <div class="totals">
+            <span>January total: 25</span>
+        </div>
+    </div>
+</body>
+</html>

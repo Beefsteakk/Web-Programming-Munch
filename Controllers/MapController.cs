@@ -16,7 +16,7 @@ namespace EffectiveWebProg.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetLocations(string searchQuery = "", float? minRating = null, float? maxRating = null, Guid? categoryID = null)
+        public JsonResult GetLocations(string searchQuery = "", float? minRating = null, float? maxRating = null)
         {
             List<object> locations = new List<object>();
 
@@ -27,8 +27,7 @@ namespace EffectiveWebProg.Controllers
                     connection.Open();
 
                     string query = "SELECT r.RestID, r.RestName, r.RestLong, r.RestLat, r.RestRatings FROM Restaurants r " +
-                                    "LEFT JOIN RestCategory rc ON r.RestID = rc.RestID " + 
-                                    "LEFT JOIN Category c ON rc.CatID = c.CatID WHERE 1=1";
+                                    "WHERE 1=1";
 
                     if (!string.IsNullOrEmpty(searchQuery))
                     {
@@ -43,11 +42,6 @@ namespace EffectiveWebProg.Controllers
                     if (maxRating.HasValue)
                     {
                         query += " AND r.RestRatings <= @maxRating";
-                    }
-
-                    if (categoryID.HasValue)
-                    {
-                        query += " AND c.CatID = @categoryID";
                     }
 
                     using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -67,10 +61,6 @@ namespace EffectiveWebProg.Controllers
                             command.Parameters.AddWithValue("@maxRating", maxRating.Value);
                         }
 
-                        if (categoryID.HasValue)
-                        {
-                            command.Parameters.AddWithValue("@categoryID", categoryID.Value);
-                        }
 
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {

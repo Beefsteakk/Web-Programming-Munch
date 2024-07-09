@@ -84,11 +84,10 @@
             const searchQuery = document.getElementById('searchQuery').value;
             const minRating = document.getElementById('minRating').value;
             const maxRating = document.getElementById('maxRating').value;
-            const categoryID = document.getElementById('category').value;
 
-            console.log(`Search Query: ${searchQuery}, Min Rating: ${minRating}, Max Rating: ${maxRating}, Category: ${categoryID}`);
+            console.log(`Search Query: ${searchQuery}, Min Rating: ${minRating}, Max Rating: ${maxRating}`);
 
-            fetch(`/Map/GetLocations?searchQuery=${searchQuery}&minRating=${minRating}&maxRating=${maxRating}&categoryID=${categoryID}`)
+            fetch(`/Map/GetLocations?searchQuery=${searchQuery}&minRating=${minRating}&maxRating=${maxRating}`)
                 .then(response => response.json())
                 .then(data => {
                     console.log('Filtered data:', data);

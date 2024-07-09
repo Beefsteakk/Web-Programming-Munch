@@ -1,55 +1,28 @@
 using EffectiveWebProg.Models;
+using EffectiveWebProg.Data;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EffectiveWebProg.Controllers
 {
-    public class RestProfileController : BaseController
+    public class RestProfileController(ApplicationDbContext db) : BaseController
     {
         private readonly string connectionString = "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
+        private readonly ApplicationDbContext _db = db;
 
-        private async Task<RestaurantsModel> GetRestaurantDetailsByUserIdAsync(string restID)
+        private async Task<RestaurantsModel?> GetRestaurantDetailsByUserIdAsync(string restID)
         {
-            RestaurantsModel restaurantDetails = null;
-            string query = "SELECT * FROM Restaurants WHERE RestID = @RestID";
-
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                await conn.OpenAsync();
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@RestID", restID);
-
-                    using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
-                    {
-                        if (await reader.ReadAsync())
-                        {
-                            restaurantDetails = new RestaurantsModel
-                            {
-                                RestID = Guid.Parse(reader["RestID"].ToString()),
-                                RestName = reader["RestName"].ToString(),
-                                RestBio = reader["RestBio"]?.ToString(),
-                                RestContact = !string.IsNullOrEmpty(reader["RestContact"].ToString()) ? int.Parse(reader["RestContact"].ToString()) : 0,
-                                RestEmail = reader["RestEmail"].ToString(),
-                                RestAddress = reader["RestAddress"]?.ToString(),
-                                RestLat = !string.IsNullOrEmpty(reader["RestLat"].ToString()) ? double.Parse(reader["RestLat"].ToString()) : 0.0,
-                                RestLong = !string.IsNullOrEmpty(reader["RestLong"].ToString()) ? double.Parse(reader["RestLong"].ToString()) : 0.0,
-                                RestPic = reader["RestPic"]?.ToString(),
-                                RestWebsite = reader["RestWebsite"]?.ToString(),
-                                RestRatings = !string.IsNullOrEmpty(reader["RestRatings"].ToString()) ? float.Parse(reader["RestRatings"].ToString()) : 0
-                            };
-                        }
-                    }
-                }
-            }
-            return restaurantDetails;
+            var restaurant = await _db.Restaurants.FindAsync(Guid.Parse(restID));
+            return restaurant;
         }
 
 
-        private async Task<PostPicsModel> GetRestaurantPostsAsync(string restID)
+        private async Task<List<PostPicsModel>> GetRestaurantPostsAsync(string restID)
         {
-            PostPicsModel postDetails  = null;
-            string query = "SELECT pp.PicID , pp.ImageURL FROM PostPics pp JOIN Posts p on pp.PostID = p.PostID WHERE p.RestID = @RestID ORDER BY p.PostCreatedAt DESC LIMIT 1";
+            List<PostPicsModel> postDetailsList = new List<PostPicsModel>();
+            string query = "SELECT pp.PicID, pp.ImageURL FROM PostPics pp JOIN Posts p on pp.PostID = p.PostID WHERE p.RestID = @RestID ORDER BY p.PostCreatedAt DESC";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -60,19 +33,25 @@ namespace EffectiveWebProg.Controllers
 
                     using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
                     {
-                        if (await reader.ReadAsync())
+                        while (await reader.ReadAsync())
                         {
-                            postDetails  = new PostPicsModel
+                            PostPicsModel postDetails = new PostPicsModel
                             {
-                                PicID = Guid.Parse(reader["PicID"].ToString()??""),
-                                ImageURL = reader["ImageURL"].ToString()??"",
+                                PicID = Guid.Parse(reader["PicID"].ToString() ?? ""),
+                                ImageURL = reader["ImageURL"].ToString() ?? "",
                             };
+                            postDetailsList.Add(postDetails);
                         }
                     }
                 }
-                // Console.WriteLine("PostDetails: " + postDetails.ImageURL);
             }
-            return postDetails ;
+
+            foreach (var post in postDetailsList)
+            {
+                Console.WriteLine("PostDetails lol: " + post.ImageURL);
+            }
+
+            return postDetailsList;
         }
         public async Task<IActionResult> SelectRestaurant(string restID)
         {
@@ -83,37 +62,32 @@ namespace EffectiveWebProg.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+
         public async Task<IActionResult> Index()
         {
             string restID = HttpContext.Session.GetString("RestID") ?? "";
             if (string.IsNullOrEmpty(restID))
             {
-                Console.WriteLine("RestID is null" + restID);
+                Console.WriteLine("RestID is null or empty: " + restID);
                 // Handle the case where the restID is not available in the session
                 return RedirectToAction("Error", "Home");
             }
+
             RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(restID);
-            PostPicsModel restaurantPosts = await GetRestaurantPostsAsync(restID);
+            List<PostPicsModel> restaurantPosts = await GetRestaurantPostsAsync(restID);
             string sessionemail = HttpContext.Session.GetString("SSName") ?? "";
-           
+
             string sessionType = HttpContext.Session.GetString("SSUserType") ?? "";
-            bool isOwnRestaurant = false;
-
-            // Check if sessionID matches restaurantEmail
-            if (sessionemail == restaurantDetails.RestEmail)
-            {
-                isOwnRestaurant = true;
-            }
-
-
-            ViewBag.sessionemail = sessionemail;
+            bool isOwnRestaurant = sessionemail == restaurantDetails.RestEmail;
+            
+            ViewBag.SessionEmail = sessionemail;
             ViewBag.RestaurantDetails = restaurantDetails;
-            ViewBag.IsOwnRestaurant = isOwnRestaurant;
+            ViewBag.isOwnRestaurant = isOwnRestaurant;
             ViewBag.RestaurantPosts = restaurantPosts;
-
+            
             return View();
         }
+
         public async Task<IActionResult> EditProfile()
         {
             string sessionID = HttpContext.Session.GetString("SSName") ?? "";
@@ -154,5 +128,58 @@ namespace EffectiveWebProg.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost("SaveReservation")]
+        [Route("RestProfile/SaveReservation")]
+        public async Task<IActionResult> SaveReservation(ReservationsModel reservationDetails, string paymentToken)
+        {
+            // Retrieve the UserID from the claims
+            string userID = HttpContext.Session.GetString("SSID") ?? "";
+            if (string.IsNullOrEmpty(userID))
+            {
+                return BadRequest("UserID is not available.");
+            }
+
+            // Check if UserID exists in the Users table
+            string userCheckQuery = "SELECT COUNT(*) FROM Users WHERE UserID = @UserID";
+            bool userExists = false;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand userCmd = new MySqlCommand(userCheckQuery, conn))
+                {
+                    userCmd.Parameters.AddWithValue("@UserID", userID);
+                    userExists = (long)await userCmd.ExecuteScalarAsync() > 0;
+                }
+
+                if (!userExists)
+                {
+                    return BadRequest("Invalid UserID.");
+                }
+
+                string query = "INSERT INTO Reservations (RestID, ReservedName, ReservationDate, NumOfGuests, SpecialRequest, ReservationStatus, ReservationTime, paymentToken, UserID) VALUES (@RestID, @ReservedName, @ReservationDate, @NumOfGuests, @SpecialRequest, @ReservationStatus, @ReservationTime, @paymentToken, @UserID)";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@RestID", reservationDetails.RestID);
+                    cmd.Parameters.AddWithValue("@ReservedName", reservationDetails.ReservedName);
+                    cmd.Parameters.AddWithValue("@ReservationDate", reservationDetails.ReservationDate.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@NumOfGuests", reservationDetails.NumOfGuests);
+                    cmd.Parameters.AddWithValue("@SpecialRequest", reservationDetails.SpecialRequest);
+                    cmd.Parameters.AddWithValue("@ReservationStatus", "Pending");
+                    cmd.Parameters.AddWithValue("@ReservationTime", reservationDetails.ReservationTime);
+                    cmd.Parameters.AddWithValue("@paymentToken", paymentToken);
+                    cmd.Parameters.AddWithValue("@UserID", userID);
+
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
+    
     }
+
 }

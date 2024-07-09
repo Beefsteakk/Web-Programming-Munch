@@ -1,67 +1,147 @@
 @{
     ViewData["Title"] = "Edit Restaurant Profile";
     var details = ViewBag.RestaurantDetails as RestaurantsModel;
-    var followerCounts = ViewBag.FollowerCounts as Dictionary<string, int>;
-    var restaurantId = "12345"; // Replace with your specific restaurant ID
     <link href="~/css/editprofile.css" rel="stylesheet" />
 }
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+    }
+    .container {
+        max-width: 800px;
+        margin-top: 50px;
+    }
+    .form_area {
+        background-color: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    .form_group {
+        margin-bottom: 25px;
+    }
+    .sub_title {
+        font-weight: 500;
+        color: #555;
+        margin-bottom: 8px;
+        display: block;
+    }
+    .form_style {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+    .form_style:focus {
+        border-color: #4a90e2;
+        outline: none;
+    }
+    .input-group {
+        display: flex;
+    }
+    .input-container {
+        flex-grow: 1;
+        position: relative;
+    }
+    .map-button {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 5px 10px;
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .gbtn, .rbtn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .gbtn {
+        background-color: #4a90e2;
+        color: white;
+        margin-right: 10px;
+    }
+    .gbtn:hover {
+        background-color: #3a7bc8;
+    }
+    .rbtn {
+        background-color: #e74c3c;
+        color: white;
+    }
+    .rbtn:hover {
+        background-color: #c0392b;
+    }
+</style>
+
 <div class="container">
-    <div class="row">
-        <div class="form_area">
-            <p class="title">Edit Restaurant Profile</p>
-            <form action="/RestProfile/SaveProfile" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="RestID" value="@details.RestID" />
-                <div class="form_group">
-                    <label class="sub_title" for="name">Name</label>
-                    <input value="@details.RestName" id="RestName" name="RestName" class="form_style" type="text"
-                        required>
-                </div>
-                <div class="form_group">
-                    <label class="sub_title" for="email">Email</label>
-                    <input type="email" id="RestEmail" name="RestEmail" class="form_style" value="@details.RestEmail"
-                        required>
-                </div>
-                <div class="form_group">
-                    <label class="sub_title" for="RestAddress">Restaurant Address</label>
-                    <div class="input-group">
-                        <div class="input-container">
-                            <input type="text" id="RestAddress" name="RestAddress" class="form_style"
-                                value="@details.RestAddress" required />
-                            <button type="button" class="btn btn-outline-secondary map-button" onclick="openMapModal()">
-                                Map
-                            </button>
-                        </div>
+    <div class="form_area">
+        <h2 class="title">Edit Restaurant Profile</h2>
+        <form action="/RestProfile/SaveProfile" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="RestID" value="@details.RestID" />
+            
+            <div class="form_group">
+                <label class="sub_title" for="RestName">Name</label>
+                <input value="@details.RestName" id="RestName" name="RestName" class="form_style" type="text" required>
+            </div>
+            
+            <div class="form_group">
+                <label class="sub_title" for="RestEmail">Email</label>
+                <input type="email" id="RestEmail" name="RestEmail" class="form_style" value="@details.RestEmail" required>
+            </div>
+            
+            <div class="form_group">
+                <label class="sub_title" for="RestAddress">Restaurant Address</label>
+                <div class="input-group">
+                    <div class="input-container">
+                        <input type="text" id="RestAddress" name="RestAddress" class="form_style" value="@details.RestAddress" required />
+                        <button type="button" class="map-button" onclick="openMapModal()">Map</button>
                     </div>
-                    <input type="hidden" id="latitude" name="RestLat" value="@details.RestLat" />
-                    <input type="hidden" id="longitude" name="RestLong" value="@details.RestLong" />
                 </div>
+                <input type="hidden" id="latitude" name="RestLat" value="@details.RestLat" />
+                <input type="hidden" id="longitude" name="RestLong" value="@details.RestLong" />
+            </div>
 
-                <div class="form_group">
-                    <label class="sub_title" for="RestContact">Restaurant Contact</label>
-                    <input type="tel" id="RestContact" name="RestContact" class="form_style"
-                        value="@details.RestContact" required />
-                </div>
+            <div class="form_group">
+                <label class="sub_title" for="RestContact">Restaurant Contact</label>
+                <input type="tel" id="RestContact" name="RestContact" class="form_style" value="@details.RestContact" required />
+            </div>
 
-                <div class="form_group">
-                    <label class="sub_title" for="RestWebsite">Restaurant Website</label>
-                    <input type="url" id="RestWebsite" name="RestWebsite" class="form_style"
-                        value="@details.RestWebsite" required />
-                </div>
+            <div class="form_group">
+                <label class="sub_title" for="RestWebsite">Restaurant Website</label>
+                <input type="url" id="RestWebsite" name="RestWebsite" class="form_style" value="@details.RestWebsite" required />
+            </div>
 
-                <div class="form_group">
-                    <label class="sub_title" for="RestBio">Restaurant Bio</label>
-                    <textarea id="RestBio" name="RestBio" class="form_style" rows="3"
-                        required>@details.RestBio</textarea>
-                </div>
+            <div class="form_group">
+                <label class="sub_title" for="RestBio">Restaurant Bio</label>
+                <textarea id="RestBio" name="RestBio" class="form_style" rows="3" required>@details.RestBio</textarea>
+            </div>
 
-                <div class="form_group">
-                    <button type="submit" class="gbtn">Save</button>
-                    <button type="button" class="rbtn"
-                        onclick="window.location.href='/RestProfile'">Cancel</button>
-                </div>
-            </form>
-        </div>
-
+            <div class="form_group">
+                <button type="submit" class="gbtn">Save</button>
+                <button type="button" class="rbtn" onclick="window.location.href='/RestProfile'">Cancel</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -87,6 +167,8 @@
         </div>
     </div>
 </div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcZ-tpp7-d401k61UO39tGYGvq-yOAn1s&libraries=places"></script>
+
 <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcZ-tpp7-d401k61UO39tGYGvq-yOAn1s&libraries=places"></script>
 <script>

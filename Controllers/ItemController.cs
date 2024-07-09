@@ -89,5 +89,6 @@ namespace EffectiveWebProg.Controllers
 
             return $"/images/{file.FileName}";
         }
+
     }
 }
