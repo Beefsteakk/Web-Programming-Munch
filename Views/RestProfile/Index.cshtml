@@ -2,23 +2,18 @@
     <link href="~/css/ownerProfile.css" rel="stylesheet" />
     ViewData["Title"] = "Restaurant Profile";
     var details = ViewBag.RestaurantDetails as RestaurantsModel;
-    var sessionEmail = ViewBag.sessionemail as string;
     var postDetails = ViewBag.RestaurantPosts;
-
-
-
-    var restaurantId = details.RestID; // Replace with your specific restaurant ID
-    @* var followerCount = followerCounts.ContainsKey(restaurantId) ? followerCounts[restaurantId] : 0; *@
+    @* var restaurantId = "12345"; // Replace with your specific restaurant ID *@
 }
 
+<script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
 
 <div class="container">
     <div class="profile-header">
         <div class="row">
-            <div class="position-relative ">
+            <div class="position-relative">
                 <img disabled src="~/assets/RestaurantStuff/Cover.jpg" alt="Cover Photo" class="img-fluid w-100"
                     style="height: 300px; object-fit: cover;">
-
                 <div class="row">
                     <div class="profile-info col-3">
                         <img disabled src="~/assets/RestaurantStuff/ProfilePage.jpg" alt="Profile Photo"
@@ -33,16 +28,6 @@
                                         <h2>@details.RestName</h2>
                                     </div>
                                     <div class="col-7">
-                                        @* @if ("userFollowed")
-                                        {
-                                        <button class="f-btn btn btn-primary">
-                                        <i class="fas fa-check"></i>
-                                        </button>
-                                        }
-                                        else
-                                        {
-                                        <button class="f-btn btn btn-primary">Follow</button>
-                                        } *@
                                         <button class="f-btn btn btn-primary">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -52,23 +37,22 @@
                                             </svg>
                                             Follow
                                         </button>
-                                        @if (sessionEmail == details.RestEmail)
-                                        {
-                                            <a asp-area="" asp-controller="RestProfile" asp-action="EditProfile"
-                                                class="btn btn-primary e-btn">Edit Profile</a>
-                                        }
-
-
+                                    @if (ViewBag.isOwnRestaurant)
+                                    {
+                                        <a asp-area="" asp-controller="RestProfile" asp-action="EditProfile" class="btn btn-primary e-btn">Edit Profile</a>
+                                    }
+                                        
                                     </div>
                                 </div>
                                 <p>Rating:
 
                                     <span class="star-rating">
                                         @{
-                                            double rating = details.RestRatings ?? 0.0;
-                                            int fullStars = (int)Math.Floor(rating);
-                                            double decimalPart = rating - fullStars;
-                                            int emptyStars = 5 - fullStars - 1; // 1 for the last float star
+                                            float rating = details.RestRatings ?? 0f;
+                                            int fullStars = (int)rating;
+                                            bool hasHalfStar = rating - fullStars >= 0.5;
+                                            int emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
 
                                             for (int i = 0; i < fullStars; i++)
                                             {
@@ -76,13 +60,13 @@
                                             }
 
                                             // Handling float star style for ratings between 2.0 and 2.9
-                                            if (decimalPart > 0)
+                                            if (rating - fullStars > 0)
                                             {
-                                                if (decimalPart <= 0.3)
+                                                if (rating - fullStars <= 0.3)
                                                 {
                                                     @:<i class="far fa-star"></i>
                                                 }
-                                                else if (decimalPart <= 0.7)
+                                                else if (rating - fullStars <= 0.7)
                                                 {
                                                     @:<i style="color:gold" class="fas fa-star-half-alt"></i>
                                                 }
@@ -114,11 +98,8 @@
                                     <i class="fas fa-link"></i>
                                     <a href="@details.RestWebsite" target="_blank">@details.RestWebsite</a>
                                 </p>
-
-
                             </div>
-                            <div class="col-1">
-                            </div>
+                            <div class="col-1"></div>
                             <div class="col-3">
                                 <button class="r-btn btn btn-primary ml-auto d-block" onclick="openReservationPopup()">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -146,31 +127,18 @@
                                             d="M12 2l3.09 6.31 6.91.99-5 4.86 1.18 6.88L12 17.25l-6.09 3.89 1.18-6.88-5-4.86 6.91-.99L12 2zm0 2.27l-2.76 5.63-6.22.89 4.51 4.41-1.07 6.23L12 18.77l5.54 2.86-1.07-6.23 4.51-4.41-6.22-.89L12 4.27z" />
                                     </svg>
                                     Favorite
-                                </button></button>
+                                </button>
                             </div>
                         </div>
-
-
                     </div>
-
                 </div>
-
             </div>
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-2">
-                </div>
+                <div class="col-2"></div>
                 <div class="col-8">
-                    <div class="row">
-
-
-                        </row>
-
-
-
-                    </div>
-
+                    <div class="row"></div>
                 </div>
                 <div class="row">
                     <div class="col-md text-center">
@@ -200,10 +168,8 @@
                             <li class="nav-item">
                                 <button class="nav-link" onclick="openTab(event, 'Videos')">Videos</button>
                             </li>
-
                         </ul>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -211,7 +177,6 @@
             <div id="posts" class="tab-content">
                 <div class="row">
                     <div class="col-md-2">
-
                         <h3>Posts</h3>
                     </div>
                 </div>
@@ -221,14 +186,12 @@
                             @foreach (var post in postDetails)
                             {
                                 <div class="col-md-4">
-                                    
+
                                     <img src="/Images/PostPics/@post.ImageURL" id="@post.PicID" class="img-fluid">
                                 </div>
                             }
                         </div>
                     </div>
-
-
                 </div>
             </div>
             <div id="About" class="tab-content" style="display: none">
@@ -254,35 +217,53 @@
                     </div>
                 </div>
             </div>
-
+            <div id="Reels" class="tab-content" style="display: none">
+                <h3>Reels</h3>
+                <!-- Add content for Reels here -->
+            </div>
+            <div id="Photos" class="tab-content" style="display: none">
+                <h3>Photos</h3>
+                <!-- Add content for Photos here -->
+            </div>
+            <div id="Videos" class="tab-content" style="display: none">
+                <h3>Videos</h3>
+                <!-- Add content for Videos here -->
+            </div>
 
         </div>
-
     </div>
     <div id="reservationPopup" class="modal">
         <div class="modal-content">
-            <div class="row" style="  border-bottom: 1px solid #ddd;">
+            <div class="row" style="border-bottom: 1px solid #ddd;">
                 <div class="col-3">
-
-                    <button class="noselect closebutton" onclick="closeReservationPopup()"><span class="icon"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <button class="noselect closebutton" onclick="closeReservationPopup()">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path
                                     d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z">
                                 </path>
-                            </svg></span></button>
+                            </svg>
+                        </span>
+                    </button>
                 </div>
                 <div class="col-9">
                     <h2>Reservation Details</h2>
                 </div>
             </div>
-            <form>
+            <form id="reservationForm" action="/RestProfile/SaveReservation" method="post">
+                <input type="hidden" name="RestID" value="@details.RestID" />
+
                 <div class="form-group">
-                    <label for="date">Date:</label>
-                    <input type="date" class="form-control" id="ReserveDate" name="ReserveDate">
+                    <label for="reservedName">Name:</label>
+                    <input type="text" class="form-control" id="reservedName" name="ReservedName" required>
+                </div>
+                <div class="form-group">
+                    <label for="ReserveDate">Date:</label>
+                    <input type="date" class="form-control" id="ReserveDate" name="ReservationDate" required>
                 </div>
                 <div class="form-group">
                     <label for="pax">PAX:</label>
-                    <select id="pax" class="form-control">
+                    <select id="pax" class="form-control" name="NumOfGuests" required>
                         <option value="2">2 people</option>
                         <option value="3">3 people</option>
                         <option value="4">4 people</option>
@@ -293,112 +274,190 @@
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="specialRequest">Special Request:</label>
+                    <input type="text" class="form-control" id="specialRequest" name="SpecialRequest">
+                </div>
+                <div class="form-group">
                     <label>Choose Time:</label>
                     <div class="row">
                         <div class="col-4 col-md-2">
                             <label class="radio-label">
-                                <input class="radio-input" type="radio" name="time-discount">
-                                <span class="radio-tile">
-                                    15:00
-                                </span>
+                                <input class="radio-input" type="radio" name="ReservationTime" value="15:00" required>
+                                <span class="radio-tile">15:00</span>
                             </label>
                         </div>
                         <div class="col-4 col-md-2">
                             <label class="radio-label">
-                                <input class="radio-input" type="radio" name="time-discount">
-                                <span class="radio-tile">
-                                    16:00
-                                </span>
+                                <input class="radio-input" type="radio" name="ReservationTime" value="16:00">
+                                <span class="radio-tile">16:00</span>
                             </label>
                         </div>
                         <div class="col-4 col-md-2">
                             <label class="radio-label">
-                                <input class="radio-input" type="radio" name="time-discount">
-                                <span class="radio-tile">
-                                    17:00
-                                </span>
-                            </label>
-                        </div>
-
-                        <div class="col-4 col-md-2">
-                            <label class="radio-label">
-                                <input class="radio-input" type="radio" name="time-discount">
-                                <span class="radio-tile">
-                                    18:00
-                                </span>
+                                <input class="radio-input" type="radio" name="ReservationTime" value="17:00">
+                                <span class="radio-tile">17:00</span>
                             </label>
                         </div>
                         <div class="col-4 col-md-2">
                             <label class="radio-label">
-                                <input class="radio-input" type="radio" name="time-discount">
-                                <span class="radio-tile">
-                                    19:00
-                                </span>
+                                <input class="radio-input" type="radio" name="ReservationTime" value="18:00">
+                                <span class="radio-tile">18:00</span>
                             </label>
                         </div>
                         <div class="col-4 col-md-2">
                             <label class="radio-label">
-                                <input class="radio-input" type="radio" name="time-discount">
-                                <span class="radio-tile">
-                                    20:00
-                                </span>
+                                <input class="radio-input" type="radio" name="ReservationTime" value="19:00">
+                                <span class="radio-tile">19:00</span>
+                            </label>
+                        </div>
+                        <div class="col-4 col-md-2">
+                            <label class="radio-label">
+                                <input class="radio-input" type="radio" name="ReservationTime" value="20:00">
+                                <span class="radio-tile">20:00</span>
                             </label>
                         </div>
                     </div>
-
+                    <p class="deposit-info">To reserve, a $5 deposit is required. This amount will be contributed to
+                        your total bill at the end.</p>
                 </div>
-                <button type="submit" class="Reserve-btn">Confirm Reservation</button>
+                <div id="google-pay-button-container"></div>
             </form>
         </div>
     </div>
 </div>
 
+<script>
+    const baseRequest = {
+        apiVersion: 2,
+        apiVersionMinor: 0
+    };
 
+    const allowedCardNetworks = ["AMEX", "DISCOVER", "INTERAC", "JCB", "MASTERCARD", "VISA"];
+    const allowedCardAuthMethods = ["PAN_ONLY", "CRYPTOGRAM_3DS"];
+    const tokenizationSpecification = {
+        type: 'PAYMENT_GATEWAY',
+        parameters: {
+            'gateway': 'acceptblue',
+            'gatewayMerchantId': 'BCR2DN4TWXD2V63G'
+        }
+    };
 
-@section Scripts {
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcZ-tpp7-d401k61UO39tGYGvq-yOAn1s&callback=initMap" async
-        defer></script>
-    <script>
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("nav-link");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(tabName).style.display = "block";
+    const baseCardPaymentMethod = {
+        type: 'CARD',
+        parameters: {
+            allowedAuthMethods: allowedCardAuthMethods,
+            allowedCardNetworks: allowedCardNetworks
+        }
+    };
+
+    const cardPaymentMethod = Object.assign({}, baseCardPaymentMethod, {
+        tokenizationSpecification: tokenizationSpecification
+    });
+
+    let paymentsClient = null;
+    let googlePayButtonAdded = false;
+
+    function getGoogleIsReadyToPayRequest() {
+        return Object.assign({}, baseRequest, {
+            allowedPaymentMethods: [baseCardPaymentMethod]
+        });
+    }
+
+    function getGooglePaymentDataRequest() {
+        const paymentDataRequest = Object.assign({}, baseRequest);
+        paymentDataRequest.allowedPaymentMethods = [cardPaymentMethod];
+        paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
+        paymentDataRequest.merchantInfo = {
+            merchantName: 'Munch'
+        };
+        return paymentDataRequest;
+    }
+
+    function getGooglePaymentsClient() {
+        if (paymentsClient === null) {
+            paymentsClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
+        }
+        return paymentsClient;
+    }
+
+    function onGooglePayLoaded() {
+        const paymentsClient = getGooglePaymentsClient();
+        paymentsClient.isReadyToPay(getGoogleIsReadyToPayRequest())
+            .then(function (response) {
+                if (response.result && !googlePayButtonAdded) {
+                    addGooglePayButton();
+                    googlePayButtonAdded = true;
+                }
+            })
+            .catch(function (err) {
+                console.error(err);
+            });
+    }
+
+    function addGooglePayButton() {
+        const paymentsClient = getGooglePaymentsClient();
+        const button = paymentsClient.createButton({ onClick: onGooglePaymentButtonClicked });
+        document.getElementById('google-pay-button-container').appendChild(button);
+    }
+
+    function getGoogleTransactionInfo() {
+        return {
+            countryCode: 'US',
+            currencyCode: 'USD',
+            totalPriceStatus: 'FINAL',
+            totalPrice: '5.00'
+        };
+    }
+
+    function onGooglePaymentButtonClicked() {
+        const paymentDataRequest = getGooglePaymentDataRequest();
+        paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
+
+        const paymentsClient = getGooglePaymentsClient();
+        paymentsClient.loadPaymentData(paymentDataRequest)
+            .then(function (paymentData) {
+                processPayment(paymentData);
+            })
+            .catch(function (err) {
+                console.error(err);
+            });
+    }
+
+    function processPayment(paymentData) {
+        const paymentToken = paymentData.paymentMethodData.tokenizationData.token;
+
+        const reservationForm = document.getElementById('reservationForm');
+        const paymentTokenInput = document.createElement('input');
+        paymentTokenInput.setAttribute('type', 'hidden');
+        paymentTokenInput.setAttribute('name', 'paymentToken');
+        paymentTokenInput.setAttribute('value', paymentToken);
+        reservationForm.appendChild(paymentTokenInput);
+
+        reservationForm.submit();
+    }
+
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("nav-link");
+        for (i = 0; tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        if (evt.currentTarget) {
             evt.currentTarget.className += " active";
         }
+        document.getElementById(tabName).style.display = "block";
+    }
 
-        function initMap() {
-            var location = { lat: @details.RestLat, lng: @details.RestLong }; // Example coordinates for Singapore
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 10,
-                center: location
-            });
-            var marker = new google.maps.Marker({
-                position: location,
-                map: map
-            });
-        }
-        function closeReservationPopup() {
-            document.getElementById('reservationPopup').style.display = 'none';
-        }
+    function closeReservationPopup() {
+        document.getElementById('reservationPopup').style.display = 'none';
+    }
 
-        // Function to open the reservation popup
-        function openReservationPopup() {
-            document.getElementById('reservationPopup').style.display = 'block';
-        }
-
-        // Close the modal if the user clicks outside of it
-        window.onclick = function (event) {
-            var modal = document.getElementById('reservationPopup');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
-    </script>
-}
+    function openReservationPopup() {
+        document.getElementById('reservationPopup').style.display = 'block';
+        onGooglePayLoaded();
+    }
+</script>

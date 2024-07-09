@@ -2,6 +2,8 @@ using EffectiveWebProg.Models;
 using EffectiveWebProg.Data;
 using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EffectiveWebProg.Controllers
 {
@@ -60,7 +62,7 @@ namespace EffectiveWebProg.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+
         public async Task<IActionResult> Index()
         {
             string restID = HttpContext.Session.GetString("RestID") ?? "";
@@ -77,12 +79,12 @@ namespace EffectiveWebProg.Controllers
 
             string sessionType = HttpContext.Session.GetString("SSUserType") ?? "";
             bool isOwnRestaurant = sessionemail == restaurantDetails.RestEmail;
-
+            
             ViewBag.SessionEmail = sessionemail;
             ViewBag.RestaurantDetails = restaurantDetails;
-            ViewBag.IsOwnRestaurant = isOwnRestaurant;
+            ViewBag.isOwnRestaurant = isOwnRestaurant;
             ViewBag.RestaurantPosts = restaurantPosts;
-
+            
             return View();
         }
 
@@ -126,5 +128,58 @@ namespace EffectiveWebProg.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost("SaveReservation")]
+        [Route("RestProfile/SaveReservation")]
+        public async Task<IActionResult> SaveReservation(ReservationsModel reservationDetails, string paymentToken)
+        {
+            // Retrieve the UserID from the claims
+            string userID = HttpContext.Session.GetString("SSID") ?? "";
+            if (string.IsNullOrEmpty(userID))
+            {
+                return BadRequest("UserID is not available.");
+            }
+
+            // Check if UserID exists in the Users table
+            string userCheckQuery = "SELECT COUNT(*) FROM Users WHERE UserID = @UserID";
+            bool userExists = false;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand userCmd = new MySqlCommand(userCheckQuery, conn))
+                {
+                    userCmd.Parameters.AddWithValue("@UserID", userID);
+                    userExists = (long)await userCmd.ExecuteScalarAsync() > 0;
+                }
+
+                if (!userExists)
+                {
+                    return BadRequest("Invalid UserID.");
+                }
+
+                string query = "INSERT INTO Reservations (RestID, ReservedName, ReservationDate, NumOfGuests, SpecialRequest, ReservationStatus, ReservationTime, paymentToken, UserID) VALUES (@RestID, @ReservedName, @ReservationDate, @NumOfGuests, @SpecialRequest, @ReservationStatus, @ReservationTime, @paymentToken, @UserID)";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@RestID", reservationDetails.RestID);
+                    cmd.Parameters.AddWithValue("@ReservedName", reservationDetails.ReservedName);
+                    cmd.Parameters.AddWithValue("@ReservationDate", reservationDetails.ReservationDate.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@NumOfGuests", reservationDetails.NumOfGuests);
+                    cmd.Parameters.AddWithValue("@SpecialRequest", reservationDetails.SpecialRequest);
+                    cmd.Parameters.AddWithValue("@ReservationStatus", "Pending");
+                    cmd.Parameters.AddWithValue("@ReservationTime", reservationDetails.ReservationTime);
+                    cmd.Parameters.AddWithValue("@paymentToken", paymentToken);
+                    cmd.Parameters.AddWithValue("@UserID", userID);
+
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
+    
     }
+
 }
