@@ -120,6 +120,33 @@ public class PostsController(ApplicationDbContext db) : BaseController
     }
 
     [HttpPost]
+    [Route("Posts/EditComment")]
+    public async Task<IActionResult> EditCommentByIDAsync(Guid commentID, string content)
+    {
+        var comment = await FetchCommentByIDAsync(commentID);
+        if (comment == null) return NotFound();
+        if (!CheckCommentOperationIsPermitted(comment)) return Forbid();
+
+        comment.CommentContent = content;
+        _db.Comments.Update(comment);
+        await _db.SaveChangesAsync();
+        return RedirectToAction("SpecificPost", new { id = comment.PostID });
+    }
+
+    [HttpPost]
+    [Route("Posts/DeleteComment")]
+    public async Task<IActionResult> DeleteCommentByIDAsync(Guid commentID)
+    {
+        var comment = await FetchCommentByIDAsync(commentID);
+        if (comment == null) return NotFound();
+        if (!CheckCommentOperationIsPermitted(comment)) return Forbid();
+
+        _db.Comments.Remove(comment);
+        await _db.SaveChangesAsync();
+        return RedirectToAction("");
+    }
+
+    [HttpPost]
     public async Task<JsonResult> GetInfo(string id)
     {
         var Gid = Guid.Parse(id);
@@ -187,34 +214,28 @@ public class PostsController(ApplicationDbContext db) : BaseController
 
     [HttpPost]
     [Route("Posts/LikePost")]
-    public async Task<IActionResult> LikePostAsync(Guid postId)
+    public async Task<JsonResult> LikePostAsync(Guid postId)
     {
         var post = await FetchPostByIDAsync(postId);
         var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
-        if (post == null) return NotFound();
+        if (post == null) return Json(new {status = "failed", reason = "Post not found."});
 
         var user = await _db.Users.FindAsync(sessionID);
-        if (user != null)
+        if (user == null) return Json(new {status = "failed", reason = "User not found."});
+    
+        var like = await _db.PostLikes.FirstOrDefaultAsync(l => l.PostID == postId && l.UserID == sessionID);
+        if (like == null)
         {
-            var like = await _db.PostLikes.FirstOrDefaultAsync(l => l.PostID == postId && l.UserID == sessionID);
-            if (like == null)
-            {
-                like = new PostLikesModel { Post = post, User = user };
-                await _db.PostLikes.AddAsync(like);
-            }
-            else
-            {
-                _db.PostLikes.Remove(like);
-            }
+            like = new PostLikesModel { Post = post, User = user };
+            await _db.PostLikes.AddAsync(like);
         }
         else
         {
-            var restaurant = await _db.Restaurants.FindAsync(sessionID);
-            if (restaurant == null) return Forbid();
+            _db.PostLikes.Remove(like);
         }
 
         await _db.SaveChangesAsync();
-        return RedirectToAction("");
+        return Json(new {status = "success"});
     }
 
     [HttpGet]
@@ -232,6 +253,21 @@ public class PostsController(ApplicationDbContext db) : BaseController
     {
         var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
         return post.RestID == sessionID;
+    }
+
+    private bool CheckCommentOperationIsPermitted(CommentsModel comment)
+    {
+        var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
+        if (HttpContext.Session.GetString("SSUserType") == "Restaurant")
+        {
+            if (comment.Restaurant == null) return false;
+            return comment.Restaurant.RestID == sessionID;
+        }
+        else
+        {
+            if (comment.User == null) return false;
+            return comment.User.UserID == sessionID;
+        }
     }
 
     private async Task<List<PostsModel>> FetchViewablePostsByIDAsync(Guid id)
@@ -254,7 +290,7 @@ public class PostsController(ApplicationDbContext db) : BaseController
 
     private async Task<PostsModel?> FetchPostByIDAsync(Guid postID)
     {
-        var post = await _db.Posts.FirstOrDefaultAsync(p => p.PostID == postID);
+        var post = await _db.Posts.FindAsync(postID);
         return post;
     }
 
@@ -299,4 +335,11 @@ public class PostsController(ApplicationDbContext db) : BaseController
 
         return comments;
     }
+
+    private async Task<CommentsModel?> FetchCommentByIDAsync(Guid commentID)
+    {
+        var comment = await _db.Comments.FindAsync(commentID);
+        return comment;
+    }
+
 }
