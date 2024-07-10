@@ -134,3 +134,35 @@ body {
         line-height: 70px;
     }
 }
+
+#g-recaptcha-response {
+    display: block !important;
+    position: absolute;
+    margin: -78px 0 0 0 !important;
+    width: 302px !important;
+    height: 76px !important;
+    z-index: -999999;
+    opacity: 0;
+}
+
+input[type="radio"] {
+    margin: 8px 10px 0 10px;
+}
+
+.register-link {
+    text-align: center;
+    font-size: 14px;
+    color: black;
+    margin-top: 23px;
+    line-height: 33px;
+}
+
+* {
+    color: black;
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+}
+
+.profile-picture img {
+    width: 100px;
+    height: 100px;
+}
