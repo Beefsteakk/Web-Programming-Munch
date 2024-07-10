@@ -8,6 +8,12 @@ namespace EffectiveWebProg.Controllers
     {
         private readonly string connectionString = "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
 
+        public IActionResult Employees()
+        {
+            return RedirectToAction("Index", "Employees");
+        }
+
+        
         private async Task<RestaurantsModel> GetRestaurantDetailsByUserIdAsync(string userId)
         {
             RestaurantsModel restaurantDetails = null;
@@ -138,18 +144,112 @@ namespace EffectiveWebProg.Controllers
             return count;
         }
 
+        private async Task<int> GetTotalEmployeesCountAsync()
+        {
+            int count = 0;
+            string query = "SELECT COUNT(*) FROM Employees";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    count = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                }
+            }
+            return count;
+        }
+
+
         public async Task<IActionResult> Index()
         {
             string userId = "deab13da-1e6b-11ef-ad56-662ef0370963"; // example userId
             RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(userId);
             List<ReservationsModel> upcomingReservations = await GetUpcomingReservationsAsync();
             int totalReservations = await GetTotalReservationsCountAsync();
+            int totalEmployees = await GetTotalEmployeesCountAsync();
+            var reservationStats = await GetReservationStatsAsync();
+            var itemStocks = await GetItemStocksAsync();
+            var employeeWorkingHours = await GetEmployeeWorkingHoursAsync();
 
             ViewBag.RestaurantDetails = restaurantDetails;
             ViewBag.UpcomingReservations = upcomingReservations;
             ViewBag.TotalReservations = totalReservations;
+            ViewBag.TotalEmployees = totalEmployees;
+            ViewBag.ReservationStats = reservationStats;
+            ViewBag.ItemStocks = itemStocks;
+            ViewBag.EmployeeWorkingHours = employeeWorkingHours;
 
             return View();
+        }
+        private async Task<Dictionary<string, int>> GetReservationStatsAsync()
+        {
+            var stats = new Dictionary<string, int>();
+            string query = @"
+                SELECT ReservationStatus, COUNT(*) as Count
+                FROM Reservations
+                WHERE ReservationDate >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+                GROUP BY ReservationStatus";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            stats[reader["ReservationStatus"].ToString()] = int.Parse(reader["Count"].ToString());
+                        }
+                    }
+                }
+            }
+            return stats;
+        }
+
+        private async Task<Dictionary<string, int>> GetItemStocksAsync()
+        {
+            var stocks = new Dictionary<string, int>();
+            string query = "SELECT ItemName, StockCount FROM InventoryItems JOIN Items ON InventoryItems.ItemID = Items.ItemID";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            stocks[reader["ItemName"].ToString()] = int.Parse(reader["StockCount"].ToString());
+                        }
+                    }
+                }
+            }
+            return stocks;
+        }
+
+        private async Task<Dictionary<string, double>> GetEmployeeWorkingHoursAsync()
+        {
+            var workingHours = new Dictionary<string, double>();
+            string query = "SELECT EmployeeID, SUM(TIMESTAMPDIFF(HOUR, StartTime, EndTime)) AS TotalHours FROM TimeSheet GROUP BY EmployeeID";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            workingHours[reader["EmployeeID"].ToString()] = double.Parse(reader["TotalHours"].ToString());
+                        }
+                    }
+                }
+            }
+            return workingHours;
         }
     }
 }

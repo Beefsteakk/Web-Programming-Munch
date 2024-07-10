@@ -53,15 +53,14 @@ namespace EffectiveWebProg.Controllers
 
             return postDetailsList;
         }
-        public async Task<IActionResult> SelectRestaurant(string restID)
+        public async Task<IActionResult> SelectRestaurant(Guid restID)
         {
-            // Store the restID in session
-            HttpContext.Session.SetString("RestID", restID);
+            // Set the RestID in the session
+            HttpContext.Session.SetString("RestID", restID.ToString());
 
-            // Redirect to the restaurant profile or any other page
-            return RedirectToAction("Index");
+            // Redirect to the employee index page or wherever appropriate
+            return RedirectToAction("Index", "Employees");
         }
-
 
         public async Task<IActionResult> Index()
         {
