@@ -11,7 +11,7 @@ namespace EffectiveWebProg.Models
 
         [StringLength(255)]
         [Column(TypeName = "varchar(255)")]
-        public string? RestName { get; set; } // nullable
+        required public string RestName { get; set; }
 
         public double? RestLat { get; set; } // nullable
         public double? RestLong { get; set; } // nullable

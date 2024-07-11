@@ -42,6 +42,7 @@ allPost.forEach(function(e) {
                             <div class="row">
                                 <div class="d-inline">
                                     <span class="fw-bold">${comment.commentAuthorUser != null ? comment.commentAuthorUser.username : comment.commentAuthorRestaurant.restName}</span><span class="text-break"> ${comment.commentContent}</span>
+                                    ${comment.isOwnComment ? `<a class="float-end" href=/Posts/SpecificComment/${comment.commentID}><i class="fa-regular fa-clipboard"></i></a>` : ''}
                                 </div>
                             </div>
                         `)

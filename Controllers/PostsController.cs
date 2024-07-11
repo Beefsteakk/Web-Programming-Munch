@@ -130,7 +130,7 @@ public class PostsController(ApplicationDbContext db) : BaseController
         comment.CommentContent = content;
         _db.Comments.Update(comment);
         await _db.SaveChangesAsync();
-        return RedirectToAction("SpecificPost", new { id = comment.PostID });
+        return RedirectToAction("");
     }
 
     [HttpPost]
@@ -147,42 +147,42 @@ public class PostsController(ApplicationDbContext db) : BaseController
     }
 
     [HttpPost]
-    public async Task<JsonResult> GetInfo(string id)
+    public async Task<JsonResult> GetInfo(Guid id)
     {
-        var Gid = Guid.Parse(id);
-        var post = await _db.Posts.FirstOrDefaultAsync(p => p.PostID == Gid);
-        if (post == null)
-        {
-            return Json(new { success = false });
-        }
-        await CompletePostObject(post);
+        var post = await FetchPostByIDAsync(id);
+        if (post == null) return Json(new { success = false });
 
+        await CompletePostObject(post);
         var postDTO = new PostDTO(post.PostID, post.PostContent, post.PostCreatedAt.ToString("G"));
         if (post.Restaurant != null)
         {
             postDTO.PostAuthorRestaurant = new PostRestaurantAuthorDTO(post.Restaurant.RestID, post.Restaurant.RestName);
         }
 
-        var comments = await GetSpecificPostCommentsAsync(Gid);
+        var comments = await GetSpecificPostCommentsAsync(id);
         var commentDTOList = new List<CommentDTO>();
         foreach (var comment in comments)
         {
-            var commentDTO = new CommentDTO(comment.CommentID, comment.PostID, comment.CommentContent);
-            if (comment.UserID != null)
-            {
-                var author = await _db.Users.FirstOrDefaultAsync(u => u.UserID == comment.UserID);
-                commentDTO.CommentAuthorUser = new CommentUserAuthorDTO(author.UserID, author.UserUsername);
-            }
+            var userID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
+            CommentDTO commentDTO;
             if (comment.RestID != null)
             {
+                commentDTO = new CommentDTO(comment.CommentID, comment.PostID, comment.CommentContent, userID == comment.RestID);
                 var author = await _db.Restaurants.FirstOrDefaultAsync(r => r.RestID == comment.RestID);
                 commentDTO.CommentAuthorRestaurant = new CommentRestaurantAuthorDTO(author.RestID, author.RestName);
+                commentDTOList.Add(commentDTO);
             }
-            commentDTOList.Add(commentDTO);
+            if (comment.UserID != null)
+            {
+                commentDTO = new CommentDTO(comment.CommentID, comment.PostID, comment.CommentContent, userID == comment.UserID);
+                var author = await _db.Users.FirstOrDefaultAsync(u => u.UserID == comment.UserID);
+                commentDTO.CommentAuthorUser = new CommentUserAuthorDTO(author.UserID, author.UserUsername);
+                commentDTOList.Add(commentDTO);
+            }
         }
 
         var imageURLs = await _db.PostPics
-            .Where(p => p.PostID == Gid)
+            .Where(p => p.PostID == id)
             .Select(p => p.ImageURL)
             .ToListAsync();
 
@@ -210,6 +210,17 @@ public class PostsController(ApplicationDbContext db) : BaseController
 
         var model = new IndividualPostViewModel { Post = post, CommentsList = comments, PostImageURLs = imageURLs };
         return View(model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> SpecificComment(Guid id)
+    {
+        var comment = await FetchCommentByIDAsync(id);
+        if (comment == null) return NotFound();
+        if (!CheckCommentOperationIsPermitted(comment)) return Forbid();
+        await CompleteCommentObject(comment);
+        Console.WriteLine($"{comment.User} + {comment.Restaurant}");
+        return View(comment);
     }
 
     [HttpPost]
@@ -260,13 +271,13 @@ public class PostsController(ApplicationDbContext db) : BaseController
         var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
         if (HttpContext.Session.GetString("SSUserType") == "Restaurant")
         {
-            if (comment.Restaurant == null) return false;
-            return comment.Restaurant.RestID == sessionID;
+            if (comment.RestID == null) return false;
+            return comment.RestID == sessionID;
         }
         else
         {
-            if (comment.User == null) return false;
-            return comment.User.UserID == sessionID;
+            if (comment.UserID == null) return false;
+            return comment.UserID == sessionID;
         }
     }
 
@@ -324,6 +335,19 @@ public class PostsController(ApplicationDbContext db) : BaseController
             post.PostID
         ).ToListAsync();
         */
+    }
+
+    private async Task CompleteCommentObject(CommentsModel comment)
+    {
+        if (comment.RestID != null)
+        {
+            comment.Restaurant = await _db.Restaurants.FindAsync(comment.RestID);
+        }
+
+        if (comment.UserID != null)
+        {
+            comment.User = await _db.Users.FindAsync(comment.UserID);
+        }
     }
 
     private async Task<List<CommentsModel>> GetSpecificPostCommentsAsync(Guid postID)
