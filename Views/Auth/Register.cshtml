@@ -8,37 +8,11 @@
 <head>
     <script src="https://www.google.com/recaptcha/api.js?render=6LfLmX8dAAAAAGbTIkC40y7eHl9GptSMiJQDI8L8"></script>
     <link href="~/css/register.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
-    <style>
-        #g-recaptcha-response {
-            display: block !important;
-            position: absolute;
-            margin: -78px 0 0 0 !important;
-            width: 302px !important;
-            height: 76px !important;
-            z-index: -999999;
-            opacity: 0;
-        }
-
-        input[type="radio"] {
-            margin: 8px 10px 0 10px;
-        }
-
-        .register-link {
-            text-align: center;
-            font-size: 14px;
-            color: black;
-            margin-top: 23px;
-            line-height: 33px;
-        }
-
-        * {
-            color: black;
-            font-family: 'Inter', Helvetica, Arial, sans-serif;
-        }
-    </style>
+    <script type="text/javascript" src="~/js/register.js" defer></script>
 
     <script>
         function validation(event) {
@@ -94,22 +68,22 @@
             <a class="a-btn" asp-controller="Auth" asp-action="RestaurantReg">Sign Up</a>
         </div>
         <div class="registration-form" style="margin-bottom:120px;">
-            <form asp-action="Register" method="post" enctype="multipart/form-data" onsubmit="return validatexx()">
+            <form asp-action="Register" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="All" class="text-danger"></div>
-                <div>
-                    <img id="avatarImg" style="width: 100px; display: block; margin-left: auto; margin-right: auto; margin-bottom: 7px;" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png" class="avatar" alt="Avatar">
-                    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+                <div class="profile-picture">
+                    <img id="avatarImg" style="width: 100px; display: block; margin-left: auto; margin-right: auto; margin-bottom: 7px; cursor: pointer;" src="https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png" class="rounded-circle img-thumbnail" alt="Avatar">
+                    <input type="file" id="fileInput" name="UserProfilePic" style="display:none" accept="image/*">
                 </div>
 
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input asp-for="UserName" type="text" class="form-control" pattern="^[a-zA-Z][a-zA-Z ]{3,100}$" title="Name must be between 3 to 100 characters long, with no special characters." id="name" autocomplete="off" required>
+                    <input asp-for="UserName" type="text" class="form-control" pattern="^[a-zA-Z][a-zA-Z ]{2,100}$" title="Name must be between 3 to 100 characters long, with no special characters." id="name" autocomplete="off" required>
                     <span class="text-danger" asp-validation-for="UserName"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input asp-for="UserUsername" type="text" class="form-control" pattern="^[a-zA-Z][a-zA-Z ]{5,30}$" title="Username must be between 5 to 30 characters long, with no special characters." id="username" autocomplete="off" required>
+                    <input asp-for="UserUsername" type="text" class="form-control" pattern="^[a-zA-Z][a-zA-Z ]{4,30}$" title="Username must be between 5 to 30 characters long, with no special characters." id="username" autocomplete="off" required>
                     <span class="text-danger" asp-validation-for="UserUsername"></span>
                 </div>
 
@@ -150,6 +124,11 @@
                     <p class="text-muted">
                         Signing up signifies that you have read and agree to the <a href="#" data-toggle="modal" data-target="#exampleModalCenter">Terms Of Service</a> and our <a href="#" data-toggle="modal" data-target="#exampleModalCenter2">Privacy Policy</a>.
                     </p>
+
+                    @if (ViewBag.RegisterSuccess != null && ViewBag.RegisterSuccess == false)
+                    {
+                        <p id="register-failure-message" style="color: #ee6c4d;">Email already registered with an existing user. Please try again.</p>
+                    }
                 </div>
             </form>
 
@@ -162,20 +141,3 @@
     </div>
 </body>
 </html>
-
-<script>
-    grecaptcha.ready(function () {
-        grecaptcha.execute('6LfLmX8dAAAAAGbTIkC40y7eHl9GptSMiJQDI8L8', { action: 'Login' }).then(function (token) {
-            document.getElementById("g-recaptcha-response").value = token;
-        });
-    });
-
-    function check(input) {
-        if (input.value != document.getElementById('UserPassword').value) {
-            input.setCustomValidity('Password Must be Matching.');
-        } else {
-            // input is valid -- reset the error message
-            input.setCustomValidity('');
-        }
-    }
-</script>

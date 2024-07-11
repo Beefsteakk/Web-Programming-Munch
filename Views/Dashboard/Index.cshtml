@@ -3,6 +3,10 @@
     var restaurantDetails = ViewBag.RestaurantDetails as RestaurantsModel;
     var upcomingReservations = ViewBag.UpcomingReservations as List<ReservationsModel>;
     var totalReservations = ViewBag.TotalReservations;
+    var reservationStats = ViewBag.ReservationStats as Dictionary<string, int>;
+    var itemStocks = ViewBag.ItemStocks as Dictionary<string, int>;
+    var employeeWorkingHours = ViewBag.EmployeeWorkingHours as Dictionary<string, double>;
+    var totalEmployees = ViewBag.TotalEmployees; // Assuming you have this value in ViewBag
 }
 
 <div class="container-fluid">
@@ -12,9 +16,9 @@
         </aside>
         <main role="main" class="col main-content">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h1 class="h2">Dashboard</h1>
+                <h1 class="h2 mr-3">Dashboard</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group mr-2">
+                    <div class="btn-group">
                         <button class="btn btn-sm btn-outline-secondary">Share</button>
                         <button class="btn btn-sm btn-outline-secondary">Export</button>
                     </div>
@@ -22,23 +26,15 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <div class="card">
+                    <div class="card mb-4 shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">Restaurant Ratings</h5>
-                            <p class="card-text">@restaurantDetails.RestRatings</p>
+                            <h5 class="card-title">Total Reservations</h5>
+                            <p class="card-text">@totalReservations</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Followers</h5>
-                            <p class="card-text">200</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
+                    <div class="card mb-4 shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">Posts</h5>
                             <p class="card-text">10</p>
@@ -46,24 +42,53 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card">
+                    <div class="card mb-4 shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">Total Reservations</h5>
-                            <p class="card-text">@totalReservations</p>
+                            <h5 class="card-title">Total Employees</h5>
+                            <p class="card-text">@totalEmployees</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row mt-3">
-                <div class="col-md-8">
-                    <canvas id="visitsChart"></canvas>
+                <div class="col-md-6">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h5 class="card-title">Reservation Statistics (Last 30 days)</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="reservationStatsChart"></canvas>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h5 class="card-title">Stock Count of Items</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="itemStocksChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h5 class="card-title">Employee Working Hours</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="employeeWorkingHoursChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="card mb-4 shadow-sm">
                         <div class="card-header">
                             <h5 class="card-title">Upcoming Reservations</h5>
                         </div>
-                       <div class="card-body">
+                        <div class="card-body">
                             @foreach (var reservation in upcomingReservations)
                             {
                                 var statusClass = reservation.ReservationStatus.ToLower();
@@ -72,10 +97,10 @@
                                     statusClass = "pending";
                                     reservation.ReservationStatus = "Pending";
                                 }
-                                
+
                                 <div>
                                     <p>
-                                        <strong>@reservation.ReservedName</strong> - @reservation.ReservationTime.ToString(@"hh\:mm") @reservation.NumOfGuests Pax 
+                                        <strong>@reservation.ReservedName</strong> - @reservation.ReservationTime.ToString(@"hh\:mm") @reservation.NumOfGuests Pax
                                         <span class="badge status-badge @statusClass" data-reservation-id="@reservation.ReservationID" style="cursor: pointer;">
                                             @reservation.ReservationStatus
                                         </span>
@@ -84,17 +109,12 @@
                             }
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Activity</h5>
-                            <p>Activity details go here...</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </main>
     </div>
 </div>
+
 <div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -121,36 +141,99 @@
         </div>
     </div>
 </div>
+
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script>
-        var ctx = document.getElementById('visitsChart').getContext('2d');
-        var visitsChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['1', '5', '10', '15', '20', '25', '30'],
-                datasets: [{
-                    label: 'Total visits',
-                    data: [220000000, 240000000, 230000000, 260000000, 270000000, 250000000, 240000000],
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    fill: true
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-
         $(document).ready(function () {
+            // Log data for debugging
+            console.log("Page loaded");
+
+            var reservationStats = @Html.Raw(Json.Serialize(reservationStats));
+            var itemStocks = @Html.Raw(Json.Serialize(itemStocks));
+            var employeeWorkingHours = @Html.Raw(Json.Serialize(employeeWorkingHours));
+
+            console.log("Reservation Stats:", reservationStats);
+            console.log("Item Stocks:", itemStocks);
+            console.log("Employee Working Hours:", employeeWorkingHours);
+
+            // Reservation Stats Chart
+            var ctx1 = document.getElementById('reservationStatsChart').getContext('2d');
+            var reservationStatsChart = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(reservationStats),
+                    datasets: [{
+                        label: 'Reservation Status',
+                        data: Object.values(reservationStats),
+                        backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                        borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 206, 86, 1)', 'rgba(255, 99, 132, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            // Item Stocks Chart
+            var ctx2 = document.getElementById('itemStocksChart').getContext('2d');
+            var itemStocksChart = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(itemStocks),
+                    datasets: [{
+                        label: 'Stock Count',
+                        data: Object.values(itemStocks),
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            // Employee Working Hours Chart
+            var ctx3 = document.getElementById('employeeWorkingHoursChart').getContext('2d');
+            var employeeWorkingHoursChart = new Chart(ctx3, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(employeeWorkingHours),
+                    datasets: [{
+                        label: 'Total Working Hours',
+                        data: Object.values(employeeWorkingHours),
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
             $('.status-badge').on('click', function () {
                 var reservationId = $(this).data('reservation-id');
                 var currentStatus = $(this).text().trim();
@@ -191,5 +274,28 @@
     }
     .cancelled {
         background-color: red;
+    }
+
+    .btn-custom {
+        background-color: rgb(255, 255, 255); /* white background */
+        border: 2px solid rgb(32, 210, 255); /* light blue border */
+        color: rgb(0, 0, 0); /* black text */
+        position: relative;
+    }
+
+    .btn-custom::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background-color: rgb(234, 234, 20); /* yellow underline */
+        transition: width 0.3s ease, left 0.3s ease;
+    }
+
+    .btn-custom:hover::after {
+        width: 100%;
+        left: 0;
     }
 </style>

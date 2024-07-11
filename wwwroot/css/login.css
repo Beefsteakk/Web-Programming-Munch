@@ -126,3 +126,17 @@ body {
     background-color: rgb(164, 199, 208) !important;
     color: black; /* Optional: change text color on hover */
 }
+
+.logo{
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0 2rem;
+    text-decoration: none;
+    color: black;
+    margin: 0;
+}
+
+.logo:hover {
+    text-decoration: none;
+    color: rgb(83, 83, 83);
+}

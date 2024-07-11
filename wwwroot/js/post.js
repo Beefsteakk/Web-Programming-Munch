@@ -71,3 +71,31 @@ Buttons.forEach(function(e) {
         }
     })
 });
+
+document.getElementById('like-post-button').addEventListener('click', function (event) {
+    let id;
+    if (event.target.localName == "button") {
+        id = event.target.parentElement.parentElement.id
+    } else {
+        id = event.target.parentElement.parentElement.parentElement.id
+    }
+
+    $.ajax({
+        url: '/Posts/LikePost',
+        type: 'POST',
+        data: { postId: id },
+        success: function(response) {
+            if (response.status == "success") {
+                if (event.target.localName == "span" && event.target.innerText == "Like") event.target.innerText = "Unlike"
+                else if (event.target.localName == "span" && event.target.innerText == "Unlike") event.target.innerText = "Like"
+                else if (event.target.localName == "button" && event.target.children[1].textContent == "Like") event.target.children[1].textContent = "Unlike"
+                else if (event.target.localName == "button" && event.target.children[1].textContent == "Unlike") event.target.children[1].textContent = "Like"
+            } else {
+                alert("Failed to like post.")
+            }
+        },
+        error: function() {
+            alert('An error occurred while fetching data.');
+        }
+    });
+});

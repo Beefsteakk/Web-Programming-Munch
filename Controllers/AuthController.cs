@@ -16,17 +16,32 @@ namespace EffectiveWebProg.Controllers
         }
 
         [HttpPost("Auth/Register")]
-        public async Task<IActionResult> Register(UsersModel user)
+        public async Task<IActionResult> Register(UsersModel user, IFormFile? UserProfilePic)
         {
             if (ModelState.IsValid)
             {
-                user.UserPassword = BCrypt.Net.BCrypt.HashPassword(user.UserPassword);
-                await _db.Users.AddAsync(user);
-                await _db.SaveChangesAsync();
-                return RedirectToAction("Login");
+                var existingUser = await _db.Users.FirstOrDefaultAsync(u => string.Equals(u.UserEmail.ToLower(), user.UserEmail.ToLower()));
+                if (existingUser == null)
+                {
+                    if (UserProfilePic != null)
+                    {
+                        var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "UserProfilePics");
+                        var filename = $"{user.UserID}{Path.GetExtension(UserProfilePic.FileName)}";
+                        var filePath = Path.Combine(uploadsFolder, filename);
+                        using var fileStream = new FileStream(filePath, FileMode.Create);
+                        await UserProfilePic.CopyToAsync(fileStream);
+                        user.UserProfilePic = filename;
+                    }
+
+                    user.UserPassword = BCrypt.Net.BCrypt.HashPassword(user.UserPassword);
+                    await _db.Users.AddAsync(user);
+                    await _db.SaveChangesAsync();
+                    return RedirectToAction("Login");
+                }
             }
 
             // If we got this far, something failed, redisplay form
+            ViewBag.RegisterSuccess = false;
             return View(user);
         }
 
@@ -41,7 +56,6 @@ namespace EffectiveWebProg.Controllers
         {
             if (ModelState.IsValid)
             {
-                Console.WriteLine("hey chimponga");
                 // Check if model is null
                 if (model == null)
                 {
@@ -81,78 +95,52 @@ namespace EffectiveWebProg.Controllers
                 }
 
                 ModelState.AddModelError(string.Empty, "User not found or invalid password.");
+                ViewBag.LoginSuccess = false;
             }
 
             return View(model);
         }
 
-
-        // Logout action to clear session
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Login", "Auth");
         }
 
-            // if (ModelState.IsValid)
-            // {
-            //     string query = "SELECT UserUsername, UserPassword FROM Users WHERE UserUsername = @UserUsername AND UserPassword = @UserPassword";
-            //     // try
-            //     {
-            //         using (MySqlConnection conn = new MySqlConnection(connectionString))
-            //         {
-            //             await conn.OpenAsync();
-            //             using (MySqlCommand cmd = new MySqlCommand(query, conn))
-            //             {
-            //                 cmd.Parameters.AddWithValue("@UserUsername", model.UserUsername);
-            //                 using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
-            //                 {
-            //                     if (await reader.ReadAsync())
-            //                     {
-            //                         string storedPassword = reader.GetString("UserPassword");
-            //                         if (BCrypt.Net.BCrypt.Verify(model.UserPassword, storedPassword))
-            //                         {
-            //                             var claims = new List<Claim>
-            //                             {
-            //                                 new Claim(ClaimTypes.Name, model.UserUsername)
-            //                             };
-
-            //                             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            //                             var authProperties = new AuthenticationProperties
-            //                             {
-            //                                 IsPersistent = model.RememberMe
-            //                             };
-
-            //                             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
-
-            //                             return RedirectToAction("index", "Home");
-            //                         }
-            //                         else
-            //                         {
-            //                             ModelState.AddModelError("", "Invalid username or password.");
-            //                         }
-            //                     }
-            //                     else
-            //                     {
-            //                         ModelState.AddModelError("", "Invalid username or password.");
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     }
-            //     catch (MySqlException ex)
-            //     {
-            //         ModelState.AddModelError("", "An error occurred while retrieving data: " + ex.Message);
-            //     }
-            // }
-
-        //     return View(model);
-        // }
-
         [HttpGet("Auth/RestaurantReg")]
         public IActionResult RestaurantReg()
         {
             return View();
+        }
+
+        [HttpPost("Auth/RestaurantReg")]
+        public async Task<IActionResult> RestaurantReg(RestaurantsModel restaurant, IFormFile? RestaurantProfilePic)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingRestaurant = await _db.Restaurants.FirstOrDefaultAsync(r => string.Equals(r.RestEmail.ToLower(), restaurant.RestEmail.ToLower()));
+                if (existingRestaurant == null)
+                {
+                    if (RestaurantProfilePic != null)
+                    {
+                        var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "RestaurantProfilePics");
+                        var filename = $"{restaurant.RestID}{Path.GetExtension(RestaurantProfilePic.FileName)}";
+                        var filePath = Path.Combine(uploadsFolder, filename);
+                        using var fileStream = new FileStream(filePath, FileMode.Create);
+                        await RestaurantProfilePic.CopyToAsync(fileStream);
+                        restaurant.RestPic = filename;
+                    }
+
+                    restaurant.RestPassword = BCrypt.Net.BCrypt.HashPassword(restaurant.RestPassword);
+                    await _db.Restaurants.AddAsync(restaurant);
+                    await _db.SaveChangesAsync();
+                    return RedirectToAction("Login");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            ViewBag.RegisterSuccess = false;
+            return View(restaurant);
         }
 
         [HttpGet("Auth/ForgotPassword")]
