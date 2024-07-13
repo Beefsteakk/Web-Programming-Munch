@@ -11,7 +11,7 @@ namespace EffectiveWebProg.Models
 
         [StringLength(255)]
         [Column(TypeName = "varchar(255)")]
-        public string? RestName { get; set; } // nullable
+        required public string RestName { get; set; }
 
         public double? RestLat { get; set; } // nullable
         public double? RestLong { get; set; } // nullable
@@ -22,7 +22,7 @@ namespace EffectiveWebProg.Models
 
         [StringLength(255)]
         [Column(TypeName = "varchar(255)")]
-        public string? RestEmail { get; set; } // nullable
+        required public string RestEmail { get; set; }
 
         [StringLength(255)]
         [Column(TypeName = "varchar(255)")]
@@ -57,7 +57,7 @@ namespace EffectiveWebProg.Models
         public ICollection<InventoryModel> Inventory { get; set; }
         public ICollection<CartModel> Cart { get; set; }
         public ICollection<EmployeesModel> Employee { get; set; }
-        public ICollection<FollowingsModel> Followings { get; set; }
+        public ICollection<FollowingsModel>? Followings { get; set; }
 
         public RestaurantsModel()
         {

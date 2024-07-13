@@ -42,6 +42,7 @@ allPost.forEach(function(e) {
                             <div class="row">
                                 <div class="d-inline">
                                     <span class="fw-bold">${comment.commentAuthorUser != null ? comment.commentAuthorUser.username : comment.commentAuthorRestaurant.restName}</span><span class="text-break"> ${comment.commentContent}</span>
+                                    ${comment.isOwnComment ? `<a class="float-end" href=/Posts/SpecificComment/${comment.commentID}><i class="fa-regular fa-clipboard"></i></a>` : ''}
                                 </div>
                             </div>
                         `)
@@ -70,4 +71,32 @@ Buttons.forEach(function(e) {
             navigator.clipboard.writeText("https://localhost:5001/Posts");
         }
     })
+});
+
+document.getElementById('like-post-button').addEventListener('click', function (event) {
+    let id;
+    if (event.target.localName == "button") {
+        id = event.target.parentElement.parentElement.id
+    } else {
+        id = event.target.parentElement.parentElement.parentElement.id
+    }
+
+    $.ajax({
+        url: '/Posts/LikePost',
+        type: 'POST',
+        data: { postId: id },
+        success: function(response) {
+            if (response.status == "success") {
+                if (event.target.localName == "span" && event.target.innerText == "Like") event.target.innerText = "Unlike"
+                else if (event.target.localName == "span" && event.target.innerText == "Unlike") event.target.innerText = "Like"
+                else if (event.target.localName == "button" && event.target.children[1].textContent == "Like") event.target.children[1].textContent = "Unlike"
+                else if (event.target.localName == "button" && event.target.children[1].textContent == "Unlike") event.target.children[1].textContent = "Like"
+            } else {
+                alert("Failed to like post.")
+            }
+        },
+        error: function() {
+            alert('An error occurred while fetching data.');
+        }
+    });
 });

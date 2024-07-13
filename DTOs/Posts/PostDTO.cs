@@ -23,13 +23,14 @@ namespace EffectiveWebProg.DTOs.Posts
         public string RestName { get; } = RestName;
     }
 
-    public class CommentDTO(Guid CommentID, Guid ParentPostID, string CommentContent)
+    public class CommentDTO(Guid CommentID, Guid ParentPostID, string CommentContent, bool IsOwnComment)
     {
         public Guid CommentID { get; } = CommentID;
         public Guid ParentPostID { get; } = ParentPostID;
         public CommentUserAuthorDTO? CommentAuthorUser { get; set; }
         public CommentRestaurantAuthorDTO? CommentAuthorRestaurant { get; set; }
         public string CommentContent { get; } = CommentContent;
+        public bool IsOwnComment { get; } = IsOwnComment;
     }
 
     public class CommentUserAuthorDTO(Guid UserID, string Username)

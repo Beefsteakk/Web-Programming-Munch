@@ -80,19 +80,16 @@
                                 </div>
 
                                 <div class="post-footer">
-                                    <form asp-action="LikePost" method="post">
-                                        <input type="hidden" name="postId" value="@item.Post.PostID" />
-                                        <button type="submit"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                            @if (item.IsLikedByUser)
-                                            {
-                                                <span class="icon-text">Unlike</span>
-                                            }
-                                            else
-                                            {
-                                                <span class="icon-text">Like</span>
-                                            }
-                                        </button>
-                                    </form>
+                                    <button id="like-post-button" type="submit"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                        @if (item.IsLikedByUser)
+                                        {
+                                            <span class="icon-text">Unlike</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="icon-text">Like</span>
+                                        }
+                                    </button>
                                     <button><i class="fa fa-comment" aria-hidden="true"></i><span
                                             class="icon-text">Comments</span></button>
                                     <button><i class="fa fa-share" aria-hidden="true"></i><span

@@ -16,12 +16,15 @@
     </style>
 </head>
 
+<nav style="display: flex; justify-content: space-between; align-items: center; height: 70px; padding: 0rem calc((100vw - 1300px) / 2);">
+    <a class="logo" asp-controller="Home" asp-action="Index">Munch</a>
+</nav>
 <div class="container" style="padding-top: 60px;">
     <div class="row" style="margin-top: 150px;">
         <div class="col-lg-10 col-xl-9 mx-auto">
             <div class="card card-signin flex-row my-5">
                 <div class="card-img-left d-none d-md-flex"
-                    style="background: scroll center url('/Images/munch_logo3.png');">
+                    style="box-sizing: border-box; background: scroll center url('/Images/munch_logo3.png');">
                     <!-- Background image for card set in CSS! -->
                 </div>
                 <div class="card-body">
@@ -40,16 +43,14 @@
                             <span asp-validation-for="UserPassword" class="text-danger"></span>
                         </div>
 
-                        <a class="d-block text-center mt-2 small" href="/Auth/ForgotPassword">Forgot password?</a>
-                        <p></p>
-                        <div class="container">
-
-
-
+                        <div class="container" style="display: grid; place-items: center;">
+                            <a class="d-block text-center mt-2 small" href="/Auth/ForgotPassword">Forgotten password?</a>
+                            <p></p>
                             <button class="btn btn-lg btn-primary btn-block text-uppercase " type="submit" 
-                            style="width: 150px; text-align: center; margin-left: 95px; background-color:rgb(27, 26, 26); border:0px;">Sign In</button>
-
-                        </div><a class="d-block text-center mt-2 small" href="/Auth/Register">Register</a>
+                            style="width: 150px; text-align: center; background-color:rgb(27, 26, 26); border:0px;">Sign In</button>
+                            <p></p>
+                            <p class="mt-2 small" style=>Don't have an account? <a class="text-center mt-2" href="/Auth/Register">Register</a></p>
+                        </div>
                         <!-- Updated link -->
                         <hr class="my-4">
                     </form>
@@ -60,3 +61,19 @@
         </div>
     </div>
 </div>
+
+@if (ViewBag.LoginSuccess != null && ViewBag.LoginSuccess == false)
+{
+    <div class="container" id="login-failure-message"><p style="text-align:center; color: #ee6c4d">Email does not exist or Password does not match. Please try again.</p></div>
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var message = document.getElementById("login-failure-message");
+        if (message) {
+            setTimeout(function() {
+                message.style.display = 'none';
+            }, 3000); // Hide after 3 seconds
+        }
+    });
+</script>

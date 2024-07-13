@@ -120,42 +120,69 @@ public class PostsController(ApplicationDbContext db) : BaseController
     }
 
     [HttpPost]
-    public async Task<JsonResult> GetInfo(string id)
+    [Route("Posts/EditComment")]
+    public async Task<IActionResult> EditCommentByIDAsync(Guid commentID, string content)
     {
-        var Gid = Guid.Parse(id);
-        var post = await _db.Posts.FirstOrDefaultAsync(p => p.PostID == Gid);
-        if (post == null)
-        {
-            return Json(new { success = false });
-        }
-        await CompletePostObject(post);
+        var comment = await FetchCommentByIDAsync(commentID);
+        if (comment == null) return NotFound();
+        if (!CheckCommentOperationIsPermitted(comment)) return Forbid();
 
+        comment.CommentContent = content;
+        _db.Comments.Update(comment);
+        await _db.SaveChangesAsync();
+        return RedirectToAction("");
+    }
+
+    [HttpPost]
+    [Route("Posts/DeleteComment")]
+    public async Task<IActionResult> DeleteCommentByIDAsync(Guid commentID)
+    {
+        var comment = await FetchCommentByIDAsync(commentID);
+        if (comment == null) return NotFound();
+        if (!CheckCommentOperationIsPermitted(comment)) return Forbid();
+
+        _db.Comments.Remove(comment);
+        await _db.SaveChangesAsync();
+        return RedirectToAction("");
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> GetInfo(Guid id)
+    {
+        var post = await FetchPostByIDAsync(id);
+        if (post == null) return Json(new { success = false });
+
+        await CompletePostObject(post);
         var postDTO = new PostDTO(post.PostID, post.PostContent, post.PostCreatedAt.ToString("G"));
         if (post.Restaurant != null)
         {
             postDTO.PostAuthorRestaurant = new PostRestaurantAuthorDTO(post.Restaurant.RestID, post.Restaurant.RestName);
         }
 
-        var comments = await GetSpecificPostCommentsAsync(Gid);
+        var comments = await GetSpecificPostCommentsAsync(id);
         var commentDTOList = new List<CommentDTO>();
         foreach (var comment in comments)
         {
-            var commentDTO = new CommentDTO(comment.CommentID, comment.PostID, comment.CommentContent);
-            if (comment.UserID != null)
-            {
-                var author = await _db.Users.FirstOrDefaultAsync(u => u.UserID == comment.UserID);
-                commentDTO.CommentAuthorUser = new CommentUserAuthorDTO(author.UserID, author.UserUsername);
-            }
+            var userID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
+            CommentDTO commentDTO;
             if (comment.RestID != null)
             {
+                commentDTO = new CommentDTO(comment.CommentID, comment.PostID, comment.CommentContent, userID == comment.RestID);
                 var author = await _db.Restaurants.FirstOrDefaultAsync(r => r.RestID == comment.RestID);
                 commentDTO.CommentAuthorRestaurant = new CommentRestaurantAuthorDTO(author.RestID, author.RestName);
+                commentDTOList.Add(commentDTO);
             }
-            commentDTOList.Add(commentDTO);
+            if (comment.UserID != null)
+            {
+                commentDTO = new CommentDTO(comment.CommentID, comment.PostID, comment.CommentContent, userID == comment.UserID);
+                var author = await _db.Users.FirstOrDefaultAsync(u => u.UserID == comment.UserID);
+                commentDTO.CommentAuthorUser = new CommentUserAuthorDTO(author.UserID, author.UserUsername);
+                commentDTOList.Add(commentDTO);
+            }
         }
 
         var imageURLs = await _db.PostPics
-            .Where(p => p.PostID == Gid)
+            .Where(p => p.PostID == id)
             .Select(p => p.ImageURL)
             .ToListAsync();
 
@@ -185,36 +212,41 @@ public class PostsController(ApplicationDbContext db) : BaseController
         return View(model);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> SpecificComment(Guid id)
+    {
+        var comment = await FetchCommentByIDAsync(id);
+        if (comment == null) return NotFound();
+        if (!CheckCommentOperationIsPermitted(comment)) return Forbid();
+        await CompleteCommentObject(comment);
+        Console.WriteLine($"{comment.User} + {comment.Restaurant}");
+        return View(comment);
+    }
+
     [HttpPost]
     [Route("Posts/LikePost")]
-    public async Task<IActionResult> LikePostAsync(Guid postId)
+    public async Task<JsonResult> LikePostAsync(Guid postId)
     {
         var post = await FetchPostByIDAsync(postId);
         var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
-        if (post == null) return NotFound();
+        if (post == null) return Json(new {status = "failed", reason = "Post not found."});
 
         var user = await _db.Users.FindAsync(sessionID);
-        if (user != null)
+        if (user == null) return Json(new {status = "failed", reason = "User not found."});
+    
+        var like = await _db.PostLikes.FirstOrDefaultAsync(l => l.PostID == postId && l.UserID == sessionID);
+        if (like == null)
         {
-            var like = await _db.PostLikes.FirstOrDefaultAsync(l => l.PostID == postId && l.UserID == sessionID);
-            if (like == null)
-            {
-                like = new PostLikesModel { Post = post, User = user };
-                await _db.PostLikes.AddAsync(like);
-            }
-            else
-            {
-                _db.PostLikes.Remove(like);
-            }
+            like = new PostLikesModel { Post = post, User = user };
+            await _db.PostLikes.AddAsync(like);
         }
         else
         {
-            var restaurant = await _db.Restaurants.FindAsync(sessionID);
-            if (restaurant == null) return Forbid();
+            _db.PostLikes.Remove(like);
         }
 
         await _db.SaveChangesAsync();
-        return RedirectToAction("");
+        return Json(new {status = "success"});
     }
 
     [HttpGet]
@@ -232,6 +264,21 @@ public class PostsController(ApplicationDbContext db) : BaseController
     {
         var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
         return post.RestID == sessionID;
+    }
+
+    private bool CheckCommentOperationIsPermitted(CommentsModel comment)
+    {
+        var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
+        if (HttpContext.Session.GetString("SSUserType") == "Restaurant")
+        {
+            if (comment.RestID == null) return false;
+            return comment.RestID == sessionID;
+        }
+        else
+        {
+            if (comment.UserID == null) return false;
+            return comment.UserID == sessionID;
+        }
     }
 
     private async Task<List<PostsModel>> FetchViewablePostsByIDAsync(Guid id)
@@ -254,7 +301,7 @@ public class PostsController(ApplicationDbContext db) : BaseController
 
     private async Task<PostsModel?> FetchPostByIDAsync(Guid postID)
     {
-        var post = await _db.Posts.FirstOrDefaultAsync(p => p.PostID == postID);
+        var post = await _db.Posts.FindAsync(postID);
         return post;
     }
 
@@ -290,6 +337,19 @@ public class PostsController(ApplicationDbContext db) : BaseController
         */
     }
 
+    private async Task CompleteCommentObject(CommentsModel comment)
+    {
+        if (comment.RestID != null)
+        {
+            comment.Restaurant = await _db.Restaurants.FindAsync(comment.RestID);
+        }
+
+        if (comment.UserID != null)
+        {
+            comment.User = await _db.Users.FindAsync(comment.UserID);
+        }
+    }
+
     private async Task<List<CommentsModel>> GetSpecificPostCommentsAsync(Guid postID)
     {
         var comments = await _db.Comments
@@ -299,4 +359,11 @@ public class PostsController(ApplicationDbContext db) : BaseController
 
         return comments;
     }
+
+    private async Task<CommentsModel?> FetchCommentByIDAsync(Guid commentID)
+    {
+        var comment = await _db.Comments.FindAsync(commentID);
+        return comment;
+    }
+
 }
