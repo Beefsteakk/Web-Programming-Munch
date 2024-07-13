@@ -13,15 +13,8 @@
 
 <body class="bg-white">
     <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-info-dialog">
-            <div class="modal-content modal-info-content">
-                <div class="modal-image">
-                    <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner" id="carouselInner">
-                            <!-- Photos will be inserted here from the database -->
-                        </div>
-                    </div>
-                </div>
+        <div class="modal-dialog modal-xl modal-info-dialog" id="main-modal">
+            <div class="modal-content modal-info-content" id="modal-image-container">
                 <div class="modal-details modal-info-details">
                     <div class="modal-info-header">
                         <img src="~/Images/xunyin.jpg" alt="Xun Yin">
@@ -51,8 +44,8 @@
                                     <a class="float-end" asp-controller="Posts" asp-action="SpecificPost"
                                     asp-route-id="@item.Post.PostID"><i class="fa-regular fa-clipboard"></i></a>
                                 }
-                                <a class="left-nav-link text-dark" asp-area="" asp-controller="RestProfile" asp-action="SelectRestaurant" asp-route-restID=@item.Post.Restaurant.RestID>
                                     <div class="post-header">
+                                        <a class="left-nav-link text-dark" asp-area="" asp-controller="RestProfile" asp-action="SelectRestaurant" asp-route-restID=@item.Post.Restaurant.RestID>
                                             <img src="~/Images/xunyin.jpg" alt="Xun Yin">
                                             <div class="post-info">
                                                 @if (item.Post.Restaurant != null)
@@ -61,8 +54,8 @@
                                                 }
                                                 <span>@item.Post.PostCreatedAt</span>
                                             </div>
+                                        </a>
                                     </div>
-                                </a>
                                 <div class="post-content">
                                     <p style="max-height: 200px;overflow-y:auto">@item.Post.PostContent</p>
                                     <!-- TODO: Generate the image table dynamically, currently randomizing amount of photos -->
