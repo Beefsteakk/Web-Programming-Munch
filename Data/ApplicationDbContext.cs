@@ -28,7 +28,7 @@ namespace EffectiveWebProg.Data
         public DbSet<EmployeesModel> Employees { get; set; }
         public DbSet<CreditCardModel> CreditCard { get; set; }
         public DbSet<CommentsModel> Comments { get; set; }
-        public DbSet<CartModel> Carts { get; set; }
+        public DbSet<CartModel> Cart { get; set; }
         public DbSet<CartItemsModel> CartItems { get; set; }
 
         [Obsolete]

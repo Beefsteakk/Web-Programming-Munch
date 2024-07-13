@@ -1,0 +1,21 @@
+@model EffectiveWebProg.Models.CartModel
+
+<h2>Your Cart</h2>
+
+@if (Model.CartItem.Any())
+{
+    <div>
+        @foreach (var item in Model.CartItem)
+        {
+            <div class="cart-item">
+                <img src="@item.Items.ItemPic" alt="@item.Items.ItemName" class="cart-item-image">
+                <div class="cart-item-details">
+                    <h3 class="cart-item-name">@item.Items.ItemName</h3>
+                    <p class="cart-item-price">$@item.Items.Price.ToString("0.00")</p>
+                    <p class="cart-item-quantity">Quantity: @item.Quantity</p>
+                    <button class="remove-from-cart" data-item-id="@item.Item.ItemId">Remove from Cart</button>
+                </div>
+            </div>    
+        }
+    </div>
+}
