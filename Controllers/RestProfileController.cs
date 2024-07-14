@@ -59,7 +59,7 @@ namespace EffectiveWebProg.Controllers
             HttpContext.Session.SetString("RestID", restID.ToString());
 
             // Redirect to the employee index page or wherever appropriate
-            return RedirectToAction("Index", "Employees");
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Index()
