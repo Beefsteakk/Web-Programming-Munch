@@ -7,6 +7,7 @@
 }
 
 <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AVkGFYL29FKXNC4HSGogpIF4bRCV_ckeHqc6QW6cO-YJWpKSFmMDvLKZUr_JIj-Viou_PEZgSzbdFV-o&currency=SGD"></script>
 
 <div class="container">
     <div class="profile-header">
@@ -317,10 +318,10 @@
                             </label>
                         </div>
                     </div>
-                    <p class="deposit-info">To reserve, a $5 deposit is required. This amount will be contributed to
-                        your total bill at the end.</p>
+                    <p class="deposit-info">To reserve, a $5 deposit is required. This amount will be contributed to your total bill at the end.</p>
                 </div>
                 <div id="google-pay-button-container"></div>
+                <div id="paypal-button-container"></div>
             </form>
         </div>
     </div>
@@ -402,8 +403,8 @@
 
     function getGoogleTransactionInfo() {
         return {
-            countryCode: 'US',
-            currencyCode: 'USD',
+            countryCode: 'SG',
+            currencyCode: 'SGD',
             totalPriceStatus: 'FINAL',
             totalPrice: '5.00'
         };
@@ -416,15 +417,51 @@
         const paymentsClient = getGooglePaymentsClient();
         paymentsClient.loadPaymentData(paymentDataRequest)
             .then(function (paymentData) {
-                processPayment(paymentData);
+                processGooglePayment(paymentData);
             })
             .catch(function (err) {
                 console.error(err);
             });
     }
 
-    function processPayment(paymentData) {
+    function processGooglePayment(paymentData) {
         const paymentToken = paymentData.paymentMethodData.tokenizationData.token;
+
+        const reservationForm = document.getElementById('reservationForm');
+        const paymentTokenInput = document.createElement('input');
+        paymentTokenInput.setAttribute('type', 'hidden');
+        paymentTokenInput.setAttribute('name', 'paymentToken');
+        paymentTokenInput.setAttribute('value', paymentToken);
+        reservationForm.appendChild(paymentTokenInput);
+
+        reservationForm.submit();
+    }
+
+    // PayPal configuration
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '5.00', // Same amount as Google Pay
+                        currency_code: 'SGD'
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                processPaypalPayment(details);
+            });
+        },
+        onError: function(err) {
+            console.error(err);
+        }
+    }).render('#paypal-button-container'); // Display payment button on your web page
+
+    function processPaypalPayment(paymentDetails) {
+        // Extract PayPal payment details
+        const paymentToken = paymentDetails.id;
 
         const reservationForm = document.getElementById('reservationForm');
         const paymentTokenInput = document.createElement('input');
