@@ -3,12 +3,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EffectiveWebProg.ViewModels;
 using EffectiveWebProg.Models;
+using MySql.Data.MySqlClient;
 
 namespace EffectiveWebProg.Controllers
 {
-    public class ProfileController(ApplicationDbContext db) : BaseController
+
+    public class ProfileController : Controller
     {
-        private readonly ApplicationDbContext _db = db;
+        private readonly ApplicationDbContext _db;
+        private readonly string connectionString = "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
+
+        public ProfileController(ApplicationDbContext db)
+        {
+            _db = db;
+        }
 
         public async Task<IActionResult> Index()
         {
@@ -27,6 +35,7 @@ namespace EffectiveWebProg.Controllers
             var viewModel = new ProfileViewModel(user, followingCount.Count);
             return View(viewModel);
         }
+
         private async Task<List<ReservationsModel>> GetReservationsByUserIdAsync(Guid userId)
         {
             Console.WriteLine("sessionlol: " + userId);
@@ -71,6 +80,58 @@ namespace EffectiveWebProg.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateReservation(Guid reservationId, string reservedName, DateOnly reservationDate, string reservationTime, int NumberOfGuest, string SpecialRequest)
+        {
+            string query = "UPDATE Reservations SET ReservedName=@ReservedName, ReservationDate=@ReservationDate, ReservationTime=@ReservationTime, NumOfGuests=@NumOfGuests, SpecialRequest=@SpecialRequest WHERE ReservationID = @ReservationID";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    // cmd.Parameters.AddWithValue("@NewStatus", newStatus);
+                    cmd.Parameters.AddWithValue("@ReservationID", reservationId);
+                    cmd.Parameters.AddWithValue("@ReservedName", reservedName);
+                    cmd.Parameters.AddWithValue("@ReservationDate", reservationDate.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@ReservationTime", reservationTime);
+                    cmd.Parameters.AddWithValue("@NumOfGuests", NumberOfGuest);
+                    cmd.Parameters.AddWithValue("@SpecialRequest", SpecialRequest);
+
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+
+            return Ok(new { success = true });
+        }
+
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteReservation(Guid id)
+        {
+            Console.WriteLine("Deleting reservation with ID: " + id);
+            string query = "DELETE FROM Reservations WHERE ReservationID = @ReservationID";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@ReservationID", id);
+
+                    var result = await cmd.ExecuteNonQueryAsync();
+                    if (result > 0)
+                    {
+                        return Ok(new { success = true });
+                    }
+                    else
+                    {
+                        return NotFound(new { success = false, message = "Reservation not found." });
+                    }
+                }
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> EditProfile()
         {
@@ -79,7 +140,7 @@ namespace EffectiveWebProg.Controllers
             return View(user);
         }
 
-        [HttpPost("Profile/EditProfile")]
+        [HttpPost("EditProfile")]
         public async Task<IActionResult> EditProfilePost(IFormFile UserProfilePic, string UserName, string UserUsername, string UserEmail, int UserContactNum)
         {
             var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
