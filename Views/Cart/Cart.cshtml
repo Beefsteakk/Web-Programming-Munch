@@ -1,4 +1,7 @@
 @model EffectiveWebProg.Models.CartModel
+@{
+    Layout = "_Layout";
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,72 +9,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
-    <style>
-        .cart-container {
-            max-width: 900px;
-            margin: auto;
-            padding: 20px;
-        }
-        .cart-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .cart-item-image {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            margin-right: 20px;
-        }
-        .cart-item-details {
-            flex-grow: 1;
-        }
-        .cart-item-name {
-            font-size: 1.2em;
-            margin: 0;
-        }
-        .cart-item-price, .cart-item-quantity {
-            margin: 5px 0;
-        }
-        .remove-from-cart {
-            background: none;
-            border: none;
-            color: #d9534f;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/cart.css">
 </head>
 <body>
-    <div class="cart-container">
-        <h2>Your Cart</h2>
-        @if (Model.CartItem.Any())
-        {
-            <div>
+    <div class="container">
+        <div class="cart">
+            <h2>Cart</h2>
+            <div class="product-header">
+                <span>Product</span>
+                <span>Quantity</span>
+                <span>Price</span>
+                <span></span>
+            </div>
+            @if (Model.CartItem.Any())
+            {
                 @foreach (var item in Model.CartItem)
                 {
-                    <div class="cart-item">
-                        <img src="@item.Items.ItemPic" alt="@item.Items.ItemName" class="cart-item-image">
-                        <div class="cart-item-details">
-                            <h3 class="cart-item-name">@item.Items.ItemName</h3>
-                            <p class="cart-item-price">$@item.Items.Price.ToString("0.00")</p>
-                            <p class="cart-item-quantity">Quantity: @item.Quantity</p>
-                            <button class="remove-from-cart" data-item-id="@item.Items.ItemID">Remove from Cart</button>
+                    <div class="product">
+                        <div class="product-info">
+                            <img src="@item.Items.ItemPic" alt="@item.Items.ItemName" class="cart-item-image">
+                            <div class="cart-item-details">
+                                <h3 class="cart-item-name">@item.Items.ItemName</h3>
+                            </div>
                         </div>
+                        <div class="quantity">
+                            <button class="decrease">-</button>
+                            <p class="cart-item-quantity">@item.Quantity</p>
+                            <button class="increase">+</button>
+                        </div>
+                        <span class="cart-item-price">$@item.Items.Price.ToString("0.00")</span>
+                        <button class="remove-from-cart" data-item-id="@item.Items.ItemID">x</button>
                     </div>
                 }
-            </div>
-        }
-        else
-        {
-            <p>Your cart is empty.</p>
-        }
+            }
+            else
+            {
+                <p>Your cart is empty.</p>
+            }
+        </div>
+        <div class="summary">
+            <h2>Summary</h2>
+            <p>Total: $@Model.CartTotal</p>
+            <button>Check Out</button>
+        </div>            
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const updateQuantity = async (itemId, action) => {
+                const url = action === 'increase' ? '/Cart/IncreaseQuantity' : '/Cart/DecreaseQuantity';
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(itemId)
+                    });
+
+                    if (response.ok) {
+                        location.reload(); // Refresh the page or update the cart display
+                    } else {
+                        const errorText = await response.text();
+                        alert(`Failed to update item quantity: ${errorText}`);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred while updating the item quantity.');
+                }
+            };
+
+            const increaseButtons = document.querySelectorAll('.quantity .increase');
+            increaseButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const itemId = e.target.closest('.product').querySelector('.remove-from-cart').getAttribute('data-item-id');
+                    updateQuantity(itemId, 'increase');
+                });
+            });
+
+            const decreaseButtons = document.querySelectorAll('.quantity .decrease');
+            decreaseButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const itemId = e.target.closest('.product').querySelector('.remove-from-cart').getAttribute('data-item-id');
+                    updateQuantity(itemId, 'decrease');
+                });
+            });
+
             const removeFromCartButtons = document.querySelectorAll('.remove-from-cart');
             removeFromCartButtons.forEach(button => {
                 button.addEventListener('click', async (e) => {
@@ -87,8 +109,7 @@
 
                         if (response.ok) {
                             alert('Item removed from cart successfully!');
-                            // Optionally, refresh the page or update the cart display
-                            location.reload();
+                            location.reload(); // Optionally, refresh the page or update the cart display
                         } else {
                             const errorText = await response.text();
                             alert(`Failed to remove item from cart: ${errorText}`);
