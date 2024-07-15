@@ -36,7 +36,7 @@
     <div class="profile-tabs">
         <button class="tab-link active" onclick="openTab(event, 'reservations')">My Reservations</button>
     </div>
-    <div id="reservations" class="tab-content container mt-5">
+    <div id="reservations" class="tab-content container mt-5" style="display: block;">
         <h2 class="mb-4 text-center">My Reservations</h2>
 
         @foreach (var reservation in ReservationsDetails)
@@ -76,17 +76,18 @@
                 </div>
             </div>
         }
+        }
     </div>
 </div>
 
 <!-- Modal for Editing Reservation -->
 <div class="modal fade" id="editReservationModal" tabindex="-1" aria-labelledby="editReservationModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="editReservationModalLabel">Edit Reservation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close"  onclick="closeModal()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -97,15 +98,17 @@
                         <label for="editReservedName">Name</label>
                         <input type="text" class="form-control" id="editReservedName" name="reservedName" required>
                     </div>
-                    <div class="form-group">
-                        <label for="editReservationDate">Date</label>
-                        <input type="date" class="form-control" id="editReservationDate" name="reservationDate"
-                            required>
-                    </div>
-                    <div class="form-group">
-                        <label for="editReservationTime">Time</label>
-                        <input type="time" class="form-control" id="editReservationTime" name="reservationTime"
-                            required>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="editReservationDate">Date</label>
+                            <input type="date" class="form-control" id="editReservationDate" name="reservationDate"
+                                required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="editReservationTime">Time</label>
+                            <input type="time" class="form-control" id="editReservationTime" name="reservationTime"
+                                required>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="editNumOfGuests">Number of Guests</label>
@@ -113,16 +116,18 @@
                     </div>
                     <div class="form-group">
                         <label for="editSpecialRequest">Special Request</label>
-                        <textarea class="form-control" id="editSpecialRequest" name="specialRequest"></textarea>
+                        <textarea class="form-control" id="editSpecialRequest" name="specialRequest"
+                            rows="3"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <div class="text-right">
+                        <button type="button" class="btn btn-secondary"  onclick="closeModal()" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-
 </div>
-
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -244,48 +249,10 @@
             }
         }
 
-
+        function closeModal() {
+            $('#editReservationModal').modal('hide');
+        }
     </script>
 }
 
-<style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        background-color: #f8f9fa;
-    }
 
-    .reservation-card {
-        transition: all 0.3s ease;
-        border-radius: 10px;
-        overflow: hidden;
-    }
-
-    .reservation-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-header {
-        background-color: #4a90e2;
-    }
-
-    .btn-outline-primary {
-        color: #4a90e2;
-        border-color: #4a90e2;
-    }
-
-    .btn-outline-primary:hover {
-        background-color: #4a90e2;
-        color: white;
-    }
-
-    .btn-outline-danger {
-        color: #e74c3c;
-        border-color: #e74c3c;
-    }
-
-    .btn-outline-danger:hover {
-        background-color: #e74c3c;
-        color: white;
-    }
-</style>
