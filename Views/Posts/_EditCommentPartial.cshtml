@@ -1,0 +1,9 @@
+<form asp-action="EditComment" asp-controller="Posts" method="post">
+    <h1>Edit Comment:</h1>
+    <input type="hidden" name="commentID" value=@Model.CommentID />
+
+    <label for="comment">Comment:</label>
+    <input type="text" name="content" class="form-control" required>
+
+    <button type="submit" class="btn btn-primary float-end mt-3">Edit Comment</button>
+</form>

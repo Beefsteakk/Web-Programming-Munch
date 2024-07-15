@@ -43,9 +43,6 @@
             </div>
         </div>
     }
-    @{
-        var controller = (string)ViewContext.RouteData.Values["controller"];
-    }
 
     <div class="container-fluid">
         <div class="row">
@@ -57,16 +54,20 @@
                         </li>
                         @if (ViewBag.UserType == "User")
                         {
-                            <li class="left-nav-item">
-                                <a class="left-nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">
-                                    <i class="fa-solid fa-user"></i>
-                                    <span class="left-link-text d-none d-xl-inline">Profile</span>
-                                </a>
+                            <li class="search-box left-nav-item">
+                                <i class='fa-solid fa-search'></i>
+                                <input class="left-link-text" type="text" placeholder="Search...">
                             </li>
                             <li class="left-nav-item">
                                 <a class="left-nav-link text-dark" asp-area="" asp-controller="Posts" asp-action="Index">
                                     <i class="fa-solid fa-house"></i>
                                     <span class="left-link-text d-none d-xl-inline">Main Feed</span>
+                                </a>
+                            </li>
+                            <li class="left-nav-item">
+                                <a class="left-nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">
+                                    <i class="fa-solid fa-user"></i>
+                                    <span class="left-link-text d-none d-xl-inline">Profile</span>
                                 </a>
                             </li>
                         }
@@ -119,6 +120,12 @@
                                     asp-action="Index">
                                     <i class="fa-solid fa-tachometer-alt"></i>
                                     <span class="left-link-text d-none d-xl-inline">Stock Up</span>
+                                </a>
+                            </li>
+                            <li class="left-nav-item">
+                                <a class="left-nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
+                                    <i class="fa-solid fa-shopping-cart"></i>
+                                    <span class="left-link-text d-none d-xl-inline">Cart</span>
                                 </a>
                             </li>
                         }

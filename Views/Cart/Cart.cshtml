@@ -1,0 +1,105 @@
+@model EffectiveWebProg.Models.CartModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        .cart-container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+        .cart-item-details {
+            flex-grow: 1;
+        }
+        .cart-item-name {
+            font-size: 1.2em;
+            margin: 0;
+        }
+        .cart-item-price, .cart-item-quantity {
+            margin: 5px 0;
+        }
+        .remove-from-cart {
+            background: none;
+            border: none;
+            color: #d9534f;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <h2>Your Cart</h2>
+        @if (Model.CartItem.Any())
+        {
+            <div>
+                @foreach (var item in Model.CartItem)
+                {
+                    <div class="cart-item">
+                        <img src="@item.Items.ItemPic" alt="@item.Items.ItemName" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <h3 class="cart-item-name">@item.Items.ItemName</h3>
+                            <p class="cart-item-price">$@item.Items.Price.ToString("0.00")</p>
+                            <p class="cart-item-quantity">Quantity: @item.Quantity</p>
+                            <button class="remove-from-cart" data-item-id="@item.Items.ItemID">Remove from Cart</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>Your cart is empty.</p>
+        }
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const removeFromCartButtons = document.querySelectorAll('.remove-from-cart');
+            removeFromCartButtons.forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    const itemId = e.target.getAttribute('data-item-id');
+                    try {
+                        const response = await fetch('/Cart/RemoveFromCart', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(itemId)
+                        });
+
+                        if (response.ok) {
+                            alert('Item removed from cart successfully!');
+                            // Optionally, refresh the page or update the cart display
+                            location.reload();
+                        } else {
+                            const errorText = await response.text();
+                            alert(`Failed to remove item from cart: ${errorText}`);
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('An error occurred while removing the item from the cart.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

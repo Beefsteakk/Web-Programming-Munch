@@ -1,0 +1,63 @@
+@using EffectiveWebProg.Models;
+@model CommentsModel
+
+<!-- This could be here temporarily depending on the design choice. It's just here for me to test out. -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js" defer></script>
+    <link rel="stylesheet" href="~/css/post.css">
+</head>
+
+<body class="bg-white">
+    <div class="container">
+        <div class="row w-100">
+            <div class="col-2"></div>
+            <div class="main-content">
+                <div class="content">
+                    <div class="post-header">
+                        @if (Model.User != null)
+                        {
+                            @if (Model.User.UserProfilePic != null)
+                            {
+                                <img src="/Images/UserProfilePics/@Model.User.UserProfilePic" alt="Profile Picture">
+                            }
+                            else
+                            {
+                                <img src="~/Images/chef.png" alt="Profile Picture">
+                            }
+                        }
+                        @if (Model.Restaurant != null)
+                        {
+                            <img src="~/Images/chef.png" alt="Profile Picture">
+                        }
+                        <div class="post-info">
+                            @if (Model.Restaurant != null)
+                            {
+                                <h4>@Model.Restaurant.RestName</h4>
+                            }
+                            @if (Model.User != null)
+                            {
+                                <h4>@Model.User.UserUsername</h4>
+                            }
+                            <span>@Model.CommentCreatedAt</span>
+                        </div>
+                    </div>
+                    <div class="post-content mb-5">
+                        <p style="max-height: 200px;overflow-y:auto">@Model.CommentContent</p>
+                    </div>
+                    @await Html.PartialAsync("_EditCommentPartial", Model)
+                    <form asp-action="DeleteComment" asp-controller="Posts" method="post">
+                        <input type="hidden" name="commentID" value=@Model.CommentID />
+                        <button type="submit" class="btn btn-danger float-end mt-3">Delete Comment</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+</body>

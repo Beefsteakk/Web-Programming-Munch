@@ -1,15 +1,26 @@
 allPost = document.querySelectorAll('.posts');
 allPost.forEach(function(e) {
     e.addEventListener('click', function(obj) {
-        console.log(e.id)
         if (obj.target.localName != "button" && obj.target.localName != "textarea" && obj.target.localName != "span") {
             $.ajax({
                 url: '/Posts/GetInfo',
                 type: 'POST',
                 data: { id: e.id },
                 success: function(response) {
-                    console.log(response)
-                    $('#carouselInner').empty();
+                    $('#main-modal')[0].classList.remove("modal-info-dialog");
+                    $('.modal-image').remove();
+                    if (response.post.postPictureURLs.length > 0 && $('.modal-image').length == 0) {
+                        $('#modal-image-container')[0].insertAdjacentHTML("afterbegin", `
+                            <div class="modal-image">
+                                <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner" id="carouselInner">
+                                    </div>
+                                </div>
+                            </div>
+                        `)
+
+                        $('#main-modal')[0].classList.add("modal-info-dialog");
+                    }
 
                     if (response.post.postPictureURLs.length > 1) {
                         $('#imageCarousel').append(`
@@ -42,6 +53,7 @@ allPost.forEach(function(e) {
                             <div class="row">
                                 <div class="d-inline">
                                     <span class="fw-bold">${comment.commentAuthorUser != null ? comment.commentAuthorUser.username : comment.commentAuthorRestaurant.restName}</span><span class="text-break"> ${comment.commentContent}</span>
+                                    ${comment.isOwnComment ? `<a class="float-end" href=/Posts/SpecificComment/${comment.commentID}><i class="fa-regular fa-clipboard"></i></a>` : ''}
                                 </div>
                             </div>
                         `)
