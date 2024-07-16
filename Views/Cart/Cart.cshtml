@@ -1,4 +1,8 @@
 @model EffectiveWebProg.Models.CartModel
+@{
+    Layout = "_Layout";
+    var cartTotal = Model.CartTotal.ToString("0.00"); // Format the cart total as a string
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,72 +10,236 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
-    <style>
-        .cart-container {
-            max-width: 900px;
-            margin: auto;
-            padding: 20px;
-        }
-        .cart-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .cart-item-image {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            margin-right: 20px;
-        }
-        .cart-item-details {
-            flex-grow: 1;
-        }
-        .cart-item-name {
-            font-size: 1.2em;
-            margin: 0;
-        }
-        .cart-item-price, .cart-item-quantity {
-            margin: 5px 0;
-        }
-        .remove-from-cart {
-            background: none;
-            border: none;
-            color: #d9534f;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/cart.css">
+    <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
 </head>
 <body>
-    <div class="cart-container">
-        <h2>Your Cart</h2>
-        @if (Model.CartItem.Any())
-        {
-            <div>
+    <div class="container">
+        <div class="cart">
+            <h2>Cart</h2>
+            <div class="product-header">
+                <span>Product</span>
+                <span>Quantity</span>
+                <span>Price</span>
+                <span></span>
+            </div>
+            @if (Model.CartItem.Any())
+            {
                 @foreach (var item in Model.CartItem)
                 {
-                    <div class="cart-item">
-                        <img src="@item.Items.ItemPic" alt="@item.Items.ItemName" class="cart-item-image">
-                        <div class="cart-item-details">
-                            <h3 class="cart-item-name">@item.Items.ItemName</h3>
-                            <p class="cart-item-price">$@item.Items.Price.ToString("0.00")</p>
-                            <p class="cart-item-quantity">Quantity: @item.Quantity</p>
-                            <button class="remove-from-cart" data-item-id="@item.Items.ItemID">Remove from Cart</button>
+                    <div class="product">
+                        <div class="product-info">
+                            <img src="@item.Items.ItemPic" alt="@item.Items.ItemName" class="cart-item-image">
+                            <div class="cart-item-details">
+                                <h3 class="cart-item-name">@item.Items.ItemName</h3>
+                            </div>
                         </div>
+                        <div class="quantity">
+                            <button class="decrease">-</button>
+                            <p class="cart-item-quantity">@item.Quantity</p>
+                            <button class="increase">+</button>
+                        </div>
+                        <span class="cart-item-price">$@item.Items.Price.ToString("0.00")</span>
+                        <button class="remove-from-cart" data-item-id="@item.Items.ItemID">x</button>
                     </div>
                 }
-            </div>
-        }
-        else
-        {
-            <p>Your cart is empty.</p>
-        }
+            }
+            else
+            {
+                <p>Your cart is empty.</p>
+            }
+        </div>
+        <div class="summary">
+            <h2>Summary</h2>
+            <p>Total: $@Model.CartTotal</p>
+            <div id="googlepay-button-container"></div>
+        </div>            
     </div>
     <script>
+        const cartTotal = '@cartTotal'; // Injected cart total
+
+        // Define Google pay API
+        const baseRequest = {
+            apiVersion: 2,
+            apiVersionMinor: 0
+        };
+        
+        // Request a payment token 
+        const tokenizationSpecification = {
+            type: 'PAYMENT_GATEWAY',
+            parameters: {
+                'gateway': 'acceptblue',
+                'gatewayMerchantId': 'BCR2DN4TWXD2V63G'
+            }
+        };
+
+        // Define supported payment card networks
+        const allowedCardNetworks = ["AMEX", "DISCOVER", "INTERAC", "JCB", "MASTERCARD", "VISA"];
+
+        // Define supported payment card authentication methods
+        const allowedCardAuthMethods = ["PAN_ONLY", "CRYPTOGRAM_3DS"];
+
+        // Describe allowed payment methods
+        const baseCardPaymentMethod = {
+            type: 'CARD',
+            parameters: {
+                allowedAuthMethods: allowedCardAuthMethods,
+                allowedCardNetworks: allowedCardNetworks
+            }
+        };
+
+        const cartPaymentMethod = Object.assign(
+            {tokenizationSpecification: tokenizationSpecification},
+            baseCardPaymentMethod
+        );
+
+        let paymentsClient = null;
+        let googlePayButtonAdded = false;
+
+        function getGoogleIsReadyToPayRequest() {
+            return Object.assign(
+                {},
+                baseRequest,
+                {
+                    allowedPaymentMethods: [baseCardPaymentMethod]
+                }
+            );
+        }
+
+        function getGooglePaymentDataRequest() {
+            const paymentDataRequest = Object.assign({}, baseRequest);
+            paymentDataRequest.allowedPaymentMethods = [cartPaymentMethod];
+            paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
+            paymentDataRequest.merchantInfo = {
+                merchantName: 'Munch'
+            };
+            return paymentDataRequest;
+        }
+
+        function getGooglePaymentsClient() {
+            if (paymentsClient === null) {
+                paymentsClient = new google.payments.api.PaymentsClient({environment: 'TEST'});
+            }
+            return paymentsClient;
+        }
+
+        function onGooglePayLoaded() {
+            const paymentsClient = getGooglePaymentsClient();
+            paymentsClient.isReadyToPay(getGoogleIsReadyToPayRequest())
+                .then(function (response) {
+                    if (response.result && !googlePayButtonAdded) {
+                        addGooglePayButton();
+                        googlePayButtonAdded = true;
+                    }
+                })
+                .catch(function (err) {
+                    console.error(err);
+                });
+        }
+
+        function addGooglePayButton() {
+            const paymentsClient = getGooglePaymentsClient();
+            const button = paymentsClient.createButton({ 
+                buttonColor: 'default',
+                buttonType: 'order',
+                buttonradius: 4,
+                onClick: onGooglePaymentButtonClicked });
+            document.getElementById('googlepay-button-container').appendChild(button);
+        }
+
+        function getGoogleTransactionInfo() {
+            return {
+                countryCode: 'SG',
+                currencyCode: 'SGD',
+                totalPriceStatus: 'FINAL',
+                totalPrice: cartTotal // Use the injected cart total
+            };
+        }
+
+        function onGooglePaymentButtonClicked() {
+            const paymentDataRequest = getGooglePaymentDataRequest();
+            paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
+
+            const paymentsClient = getGooglePaymentsClient();
+            paymentsClient.loadPaymentData(paymentDataRequest)
+                .then(function (paymentData) {
+                    processGooglePayment(paymentData);
+                })
+                .catch(function (err) {
+                    console.error(err);
+                });
+        }
+
+        function processGooglePayment(paymentData) {
+            const paymentToken = paymentData.paymentMethodData.tokenizationData.token;
+            console.log("Payment Token: ", paymentToken);
+            
+            fetch('/Cart/ProcessPayment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ paymentToken })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Payment processed successfully!');
+                    location.reload(); // Optionally, refresh the page or redirect to a success page
+                } else {
+                    response.text().then(text => {
+                        alert('Failed to process payment: ' + text);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing the payment.');
+            });
+    }
+
+
+
+
         document.addEventListener('DOMContentLoaded', () => {
+            const updateQuantity = async (itemId, action) => {
+                const url = action === 'increase' ? '/Cart/IncreaseQuantity' : '/Cart/DecreaseQuantity';
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(itemId)
+                    });
+
+                    if (response.ok) {
+                        location.reload(); // Refresh the page or update the cart display
+                    } else {
+                        const errorText = await response.text();
+                        alert(`Failed to update item quantity: ${errorText}`);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred while updating the item quantity.');
+                }
+            };
+
+            const increaseButtons = document.querySelectorAll('.quantity .increase');
+            increaseButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const itemId = e.target.closest('.product').querySelector('.remove-from-cart').getAttribute('data-item-id');
+                    updateQuantity(itemId, 'increase');
+                });
+            });
+
+            const decreaseButtons = document.querySelectorAll('.quantity .decrease');
+            decreaseButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const itemId = e.target.closest('.product').querySelector('.remove-from-cart').getAttribute('data-item-id');
+                    updateQuantity(itemId, 'decrease');
+                });
+            });
+
             const removeFromCartButtons = document.querySelectorAll('.remove-from-cart');
             removeFromCartButtons.forEach(button => {
                 button.addEventListener('click', async (e) => {
@@ -87,8 +255,7 @@
 
                         if (response.ok) {
                             alert('Item removed from cart successfully!');
-                            // Optionally, refresh the page or update the cart display
-                            location.reload();
+                            location.reload(); // Optionally, refresh the page or update the cart display
                         } else {
                             const errorText = await response.text();
                             alert(`Failed to remove item from cart: ${errorText}`);

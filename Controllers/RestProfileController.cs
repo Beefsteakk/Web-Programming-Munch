@@ -59,7 +59,7 @@ namespace EffectiveWebProg.Controllers
             HttpContext.Session.SetString("RestID", restID.ToString());
 
             // Redirect to the employee index page or wherever appropriate
-            return RedirectToAction("Index", "Employees");
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Index()
@@ -74,6 +74,9 @@ namespace EffectiveWebProg.Controllers
 
             RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(restID);
             List<PostPicsModel> restaurantPosts = await GetRestaurantPostsAsync(restID);
+            int count = restaurantPosts.Count;
+            ViewBag.PostCount = count;
+            
             string sessionemail = HttpContext.Session.GetString("SSName") ?? "";
 
             string sessionType = HttpContext.Session.GetString("SSUserType") ?? "";
@@ -94,6 +97,7 @@ namespace EffectiveWebProg.Controllers
 
             RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(restID);
             ViewBag.RestaurantDetails = restaurantDetails;
+            
 
             return View();
         }
