@@ -1,33 +1,83 @@
-@model IEnumerable<EffectiveWebProg.Models.InventoryItemsModel>
-
+@model EffectiveWebProg.ViewModels.InventoryViewModel
 @{
     ViewBag.Title = "Inventory";
 }
 
-<h2>Inventory</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
+    <link rel="stylesheet" type="text/css" href="~/css/inventory.css" />
+    <script type="text/javascript" src="~/js/inventorySearch.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Inventory</h1>
+        <div class="summary">
+            <span>Total Items: @ViewBag.TotalItems</span> | 
+            <span>Total Stock Count: @ViewBag.TotalStockCount</span> | 
+            <span>Total Price: @ViewBag.TotalPrice</span>
+        </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Item Pic</th>
-            <th>Item Name</th>
-            <th>Stock Count</th>
-            <th>Total Price</th>
-            <th>Last Updated</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td><img src="@item.Items.ItemPic" alt="@item.Items.ItemName" style="max-width: 50px;" /></td>
-                <td>@item.Items.ItemName</td>
-                <td>@item.StockCount</td>
-                <td>@item.TotalPrice</td>
-                <td>@item.LastUpdated.ToString("yyyy-MM-dd HH:mm")</td>
-                <td><button class="stock-up-btn">Stock Up</button></td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <div class="search-filter-container">
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search for gifts...">
+            </div>
+            <div class="filter-dropdown">
+                <select id="category-filter">
+                    <option value="">All Categories</option>
+                    @foreach (var category in Model.ItemCat)
+                    {
+                        <option value="@category.CatName">@category.CatName</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <table class="inventory-table">
+            <thead>
+                <tr>
+                    <th>Item Pic</th>
+                    <th>Item Name</th>
+                    <th>Stock Count</th>
+                    <th>Total Price</th>
+                    <th>Last Updated</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.InventoryItems)
+                {
+                    <tr>
+                        <td><img src="@item.Items.ItemPic" alt="@item.Items.ItemName" style="max-width: 50px;" /></td>
+                        <td class="item-name">@item.Items.ItemName</td>
+                        <td class="stock">@item.StockCount</td>
+                        <td class="price">@item.TotalPrice</td>
+                        <td class="updated">@item.LastUpdated.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td><button class="stock-up-btn">Stock Up</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <button onclick="location.href='@Url.Action("Index", new { page = ViewBag.CurrentPage - 1, searchString = ViewBag.CurrentSearch, categoryFilter = ViewBag.CurrentCategory })'">Previous</button>
+            }
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <button @(i == ViewBag.CurrentPage ? "disabled" : "") onclick="location.href='@Url.Action("Index", new { page = i, searchString = ViewBag.CurrentSearch, categoryFilter = ViewBag.CurrentCategory })'">@i</button>
+            }
+            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+            {
+                <button onclick="location.href='@Url.Action("Index", new { page = ViewBag.CurrentPage + 1, searchString = ViewBag.CurrentSearch, categoryFilter = ViewBag.CurrentCategory })'">Next</button>
+            }
+        </div>
+    </div>
+</body>
+
+
+    
