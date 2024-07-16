@@ -30,7 +30,7 @@
                     <option value="">All Categories</option>
                     @foreach (var category in Model.ItemCat)
                     {
-                        <option value="@category.CatName">@category.CatName</option>
+                        <option value="@category.CatID">@category.CatName</option>
                     }
                 </select>
             </div>
@@ -47,10 +47,10 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="inventory-items">
                 @foreach (var item in Model.InventoryItems)
                 {
-                    <tr>
+                    <tr class="item-row" data-category="@item.Items.CatID">
                         <td><img src="@item.Items.ItemPic" alt="@item.Items.ItemName" style="max-width: 50px;" /></td>
                         <td class="item-name">@item.Items.ItemName</td>
                         <td class="stock">@item.StockCount</td>

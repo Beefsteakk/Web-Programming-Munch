@@ -20,7 +20,7 @@ namespace EffectiveWebProg.Controllers
         }
 
         // GET: Items
-        public async Task<IActionResult> Index(string searchString, Guid? categoryFilter, int page = 1)
+        public async Task<IActionResult> Index(int page = 1)
         {
             var userType = HttpContext.Session.GetString("SSUserType");
             ViewBag.UserType = userType;
@@ -47,16 +47,6 @@ namespace EffectiveWebProg.Controllers
                 .Where(ii => ii.Inventory.RestID == restID)
                 .AsQueryable();
 
-            // if (!string.IsNullOrEmpty(searchString))
-            // {
-            //     query = query.Where(ii => ii.Items.ItemName.Contains(searchString));
-            // }
-
-            // if (categoryFilter.HasValue)
-            // {
-            //     query = query.Where(ii => ii.Items.CatID == categoryFilter.Value);
-            // }
-
             var totalItems = await query.CountAsync();
             var inventoryItems = await query
                 .Skip((page - 1) * PageSize)
@@ -64,10 +54,7 @@ namespace EffectiveWebProg.Controllers
                 .ToListAsync();
 
             var categories = await _db.ItemCat.ToListAsync();
-            var items = await _db.Items.Include(i => i.ItemCat).ToListAsync();
 
-            // ViewBag.CurrentSearch = searchString;
-            // ViewBag.CurrentCategory = categoryFilter;
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = (int)Math.Ceiling(totalItems / (double)PageSize);
 

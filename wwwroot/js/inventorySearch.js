@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const categoryFilter = document.getElementById('category-filter');
+    const items = document.querySelectorAll('.item-row');
 
     function filterItems() {
         const searchTerm = searchInput.value.toLowerCase();
