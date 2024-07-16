@@ -1,0 +1,33 @@
+@model IEnumerable<EffectiveWebProg.Models.InventoryItemsModel>
+
+@{
+    ViewBag.Title = "Inventory";
+}
+
+<h2>Inventory</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item Pic</th>
+            <th>Item Name</th>
+            <th>Stock Count</th>
+            <th>Total Price</th>
+            <th>Last Updated</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><img src="@item.Items.ItemPic" alt="@item.Items.ItemName" style="max-width: 50px;" /></td>
+                <td>@item.Items.ItemName</td>
+                <td>@item.StockCount</td>
+                <td>@item.TotalPrice</td>
+                <td>@item.LastUpdated.ToString("yyyy-MM-dd HH:mm")</td>
+                <td><button class="stock-up-btn">Stock Up</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
