@@ -1,3 +1,9 @@
+@model List<EffectiveWebProg.Models.EmployeesModel>
+
+@{
+    ViewData["Title"] = "Employees Page";
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +13,14 @@
     <link rel="stylesheet" href="~/css/employee.css">
 </head>
 <body>
+    <script src="/_framework/aspnetcore-browser-refresh.js"></script>
     <div class="main-content">
         <div class="header">
-            <input type="text" class="search" placeholder="Shift+K to search a user">
+            <form method="get" asp-controller="Employees" asp-action="Search">
+                <input type="text" id="search-input" name="searchTerm" placeholder="🔍   Search an employee...">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+
             <div class="header-icons">
                 <div class="icon">🔔</div>
                 <div class="icon">👤</div>
@@ -17,81 +28,74 @@
         </div>
         <div class="content">
             <div class="employee-header">
-                <h1>32 Employees</h1>
+                <h1>@Model.Count Employees</h1> <!-- Display total number of employees -->
                 <div class="actions">
-                    <button class="filter-button">Filter</button>
-                    <button class="add-button">+ Add Employee</button>
+                    @* <button class="filter-button">Filter</button> *@
+                    <button class="filter-button" onclick="toggleSorting('name')">Sort by Name A - Z</button>
+                    @* <button class="filter-button" onclick="toggleSorting('dept')">Sort by Department</button> *@
+                    <a asp-controller="Employees" asp-action="Create"><button class="add-button">+ Add Employee</button></a>
                 </div>
             </div>
             <div class="employee-cards">
-                <div class="employee-card">
-                    <div class="employee-photo"><img src="employee1.jpg" alt="Employee Photo"></div>
-                    <div class="employee-info">
-                        <h3>Bessie Cooper</h3>
-                        <p>Project Manager</p>
-                        <p>Department: Design Team</p>
-                        <p>Hired Date: 7/27/13</p>
-                        <p>Email: Ronald043@gmail.com</p>
-                        <p>Phone: (229) 555-0109</p>
+                @foreach (var employee in Model)
+                {
+                    <div class="employee-card">
+                        <div class="edit-icon" onclick="openPopup('@employee.EmployeeID')">&#x2026;</div>
+                        <div class="employee-photo"><img src="~/Images/@employee.EmployeePic" alt="Employee Photo"></div>
+                        <div class="employee-info">
+                            <h3>@employee.EmployeeName</h3>
+                            <p>@employee.Role</p>
+                        </div>
+                        <div class="details-card">
+                            <table>
+                                <tr>
+                                    <td class="text-title">Department</td>
+                                    <td class="text-title">Hired Date</td>
+                                </tr>
+                                <tr>
+                                    <td>@employee.Department</td>
+                                    <td>@employee.HireDate.ToString("MM/dd/yyyy")</td> <!-- Adjust date formatting as per your needs -->
+                                </tr>
+                            </table>
+                            <p>✉️ @employee.Email</p>
+                            <p>📞 @employee.PhoneNumber</p>
+                        </div>
                     </div>
-                </div>
-                <div class="employee-card">
-                    <div class="employee-photo"><img src="employee2.jpg" alt="Employee Photo"></div>
-                    <div class="employee-info">
-                        <h3>Theresa Webb</h3>
-                        <p>Project Manager</p>
-                        <p>Department: Marketing</p>
-                        <p>Hired Date: 10/28/12</p>
-                        <p>Email: Ronald043@gmail.com</p>
-                        <p>Phone: (406) 555-0120</p>
-                    </div>
-                </div>
-                <div class="employee-card">
-                    <div class="employee-photo"><img src="employee3.jpg" alt="Employee Photo"></div>
-                    <div class="employee-info">
-                        <h3>Bessie Cooper</h3>
-                        <p>Project Manager</p>
-                        <p>Department: SEO</p>
-                        <p>Hired Date: 9/4/12</p>
-                        <p>Email: Ronald043@gmail.com</p>
-                        <p>Phone: (684) 555-0102</p>
-                    </div>
-                </div>
-                <div class="employee-card">
-                    <div class="employee-photo"><img src="employee4.jpg" alt="Employee Photo"></div>
-                    <div class="employee-info">
-                        <h3>Eleanor Pena</h3>
-                        <p>Project Manager</p>
-                        <p>Department: Data Visual</p>
-                        <p>Hired Date: 4/4/18</p>
-                        <p>Email: Ronald043@gmail.com</p>
-                        <p>Phone: (684) 555-0103</p>
-                    </div>
-                </div>
-                <div class="employee-card">
-                    <div class="employee-photo"><img src="employee5.jpg" alt="Employee Photo"></div>
-                    <div class="employee-info">
-                        <h3>Guy Hawkins</h3>
-                        <p>Project Manager</p>
-                        <p>Department: Product Design</p>
-                        <p>Hired Date: 1/15/12</p>
-                        <p>Email: Ronald043@gmail.com</p>
-                        <p>Phone: (684) 555-0104</p>
-                    </div>
-                </div>
-                <div class="employee-card">
-                    <div class="employee-photo"><img src="employee6.jpg" alt="Employee Photo"></div>
-                    <div class="employee-info">
-                        <h3>Jenny Wilson</h3>
-                        <p>Project Manager</p>
-                        <p>Department: UI/UX Design</p>
-                        <p>Hired Date: 7/27/13</p>
-                        <p>Email: Ronald043@gmail.com</p>
-                        <p>Phone: (684) 555-0105</p>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
+    <!-- Popup Container -->
+    <div id="popup-container" class="popup-container">
+        <div class="popup">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <h2>Edit Information</h2>
+           <form id="edit-form">
+            <input type="hidden" id="employee-id" name="EmployeeID" value="">
+            <label for="photo">Photo:</label>
+            <img id="photo-preview" src="" alt="Photo Preview" style="display: block; margin-top: 5px;">
+            <input type="file" id="photo" name="photo" accept="image/*" onchange="previewImage(event)">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="EmployeeName">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="Role">
+            <label for="department">Department:</label>
+            <input type="text" id="department" name="Department">
+            <label for="hire-date">Hired Date:</label>
+            <input type="date" id="hire-date" name="HireDate">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="Email">
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="PhoneNumber">
+            <table>
+                <tr>
+                    <td><button type="button" onclick="confirmDelete()" style="width: 150px; background-color: #ff5722;">Delete</button></td>
+                    <td><button type="submit" style="width: 150px; margin-left: 157px;">Save</button></td>
+                </tr>
+            </table>
+        </form>
+        </div>
+    </div>
+    <script src="~/js/employees.js"></script>
 </body>
 </html>

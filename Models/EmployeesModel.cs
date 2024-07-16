@@ -29,18 +29,24 @@ public class EmployeesModel
     public string? Role { get; set; }
 
     [Required]
-    public DateOnly HireDate { get; set; }
+    [StringLength(255)]
+    [Column(TypeName = "varchar(100)")] 
+    public string? Department { get; set; }
+
+    [StringLength(255)]
+    [Column(TypeName = "varchar(255)")]
+    public string? Email { get; set; }
+
+    [StringLength(255)]
+    [Column(TypeName = "varchar(20)")]
+    public string? PhoneNumber { get; set; }
 
     [Required]
-    public TimeSpan ReservationTime { get; set; }
-
-    public double Salary { get; set; }
-
+    public DateOnly HireDate { get; set; }
 
     // Navigation properties
     [ForeignKey("RestID")]
-    public required RestaurantsModel Restaurant { get; set; }
-
+    public RestaurantsModel? Restaurant { get; set; }
 
     public ICollection<TimeSheetModel> TimeSheets { get; set; } 
 
@@ -50,4 +56,9 @@ public class EmployeesModel
         TimeSheets = new List<TimeSheetModel>();
     }
 
+    // Optional constructor to initialize Restaurant property
+    public EmployeesModel(Guid restId) : this()
+    {
+        RestID = restId;
+    }
 }

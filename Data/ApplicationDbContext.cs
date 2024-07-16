@@ -36,6 +36,12 @@ namespace EffectiveWebProg.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Example: Configure RestID to be auto-generated
+            modelBuilder.Entity<EmployeesModel>()
+                .Property(e => e.RestID)
+                .ValueGeneratedOnAdd(); // Indicates that the value is generated on add (auto-generated)
+
+
             // Configure CreditCard
             modelBuilder.Entity<CreditCardModel>(entity =>
             {
@@ -123,6 +129,10 @@ namespace EffectiveWebProg.Data
                 entity.Property(e => e.EmployeeName).HasMaxLength(255);
                 entity.Property(e => e.EmployeePic).HasMaxLength(255);
                 entity.Property(e => e.Role).HasMaxLength(20);
+                entity.Property(e => e.Department).HasMaxLength(100);
+                entity.Property(e => e.Email).HasMaxLength(255);
+                entity.Property(e => e.PhoneNumber).HasMaxLength(20);
+                entity.Property(e => e.HireDate).HasColumnType("date");
                 entity.HasIndex(e => e.RestID);
                 entity.HasOne(e => e.Restaurant)
                     .WithMany(r => r.Employee)
