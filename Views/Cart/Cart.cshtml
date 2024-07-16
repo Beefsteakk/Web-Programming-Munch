@@ -1,6 +1,7 @@
 @model EffectiveWebProg.Models.CartModel
 @{
     Layout = "_Layout";
+    var cartTotal = Model.CartTotal.ToString("0.00"); // Format the cart total as a string
 }
 
 <!DOCTYPE html>
@@ -10,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart</title>
     <link rel="stylesheet" href="~/css/cart.css">
+    <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
 </head>
 <body>
     <div class="container">
@@ -50,10 +52,154 @@
         <div class="summary">
             <h2>Summary</h2>
             <p>Total: $@Model.CartTotal</p>
-            <button>Check Out</button>
+            <div id="googlepay-button-container"></div>
         </div>            
     </div>
     <script>
+        const cartTotal = '@cartTotal'; // Injected cart total
+
+        // Define Google pay API
+        const baseRequest = {
+            apiVersion: 2,
+            apiVersionMinor: 0
+        };
+        
+        // Request a payment token 
+        const tokenizationSpecification = {
+            type: 'PAYMENT_GATEWAY',
+            parameters: {
+                'gateway': 'acceptblue',
+                'gatewayMerchantId': 'BCR2DN4TWXD2V63G'
+            }
+        };
+
+        // Define supported payment card networks
+        const allowedCardNetworks = ["AMEX", "DISCOVER", "INTERAC", "JCB", "MASTERCARD", "VISA"];
+
+        // Define supported payment card authentication methods
+        const allowedCardAuthMethods = ["PAN_ONLY", "CRYPTOGRAM_3DS"];
+
+        // Describe allowed payment methods
+        const baseCardPaymentMethod = {
+            type: 'CARD',
+            parameters: {
+                allowedAuthMethods: allowedCardAuthMethods,
+                allowedCardNetworks: allowedCardNetworks
+            }
+        };
+
+        const cartPaymentMethod = Object.assign(
+            {tokenizationSpecification: tokenizationSpecification},
+            baseCardPaymentMethod
+        );
+
+        let paymentsClient = null;
+        let googlePayButtonAdded = false;
+
+        function getGoogleIsReadyToPayRequest() {
+            return Object.assign(
+                {},
+                baseRequest,
+                {
+                    allowedPaymentMethods: [baseCardPaymentMethod]
+                }
+            );
+        }
+
+        function getGooglePaymentDataRequest() {
+            const paymentDataRequest = Object.assign({}, baseRequest);
+            paymentDataRequest.allowedPaymentMethods = [cartPaymentMethod];
+            paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
+            paymentDataRequest.merchantInfo = {
+                merchantName: 'Munch'
+            };
+            return paymentDataRequest;
+        }
+
+        function getGooglePaymentsClient() {
+            if (paymentsClient === null) {
+                paymentsClient = new google.payments.api.PaymentsClient({environment: 'TEST'});
+            }
+            return paymentsClient;
+        }
+
+        function onGooglePayLoaded() {
+            const paymentsClient = getGooglePaymentsClient();
+            paymentsClient.isReadyToPay(getGoogleIsReadyToPayRequest())
+                .then(function (response) {
+                    if (response.result && !googlePayButtonAdded) {
+                        addGooglePayButton();
+                        googlePayButtonAdded = true;
+                    }
+                })
+                .catch(function (err) {
+                    console.error(err);
+                });
+        }
+
+        function addGooglePayButton() {
+            const paymentsClient = getGooglePaymentsClient();
+            const button = paymentsClient.createButton({ 
+                buttonColor: 'default',
+                buttonType: 'order',
+                buttonradius: 4,
+                onClick: onGooglePaymentButtonClicked });
+            document.getElementById('googlepay-button-container').appendChild(button);
+        }
+
+        function getGoogleTransactionInfo() {
+            return {
+                countryCode: 'SG',
+                currencyCode: 'SGD',
+                totalPriceStatus: 'FINAL',
+                totalPrice: cartTotal // Use the injected cart total
+            };
+        }
+
+        function onGooglePaymentButtonClicked() {
+            const paymentDataRequest = getGooglePaymentDataRequest();
+            paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
+
+            const paymentsClient = getGooglePaymentsClient();
+            paymentsClient.loadPaymentData(paymentDataRequest)
+                .then(function (paymentData) {
+                    processGooglePayment(paymentData);
+                })
+                .catch(function (err) {
+                    console.error(err);
+                });
+        }
+
+        function processGooglePayment(paymentData) {
+            const paymentToken = paymentData.paymentMethodData.tokenizationData.token;
+            console.log("Payment Token: ", paymentToken);
+            
+            fetch('/Cart/ProcessPayment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ paymentToken })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Payment processed successfully!');
+                    location.reload(); // Optionally, refresh the page or redirect to a success page
+                } else {
+                    response.text().then(text => {
+                        alert('Failed to process payment: ' + text);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing the payment.');
+            });
+    }
+
+
+
+
         document.addEventListener('DOMContentLoaded', () => {
             const updateQuantity = async (itemId, action) => {
                 const url = action === 'increase' ? '/Cart/IncreaseQuantity' : '/Cart/DecreaseQuantity';

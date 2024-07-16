@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 
 namespace EffectiveWebProg.Controllers
 {
@@ -21,7 +20,6 @@ namespace EffectiveWebProg.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // Retrieve user type from session and set it to ViewBag
             var userType = HttpContext.Session.GetString("SSUserType");
             ViewBag.UserType = userType;
 
@@ -30,7 +28,6 @@ namespace EffectiveWebProg.Controllers
                 return Forbid();
             }
 
-            // Retrieve session ID, which is the restaurant ID
             var sessionID = HttpContext.Session.GetString("SSID");
             if (string.IsNullOrEmpty(sessionID))
             {
@@ -42,7 +39,6 @@ namespace EffectiveWebProg.Controllers
                 return BadRequest("Invalid session ID.");
             }
 
-            // Fetch the cart linked to this restaurant
             var cart = await _db.Cart
                                 .Include(c => c.CartItem)
                                     .ThenInclude(ci => ci.Items)
@@ -58,7 +54,6 @@ namespace EffectiveWebProg.Controllers
         [HttpPost("AddToCart")]
         public async Task<IActionResult> AddToCart([FromBody] Guid itemId)
         {
-            // Retrieve user type from session and set it to ViewBag
             var userType = HttpContext.Session.GetString("SSUserType");
             ViewBag.UserType = userType;
 
@@ -67,7 +62,6 @@ namespace EffectiveWebProg.Controllers
                 return Forbid();
             }
 
-            // Retrieve session ID, which is the restaurant ID
             var sessionID = HttpContext.Session.GetString("SSID");
             if (string.IsNullOrEmpty(sessionID))
             {
@@ -79,7 +73,6 @@ namespace EffectiveWebProg.Controllers
                 return BadRequest("Invalid session ID.");
             }
 
-            // Find or create a cart for this restaurant
             var cart = await _db.Cart.FirstOrDefaultAsync(c => c.RestID == restID);
             if (cart == null)
             {
@@ -100,18 +93,15 @@ namespace EffectiveWebProg.Controllers
                 await _db.SaveChangesAsync();
             }
 
-            // Find the item
             var item = await _db.Items.FindAsync(itemId);
             if (item == null)
             {
                 return NotFound($"Item not found. ItemID: {itemId}");
             }
 
-            // Check if the item is already in the cart
             var cartItem = await _db.CartItems.FirstOrDefaultAsync(ci => ci.CartID == cart.CartID && ci.ItemID == itemId);
             if (cartItem == null)
             {
-                // Add new item to cart
                 cartItem = new CartItemsModel
                 {
                     CartID = cart.CartID,
@@ -124,13 +114,10 @@ namespace EffectiveWebProg.Controllers
             }
             else
             {
-                // Increase quantity of existing item
                 cartItem.Quantity++;
             }
 
-            // Update cart total
             cart.CartTotal += item.Price;
-
             await _db.SaveChangesAsync();
             return Ok();
         }
@@ -138,8 +125,7 @@ namespace EffectiveWebProg.Controllers
         [HttpPost("RemoveFromCart")]
         public async Task<IActionResult> RemoveFromCart([FromBody] Guid itemId)
         {
-            // Retrieve Restaurant ID from session
-            var sessionID = HttpContext.Session.GetString("SSID");  
+            var sessionID = HttpContext.Session.GetString("SSID");
             if (string.IsNullOrEmpty(sessionID))
             {
                 return Unauthorized("You must be logged in as a restaurant to remove items from the cart.");
@@ -150,26 +136,22 @@ namespace EffectiveWebProg.Controllers
                 return BadRequest("Invalid session ID.");
             }
 
-            // Find the cart
             var cart = await _db.Cart.FirstOrDefaultAsync(c => c.RestID == restID);
             if (cart == null)
             {
                 return NotFound("Cart not found.");
             }
 
-            // Find the item
             var cartItem = await _db.CartItems
-                .Include(ci => ci.Items) // Ensure Items navigation property is included
+                .Include(ci => ci.Items)
                 .FirstOrDefaultAsync(ci => ci.CartID == cart.CartID && ci.ItemID == itemId);
             if (cartItem == null)
             {
                 return NotFound("Item not found in cart.");
             }
 
-            // Remove the item
             _db.CartItems.Remove(cartItem);
 
-            // Update cart total if Items is not null
             if (cartItem.Items != null)
             {
                 cart.CartTotal -= cartItem.Items.Price * cartItem.Quantity;
@@ -182,7 +164,6 @@ namespace EffectiveWebProg.Controllers
         [HttpPost("IncreaseQuantity")]
         public async Task<IActionResult> IncreaseQuantity([FromBody] Guid itemId)
         {
-            // Retrieve Restaurant ID from session
             var sessionID = HttpContext.Session.GetString("SSID");
             if (string.IsNullOrEmpty(sessionID))
             {
@@ -194,14 +175,12 @@ namespace EffectiveWebProg.Controllers
                 return BadRequest("Invalid session ID.");
             }
 
-            // Find the cart
             var cart = await _db.Cart.FirstOrDefaultAsync(c => c.RestID == restID);
             if (cart == null)
             {
                 return NotFound("Cart not found.");
             }
 
-            // Find the item
             var cartItem = await _db.CartItems
                 .Include(ci => ci.Items)
                 .FirstOrDefaultAsync(ci => ci.CartID == cart.CartID && ci.ItemID == itemId);
@@ -210,7 +189,6 @@ namespace EffectiveWebProg.Controllers
                 return NotFound("Item not found in cart.");
             }
 
-            // Increase quanity of the item
             cartItem.Quantity++;
             cart.CartTotal += cartItem.Items.Price;
 
@@ -221,7 +199,6 @@ namespace EffectiveWebProg.Controllers
         [HttpPost("DecreaseQuantity")]
         public async Task<IActionResult> DecreaseQuantity([FromBody] Guid itemId)
         {
-            // Retrieve Restaurant ID from session
             var sessionID = HttpContext.Session.GetString("SSID");
             if (string.IsNullOrEmpty(sessionID))
             {
@@ -233,14 +210,12 @@ namespace EffectiveWebProg.Controllers
                 return BadRequest("Invalid session ID.");
             }
 
-            // Find the cart
             var cart = await _db.Cart.FirstOrDefaultAsync(c => c.RestID == restID);
             if (cart == null)
             {
                 return NotFound("Cart not found.");
             }
 
-            // Find the item
             var cartItem = await _db.CartItems
                 .Include(ci => ci.Items)
                 .FirstOrDefaultAsync(ci => ci.CartID == cart.CartID && ci.ItemID == itemId);
@@ -249,7 +224,6 @@ namespace EffectiveWebProg.Controllers
                 return NotFound("Item not found in cart.");
             }
 
-            // Decrease quantity of existing item
             if (cartItem.Quantity > 1)
             {
                 cartItem.Quantity--;
@@ -264,5 +238,95 @@ namespace EffectiveWebProg.Controllers
             await _db.SaveChangesAsync();
             return Ok();
         }
+
+        [HttpPost("ProcessPayment")]
+        public async Task<IActionResult> ProcessPayment([FromBody] PaymentData paymentData)
+        {
+            // Simulate payment validation
+            bool paymentSuccess = true;
+
+            if (!paymentSuccess)
+            {
+                return StatusCode(500, "Payment processing failed.");
+            }
+
+            var sessionID = HttpContext.Session.GetString("SSID");
+            if (string.IsNullOrEmpty(sessionID))
+            {
+                return Unauthorized("You must be logged in as a restaurant to complete the purchase.");
+            }
+
+            if (!Guid.TryParse(sessionID, out Guid restID))
+            {
+                return BadRequest("Invalid session ID.");
+            }
+
+            var inventory = await _db.Inventory.FirstOrDefaultAsync(i => i.RestID == restID);
+            if (inventory == null)
+            {
+                var restaurant = await _db.Restaurants.FindAsync(restID);
+                if (restaurant == null)
+                {
+                    return NotFound("Restaurant not found.");
+                }
+
+                inventory = new InventoryModel
+                {
+                    InventoryID = Guid.NewGuid(),
+                    RestID = restID,
+                    InventoryName = "Default Inventory",
+                    Rest = restaurant
+                };
+                _db.Inventory.Add(inventory);
+                await _db.SaveChangesAsync();
+            }
+
+            var cart = await _db.Cart
+                .Include(c => c.CartItem)
+                .ThenInclude(ci => ci.Items)
+                .FirstOrDefaultAsync(c => c.RestID == restID);
+
+            if (cart == null)
+            {
+                return NotFound("Cart not found.");
+            }
+
+            foreach (var cartItem in cart.CartItem)
+            {
+                var inventoryItem = await _db.InventoryItems.FirstOrDefaultAsync(ii => ii.ItemID == cartItem.ItemID && ii.InventoryID == inventory.InventoryID);
+
+                if (inventoryItem == null)
+                {
+                    inventoryItem = new InventoryItemsModel
+                    {
+                        InventoryID = inventory.InventoryID,
+                        ItemID = cartItem.ItemID,
+                        StockCount = cartItem.Quantity,
+                        TotalPrice = cartItem.Items.Price * cartItem.Quantity,
+                        LastUpdated = DateTime.Now,
+                        Inventory = inventory,
+                        Items = cartItem.Items
+                    };
+                    _db.InventoryItems.Add(inventoryItem);
+                }
+                else
+                {
+                    inventoryItem.StockCount += cartItem.Quantity;
+                    inventoryItem.TotalPrice += cartItem.Items.Price * cartItem.Quantity;
+                    inventoryItem.LastUpdated = DateTime.Now;
+                }
+            }
+
+            _db.CartItems.RemoveRange(cart.CartItem);
+            cart.CartTotal = 0;
+
+            await _db.SaveChangesAsync();
+            return Ok();
+        }
+    }
+
+    public class PaymentData
+    {
+        public string PaymentToken { get; set; }
     }
 }
