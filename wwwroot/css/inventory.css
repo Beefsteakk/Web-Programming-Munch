@@ -77,7 +77,7 @@ h1 {
     font-style: italic;
     color: #999;
 }
-.stock-up-btn {
+.add-to-cart {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -91,7 +91,7 @@ h1 {
     border-radius: 4px;
     transition: background-color 0.3s;
 }
-.stock-up-btn:hover {
+.add-to-cart:hover {
     background-color: #45a049;
 }
 .pagination {

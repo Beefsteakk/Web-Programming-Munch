@@ -24,4 +24,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     searchInput.addEventListener('input', filterItems);
     categoryFilter.addEventListener('change', filterItems);
+
+    // Add to Cart functionality
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const itemId = e.target.getAttribute('data-item-id');
+            console.log('Adding item to cart, ItemID:', itemId); // Log the itemId
+            try {
+                const response = await fetch('/Cart/AddToCart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(itemId)
+                });
+
+                if (response.ok) {
+                    alert('Item added to cart successfully!');
+                } else {
+                    const errorText = await response.text();
+                    console.error('Error response:', errorText); // Log the error response
+                    alert(`Failed to add item to cart: ${errorText}`);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while adding the item to the cart.');
+            }
+        });
+    });
 });

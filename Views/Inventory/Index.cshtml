@@ -56,7 +56,7 @@
                         <td class="stock">@item.StockCount</td>
                         <td class="price">@item.TotalPrice</td>
                         <td class="updated">@item.LastUpdated.ToString("yyyy-MM-dd HH:mm")</td>
-                        <td><button class="stock-up-btn">Stock Up</button></td>
+                        <td><button class="add-to-cart" data-item-id="@item.ItemID">Stock Up</button></td>
                     </tr>
                 }
             </tbody>
