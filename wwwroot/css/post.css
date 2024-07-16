@@ -176,6 +176,7 @@ aside .recommended ul li span {
     flex: 1;
     padding: 20px;
     overflow-y: auto; /* Enable vertical scroll if content overflows */
+    min-height: 500px;
 }
 .modal-info-title {
     font-size: 24px;
@@ -203,6 +204,17 @@ aside .recommended ul li span {
     background-color: #f2f2f2;
     padding: 20px;
     border-radius: 5px;
+}
+
+.comments {
+    position: relative;
+    padding-left:5px
+}
+
+.editIcon {
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .modal-post-header {

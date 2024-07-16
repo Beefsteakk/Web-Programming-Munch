@@ -1,12 +1,12 @@
 allPost = document.querySelectorAll('.posts');
-allPost.forEach(function(e) {
-    e.addEventListener('click', function(obj) {
-        if (obj.target.localName != "button" && obj.target.localName != "textarea" && obj.target.localName != "span") {
+allPost.forEach(function (e) {
+    e.addEventListener('click', function (obj) {
+        if (obj.target.localName != "button" && obj.target.localName != "textarea" && obj.target.parentElement.classList != "clickable") {
             $.ajax({
                 url: '/Posts/GetInfo',
                 type: 'POST',
                 data: { id: e.id },
-                success: function(response) {
+                success: function (response) {
                     $('#main-modal')[0].classList.remove("modal-info-dialog");
                     $('.modal-image').remove();
                     if (response.post.postPictureURLs.length > 0 && $('.modal-image').length == 0) {
@@ -51,16 +51,16 @@ allPost.forEach(function(e) {
                     response.comments.forEach((comment, _) => {
                         $('#modalComments').append(`
                             <div class="row">
-                                <div class="d-inline">
+                                <div class="d-inline comments">
                                     <span class="fw-bold">${comment.commentAuthorUser != null ? comment.commentAuthorUser.username : comment.commentAuthorRestaurant.restName}</span><span class="text-break"> ${comment.commentContent}</span>
-                                    ${comment.isOwnComment ? `<a class="float-end" href=/Posts/SpecificComment/${comment.commentID}><i class="fa-regular fa-clipboard"></i></a>` : ''}
+                                    ${comment.isOwnComment ? `<a class="editIcon" href=/Posts/SpecificComment/${comment.commentID}><i class="fa-regular fa-clipboard"></i></a>` : ''}
                                 </div>
                             </div>
                         `)
                     });
                     $('#infoModal').modal('show');
                 },
-                error: function() {
+                error: function () {
                     alert('An error occurred while fetching data.');
                 }
             });
@@ -68,46 +68,48 @@ allPost.forEach(function(e) {
     })
 });
 
-Buttons = document.querySelectorAll('.post-footer > button');
-Buttons.forEach(function(e) {
-    e.addEventListener('click', function(obj) {
-        obj.stopPropagation()
-        if (e.textContent == "Like") {
-            
-        }
-        else if (e.textContent == "Comment") {
-            
-        }
-        else if (e.textContent == "Share") {
-            navigator.clipboard.writeText("https://localhost:5001/Posts");
-        }
-    })
-});
+// Buttons = document.querySelectorAll('.post-footer > .clickable');
+// Buttons.forEach(function(e) {
+//     e.addEventListener('click', function(obj) {
+//         obj.stopPropagation()
+//         if (e.textContent == "Like") {
 
-document.getElementById('like-post-button').addEventListener('click', function (event) {
-    let id;
-    if (event.target.localName == "button") {
-        id = event.target.parentElement.parentElement.id
-    } else {
-        id = event.target.parentElement.parentElement.parentElement.id
-    }
+//         }
+//         else if (e.textContent == "Share") {
+//             navigator.clipboard.writeText("https://localhost:5001/Posts");
+//         }
+//     })
+// });
 
-    $.ajax({
-        url: '/Posts/LikePost',
-        type: 'POST',
-        data: { postId: id },
-        success: function(response) {
-            if (response.status == "success") {
-                if (event.target.localName == "span" && event.target.innerText == "Like") event.target.innerText = "Unlike"
-                else if (event.target.localName == "span" && event.target.innerText == "Unlike") event.target.innerText = "Like"
-                else if (event.target.localName == "button" && event.target.children[1].textContent == "Like") event.target.children[1].textContent = "Unlike"
-                else if (event.target.localName == "button" && event.target.children[1].textContent == "Unlike") event.target.children[1].textContent = "Like"
-            } else {
-                alert("Failed to like post.")
+allLikeButton = document.querySelectorAll('#like-post-button')
+allLikeButton.forEach(function (e) {
+    e.addEventListener('click', function (event) {
+        let id;
+        if (event.target.localName == "button") {
+            id = event.target.parentElement.parentElement.id
+        } else {
+            id = event.target.parentElement.parentElement.parentElement.id
+        }
+
+        $.ajax({
+            url: '/Posts/LikePost',
+            type: 'POST',
+            data: { postId: id },
+            success: function (response) {
+                if (response.status == "success") {
+                    if (event.target.localName == "span" && event.target.innerText == "Like") event.target.innerText = "Unlike"
+                    else if (event.target.localName == "span" && event.target.innerText == "Unlike") event.target.innerText = "Like"
+                    else if (event.target.localName == "i" && event.target.nextElementSibling.innerText == "Like") event.target.nextElementSibling.innerText = "Unlike"
+                    else if (event.target.localName == "i" && event.target.nextElementSibling.innerText == "Unlike") event.target.nextElementSibling.innerText = "Like"
+                    else if (event.target.localName == "button" && event.target.children[1].textContent == "Like") event.target.children[1].textContent = "Unlike"
+                    else if (event.target.localName == "button" && event.target.children[1].textContent == "Unlike") event.target.children[1].textContent = "Like"
+                } else {
+                    alert("Failed to like post.")
+                }
+            },
+            error: function () {
+                alert('An error occurred while fetching data.');
             }
-        },
-        error: function() {
-            alert('An error occurred while fetching data.');
-        }
+        });
     });
 });
