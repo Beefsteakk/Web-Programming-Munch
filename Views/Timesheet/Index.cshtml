@@ -1,241 +1,154 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Absence Schedule</title>
-    <link rel="stylesheet" href="~/css/timesheet.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Employee Timesheet</h1>
-        <h2>January</h2>
-        <div class="legend">
-            <span class="legend-item morning">M (Morning Shift): 10:30am - 6:30pm</span>
-            <span class="legend-item afternoon">AF (Afternoon Shift): 3:00pm - 11:00pm</span>
-            <span class="legend-item full">F (Full Shift): 10:30am - 10:30pm</span>
-            @* <span class="legend-item leave">L On Leave</span> *@
-        </div>
-        <div class="legend">
-            <span class="legend-item off">OFF (Off Day)</span>
-            <span class="legend-item annual">AL (Annual Leave)</span>
-            <span class="legend-item ph">PH (Public Holiday)</span>
-            @* <span class="legend-item leave">L On Leave</span> *@
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th rowspan="3">Employee name</th>
-                    <th rowspan="3">Designation</th>
-                    <th rowspan="3">Employee ID</th>
-                </tr>
-                <tr>
-                    <th>12-Jan</th>
-                    <th>13-Jan</th>
-                    <th>14-Jan</th>
-                    <th>15-Jan</th>
-                    <th>16-Jan</th>
-                    <th>17-Jan</th>
-                    <th>18-Jan</th>
-                </tr>
-                <tr>
-                    <th>Mon</th>
-                    <th>Tue</th>
-                    <th>Wed</th>
-                    <th>Thu</th>
-                    <th>Fri</th>
-                    <th>Sat</th>
-                    <th>Sun</th>
-                    @* <th>Total days</th> *@
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Harsimran Brar</td>
-                    <td>Manager</td>
-                    <td>01287300</td>
-                    <td class="full">F</td>
-                    <td class="morning">M</td>
-                    <td class="afternoon">AF</td>
-                    <td class="off">OFF</td>
-                    <td class="annual">AL</td>
-                    <td class="afternoon">AF</td>
-                    <td class="full">F</td>
-                    @* <td>4</td> *@
-                </tr>
-                <tr>
-                    <td>Jordan Mitchell</td>
-                    <td>Assistant Manager</td>
-                    <td>01287300</td>
-                    <td class="afternoon">AF</td>
-                    <td class="afternoon">AF</td>
-                    <td class="morning">M</td>
-                    <td class="off">OFF</td>
-                    <td class="full">F</td>
-                    <td class="full">F</td>
-                    <td class="afternoon">AF</td>
-                    @* <td>7</td> *@
-                </tr>
-                <tr>
-                    <td>Asaf Karten</td>
-                    <td>Supervisor</td>
-                    <td>01287300</td>
-                    <td class="annual">AL</td>
-                    <td class="full">F</td>
-                    <td class="afternoon">AF</td>
-                    <td class="afternoon">AF</td>
-                    <td class="off">OFF</td>
-                    <td class="morning">M</td>
-                    <td class="afternoon">AF</td>
-                    @* <td>3</td> *@
-                </tr>
-                <tr>
-                    <td>Vanja Jovanovic</td>
-                    <td>Service Agent</td>
-                    <td>01287300</td>
-                    <td class="full">F</td>
-                    <td class="afternoon">AF</td>
-                    <td class="full">F</td>
-                    <td class="afternoon">AF</td>
-                    <td class="afternoon">AF</td>
-                    <td class="morning">M</td>
-                    <td class="off">OFF</td>
-                    @* <td>4</td> *@
-                </tr>
-                <tr>
-                    <td>Madison Butler</td>
-                    <td>Trainee</td>
-                    <td>01287300</td>
-                    <td class="off">OFF</td>
-                    <td class="ph">PH</td>
-                    <td class="off">OFF</td>
-                    <td class="morning">M</td>
-                    <td class="afternoon">AF</td>
-                    <td class="afternoon">AF</td>
-                    <td class="full">F</td>
-                    @* <td>6</td> *@
-                </tr>
-                <tr>
-                    <td>Jordan Mitchell</td>
-                    <td>Part-time</td>
-                    <td>01287300</td>
-                    <td class="afternoon">AF</td>
-                    <td class="morning">M</td>
-                    <td class="morning">M</td>
-                    <td class="afternoon">AF</td>
-                    <td class="full">F</td>
-                    <td class="off">OFF</td>
-                    <td class="afternoon">AF</td>
-                    @* <td>7</td> *@
-                </tr>
-                <tr>
-                    <td>Asaf Karten</td>
-                    <td>Hostess</td>
-                    <td>01287300</td>
-                    <td class="off">OFF</td>
-                    <td class="full">F</td>
-                    <td class="afternoon">AF</td>
-                    <td class="afternoon">AF</td>
-                    <td class="off">OFF</td>
-                    <td class="morning">M</td>
-                    <td class="afternoon">AF</td>
-                    @* <td>3</td> *@
-                </tr>
-                <tr>
-                    <td>Vanja Jovanovic</td>
-                    <td>Trainee</td>
-                    <td>01287300</td>
-                    <td class="full">F</td>
-                    <td class="off">OFF</td>
-                    <td class="full">F</td>
-                    <td class="afternoon">AF</td>
-                    <td class="afternoon">AF</td>
-                    <td class="morning">M</td>
-                    <td class="off">OFF</td>
-                    @* <td>4</td> *@
-                </tr>
-                <tr>
-                    <td>Harsimran Brar</td>
-                    <td>Part-time</td>
-                    <td>01287300</td>
-                    <td class="full">F</td>
-                    <td class="morning">M</td>
-                    <td class="afternoon">AF</td>
-                    <td class="off">OFF</td>
-                    <td class="morning">M</td>
-                    <td class="off">OFF</td>
-                    <td class="full">F</td>
-                    @* <td>4</td> *@
-                </tr>
-                <tr>
-                    <td>Asaf Karten</td>
-                    <td>Part-time</td>
-                    <td>01287300</td>
-                    <td class="morning">M</td>
-                    <td class="full">F</td>
-                    <td class="afternoon">AF</td>
-                    <td class="afternoon">AF</td>
-                    <td class="off">OFF</td>
-                    <td class="morning">M</td>
-                    <td class="afternoon">AF</td>
-                    @* <td>3</td> *@
-                </tr>
-                <tr>
-                    <td>Vanja Jovanovic</td>
-                    <td>Part-time</td>
-                    <td>01287300</td>
-                    <td class="full">F</td>
-                    <td class="morning">M</td>
-                    <td class="full">F</td>
-                    <td class="afternoon">AF</td>
-                    <td class="afternoon">AF</td>
-                    <td class="morning">M</td>
-                    <td class="off">OFF</td>
-                    @* <td>4</td> *@
-                <tr>
-                    <td>Jordan Mitchell</td>
-                    <td>Part-time</td>
-                    <td>01287300</td>
-                    <td class="afternoon">AF</td>
-                    <td class="off">OFF</td>
-                    <td class="morning">M</td>
-                    <td class="off">OFF</td>
-                    <td class="full">F</td>
-                    <td class="full">F</td>
-                    <td class="afternoon">AF</td>
-                    @* <td>7</td> *@
-                </tr>
-                <tr>
-                    <td>Asaf Karten</td>
-                    <td>Part-time</td>
-                    <td>01287300</td>
-                    <td class="morning">M</td>
-                    <td class="full">F</td>
-                    <td class="afternoon">AF</td>
-                    <td class="afternoon">AF</td>
-                    <td class="off">OFF</td>
-                    <td class="morning">M</td>
-                    <td class="afternoon">AF</td>
-                    @* <td>3</td> *@
-                </tr>
-                <tr>
-                    <td>Madison Butler</td>
-                    <td>Trainee</td>
-                    <td>01287344</td>
-                    <td class="off">OFF</td>
-                    <td class="morning">M</td>
-                    <td class="off">OFF</td>
-                    <td class="morning">M</td>
-                    <td class="afternoon">AF</td>
-                    <td class="afternoon">AF</td>
-                    <td class="full">F</td>
-                    @* <td>6</td> *@
-                </tr>
-            </tbody>
-        </table>
-        <div class="totals">
-            <span>January total: 25</span>
+@model EffectiveWebProg.ViewModels.TimesheetViewModel
+
+@{
+    ViewData["Title"] = "Timesheet";
+    var startOfWeek = Model.CurrentDate.AddDays(-(int)Model.CurrentDate.DayOfWeek);
+}
+
+<div class="container">
+    <div class="nav">
+        <h2 id="monthYear">@Model.CurrentDate.ToString("MMMM yyyy")</h2>
+        <div class="nav-buttons">
+            <a asp-action="Index" asp-route-date="@Model.CurrentDate.AddDays(-7).ToString("yyyy-MM-dd")" class="btn btn-primary">&lt;</a>
+            <a asp-action="Index" class="btn btn-primary">Today</a>
+            <a asp-action="Index" asp-route-date="@Model.CurrentDate.AddDays(7).ToString("yyyy-MM-dd")" class="btn btn-primary">&gt;</a>
         </div>
     </div>
-</body>
-</html>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            @for (var day = 0; day < 7; day++)
+            {
+                <th>@startOfWeek.AddDays(day).ToString("dddd")</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @for (var day = 0; day < 7; day++)
+            {
+                var currentDay = startOfWeek.AddDays(day);
+                <td>
+                    <div class="day-box" data-date="@currentDay.ToString("yyyy-MM-dd")">
+                        <span>@currentDay.ToString("MMM d")</span>
+                        <div class="plus-sign" onclick="showShiftForm(this, '@currentDay.ToString("yyyy-MM-dd")')" title="Add Shift">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <ul>
+                            @foreach (var timesheet in Model.Timesheets.Where(t => t.Day.Date == currentDay.Date))
+                            {
+                                <li data-shift-id="@timesheet.SheetID">
+                                    Employee: @timesheet.Employees.EmployeeName
+                                    <br />
+                                    Start Time: @timesheet.StartTime.ToString(@"hh\:mm")
+                                    <br />
+                                    End Time: @timesheet.EndTime.ToString(@"hh\:mm")
+                                    <br />
+                                    <button class="btn btn-sm btn-primary" onclick="editShift('@timesheet.SheetID')">Edit</button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteShift('@timesheet.SheetID')">Delete</button>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div id="shiftFormModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="shiftForm">
+            <input type="hidden" id="shiftId" name="SheetID" />
+            <input type="hidden" id="shiftDate" name="Day" />
+            <div class="form-group">
+                <label for="employeeId">Employee Name</label>
+                <select id="employeeId" name="EmployeeID" class="form-control" required>
+                    <option value="">Select an employee</option>
+                    @foreach (var employee in Model.Employees)
+                    {
+                        <option value="@employee.EmployeeID">@employee.EmployeeName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="shiftType">Shift</label>
+                <select id="shiftType" name="ShiftType" class="form-control" required onchange="updateShiftTimes()">
+                    <option value="">Select shift</option>
+                    <option value="Morning">Morning Shift (10:30 AM to 6:30 PM)</option>
+                    <option value="Afternoon">Afternoon Shift (3:00 PM to 11:00 PM)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="startTime">Start Time</label>
+                <input type="time" id="startTime" name="StartTime" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="endTime">End Time</label>
+                <input type="time" id="endTime" name="EndTime" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/timesheet.js"></script>
+
+    <style>
+        .day-box {
+            position: relative;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        .plus-sign {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+            display: none;
+        }
+        .day-box:hover .plus-sign {
+            display: block;
+        }
+        th {
+            text-align: center;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+}

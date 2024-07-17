@@ -13,7 +13,7 @@ namespace EffectiveWebProg.Data
 
         public DbSet<UsersModel> Users { get; set; }
         public DbSet<UserCardModel> UserCards { get; set; }
-        public DbSet<TimeSheetModel> TimeSheets { get; set; }
+        public DbSet<TimeSheetModel> TimeSheet { get; set; }
         public DbSet<RestCardModel> RestCards { get; set; }
         public DbSet<RestaurantsModel> Restaurants { get; set; }
         public DbSet<ReservationsModel> Reservations { get; set; }
@@ -223,7 +223,10 @@ namespace EffectiveWebProg.Data
                 entity.HasKey(e => e.SheetID);
                 entity.Property(e => e.SheetID).IsRequired().HasMaxLength(36);
                 entity.Property(e => e.EmployeeID).HasMaxLength(36);
-                entity.Property(e => e.Day).HasMaxLength(50);
+                entity.Property(e => e.Day).HasColumnType("date");
+                entity.Property(e => e.ShiftType).HasMaxLength(20);
+                entity.Property(e => e.StartTime).HasColumnType("date");
+                entity.Property(e => e.EndTime).HasColumnType("date");
                 entity.HasIndex(e => e.EmployeeID);
                 entity.HasOne(e => e.Employees)
                     .WithMany(e => e.TimeSheets)
