@@ -18,7 +18,6 @@ namespace EffectiveWebProg.Controllers
             return restaurant;
         }
 
-
         private async Task<List<PostPicsModel>> GetRestaurantPostsAsync(string restID)
         {
             List<PostPicsModel> postDetailsList = new List<PostPicsModel>();
@@ -46,10 +45,7 @@ namespace EffectiveWebProg.Controllers
                 }
             }
 
-            foreach (var post in postDetailsList)
-            {
-                Console.WriteLine("PostDetails lol: " + post.ImageURL);
-            }
+
 
             return postDetailsList;
         }
@@ -62,6 +58,25 @@ namespace EffectiveWebProg.Controllers
             return RedirectToAction("Index");
         }
 
+
+        private async Task<int> GetRestaurantFollowersCount(string restID)
+        {
+            int followersCount = 0;
+            string query = "SELECT COUNT(*) FROM Followings WHERE RestID = @RestID";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@RestID", restID);
+
+                    followersCount = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                }
+            }
+
+            return followersCount;
+        }
         public async Task<IActionResult> Index()
         {
             string restID = HttpContext.Session.GetString("RestID") ?? "";
@@ -76,17 +91,19 @@ namespace EffectiveWebProg.Controllers
             List<PostPicsModel> restaurantPosts = await GetRestaurantPostsAsync(restID);
             int count = restaurantPosts.Count;
             ViewBag.PostCount = count;
-            
+
+            ViewBag.FollowersCount = await GetRestaurantFollowersCount(restID);
+            Console.WriteLine("FollowersCount: " + ViewBag.FollowersCount);
             string sessionemail = HttpContext.Session.GetString("SSName") ?? "";
 
             string sessionType = HttpContext.Session.GetString("SSUserType") ?? "";
             bool isOwnRestaurant = sessionemail == restaurantDetails.RestEmail;
-            
+
             ViewBag.SessionEmail = sessionemail;
             ViewBag.RestaurantDetails = restaurantDetails;
             ViewBag.isOwnRestaurant = isOwnRestaurant;
             ViewBag.RestaurantPosts = restaurantPosts;
-            
+
             return View();
         }
 
@@ -97,7 +114,7 @@ namespace EffectiveWebProg.Controllers
 
             RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(restID);
             ViewBag.RestaurantDetails = restaurantDetails;
-            
+
 
             return View();
         }
@@ -182,7 +199,7 @@ namespace EffectiveWebProg.Controllers
             return RedirectToAction("Index");
         }
 
-    
+
     }
 
 }
