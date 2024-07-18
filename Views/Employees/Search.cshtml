@@ -1,39 +1,5 @@
 @model List<EffectiveWebProg.Models.EmployeesModel>
 
-@* @{
-    ViewData["Title"] = "Search Results";
-}
-<h1>Search Results</h1>
-
-@if (Model != null && Model.Any())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Employee Name</th>
-                <th>Role</th>
-                <th>Department</th>
-                <!-- Add more columns as needed -->
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var employee in Model)
-            {
-                <tr>
-                    <td>@employee.EmployeeName</td>
-                    <td>@employee.Role</td>
-                    <td>@employee.Department</td>
-                    <!-- Add more columns as needed -->
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>No employees found.</p>
-} *@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,17 +16,11 @@ else
                 <input type="text" id="search-input" name="searchTerm" placeholder="🔍   Search an employee...">
                 <button type="submit" class="search-button">Search</button>
             </form>
-
-            <div class="header-icons">
-                <div class="icon">🔔</div>
-                <div class="icon">👤</div>
-            </div>
         </div>
         <div class="content">
             <div class="employee-header">
                 <h1>@Model.Count Employees</h1> <!-- Display total number of employees -->
                 <div class="actions">
-                    <button class="filter-button">Filter</button>
                     <a asp-controller="Employees" asp-action="Create"><button class="add-button">+ Add Employee</button></a>
                 </div>
             </div>
