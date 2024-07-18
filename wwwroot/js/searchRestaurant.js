@@ -27,9 +27,10 @@ function initialiseAutocomplete() {
             })
         },
         select: function(event, ui) {
+            console.log('Selected i temId:', ui.item.id); // Log selected itemId
+            window.location.href = `http://localhost:5101/RestProfile/SelectRestaurant?restID=${ui.item.id}`;
+            response(`RestProfile/${ui.item.id}`)
             $("#itemId").val(ui.item.id);
-            console.log('Selected itemId:', $("#itemId").val()); // Log selected itemId
         },
-        appendTo: "#postModal",
     })
 }

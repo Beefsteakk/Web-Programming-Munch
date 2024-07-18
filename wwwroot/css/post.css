@@ -176,6 +176,7 @@ aside .recommended ul li span {
     flex: 1;
     padding: 20px;
     min-height: 500px;
+    max-height: 80vh;
 }
 .modal-info-title {
     font-size: 24px;
@@ -191,7 +192,7 @@ aside .recommended ul li span {
     border-top: 1px solid lightgray; /* Border on top only */
     padding: 15px 10px; /* More vertical padding, less horizontal padding */
     margin-bottom: 10px; /* Space between comments */
-    max-height: 500px;
+    max-height: 60vh;
     overflow-y: auto; /* Enable vertical scroll if content overflows */
     overflow-x: hidden; /* Hide horizontal scroll */
 }
