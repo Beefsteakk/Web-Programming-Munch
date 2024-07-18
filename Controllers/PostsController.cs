@@ -156,7 +156,7 @@ public class PostsController(ApplicationDbContext db) : BaseController
         var postDTO = new PostDTO(post.PostID, post.PostContent, post.PostCreatedAt.ToString("G"));
         if (post.Restaurant != null)
         {
-            postDTO.PostAuthorRestaurant = new PostRestaurantAuthorDTO(post.Restaurant.RestID, post.Restaurant.RestName);
+            postDTO.PostAuthorRestaurant = new PostRestaurantAuthorDTO(post.Restaurant.RestID, post.Restaurant.RestName, post.Restaurant.RestPic);
         }
 
         var comments = await GetSpecificPostCommentsAsync(id);
