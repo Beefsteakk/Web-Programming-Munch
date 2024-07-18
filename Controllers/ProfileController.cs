@@ -7,7 +7,6 @@ using MySql.Data.MySqlClient;
 
 namespace EffectiveWebProg.Controllers
 {
-
     public class ProfileController : BaseController
     {
         private readonly ApplicationDbContext _db;
