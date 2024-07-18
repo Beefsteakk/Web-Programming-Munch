@@ -23,33 +23,41 @@ namespace EffectiveWebProg.Models
         [Column(TypeName = "varchar(255)")] 
         public string? EmployeePic { get; set; }
 
-        [StringLength(20)]
-        [Column(TypeName = "varchar(20)")] 
-        public string? Role { get; set; }
+    [StringLength(255)]
+    [Column(TypeName = "varchar(20)")] 
+    public string? Role { get; set; }
 
-        [StringLength(20)]
-        [Column(TypeName = "varchar(20)")]
-        public string? PhoneNumber { get; set; }
+    [Required]
+    [StringLength(255)]
+    [Column(TypeName = "varchar(100)")] 
+    public string? Department { get; set; }
 
-        [StringLength(255)]
-        [Column(TypeName = "varchar(255)")]
-        public string? Email { get; set; }
+    [StringLength(255)]
+    [Column(TypeName = "varchar(255)")]
+    public string? Email { get; set; }
 
-        [Required]
-        public DateTime HireDate { get; set; }
+    [StringLength(255)]
+    [Column(TypeName = "varchar(20)")]
+    public string? PhoneNumber { get; set; }
 
-        public decimal Salary { get; set; }
+    [Required]
+    public DateOnly HireDate { get; set; }
 
-        // Navigation properties
-        [ForeignKey("RestID")]
-        public required RestaurantsModel Restaurant { get; set; }
+    // Navigation properties
+    [ForeignKey("RestID")]
+    public RestaurantsModel? Restaurant { get; set; }
 
         public ICollection<TimeSheetModel> TimeSheets { get; set; } 
 
-        public EmployeesModel()
-        {
-            EmployeeID = Guid.NewGuid();
-            TimeSheets = new List<TimeSheetModel>();
-        }
+    public EmployeesModel()
+    {
+        EmployeeID = Guid.NewGuid();
+        TimeSheets = new List<TimeSheetModel>();
+    }
+
+    // Optional constructor to initialize Restaurant property
+    public EmployeesModel(Guid restId) : this()
+    {
+        RestID = restId;
     }
 }

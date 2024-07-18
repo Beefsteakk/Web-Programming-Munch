@@ -1,0 +1,129 @@
+@model List<EffectiveWebProg.Models.EmployeesModel>
+
+@* @{
+    ViewData["Title"] = "Search Results";
+}
+<h1>Search Results</h1>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Employee Name</th>
+                <th>Role</th>
+                <th>Department</th>
+                <!-- Add more columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>@employee.EmployeeName</td>
+                    <td>@employee.Role</td>
+                    <td>@employee.Department</td>
+                    <!-- Add more columns as needed -->
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No employees found.</p>
+} *@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="~/css/employee.css">
+</head>
+<body>
+    <script src="/_framework/aspnetcore-browser-refresh.js"></script>
+    <div class="main-content">
+        <div class="header">
+            <form method="get" asp-controller="Employees" asp-action="Search">
+                <input type="text" id="search-input" name="searchTerm" placeholder="🔍   Search an employee...">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+
+            <div class="header-icons">
+                <div class="icon">🔔</div>
+                <div class="icon">👤</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="employee-header">
+                <h1>@Model.Count Employees</h1> <!-- Display total number of employees -->
+                <div class="actions">
+                    <button class="filter-button">Filter</button>
+                    <a asp-controller="Employees" asp-action="Create"><button class="add-button">+ Add Employee</button></a>
+                </div>
+            </div>
+            <div class="employee-cards">
+                @foreach (var employee in Model)
+                {
+                    <div class="employee-card">
+                        <div class="edit-icon" onclick="openPopup('@employee.EmployeeID')">&#x2026;</div>
+                        <div class="employee-photo"><img src="~/Images/@employee.EmployeePic" alt="Employee Photo"></div>
+                        <div class="employee-info">
+                            <h3>@employee.EmployeeName</h3>
+                            <p>@employee.Role</p>
+                        </div>
+                        <div class="details-card">
+                            <table>
+                                <tr>
+                                    <td class="text-title">Department</td>
+                                    <td class="text-title">Hired Date</td>
+                                </tr>
+                                <tr>
+                                    <td>@employee.Department</td>
+                                    <td>@employee.HireDate.ToString("MM/dd/yyyy")</td> <!-- Adjust date formatting as per your needs -->
+                                </tr>
+                            </table>
+                            <p>✉️ @employee.Email</p>
+                            <p>📞 @employee.PhoneNumber</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- Popup Container -->
+    <div id="popup-container" class="popup-container">
+        <div class="popup">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <h2>Edit Information</h2>
+           <form id="edit-form">
+            <input type="hidden" id="employee-id" name="EmployeeID" value="">
+            <label for="photo">Photo:</label>
+            <img id="photo-preview" src="" alt="Photo Preview" style="display: block; margin-top: 5px;">
+            <input type="file" id="photo" name="photo" accept="image/*" onchange="previewImage(event)">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="EmployeeName">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="Role">
+            <label for="department">Department:</label>
+            <input type="text" id="department" name="Department">
+            <label for="hire-date">Hired Date:</label>
+            <input type="date" id="hire-date" name="HireDate">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="Email">
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="PhoneNumber">
+            <table>
+                <tr>
+                    <td><button type="button" onclick="confirmDelete()" style="width: 150px; background-color: #ff5722;">Delete</button></td>
+                    <td><button type="submit" style="width: 150px; margin-left: 157px;">Save</button></td>
+                </tr>
+            </table>
+        </form>
+        </div>
+    </div>
+    <script src="~/js/employees.js"></script>
+</body>
+</html>

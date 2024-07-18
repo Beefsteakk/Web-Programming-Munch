@@ -13,27 +13,27 @@ public class TimeSheetModel
     [Key]
     [Column(TypeName = "char(36)")]
     public Guid SheetID { get; set; } // Primary Key
-    
+        
     [Required]
     [Column(TypeName = "char(36)")]
     public Guid EmployeeID { get; set; } // Foreign Key From EmployeesModel
-
-    [StringLength(255)] 
-    [Column(TypeName = "varchar(50)")]
-    public string? Day { get; set; }
+    
+    [Required]
+    public DateTime Day { get; set; }
 
     [Required]
-    public TimeSpan StartTime { get; set; }
+    [Column(TypeName = "varchar(20)")]
+    public string ShiftType { get; set; }
 
     [Required]
-    public TimeSpan EndTime { get; set; }
+    public DateTime StartTime { get; set; }
 
-
+    [Required]
+    public DateTime EndTime { get; set; }
 
     // Navigation properties
     [ForeignKey("EmployeeID")]
-    public required EmployeesModel Employees { get; set; }
-
+    public EmployeesModel? Employees { get; set; }
 
     public TimeSheetModel()
     {

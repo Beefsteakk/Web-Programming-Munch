@@ -55,7 +55,7 @@ body {
 }
 
 .search {
-    width: 300px;
+    width: 500px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -94,7 +94,7 @@ body {
     gap: 10px;
 }
 
-.filter-button, .add-button {
+.filter-button, .add-button{
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -106,38 +106,95 @@ body {
     color: #333;
 }
 
+.filter-button:hover {
+    background-color: #a5a7a7;
+}
+
 .add-button {
     background-color: #ff5722;
     color: #fff;
 }
 
+.add-button:hover {
+    background-color: #fc9272;
+}
+
+.search-button {
+    background-color: #555;
+    color: #ffffff;
+    margin-right: 750px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#search-input {
+    width: 400px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.search-button:hover {
+    background-color: #a5a7a7;
+}
+
+.edit-icon {
+    position: absolute;
+    font-size: 3.0em;
+    cursor: pointer;
+    color: #888;
+    right: 30px;
+    top: 5px; 
+}
+
+.edit-icon:hover {
+    color: #555;
+}
+
 .employee-cards {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 30px;
+    border-radius: 30px;
 }
 
 .employee-card {
     width: calc(33.333% - 20px);
-    background-color: #fff;
+    background-color: #f0f0f0;
     border: 1px solid #ddd;
     border-radius: 30px;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    position: relative;
+}
+
+.details-card {
+    width: 100%;
+    background-color: #fff;
+    /* border: 1px solid #ddd; */
+    border-radius: 30px;
+    padding: 20px;
+    /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    line-height: 0.9;
 }
 
 .employee-photo img {
     border-radius: 50%;
-    width: 80px;
-    height: 80px;
+    width: 130px;
+    height: 110px;
     margin-bottom: 10px;
 }
 
 .employee-info {
-    text-align: center;
+    padding-left: 15px;
+    padding-bottom: 5px;
 }
 
 .employee-info h3 {
@@ -149,4 +206,91 @@ body {
 .employee-info p {
     margin: 5px 0;
     color: #666;
+}
+
+table {
+    line-height: 1.5;
+    margin-bottom: 25px;
+    color: #525353;
+}
+
+table td.text-title {
+    font-weight: bold;
+    color: #cac5c5;
+}
+/* 
+input[type=text] {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #e6e4e4;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('~/Images/search.png');
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+  } */
+
+.popup-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 500px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.popup h2 {
+    margin: 0 0 20px;
+}
+
+.popup form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.popup form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.popup form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+#photo-preview {
+    width: 15%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
