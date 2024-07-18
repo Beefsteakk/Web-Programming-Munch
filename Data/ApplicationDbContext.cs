@@ -82,7 +82,7 @@ namespace EffectiveWebProg.Data
                 entity.Property(e => e.RestPassword).HasMaxLength(255);
                 entity.Property(e => e.RestContact).HasColumnType("int");
                 entity.Property(e => e.RestBio).HasColumnType("text");
-                entity.Property(e => e.RestPic).HasColumnType("longblob");
+                entity.Property(e => e.RestPic).HasMaxLength(255);
                 entity.Property(e => e.RestWebsite).HasMaxLength(255);
                 entity.Property(e => e.RestCoverPic).HasMaxLength(255);
             });
