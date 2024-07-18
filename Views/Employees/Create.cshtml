@@ -2,7 +2,6 @@
 @using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,18 +14,18 @@
     <div class="container">
         <h1>Employee Management</h1>
 
-    @{
-        var restaurant_id = HttpContextAccessor.HttpContext.Session.GetString("SSID");
-    }
+        @{
+            var restaurant_id = HttpContextAccessor.HttpContext.Session.GetString("SSID");
+        }
 
         <div class="form-container">
             <h2>Create New Employee</h2>
-            <form asp-action="Create" asp-controller="Employees" method="post" enctype="multipart/form-data">
+            <form id="employeeForm" asp-action="Create" asp-controller="Employees" method="post" enctype="multipart/form-data">
                 @Html.AntiForgeryToken()
 
-            <div class="form-group">
-                <input hidden type="text" class="form-control" id="RestID"  value="@restaurant_id" name="RestID" required>
-            </div>
+                <div class="form-group">
+                    <input hidden type="text" class="form-control" id="RestID" value="@restaurant_id" name="RestID" required>
+                </div>
                 <div class="form-group">
                     <label for="photo">Photo:</label>
                     <input type="file" id="photo" name="photo" accept="image/*" onchange="previewImage(event)" required>
@@ -53,6 +52,7 @@
                 <div class="form-group">
                     <label for="hire">Hired Date:</label>
                     <input type="date" id="hire" name="HireDate" required>
+                    <span id="hire-date-error" style="color: red; display: none;">Hire date must be before today.</span>
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
@@ -72,42 +72,59 @@
     </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const hireDateInput = document.getElementById('hire');
+            const submitButton = document.querySelector('.submit-button');
+            const hireDateError = document.getElementById('hire-date-error');
 
-        document.getElementById('employeeForm').addEventListener('submit', async function(event) {
-    event.preventDefault();
+            hireDateInput.addEventListener('change', function() {
+                const selectedDate = new Date(hireDateInput.value);
+                const today = new Date();
+                today.setHours(8, 0, 0, 0);
 
-    const formData = new FormData(event.target); // Create FormData object from the form
+                if (selectedDate > today) {
+                    console.log('Hire date must be before today.', selectedDate, today);
+                    hireDateError.style.display = 'inline';
+                    submitButton.disabled = true;
+                } else {
+                    hireDateError.style.display = 'none';
+                    submitButton.disabled = false;
+                }
+            });
 
-    // Append additional fields to FormData
-    formData.append('RestID', document.getElementById('RestID').value);
+            document.getElementById('employeeForm').addEventListener('submit', async function(event) {
+                event.preventDefault();
 
-    try {
-        const response = await fetch('/Employees/Create', {
-            method: 'POST',
-            body: formData
+                const formData = new FormData(event.target); // Create FormData object from the form
+                formData.append('RestID', document.getElementById('RestID').value);
+
+                try {
+                    const response = await fetch('/Employees/Create', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        window.location.href = '/Employees/Index';
+                    } else {
+                        const errorText = await response.text();
+                        alert('An error occurred while creating the employee. Please try again.');
+                    }
+                } catch (error) {
+                    alert('An error occurred while communicating with the server. Please try again.');
+                }
+            });
+
+            function previewImage(event) {
+                var reader = new FileReader();
+                reader.onload = function(){
+                    var output = document.getElementById('photo-preview');
+                    output.src = reader.result;
+                    output.style.display = 'block';
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            }
         });
-
-        if (response.ok) {
-            window.location.href = '/Employees/Index';
-        } else {
-            const errorText = await response.text();
-            console.error('Backend Error:', errorText);
-            alert('An error occurred while creating the employee. Please try again.');
-        }
-    } catch (error) {
-        console.error('Fetch Error:', error);
-        alert('An error occurred while communicating with the server. Please try again.');
-    }
-    });
-        function previewImage(event) {
-            var reader = new FileReader();
-            reader.onload = function(){
-                var output = document.getElementById('photo-preview');
-                output.src = reader.result;
-                output.style.display = 'block';
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
     </script>
 </body>
 </html>

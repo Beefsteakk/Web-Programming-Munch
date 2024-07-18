@@ -31,19 +31,19 @@ namespace EffectiveWebProg.Controllers
             }
             else
             {
-                foreach (var employee in employees)
-                {
-                    // _logger.LogInformation($"Employee ID: {employee.EmployeeID}");
-                    // _logger.LogInformation($"Name: {employee.EmployeeName}");
-                    // _logger.LogInformation($"Department: {employee.Department}");
-                    // _logger.LogInformation($"Email: {employee.Email}");
-                    // _logger.LogInformation($"Phone Number: {employee.PhoneNumber}");
-                    // _logger.LogInformation($"Role: {employee.Role}");
-                    // _logger.LogInformation($"Hire Date: {employee.HireDate}");
-                    // _logger.LogInformation($"Restaurant ID: {employee.RestID}");
-                    // _logger.LogInformation($"Employee Pic: {employee.EmployeePic}");
-                    // _logger.LogInformation(""); // For spacing between employees
-                }
+                // foreach (var employee in employees)
+                // {
+                //     _logger.LogInformation($"Employee ID: {employee.EmployeeID}");
+                //     _logger.LogInformation($"Name: {employee.EmployeeName}");
+                //     _logger.LogInformation($"Department: {employee.Department}");
+                //     _logger.LogInformation($"Email: {employee.Email}");
+                //     _logger.LogInformation($"Phone Number: {employee.PhoneNumber}");
+                //     _logger.LogInformation($"Role: {employee.Role}");
+                //     _logger.LogInformation($"Hire Date: {employee.HireDate}");
+                //     _logger.LogInformation($"Restaurant ID: {employee.RestID}");
+                //     _logger.LogInformation($"Employee Pic: {employee.EmployeePic}");
+                //     _logger.LogInformation(""); // For spacing between employees
+                // }
             }
             return View(employees);
         }
@@ -182,17 +182,17 @@ namespace EffectiveWebProg.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit([FromForm] EmployeesModel employee, IFormFile? photo)
         {
-            if (!ModelState.IsValid)
+    if (!ModelState.IsValid)
+    {
+        foreach (var modelState in ModelState.Values)
+        {
+            foreach (var error in modelState.Errors)
             {
-                foreach (var modelState in ModelState.Values)
-                {
-                    foreach (var error in modelState.Errors)
-                    {
-                        // _logger.LogError(error.ErrorMessage);
-                    }
-                }
-                return BadRequest(ModelState);
+                // _logger.LogError(error.ErrorMessage);
             }
+        }
+        return BadRequest(ModelState);
+    }
 
             try
             {
