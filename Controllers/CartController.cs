@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EffectiveWebProg.Controllers
 {
     [Route("Cart")]
-    public class CartController : Controller
+    public class CartController : BaseController
     {
         private readonly ApplicationDbContext _db;
 
@@ -18,6 +18,7 @@ namespace EffectiveWebProg.Controllers
             _db = db;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var userType = HttpContext.Session.GetString("SSUserType");

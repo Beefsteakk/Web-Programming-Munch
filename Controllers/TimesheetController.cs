@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EffectiveWebProg.Controllers
 {
-    public class TimesheetController : Controller
+    public class TimesheetController : BaseController
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<TimesheetController> _logger;
