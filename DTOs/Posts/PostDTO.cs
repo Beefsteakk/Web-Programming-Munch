@@ -17,10 +17,11 @@ namespace EffectiveWebProg.DTOs.Posts
         public string Username { get; } = Username;
     }
 
-    public class PostRestaurantAuthorDTO(Guid RestID, string RestName)
+    public class PostRestaurantAuthorDTO(Guid RestID, string RestName, string? RestPic)
     {
         public Guid RestID { get; } = RestID;
         public string RestName { get; } = RestName;
+        public string? RestPic { get; } = RestPic;
     }
 
     public class CommentDTO(Guid CommentID, Guid ParentPostID, string CommentContent, bool IsOwnComment)
