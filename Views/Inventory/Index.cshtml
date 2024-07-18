@@ -63,21 +63,6 @@
                 }
             </tbody>
         </table>
-
-        <div class="pagination">
-            @if (ViewBag.CurrentPage > 1)
-            {
-                <button onclick="location.href='@Url.Action("Index", new { page = ViewBag.CurrentPage - 1, searchString = ViewBag.CurrentSearch, categoryFilter = ViewBag.CurrentCategory })'">Previous</button>
-            }
-            @for (int i = 1; i <= ViewBag.TotalPages; i++)
-            {
-                <button @(i == ViewBag.CurrentPage ? "disabled" : "") onclick="location.href='@Url.Action("Index", new { page = i, searchString = ViewBag.CurrentSearch, categoryFilter = ViewBag.CurrentCategory })'">@i</button>
-            }
-            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
-            {
-                <button onclick="location.href='@Url.Action("Index", new { page = ViewBag.CurrentPage + 1, searchString = ViewBag.CurrentSearch, categoryFilter = ViewBag.CurrentCategory })'">Next</button>
-            }
-        </div>
     </div>
 </body>
 
