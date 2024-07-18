@@ -56,7 +56,10 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <form id="shiftForm">
-            <input type="hidden" id="shiftDate" name="Day" />
+            <div class="form-group">
+                <label for="shiftDate">Date</label>
+                <input type="date" id="shiftDate" name="Day" class="form-control" required />
+            </div>
             <div class="form-group">
                 <label for="employeeId">Employee Name</label>
                 <select id="employeeId" name="EmployeeID" class="form-control" required>
@@ -94,7 +97,10 @@
         <span class="close">&times;</span>
         <form id="editShiftForm">
             <input type="hidden" id="editShiftId" name="SheetID" />
-            <input type="hidden" id="editShiftDate" name="Day" />
+            <div class="form-group">
+                <label for="editShiftDate">Date</label>
+                <input type="date" id="editShiftDate" name="Day" class="form-control" required />
+            </div>
             <div class="form-group">
                 <label for="editEmployeeId">Employee Name</label>
                 <select id="editEmployeeId" name="EmployeeID" class="form-control" required>

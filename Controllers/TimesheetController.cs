@@ -54,6 +54,10 @@ namespace EffectiveWebProg.Controllers
 
             try
             {
+                // Convert local times to UTC for storage
+                model.StartTime = DateTime.SpecifyKind(model.StartTime, DateTimeKind.Local).ToUniversalTime();
+                model.EndTime = DateTime.SpecifyKind(model.EndTime, DateTimeKind.Local).ToUniversalTime();
+
                 _context.TimeSheet.Add(model);
                 await _context.SaveChangesAsync();
                 return Json(new { success = true, shiftId = model.SheetID });
@@ -82,10 +86,10 @@ namespace EffectiveWebProg.Controllers
                 shift.SheetID,
                 shift.EmployeeID,
                 EmployeeName = shift.Employees?.EmployeeName,
-                shift.Day,
+                Day = shift.Day.ToString("yyyy-MM-dd"),
                 shift.ShiftType,
-                shift.StartTime,
-                shift.EndTime
+                StartTime = shift.StartTime.ToLocalTime().ToString("HH:mm"),
+                EndTime = shift.EndTime.ToLocalTime().ToString("HH:mm")
             };
 
             return Json(shiftData);
@@ -106,6 +110,10 @@ namespace EffectiveWebProg.Controllers
                 {
                     return NotFound();
                 }
+
+                // Convert local times to UTC for storage
+                model.StartTime = DateTime.SpecifyKind(model.StartTime, DateTimeKind.Local).ToUniversalTime();
+                model.EndTime = DateTime.SpecifyKind(model.EndTime, DateTimeKind.Local).ToUniversalTime();
 
                 _context.Entry(existingShift).CurrentValues.SetValues(model);
                 await _context.SaveChangesAsync();

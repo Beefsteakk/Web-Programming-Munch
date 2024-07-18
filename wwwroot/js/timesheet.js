@@ -8,6 +8,7 @@ let editForm = document.getElementById("editShiftForm");
 function showShiftForm(element, date) {
     document.getElementById("shiftDate").value = date;
     addForm.reset();
+    document.getElementById("shiftDate").value = date; // Set the default date
     addModal.style.display = "block";
 }
 
@@ -16,18 +17,11 @@ function showEditShiftForm(shiftId) {
         .then(response => response.json())
         .then(data => {
             document.getElementById("editShiftId").value = data.sheetID;
-            document.getElementById("editShiftDate").value = new Date(data.day).toISOString().split('T')[0];
+            document.getElementById("editShiftDate").value = data.day;
             document.getElementById("editEmployeeId").value = data.employeeID;
-            
-            // Set the employee name in a disabled input field if you want to display it
-            let employeeNameInput = document.getElementById("editEmployeeName");
-            if (employeeNameInput) {
-                employeeNameInput.value = data.employeeName;
-            }
-
             document.getElementById("editShiftType").value = data.shiftType;
-            document.getElementById("editStartTime").value = new Date(data.startTime).toTimeString().slice(0, 5);
-            document.getElementById("editEndTime").value = new Date(data.endTime).toTimeString().slice(0, 5);
+            document.getElementById("editStartTime").value = data.startTime;
+            document.getElementById("editEndTime").value = data.endTime;
             editModal.style.display = "block";
         })
         .catch(error => {
