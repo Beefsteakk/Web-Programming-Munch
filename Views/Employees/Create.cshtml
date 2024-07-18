@@ -1,0 +1,113 @@
+@model EffectiveWebProg.Models.EmployeesModel
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Employee</title>
+    <link rel="stylesheet" href="~/css/CreateEmployee.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Management</h1>
+
+    @{
+        var restaurant_id = HttpContextAccessor.HttpContext.Session.GetString("SSID");
+    }
+
+        <div class="form-container">
+            <h2>Create New Employee</h2>
+            <form asp-action="Create" asp-controller="Employees" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <input hidden type="text" class="form-control" id="RestID"  value="@restaurant_id" name="RestID" required>
+            </div>
+                <div class="form-group">
+                    <label for="photo">Photo:</label>
+                    <input type="file" id="photo" name="photo" accept="image/*" onchange="previewImage(event)" required>
+                    <img id="photo-preview" src="#" alt="Photo Preview" style="display: none;">
+                </div>
+                <div class="form-group">
+                    <label for="name">Employee Name:</label>
+                    <input type="text" id="name" name="EmployeeName" required>
+                </div>
+                <div class="form-group">
+                    <label for="department">Department:</label>
+                    <select id="department" name="Department" required>
+                        <option value="">Select a department</option>
+                        <option value="Human Resources">Human Resources</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Kitchen">Kitchen</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="position">Position:</label>
+                    <input type="text" id="position" name="Role" required>
+                </div>
+                <div class="form-group">
+                    <label for="hire">Hired Date:</label>
+                    <input type="date" id="hire" name="HireDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="PhoneNumber" required>
+                </div>
+                <div class="button-group">
+                    <button type="button" class="back-button" onclick="window.location.href='@Url.Action("Index", "Employees")'">Back</button>
+                    <button type="reset" class="reset-button">Reset</button>
+                    <button type="submit" class="submit-button">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+        document.getElementById('employeeForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target); // Create FormData object from the form
+
+    // Append additional fields to FormData
+    formData.append('RestID', document.getElementById('RestID').value);
+
+    try {
+        const response = await fetch('/Employees/Create', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            window.location.href = '/Employees/Index';
+        } else {
+            const errorText = await response.text();
+            console.error('Backend Error:', errorText);
+            alert('An error occurred while creating the employee. Please try again.');
+        }
+    } catch (error) {
+        console.error('Fetch Error:', error);
+        alert('An error occurred while communicating with the server. Please try again.');
+    }
+    });
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+                var output = document.getElementById('photo-preview');
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>

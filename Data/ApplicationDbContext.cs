@@ -13,7 +13,7 @@ namespace EffectiveWebProg.Data
 
         public DbSet<UsersModel> Users { get; set; }
         public DbSet<UserCardModel> UserCards { get; set; }
-        public DbSet<TimeSheetModel> TimeSheets { get; set; }
+        public DbSet<TimeSheetModel> TimeSheet { get; set; }
         public DbSet<RestCardModel> RestCards { get; set; }
         public DbSet<RestaurantsModel> Restaurants { get; set; }
         public DbSet<ReservationsModel> Reservations { get; set; }
@@ -35,6 +35,12 @@ namespace EffectiveWebProg.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            // Example: Configure RestID to be auto-generated
+            modelBuilder.Entity<EmployeesModel>()
+                .Property(e => e.RestID)
+                .ValueGeneratedOnAdd(); // Indicates that the value is generated on add (auto-generated)
+
 
             // Configure CreditCard
             modelBuilder.Entity<CreditCardModel>(entity =>
@@ -123,6 +129,10 @@ namespace EffectiveWebProg.Data
                 entity.Property(e => e.EmployeeName).HasMaxLength(255);
                 entity.Property(e => e.EmployeePic).HasMaxLength(255);
                 entity.Property(e => e.Role).HasMaxLength(20);
+                entity.Property(e => e.Department).HasMaxLength(100);
+                entity.Property(e => e.Email).HasMaxLength(255);
+                entity.Property(e => e.PhoneNumber).HasMaxLength(20);
+                entity.Property(e => e.HireDate).HasColumnType("date");
                 entity.HasIndex(e => e.RestID);
                 entity.HasOne(e => e.Restaurant)
                     .WithMany(r => r.Employee)
@@ -213,7 +223,10 @@ namespace EffectiveWebProg.Data
                 entity.HasKey(e => e.SheetID);
                 entity.Property(e => e.SheetID).IsRequired().HasMaxLength(36);
                 entity.Property(e => e.EmployeeID).HasMaxLength(36);
-                entity.Property(e => e.Day).HasMaxLength(50);
+                entity.Property(e => e.Day).HasColumnType("date");
+                entity.Property(e => e.ShiftType).HasMaxLength(20);
+                entity.Property(e => e.StartTime).HasColumnType("date");
+                entity.Property(e => e.EndTime).HasColumnType("date");
                 entity.HasIndex(e => e.EmployeeID);
                 entity.HasOne(e => e.Employees)
                     .WithMany(e => e.TimeSheets)
