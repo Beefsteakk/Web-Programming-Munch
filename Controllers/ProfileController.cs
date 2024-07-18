@@ -25,7 +25,13 @@ namespace EffectiveWebProg.Controllers
             var user = await _db.Users.FirstAsync(u => u.UserID == sessionID);
             var followingCount = await _db.Followings.Where(f => f.UserID == user.UserID).ToListAsync();
             var ReservationsDetails = await GetReservationsByUserIdAsync(sessionID);
+            var TodayReservation = ReservationsDetails.Where(r => r.ReservationDate == DateOnly.FromDateTime(DateTime.Today) && r.ReservationStatus != "Cancelled");
+            var FutureReservation = ReservationsDetails.Where(r => r.ReservationDate > DateOnly.FromDateTime(DateTime.Today) && r.ReservationStatus != "Cancelled");
+            var CancelledReservation = ReservationsDetails.Where(r => r.ReservationStatus == "Cancelled");
             ViewBag.ReservationsDetails = ReservationsDetails;
+            ViewBag.TodayReservation = TodayReservation;
+            ViewBag.FutureReservation = FutureReservation;
+            ViewBag.CancelledReservation = CancelledReservation;
 
             if (user == null)
             {
@@ -78,6 +84,7 @@ namespace EffectiveWebProg.Controllers
                 return new List<ReservationsModel>(); // Return an empty list in case of error
             }
         }
+        
 
 
         [HttpPost]
@@ -106,11 +113,10 @@ namespace EffectiveWebProg.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> DeleteReservation(Guid id)
-        {
-            Console.WriteLine("Deleting reservation with ID: " + id);
-            string query = "DELETE FROM Reservations WHERE ReservationID = @ReservationID";
+        {   
+            string query = "UPDATE Reservations SET ReservationStatus='Cancelled' WHERE ReservationID = @ReservationID";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
