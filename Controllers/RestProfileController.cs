@@ -14,10 +14,45 @@ namespace EffectiveWebProg.Controllers
 
         private async Task<RestaurantsModel?> GetRestaurantDetailsByUserIdAsync(string restID)
         {
-            Console.WriteLine("RestID: " + restID);
-            var restaurant = await _db.Restaurants.FindAsync(Guid.Parse(restID));
-            return restaurant;
+            RestaurantsModel? restaurantDetails = null;
+            string query = "SELECT RestID, RestName, RestLat, RestLong, RestAddress, RestEmail, RestPassword, RestContact, RestBio, RestPic, RestWebsite, RestOpenHr, RestCloseHr, RestCoverPic FROM Restaurants WHERE RestID = @RestID";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@RestID", restID);
+                    
+                    using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            restaurantDetails = new RestaurantsModel
+                            {
+                                RestID = Guid.Parse(reader["RestID"].ToString() ?? ""),
+                                RestName = reader["RestName"].ToString() ?? "",
+                                RestLat = reader.IsDBNull(reader.GetOrdinal("RestLat")) ? (double?)null : reader.GetDouble("RestLat"),
+                                RestLong = reader.IsDBNull(reader.GetOrdinal("RestLong")) ? (double?)null : reader.GetDouble("RestLong"),
+                                RestAddress = reader["RestAddress"].ToString() ?? "",
+                                RestEmail = reader["RestEmail"].ToString() ?? "",
+                                RestPassword = reader["RestPassword"].ToString() ?? "",
+                                RestContact = reader.IsDBNull(reader.GetOrdinal("RestContact")) ? (int?)null : reader.GetInt32("RestContact"),
+                                RestBio = reader["RestBio"].ToString() ?? "",
+                                RestPic = reader["RestPic"].ToString() ?? "",
+                                RestWebsite = reader["RestWebsite"].ToString() ?? "",
+                                RestOpenHr = reader.IsDBNull(reader.GetOrdinal("RestOpenHr")) ? (TimeSpan?)null : reader.GetTimeSpan("RestOpenHr"),
+                                RestCloseHr = reader.IsDBNull(reader.GetOrdinal("RestCloseHr")) ? (TimeSpan?)null : reader.GetTimeSpan("RestCloseHr"),
+                                RestCoverPic = reader["RestCoverPic"].ToString() ?? "",
+                            };
+                        }
+                    }
+                }
+            }
+
+            return restaurantDetails;
         }
+
 
         private async Task<List<PostPicsModel>> GetRestaurantPostsAsync(string restID)
         {
@@ -93,8 +128,7 @@ namespace EffectiveWebProg.Controllers
             int count = restaurantPosts.Count;
             ViewBag.PostCount = count;
 
-            ViewBag.FollowersCount = await GetRestaurantFollowersCount(restID);
-            Console.WriteLine("FollowersCount: " + ViewBag.FollowersCount);
+            
             string sessionemail = HttpContext.Session.GetString("SSName") ?? "";
 
             string sessionType = HttpContext.Session.GetString("SSUserType") ?? "";
@@ -104,7 +138,8 @@ namespace EffectiveWebProg.Controllers
             ViewBag.RestaurantDetails = restaurantDetails;
             ViewBag.isOwnRestaurant = isOwnRestaurant;
             ViewBag.RestaurantPosts = restaurantPosts;
-
+            ViewBag.FollowersCount = await GetRestaurantFollowersCount(restID);
+            
             return View();
         }
 
@@ -126,7 +161,7 @@ namespace EffectiveWebProg.Controllers
         {
             if (RestPic != null)
             {
-                Console.WriteLine("Restpic id "+RestPic);
+                Console.WriteLine("Restpic id " + RestPic);
                 var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "RestProfilePics");
                 var filename = $"{restaurantDetails.RestID}{Path.GetExtension(RestPic.FileName)}";
                 var filePath = Path.Combine(uploadsFolder, filename);
