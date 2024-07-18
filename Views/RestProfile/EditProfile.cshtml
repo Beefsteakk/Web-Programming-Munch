@@ -138,6 +138,27 @@
             </div>
 
             <div class="form_group">
+                <label class="sub_title" for="RestPic">Restaurant Picture</label>
+                <input type="file" id="RestPic" name="RestPic" class="form_style" accept="image/*" />
+            </div>
+
+
+            <div class="form_group">
+                <label class="sub_title" for="RestOpenHr">Restaurant Opening Hour</label>
+                <input type="time" id="RestOpenHr" name="RestOpenHr" class="form_style" value="@details.RestOpenHr" required />
+            </div>
+
+            <div class="form_group">
+                <label class="sub_title" for="RestCloseHr">Restaurant Closing Hour</label>
+                <input type="time" id="RestCloseHr" name="RestCloseHr" class="form_style" value="@details.RestCloseHr" required />
+            </div>
+
+            <div class="form_group">
+                <label class="sub_title" for="RestCoverPic">Restaurant Cover Picture</label>
+                <input type="file" id="RestCoverPic" name="RestCoverPic" class="form_style" accept="image/*" />
+            </div>
+
+            <div class="form_group">
                 <button type="submit" class="gbtn">Save</button>
                 <button type="button" class="rbtn" onclick="window.location.href='/RestProfile'">Cancel</button>
             </div>
@@ -169,8 +190,6 @@
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcZ-tpp7-d401k61UO39tGYGvq-yOAn1s&libraries=places"></script>
 
-<script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcZ-tpp7-d401k61UO39tGYGvq-yOAn1s&libraries=places"></script>
 <script>
     let map, marker, searchBox;
 
@@ -274,6 +293,3 @@
         });
     }
 </script>
-
-
-

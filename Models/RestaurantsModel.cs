@@ -70,5 +70,10 @@ namespace EffectiveWebProg.Models
             Cart = new List<CartModel>();
             Employee = new List<EmployeesModel>();
         }
+
+        public static implicit operator RestaurantsModel(string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

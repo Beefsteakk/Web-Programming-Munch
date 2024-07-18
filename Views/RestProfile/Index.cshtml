@@ -4,7 +4,6 @@
     ViewData["Title"] = "Restaurant Profile";
     var details = ViewBag.RestaurantDetails as RestaurantsModel;
     var postDetails = ViewBag.RestaurantPosts;
-    @* var restaurantId = "12345"; // Replace with your specific restaurant ID *@
 }
 
 <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
@@ -31,7 +30,9 @@
                                         <h2>@details.RestName</h2>
                                     </div>
                                     <div class="col-7">
-                                        <button class="f-btn btn btn-primary">
+                                        @if (!ViewBag.isOwnRestaurant)
+                                        {
+                                            <button class="f-btn btn btn-primary">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -40,6 +41,7 @@
                                             </svg>
                                             Follow
                                         </button>
+                                        }
                                         @if (ViewBag.isOwnRestaurant)
                                         {
                                             <a asp-area="" asp-controller="RestProfile" asp-action="EditProfile"
@@ -47,49 +49,7 @@
                                         }
                                     </div>
                                 </div>
-                                <p>Rating:
-                                    <span class="star-rating">
-                                        @{
-                                            float rating = details.RestRatings ?? 0f;
-                                            int fullStars = (int)rating;
-                                            bool hasHalfStar = rating - fullStars >= 0.5;
-                                            int emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-
-                                            for (int i = 0; i < fullStars; i++)
-                                            {
-                                                @:<i class="fas fa-star"></i>
-                                            }
-
-                                            // Handling float star style for ratings between 2.0 and 2.9
-                                            if (rating - fullStars > 0)
-                                            {
-                                                if (rating - fullStars <= 0.3)
-                                                {
-                                                    @:<i class="far fa-star"></i>
-                                                }
-                                                else if (rating - fullStars <= 0.7)
-                                                {
-                                                    @:<i style="color:gold" class="fas fa-star-half-alt"></i>
-                                                }
-                                                else
-                                                {
-                                                    @:<i class="fas fa-star"></i>
-                                                }
-                                            }
-                                            else
-                                            {
-                                                // If the rating is a whole number
-                                                emptyStars += 1;
-                                            }
-
-                                            for (int i = 0; i < emptyStars; i++)
-                                            {
-                                                @:<i class="far fa-star"></i>
-                                            }
-                                        }
-                                    </span>
-                                    @details.RestRatings
-                                </p>
+                              
                                 <div class="profile-bio">
                                     <p><strong>Bio: </strong>@details.RestBio</p>
                                 </div>
@@ -109,24 +69,7 @@
                                     </svg>
                                     Reserve
                                 </button>
-                                <button class="m-btn btn btn-primary">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M2 4C2 2.89543 2.89543 2 4 2H20C21.1046 2 22 2.89543 22 4V20C22 21.1046 21.1046 22 20 22H4C2.89543 22 2 21.1046 2 20V4ZM4 4V6L12 11L20 6V4H4ZM20 8L12 13L4 8V20H20V8Z"
-                                            fill="currentColor" />
-                                    </svg>
-                                    Message
-                                </button>
-                                <button class="fav-btn btn btn-primary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                        width="24" height="24">
-                                        <path d="M0 0h24v24H0z" fill="none" />
-                                        <path
-                                            d="M12 2l3.09 6.31 6.91.99-5 4.86 1.18 6.88L12 17.25l-6.09 3.89 1.18-6.88-5-4.86 6.91-.99L12 2zm0 2.27l-2.76 5.63-6.22.89 4.51 4.41-1.07 6.23L12 18.77l5.54 2.86-1.07-6.23 4.51-4.41-6.22-.89L12 4.27z" />
-                                    </svg>
-                                    Favorite
-                                </button>
+                            
                             </div>
                         </div>
                     </div>
@@ -147,7 +90,7 @@
                         @* <span><strong>@followerCount</strong> followers</span> *@
                     </div>
                     <div class="col-md text-center">
-                        <span><strong>107</strong> following</span>
+                        <span><strong>@ViewBag.FollowersCount</strong> following</span>
                     </div>
                 </div>
             </div>
@@ -212,8 +155,8 @@
                     </div>
                     <div class="info-section">
                         <h4>Contact Information</h4>
-                        <p>Phone: 98772639</p>
-                        <p>Email: duckking@gmail.com</p>
+                        <p>Phone: @details.RestContact</p>
+                        <p>Email: @details.RestEmail</p>
                     </div>
                     <div class="map-section">
                         <h4>Location</h4>
@@ -230,8 +173,8 @@
 
         </div>
     </div>
-    <div id="reservationPopup" class="modal">
-        <div class="modal-content">
+    <div id="reservationPopup" class="modalReserve">
+        <div class="modal-contentReserve">
             <div class="row" style="border-bottom: 1px solid #ddd;">
                 <div class="col-3">
                     <button class="noselect closebutton" onclick="closeReservationPopup()">
