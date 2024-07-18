@@ -58,6 +58,15 @@ allPost.forEach(function (e) {
                             </div>
                         `)
                     });
+                    if ($('#modalComments').children().length == 0) {
+                        $('#modalComments').append(`
+                            <div class="row">
+                                <div class="d-inline comments">
+                                    <span>No comments yet.</span>
+                                </div>
+                            </div>
+                        `)
+                    }
                     $('#infoModal').modal('show');
                 },
                 error: function () {
