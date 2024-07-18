@@ -60,5 +60,25 @@ namespace EffectiveWebProg.Controllers
             };
             return View(viewModel);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DecreaseStock(Guid inventoryId, Guid itemId)
+        {
+            var inventoryItem = await _db.InventoryItems
+                .FirstOrDefaultAsync(ii => ii.InventoryID == inventoryId && ii.ItemID == itemId);
+
+            if (inventoryItem == null)
+            {
+                return NotFound();
+            }
+
+            if (inventoryItem.StockCount > 0)
+            {
+                inventoryItem.StockCount--;
+                await _db.SaveChangesAsync();
+            }
+
+            return Ok(new { inventoryId, itemId, newStockCount = inventoryItem.StockCount });
+        }
     }
 }

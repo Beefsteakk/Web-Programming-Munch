@@ -57,7 +57,7 @@
                         <td class="updated">@item.LastUpdated.ToString("yyyy-MM-dd HH:mm")</td>
                         <td>
                             <button class="add-to-cart" data-item-id="@item.ItemID">Stock Up</button>
-                            <button class="decrease-stock" data-item-id="@item.ItemID">Decrease</button>
+                            <button class="btn btn-danger" onclick="decreaseStock('@item.InventoryID', '@item.ItemID')">Decrease</button>
                         </td>
                     </tr>
                 }
@@ -67,4 +67,25 @@
 </body>
 
 
-    
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function decreaseStock(inventoryId, itemId) {
+            $.ajax({
+                url: '@Url.Action("DecreaseStock", "Inventory")',
+                type: 'POST',
+                data: {
+                    inventoryId: inventoryId,
+                    itemId: itemId
+                },
+                success: function (result) {
+                    alert('Stock count decreased for item: ' + itemId);
+                    location.reload(); // Automatically refresh the page
+                },
+                error: function () {
+                    alert('Error decreasing stock count');
+                }
+            });
+        }
+    </script>
+}
