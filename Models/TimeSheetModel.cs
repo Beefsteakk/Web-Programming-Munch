@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 using EffectiveWebProg.Models;
 using Org.BouncyCastle.Asn1.Cms;
@@ -33,6 +34,7 @@ public class TimeSheetModel
 
     // Navigation properties
     [ForeignKey("EmployeeID")]
+    [JsonIgnore]
     public EmployeesModel? Employees { get; set; }
 
     public TimeSheetModel()

@@ -19,7 +19,7 @@ function openPopup(EmployeeId) {
             document.getElementById('employee-id').value = data.employeeID;
         })
         .catch(error => {
-            console.error('Error fetching employee data:', error);
+            // console.error('Error fetching employee data:', error);
             alert('An error occurred while fetching the employee data.');
         });
 }
@@ -54,7 +54,7 @@ document.getElementById('edit-form').addEventListener('submit', function(event) 
         }
     })
     .catch(error => {
-        console.error('Error:', error);
+        // console.error('Error:', error);
         alert('An error occurred while updating the employee.');
     });
 });
@@ -88,7 +88,7 @@ function confirmDelete() {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            // console.error('Error:', error);
             alert('An error occurred while deleting the employee.');
         });
     }
@@ -120,7 +120,7 @@ document.getElementById('edit-form').addEventListener('submit', function(event) 
         }
     })
     .catch(error => {
-        console.error('Error:', error);
+        // console.error('Error:', error);
         alert('An error occurred while updating the employee.');
     });
 });
@@ -152,8 +152,42 @@ function toggleSorting(column) {
 }
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    const hireDateInput = document.getElementById('hire');
+    const submitButton = document.querySelector('form button[type="submit"]');
+
+    hireDateInput.addEventListener('change', function() {
+        const selectedDate = new Date(hireDateInput.value);
+        const today = new Date();
+        today.setHours(8, 0, 0, 0);
+
+        if (selectedDate > today) {
+            alert("Hire date must be before today.");
+            hireDateInput.value = '';
+            submitButton.disabled = true;
+        } else {
+            submitButton.disabled = false;
+        }
+    });
+});
 
 
+document.addEventListener("DOMContentLoaded", function() {
+    const hireDateInput = document.getElementById('hire-date');
+    const saveButton = document.getElementById('edit-save-button');
+    const hireDateError = document.getElementById('edit-hire-date-error');
 
+    hireDateInput.addEventListener('change', function() {
+        const selectedDate = new Date(hireDateInput.value);
+        const today = new Date();
+        today.setHours(8, 0, 0, 0);
 
-
+        if (selectedDate > today) {
+            hireDateError.style.display = 'inline';
+            saveButton.disabled = true;
+        } else {
+            hireDateError.style.display = 'none';
+            saveButton.disabled = false;
+        }
+    });
+});

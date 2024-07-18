@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EffectiveWebProg.styles.css" asp-append-version="true" />
     <script type="text/javascript" src="~/js/postImages.js" defer></script>
+    <script type="text/javascript" src="~/js/searchRestaurant.js" defer></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
@@ -56,7 +57,7 @@
                         {
                             <li class="search-box left-nav-item">
                                 <i class='fa-solid fa-search'></i>
-                                <input class="left-link-text" type="text" placeholder="Search...">
+                                <input class="left-link-text" id="restaurant-search" type="text" placeholder="Search...">
                             </li>
                             <li class="left-nav-item">
                                 <a class="left-nav-link text-dark" asp-area="" asp-controller="Posts" asp-action="Index">
@@ -89,7 +90,7 @@
                             <li class="left-nav-item">
                                 <div data-bs-toggle="modal" data-bs-target="#postModal">
                                     <a class="left-nav-link text-dark">
-                                        <i class="fa-solid fa-tachometer-alt"></i>
+                                        <i class="fa-solid fa-camera"></i>
                                         <span class="left-link-text d-none d-xl-inline">Add Post</span>
                                     </a>
                                 </div>
@@ -97,28 +98,28 @@
                             <li class="left-nav-item">
                                 <a class="left-nav-link text-dark" asp-area="" asp-controller="Employees"
                                     asp-action="Index">
-                                    <i class="fa-solid fa-tachometer-alt"></i>
+                                    <i class="fa-solid fa-circle-user"></i>
                                     <span class="left-link-text d-none d-xl-inline">Employees</span>
                                 </a>
                             </li>
                             <li class="left-nav-item">
                                 <a class="left-nav-link text-dark" asp-area="" asp-controller="Timesheet"
                                     asp-action="Index">
-                                    <i class="fa-solid fa-tachometer-alt"></i>
+                                    <i class="fa-solid fa-clock"></i>
                                     <span class="left-link-text d-none d-xl-inline">Timesheet</span>
                                 </a>
                             </li>
                             <li class="left-nav-item">
                                 <a class="left-nav-link text-dark" asp-area="" asp-controller="Inventory"
                                     asp-action="Index">
-                                    <i class="fa-solid fa-tachometer-alt"></i>
+                                    <i class="fa-solid fa-boxes-stacked"></i>
                                     <span class="left-link-text d-none d-xl-inline">Inventory</span>
                                 </a>
                             </li>
                             <li class="left-nav-item">
                                 <a class="left-nav-link text-dark" asp-area="" asp-controller="Shop"
                                     asp-action="Index">
-                                    <i class="fa-solid fa-tachometer-alt"></i>
+                                    <i class="fa-solid fa-store"></i>
                                     <span class="left-link-text d-none d-xl-inline">Stock Up</span>
                                 </a>
                             </li>

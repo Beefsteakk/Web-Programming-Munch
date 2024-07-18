@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;
 namespace EffectiveWebProg.Controllers
 {
 
-    public class ProfileController : Controller
+    public class ProfileController : BaseController
     {
         private readonly ApplicationDbContext _db;
         private readonly string connectionString = "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
@@ -25,7 +25,13 @@ namespace EffectiveWebProg.Controllers
             var user = await _db.Users.FirstAsync(u => u.UserID == sessionID);
             var followingCount = await _db.Followings.Where(f => f.UserID == user.UserID).ToListAsync();
             var ReservationsDetails = await GetReservationsByUserIdAsync(sessionID);
+            var TodayReservation = ReservationsDetails.Where(r => r.ReservationDate == DateOnly.FromDateTime(DateTime.Today) && r.ReservationStatus != "Cancelled");
+            var FutureReservation = ReservationsDetails.Where(r => r.ReservationDate > DateOnly.FromDateTime(DateTime.Today) && r.ReservationStatus != "Cancelled");
+            var CancelledReservation = ReservationsDetails.Where(r => r.ReservationStatus == "Cancelled");
             ViewBag.ReservationsDetails = ReservationsDetails;
+            ViewBag.TodayReservation = TodayReservation;
+            ViewBag.FutureReservation = FutureReservation;
+            ViewBag.CancelledReservation = CancelledReservation;
 
             if (user == null)
             {
@@ -78,6 +84,7 @@ namespace EffectiveWebProg.Controllers
                 return new List<ReservationsModel>(); // Return an empty list in case of error
             }
         }
+        
 
 
         [HttpPost]
@@ -106,11 +113,10 @@ namespace EffectiveWebProg.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> DeleteReservation(Guid id)
-        {
-            Console.WriteLine("Deleting reservation with ID: " + id);
-            string query = "DELETE FROM Reservations WHERE ReservationID = @ReservationID";
+        {   
+            string query = "UPDATE Reservations SET ReservationStatus='Cancelled' WHERE ReservationID = @ReservationID";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -140,7 +146,7 @@ namespace EffectiveWebProg.Controllers
             return View(user);
         }
 
-        [HttpPost("EditProfile")]
+        [HttpPost("Profile/EditProfile")]
         public async Task<IActionResult> EditProfilePost(IFormFile UserProfilePic, string UserName, string UserUsername, string UserEmail, int UserContactNum)
         {
             var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
@@ -158,20 +164,24 @@ namespace EffectiveWebProg.Controllers
                 return RedirectToAction("EditProfile");
             }
 
-            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "UserProfilePics");
-            string filePath;
-            if (user.UserProfilePic != null)
-            {
-                filePath = Path.Combine(uploadsFolder, user.UserProfilePic);
-                System.IO.File.Delete(filePath);
+            if (UserProfilePic != null)
+            {    
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "UserProfilePics");
+                string filePath;
+                if (user.UserProfilePic != null)
+                {
+                    filePath = Path.Combine(uploadsFolder, user.UserProfilePic);
+                    System.IO.File.Delete(filePath);
+                }
+
+                var filename = $"{user.UserID}{Path.GetExtension(UserProfilePic.FileName)}";
+                filePath = Path.Combine(uploadsFolder, filename);
+                using var fileStream = new FileStream(filePath, FileMode.Create);
+                await UserProfilePic.CopyToAsync(fileStream);
+
+                user.UserProfilePic = filename;
             }
 
-            var filename = $"{user.UserID}{Path.GetExtension(UserProfilePic.FileName)}";
-            filePath = Path.Combine(uploadsFolder, filename);
-            using var fileStream = new FileStream(filePath, FileMode.Create);
-            await UserProfilePic.CopyToAsync(fileStream);
-
-            user.UserProfilePic = filename;
             user.UserName = UserName;
             user.UserUsername = UserUsername;
             user.UserEmail = UserEmail;

@@ -14,8 +14,43 @@ namespace EffectiveWebProg.Controllers
 
         private async Task<RestaurantsModel?> GetRestaurantDetailsByUserIdAsync(string restID)
         {
-            var restaurant = await _db.Restaurants.FindAsync(Guid.Parse(restID));
-            return restaurant;
+            RestaurantsModel? restaurantDetails = null;
+            string query = "SELECT RestID, RestName, RestLat, RestLong, RestAddress, RestEmail, RestPassword, RestContact, RestBio, RestPic, RestWebsite, RestOpenHr, RestCloseHr, RestCoverPic FROM Restaurants WHERE RestID = @RestID";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@RestID", restID);
+                    
+                    using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            restaurantDetails = new RestaurantsModel
+                            {
+                                RestID = Guid.Parse(reader["RestID"].ToString() ?? ""),
+                                RestName = reader["RestName"].ToString() ?? "",
+                                RestLat = reader.IsDBNull(reader.GetOrdinal("RestLat")) ? (double?)null : reader.GetDouble("RestLat"),
+                                RestLong = reader.IsDBNull(reader.GetOrdinal("RestLong")) ? (double?)null : reader.GetDouble("RestLong"),
+                                RestAddress = reader["RestAddress"].ToString() ?? "",
+                                RestEmail = reader["RestEmail"].ToString() ?? "",
+                                RestPassword = reader["RestPassword"].ToString() ?? "",
+                                RestContact = reader.IsDBNull(reader.GetOrdinal("RestContact")) ? (int?)null : reader.GetInt32("RestContact"),
+                                RestBio = reader["RestBio"].ToString() ?? "",
+                                RestPic = reader["RestPic"].ToString() ?? "",
+                                RestWebsite = reader["RestWebsite"].ToString() ?? "",
+                                RestOpenHr = reader.IsDBNull(reader.GetOrdinal("RestOpenHr")) ? (TimeSpan?)null : reader.GetTimeSpan("RestOpenHr"),
+                                RestCloseHr = reader.IsDBNull(reader.GetOrdinal("RestCloseHr")) ? (TimeSpan?)null : reader.GetTimeSpan("RestCloseHr"),
+                                RestCoverPic = reader["RestCoverPic"].ToString() ?? "",
+                            };
+                        }
+                    }
+                }
+            }
+
+            return restaurantDetails;
         }
 
 
@@ -46,10 +81,7 @@ namespace EffectiveWebProg.Controllers
                 }
             }
 
-            foreach (var post in postDetailsList)
-            {
-                Console.WriteLine("PostDetails lol: " + post.ImageURL);
-            }
+
 
             return postDetailsList;
         }
@@ -62,6 +94,25 @@ namespace EffectiveWebProg.Controllers
             return RedirectToAction("Index");
         }
 
+
+        private async Task<int> GetRestaurantFollowersCount(string restID)
+        {
+            int followersCount = 0;
+            string query = "SELECT COUNT(*) FROM Followings WHERE RestID = @RestID";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@RestID", restID);
+
+                    followersCount = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                }
+            }
+
+            return followersCount;
+        }
         public async Task<IActionResult> Index()
         {
             string restID = HttpContext.Session.GetString("RestID") ?? "";
@@ -76,16 +127,18 @@ namespace EffectiveWebProg.Controllers
             List<PostPicsModel> restaurantPosts = await GetRestaurantPostsAsync(restID);
             int count = restaurantPosts.Count;
             ViewBag.PostCount = count;
+
             
             string sessionemail = HttpContext.Session.GetString("SSName") ?? "";
 
             string sessionType = HttpContext.Session.GetString("SSUserType") ?? "";
             bool isOwnRestaurant = sessionemail == restaurantDetails.RestEmail;
-            
+
             ViewBag.SessionEmail = sessionemail;
             ViewBag.RestaurantDetails = restaurantDetails;
             ViewBag.isOwnRestaurant = isOwnRestaurant;
             ViewBag.RestaurantPosts = restaurantPosts;
+            ViewBag.FollowersCount = await GetRestaurantFollowersCount(restID);
             
             return View();
         }
@@ -97,16 +150,43 @@ namespace EffectiveWebProg.Controllers
 
             RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(restID);
             ViewBag.RestaurantDetails = restaurantDetails;
-            
+
 
             return View();
         }
 
         [HttpPost("SaveProfile")]
         [Route("RestProfile/SaveProfile")]
-        public async Task<IActionResult> SaveProfile(RestaurantsModel restaurantDetails)
+        public async Task<IActionResult> SaveProfile(RestaurantsModel restaurantDetails, IFormFile? RestPic, IFormFile? RestCoverPic)
         {
-            string query = "UPDATE Restaurants SET RestName = @RestName, RestBio = @RestBio, RestContact = @RestContact, RestEmail = @RestEmail, RestAddress = @RestAddress, RestLat = @RestLat, RestLong = @RestLong, RestPic = @RestPic, RestWebsite = @RestWebsite, RestRatings = @RestRatings WHERE RestID = @RestID";
+            if (RestPic != null)
+            {
+                Console.WriteLine("Restpic id " + RestPic);
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "RestProfilePics");
+                var filename = $"{restaurantDetails.RestID}{Path.GetExtension(RestPic.FileName)}";
+                var filePath = Path.Combine(uploadsFolder, filename);
+                using var fileStream = new FileStream(filePath, FileMode.Create);
+                await RestPic.CopyToAsync(fileStream);
+                restaurantDetails.RestPic = filename;
+            }
+
+            if (RestCoverPic != null)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "RestCoverPics");
+                var filename = $"{restaurantDetails.RestID}{Path.GetExtension(RestCoverPic.FileName)}";
+                var filePath = Path.Combine(uploadsFolder, filename);
+                using var fileStream = new FileStream(filePath, FileMode.Create);
+                await RestCoverPic.CopyToAsync(fileStream);
+                restaurantDetails.RestCoverPic = filename;
+            }
+
+            string query = @"UPDATE Restaurants 
+                     SET RestName = @RestName, RestBio = @RestBio, RestContact = @RestContact, 
+                         RestEmail = @RestEmail, RestAddress = @RestAddress, RestLat = @RestLat, 
+                         RestLong = @RestLong, RestPic = @RestPic, RestWebsite = @RestWebsite, 
+                         RestOpenHr = @RestOpenHr, 
+                         RestCloseHr = @RestCloseHr, RestCoverPic = @RestCoverPic 
+                     WHERE RestID = @RestID";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -123,7 +203,9 @@ namespace EffectiveWebProg.Controllers
                     cmd.Parameters.AddWithValue("@RestLong", restaurantDetails.RestLong);
                     cmd.Parameters.AddWithValue("@RestPic", restaurantDetails.RestPic);
                     cmd.Parameters.AddWithValue("@RestWebsite", restaurantDetails.RestWebsite);
-                    cmd.Parameters.AddWithValue("@RestRatings", restaurantDetails.RestRatings);
+                    cmd.Parameters.AddWithValue("@RestOpenHr", restaurantDetails.RestOpenHr);
+                    cmd.Parameters.AddWithValue("@RestCloseHr", restaurantDetails.RestCloseHr);
+                    cmd.Parameters.AddWithValue("@RestCoverPic", restaurantDetails.RestCoverPic);
 
                     await cmd.ExecuteNonQueryAsync();
                 }
@@ -182,7 +264,7 @@ namespace EffectiveWebProg.Controllers
             return RedirectToAction("Index");
         }
 
-    
+
     }
 
 }

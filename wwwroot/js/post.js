@@ -1,7 +1,7 @@
 allPost = document.querySelectorAll('.posts');
 allPost.forEach(function (e) {
     e.addEventListener('click', function (obj) {
-        if (obj.target.localName != "button" && obj.target.localName != "textarea" && obj.target.parentElement.classList != "clickable") {
+        if (obj.target.localName != "button" && obj.target.localName != "textarea" && obj.target.parentElement.classList != "clickable" && obj.target.parentElement.classList != "a") {
             $.ajax({
                 url: '/Posts/GetInfo',
                 type: 'POST',
@@ -44,6 +44,11 @@ allPost.forEach(function (e) {
                             </div>
                         `);
                     });
+                    if (response.post.postAuthorRestaurant.restPic == null) {
+                        document.getElementById("modalProfilePic").src = "Images/chef.png"
+                    } else {
+                        document.getElementById("modalProfilePic").src = `Images/RestaurantProfilePics/${response.post.postAuthorRestaurant.restPic}`
+                    }
                     $('#modalUsername').text(response.post.postAuthorUser != null ? response.post.postAuthorUser.username : response.post.postAuthorRestaurant.restName);
                     $('#modalCreatedAt').text(response.post.postCreatedAt);
                     $('#modalMessage').text(response.post.postContent);
