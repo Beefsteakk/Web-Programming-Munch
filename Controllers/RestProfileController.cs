@@ -14,6 +14,7 @@ namespace EffectiveWebProg.Controllers
 
         private async Task<RestaurantsModel?> GetRestaurantDetailsByUserIdAsync(string restID)
         {
+            Console.WriteLine("RestID: " + restID);
             var restaurant = await _db.Restaurants.FindAsync(Guid.Parse(restID));
             return restaurant;
         }
@@ -121,9 +122,36 @@ namespace EffectiveWebProg.Controllers
 
         [HttpPost("SaveProfile")]
         [Route("RestProfile/SaveProfile")]
-        public async Task<IActionResult> SaveProfile(RestaurantsModel restaurantDetails)
+        public async Task<IActionResult> SaveProfile(RestaurantsModel restaurantDetails, IFormFile? RestPic, IFormFile? RestCoverPic)
         {
-            string query = "UPDATE Restaurants SET RestName = @RestName, RestBio = @RestBio, RestContact = @RestContact, RestEmail = @RestEmail, RestAddress = @RestAddress, RestLat = @RestLat, RestLong = @RestLong, RestPic = @RestPic, RestWebsite = @RestWebsite, RestRatings = @RestRatings WHERE RestID = @RestID";
+            if (RestPic != null)
+            {
+                Console.WriteLine("Restpic id "+RestPic);
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "RestProfilePics");
+                var filename = $"{restaurantDetails.RestID}{Path.GetExtension(RestPic.FileName)}";
+                var filePath = Path.Combine(uploadsFolder, filename);
+                using var fileStream = new FileStream(filePath, FileMode.Create);
+                await RestPic.CopyToAsync(fileStream);
+                restaurantDetails.RestPic = filename;
+            }
+
+            if (RestCoverPic != null)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "RestCoverPics");
+                var filename = $"{restaurantDetails.RestID}{Path.GetExtension(RestCoverPic.FileName)}";
+                var filePath = Path.Combine(uploadsFolder, filename);
+                using var fileStream = new FileStream(filePath, FileMode.Create);
+                await RestCoverPic.CopyToAsync(fileStream);
+                restaurantDetails.RestCoverPic = filename;
+            }
+
+            string query = @"UPDATE Restaurants 
+                     SET RestName = @RestName, RestBio = @RestBio, RestContact = @RestContact, 
+                         RestEmail = @RestEmail, RestAddress = @RestAddress, RestLat = @RestLat, 
+                         RestLong = @RestLong, RestPic = @RestPic, RestWebsite = @RestWebsite, 
+                         RestOpenHr = @RestOpenHr, 
+                         RestCloseHr = @RestCloseHr, RestCoverPic = @RestCoverPic 
+                     WHERE RestID = @RestID";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -140,7 +168,9 @@ namespace EffectiveWebProg.Controllers
                     cmd.Parameters.AddWithValue("@RestLong", restaurantDetails.RestLong);
                     cmd.Parameters.AddWithValue("@RestPic", restaurantDetails.RestPic);
                     cmd.Parameters.AddWithValue("@RestWebsite", restaurantDetails.RestWebsite);
-                    cmd.Parameters.AddWithValue("@RestRatings", restaurantDetails.RestRatings);
+                    cmd.Parameters.AddWithValue("@RestOpenHr", restaurantDetails.RestOpenHr);
+                    cmd.Parameters.AddWithValue("@RestCloseHr", restaurantDetails.RestCloseHr);
+                    cmd.Parameters.AddWithValue("@RestCoverPic", restaurantDetails.RestCoverPic);
 
                     await cmd.ExecuteNonQueryAsync();
                 }
