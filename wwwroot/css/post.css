@@ -176,6 +176,7 @@ aside .recommended ul li span {
     flex: 1;
     padding: 20px;
     min-height: 500px;
+    max-height: 80vh;
 }
 .modal-info-title {
     font-size: 24px;
