@@ -8,12 +8,12 @@ namespace EffectiveWebProg.Controllers
     {
         private readonly string connectionString = "server=mysql-webprogramming1-sit-cc31.c.aivencloud.com;port=19112;database=Munch;uid=avnadmin;pwd=AVNS_HsKVnqOod_xgB4OJwUT;sslmode=Required";
 
+        
         public IActionResult Employees()
         {
             return RedirectToAction("Index", "Employees");
         }
 
-        
         private async Task<RestaurantsModel> GetRestaurantDetailsByUserIdAsync(string userId)
         {
             RestaurantsModel restaurantDetails = null;
@@ -51,16 +51,17 @@ namespace EffectiveWebProg.Controllers
             return restaurantDetails;
         }
 
-        private async Task<List<ReservationsModel>> GetUpcomingReservationsAsync()
+        private async Task<List<ReservationsModel>> GetUpcomingReservationsAsync(string restId)
         {
             List<ReservationsModel> reservations = new List<ReservationsModel>();
-            string query = "SELECT * FROM Reservations WHERE ReservationDate >= CURDATE() ORDER BY ReservationDate, ReservationTime";
+            string query = "SELECT * FROM Reservations WHERE ReservationDate >= CURDATE() AND RestID = @RestID ORDER BY ReservationDate, ReservationTime";
             
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 await conn.OpenAsync();
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
+                    cmd.Parameters.AddWithValue("@RestID", restId);
                     using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync())
@@ -128,49 +129,57 @@ namespace EffectiveWebProg.Controllers
             return Ok(new { success = true });
         }
 
-        private async Task<int> GetTotalReservationsCountAsync()
+        private async Task<int> GetTotalReservationsCountAsync(string restId)
         {
             int count = 0;
-            string query = "SELECT COUNT(*) FROM Reservations";
+            string query = "SELECT COUNT(*) FROM Reservations WHERE RestID = @RestID";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 await conn.OpenAsync();
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
+                    cmd.Parameters.AddWithValue("@RestID", restId);
                     count = Convert.ToInt32(await cmd.ExecuteScalarAsync());
                 }
             }
             return count;
         }
 
-        private async Task<int> GetTotalEmployeesCountAsync()
+        private async Task<int> GetTotalEmployeesCountAsync(string restId)
         {
             int count = 0;
-            string query = "SELECT COUNT(*) FROM Employees";
+            string query = "SELECT COUNT(*) FROM Employees WHERE RestID = @RestID";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 await conn.OpenAsync();
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
+                    cmd.Parameters.AddWithValue("@RestID", restId);
                     count = Convert.ToInt32(await cmd.ExecuteScalarAsync());
                 }
             }
             return count;
         }
-
 
         public async Task<IActionResult> Index()
         {
-            string userId = "deab13da-1e6b-11ef-ad56-662ef0370963"; // example userId
-            RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(userId);
-            List<ReservationsModel> upcomingReservations = await GetUpcomingReservationsAsync();
-            int totalReservations = await GetTotalReservationsCountAsync();
-            int totalEmployees = await GetTotalEmployeesCountAsync();
-            var reservationStats = await GetReservationStatsAsync();
+            string restID = HttpContext.Session.GetString("SSID") ?? "";
+            if (string.IsNullOrEmpty(restID))
+            {
+                Console.WriteLine("RestID is null or empty: " + restID);
+                // Handle the case where the restID is not available in the session
+                return RedirectToAction("Error", "Home");
+            }
+            //string restId = "deab13da-1e6b-11ef-ad56-662ef0370963"; // example restaurant ID
+            RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(restID);
+            List<ReservationsModel> upcomingReservations = await GetUpcomingReservationsAsync(restID);
+            int totalReservations = await GetTotalReservationsCountAsync(restID);
+            int totalEmployees = await GetTotalEmployeesCountAsync(restID);
+            var reservationStats = await GetReservationStatsAsync(restID);
             var itemStocks = await GetItemStocksAsync();
-            var employeeWorkingHours = await GetEmployeeWorkingHoursAsync();
+            var employeeWorkingHours = await GetEmployeeWorkingHoursAsync(restID);
 
             ViewBag.RestaurantDetails = restaurantDetails;
             ViewBag.UpcomingReservations = upcomingReservations;
@@ -182,13 +191,14 @@ namespace EffectiveWebProg.Controllers
 
             return View();
         }
-        private async Task<Dictionary<string, int>> GetReservationStatsAsync()
+
+        private async Task<Dictionary<string, int>> GetReservationStatsAsync(string restId)
         {
             var stats = new Dictionary<string, int>();
             string query = @"
                 SELECT ReservationStatus, COUNT(*) as Count
                 FROM Reservations
-                WHERE ReservationDate >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+                WHERE ReservationDate >= DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND RestID = @RestID
                 GROUP BY ReservationStatus";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -196,6 +206,7 @@ namespace EffectiveWebProg.Controllers
                 await conn.OpenAsync();
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
+                    cmd.Parameters.AddWithValue("@RestID", restId);
                     using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync())
@@ -230,25 +241,32 @@ namespace EffectiveWebProg.Controllers
             return stocks;
         }
 
-        private async Task<Dictionary<string, double>> GetEmployeeWorkingHoursAsync()
+        private async Task<Dictionary<string, double>> GetEmployeeWorkingHoursAsync(string restId)
         {
             var workingHours = new Dictionary<string, double>();
-            string query = "SELECT EmployeeID, SUM(TIMESTAMPDIFF(HOUR, StartTime, EndTime)) AS TotalHours FROM TimeSheet GROUP BY EmployeeID";
+            string query = @"
+                SELECT E.EmployeeName, SUM(TIMESTAMPDIFF(HOUR, T.StartTime, T.EndTime)) AS TotalHours
+                FROM TimeSheet T
+                JOIN Employees E ON T.EmployeeID = E.EmployeeID
+                WHERE E.RestID = @RestID
+                GROUP BY E.EmployeeName";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 await conn.OpenAsync();
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
+                    cmd.Parameters.AddWithValue("@RestID", restId);
                     using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync())
                         {
-                            workingHours[reader["EmployeeID"].ToString()] = double.Parse(reader["TotalHours"].ToString());
+                            workingHours[reader["EmployeeName"].ToString()] = double.Parse(reader["TotalHours"].ToString());
                         }
                     }
                 }
             }
+
             return workingHours;
         }
     }
