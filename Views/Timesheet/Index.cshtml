@@ -39,15 +39,8 @@
                         <ul>
                             @foreach (var timesheet in Model.Timesheets.Where(t => t.Day.Date == currentDay.Date))
                             {
-                                <li data-shift-id="@timesheet.SheetID">
-                                    Employee: @timesheet.Employees.EmployeeName
-                                    <br />
-                                    Start Time: @timesheet.StartTime.ToString(@"hh\:mm")
-                                    <br />
-                                    End Time: @timesheet.EndTime.ToString(@"hh\:mm")
-                                    <br />
-                                    <button class="btn btn-sm btn-primary" onclick="editShift('@timesheet.SheetID')">Edit</button>
-                                    <button class="btn btn-sm btn-danger" onclick="deleteShift('@timesheet.SheetID')">Delete</button>
+                                <li onclick="showEditShiftForm('@timesheet.SheetID')">
+                                    @timesheet.Employees.EmployeeName - @timesheet.ShiftType
                                 </li>
                             }
                         </ul>
@@ -58,12 +51,11 @@
     </tbody>
 </table>
 
-<!-- Modal -->
+<!-- Add Shift Modal -->
 <div id="shiftFormModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <form id="shiftForm">
-            <input type="hidden" id="shiftId" name="SheetID" />
             <input type="hidden" id="shiftDate" name="Day" />
             <div class="form-group">
                 <label for="employeeId">Employee Name</label>
@@ -79,8 +71,8 @@
                 <label for="shiftType">Shift</label>
                 <select id="shiftType" name="ShiftType" class="form-control" required onchange="updateShiftTimes()">
                     <option value="">Select shift</option>
-                    <option value="Morning">Morning Shift (10:30 AM to 6:30 PM)</option>
-                    <option value="Afternoon">Afternoon Shift (3:00 PM to 11:00 PM)</option>
+                    <option value="AM">Morning Shift (10:30 AM to 6:30 PM)</option>
+                    <option value="PM">Afternoon Shift (3:00 PM to 11:00 PM)</option>
                 </select>
             </div>
             <div class="form-group">
@@ -92,6 +84,45 @@
                 <input type="time" id="endTime" name="EndTime" class="form-control" required />
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Shift Modal -->
+<div id="editShiftFormModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="editShiftForm">
+            <input type="hidden" id="editShiftId" name="SheetID" />
+            <input type="hidden" id="editShiftDate" name="Day" />
+            <div class="form-group">
+                <label for="editEmployeeId">Employee Name</label>
+                <select id="editEmployeeId" name="EmployeeID" class="form-control" required>
+                    <option value="">Select an employee</option>
+                    @foreach (var employee in Model.Employees)
+                    {
+                        <option value="@employee.EmployeeID">@employee.EmployeeName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="editShiftType">Shift</label>
+                <select id="editShiftType" name="ShiftType" class="form-control" required onchange="updateEditShiftTimes()">
+                    <option value="">Select shift</option>
+                    <option value="AM">Morning Shift (10:30 AM to 6:30 PM)</option>
+                    <option value="PM">Afternoon Shift (3:00 PM to 11:00 PM)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="editStartTime">Start Time</label>
+                <input type="time" id="editStartTime" name="StartTime" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="editEndTime">End Time</label>
+                <input type="time" id="editEndTime" name="EndTime" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="button" class="btn btn-danger" onclick="deleteShift()">Delete</button>
         </form>
     </div>
 </div>
@@ -149,6 +180,12 @@
             color: black;
             text-decoration: none;
             cursor: pointer;
+        }
+        li {
+            cursor: pointer;
+        }
+        li:hover {
+            background-color: #f0f0f0;
         }
     </style>
 }

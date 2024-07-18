@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EffectiveWebProg.Controllers
 {
-    public class TimesheetController : Controller
+    public class TimesheetController : BaseController
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<TimesheetController> _logger;
@@ -45,7 +45,7 @@ namespace EffectiveWebProg.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddOrUpdateShift([FromBody] TimeSheetModel model)
+        public async Task<IActionResult> AddShift([FromBody] TimeSheetModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -54,39 +54,7 @@ namespace EffectiveWebProg.Controllers
 
             try
             {
-                model.StartTime = model.Day.Date + model.StartTime.TimeOfDay;
-                model.EndTime = model.Day.Date + model.EndTime.TimeOfDay;
-
-                // Fetch the employee based on the EmployeeID
-                var employee = await _context.Employees.FindAsync(model.EmployeeID);
-                if (employee == null)
-                {
-                    return BadRequest("Invalid EmployeeID");
-                }
-
-                // Set the Employees navigation property
-                model.Employees = employee;
-
-                if (model.SheetID == Guid.Empty)
-                {
-                    model.SheetID = Guid.NewGuid();
-                    _context.TimeSheet.Add(model);
-                }
-                else
-                {
-                    var existingShift = await _context.TimeSheet.FindAsync(model.SheetID);
-                    if (existingShift == null)
-                    {
-                        model.SheetID = Guid.NewGuid();
-                        _context.TimeSheet.Add(model);
-                    }
-                    else
-                    {
-                        _context.Entry(existingShift).CurrentValues.SetValues(model);
-                        existingShift.Employees = employee;
-                    }
-                }
-
+                _context.TimeSheet.Add(model);
                 await _context.SaveChangesAsync();
                 return Json(new { success = true, shiftId = model.SheetID });
             }
@@ -95,20 +63,6 @@ namespace EffectiveWebProg.Controllers
                 _logger.LogError(ex, "Error occurred while saving shift: {@ShiftData}", model);
                 return StatusCode(500, new { success = false, error = "An error occurred while saving the shift.", details = ex.ToString() });
             }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteShift(Guid id)
-        {
-            var shift = await _context.TimeSheet.FindAsync(id);
-            if (shift == null)
-            {
-                return NotFound();
-            }
-
-            _context.TimeSheet.Remove(shift);
-            await _context.SaveChangesAsync();
-            return Json(new { success = true });
         }
 
         [HttpGet]
@@ -123,7 +77,67 @@ namespace EffectiveWebProg.Controllers
                 return NotFound();
             }
 
-            return Json(shift);
+            var shiftData = new
+            {
+                shift.SheetID,
+                shift.EmployeeID,
+                EmployeeName = shift.Employees?.EmployeeName,
+                shift.Day,
+                shift.ShiftType,
+                shift.StartTime,
+                shift.EndTime
+            };
+
+            return Json(shiftData);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateShift([FromBody] TimeSheetModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var existingShift = await _context.TimeSheet.FindAsync(model.SheetID);
+                if (existingShift == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Entry(existingShift).CurrentValues.SetValues(model);
+                await _context.SaveChangesAsync();
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while updating shift: {@ShiftData}", model);
+                return StatusCode(500, new { success = false, error = "An error occurred while updating the shift." });
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteShift(Guid id)
+        {
+            try
+            {
+                var shift = await _context.TimeSheet.FindAsync(id);
+                if (shift == null)
+                {
+                    return NotFound();
+                }
+
+                _context.TimeSheet.Remove(shift);
+                await _context.SaveChangesAsync();
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while deleting shift: {ShiftId}", id);
+                return StatusCode(500, new { success = false, error = "An error occurred while deleting the shift." });
+            }
         }
     }
 }

@@ -1,35 +1,72 @@
-let modal = document.getElementById("shiftFormModal");
-let span = document.getElementsByClassName("close")[0];
-let form = document.getElementById("shiftForm");
+let addModal = document.getElementById("shiftFormModal");
+let editModal = document.getElementById("editShiftFormModal");
+let addSpan = addModal.getElementsByClassName("close")[0];
+let editSpan = editModal.getElementsByClassName("close")[0];
+let addForm = document.getElementById("shiftForm");
+let editForm = document.getElementById("editShiftForm");
 
 function showShiftForm(element, date) {
-    document.getElementById("shiftId").value = "00000000-0000-0000-0000-000000000000"; // Empty Guid
     document.getElementById("shiftDate").value = date;
-    form.reset();
-    modal.style.display = "block";
+    addForm.reset();
+    addModal.style.display = "block";
 }
 
-span.onclick = function() {
-    modal.style.display = "none";
+function showEditShiftForm(shiftId) {
+    fetch(`/Timesheet/GetShift?id=${shiftId}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("editShiftId").value = data.sheetID;
+            document.getElementById("editShiftDate").value = new Date(data.day).toISOString().split('T')[0];
+            document.getElementById("editEmployeeId").value = data.employeeID;
+            
+            // Set the employee name in a disabled input field if you want to display it
+            let employeeNameInput = document.getElementById("editEmployeeName");
+            if (employeeNameInput) {
+                employeeNameInput.value = data.employeeName;
+            }
+
+            document.getElementById("editShiftType").value = data.shiftType;
+            document.getElementById("editStartTime").value = new Date(data.startTime).toTimeString().slice(0, 5);
+            document.getElementById("editEndTime").value = new Date(data.endTime).toTimeString().slice(0, 5);
+            editModal.style.display = "block";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("An error occurred while fetching the shift data. Please try again.");
+        });
+}
+
+addSpan.onclick = function() {
+    addModal.style.display = "none";
+}
+
+editSpan.onclick = function() {
+    editModal.style.display = "none";
 }
 
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target == addModal) {
+        addModal.style.display = "none";
+    }
+    if (event.target == editModal) {
+        editModal.style.display = "none";
     }
 }
 
-form.addEventListener('submit', function(e) {
+addForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    console.log("Form submitted");
+    submitShiftForm(addForm, '/Timesheet/AddShift');
+});
 
+editForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    submitShiftForm(editForm, '/Timesheet/UpdateShift');
+});
+
+function submitShiftForm(form, url) {
     let formData = new FormData(form);
     let shiftData = Object.fromEntries(formData.entries());
     
-    shiftData.SheetID = shiftData.SheetID || "00000000-0000-0000-0000-000000000000";
-    shiftData.EmployeeID = shiftData.EmployeeID;
-    
-    // Parse the date and time values correctly
     let shiftDate = new Date(shiftData.Day);
     let startTime = shiftData.StartTime.split(':');
     let endTime = shiftData.EndTime.split(':');
@@ -44,9 +81,7 @@ form.addEventListener('submit', function(e) {
     shiftData.StartTime = startDateTime.toISOString();
     shiftData.EndTime = endDateTime.toISOString();
 
-    console.log("Shift data:", shiftData);
-
-    fetch('/Timesheet/AddOrUpdateShift', {
+    fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -60,9 +95,9 @@ form.addEventListener('submit', function(e) {
         return response.json();
     })
     .then(data => {
-        console.log("Response data:", data);
         if (data.success) {
-            modal.style.display = "none";
+            addModal.style.display = "none";
+            editModal.style.display = "none";
             location.reload();
         } else {
             alert("Failed to save shift. Error: " + (data.error || "Unknown error"));
@@ -72,73 +107,61 @@ form.addEventListener('submit', function(e) {
         console.error('Error:', error);
         alert("An error occurred. Error details: " + JSON.stringify(error));
     });
-});
+}
+
+function deleteShift() {
+    const shiftId = document.getElementById("editShiftId").value;
+    if (confirm("Are you sure you want to delete this shift?")) {
+        fetch(`/Timesheet/DeleteShift?id=${shiftId}`, {
+            method: 'POST',
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw err; });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                editModal.style.display = "none";
+                location.reload();
+            } else {
+                alert("Failed to delete shift. Error: " + (data.error || "Unknown error"));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("An error occurred while deleting the shift. Error details: " + JSON.stringify(error));
+        });
+    }
+}
 
 function updateShiftTimes() {
     let shiftType = document.getElementById("shiftType").value;
     let startTime = document.getElementById("startTime");
     let endTime = document.getElementById("endTime");
 
-    if (shiftType === "Morning") {
+    if (shiftType === "AM") {
         startTime.value = "10:30";
         endTime.value = "18:30";
-    } else if (shiftType === "Afternoon") {
+    } else if (shiftType === "PM") {
         startTime.value = "15:00";
         endTime.value = "23:00";
     }
 }
 
-function deleteShift(shiftId) {
-    if (confirm("Are you sure you want to delete this shift?")) {
-        fetch('/Timesheet/DeleteShift', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id: shiftId }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                location.reload();
-            } else {
-                alert("Failed to delete shift. Please try again.");
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert("An error occurred while deleting the shift. Please check the console and try again.");
-        });
+function updateEditShiftTimes() {
+    let shiftType = document.getElementById("editShiftType").value;
+    let startTime = document.getElementById("editStartTime");
+    let endTime = document.getElementById("editEndTime");
+
+    if (shiftType === "AM") {
+        startTime.value = "10:30";
+        endTime.value = "18:30";
+    } else if (shiftType === "PM") {
+        startTime.value = "15:00";
+        endTime.value = "23:00";
     }
 }
 
-function editShift(shiftId) {
-    fetch(`/Timesheet/GetShift?id=${shiftId}`)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(shift => {
-        document.getElementById("shiftId").value = shift.sheetID;
-        document.getElementById("shiftDate").value = new Date(shift.day).toISOString().split('T')[0];
-        document.getElementById("employeeId").value = shift.employeeID;
-        document.getElementById("shiftType").value = shift.shiftType;
-        document.getElementById("startTime").value = shift.startTime.substring(0, 5);
-        document.getElementById("endTime").value = shift.endTime.substring(0, 5);
-        modal.style.display = "block";
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert("An error occurred while fetching shift data. Please check the console and try again.");
-    });
-}
-
-// Log when the script has loaded
 console.log("timesheet.js loaded");
