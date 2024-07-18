@@ -10,14 +10,14 @@ namespace EffectiveWebProg.Controllers
     public class EmployeesController : BaseController
     {
         private readonly ApplicationDbContext _db;
-        private readonly ILogger<EmployeesController> _logger;
+        // private readonly ILogger<EmployeesController> _logger;
 
         private readonly IWebHostEnvironment _hostingEnvironment;
 
         public EmployeesController(ApplicationDbContext db, ILogger<EmployeesController> logger, IWebHostEnvironment hostingEnvironment)
         {
             _db = db;
-            _logger = logger;
+            // _logger = logger;
             _hostingEnvironment = hostingEnvironment;
         }
 
@@ -27,22 +27,22 @@ namespace EffectiveWebProg.Controllers
             var employees = await _db.Employees.ToListAsync();
             if (employees == null || !employees.Any())
             {
-                _logger.LogInformation("No employees found in the database.");
+                // _logger.LogInformation("No employees found in the database.");
             }
             else
             {
                 foreach (var employee in employees)
                 {
-                    _logger.LogInformation($"Employee ID: {employee.EmployeeID}");
-                    _logger.LogInformation($"Name: {employee.EmployeeName}");
-                    _logger.LogInformation($"Department: {employee.Department}");
-                    _logger.LogInformation($"Email: {employee.Email}");
-                    _logger.LogInformation($"Phone Number: {employee.PhoneNumber}");
-                    _logger.LogInformation($"Role: {employee.Role}");
-                    _logger.LogInformation($"Hire Date: {employee.HireDate}");
-                    _logger.LogInformation($"Restaurant ID: {employee.RestID}");
-                    _logger.LogInformation($"Employee Pic: {employee.EmployeePic}");
-                    _logger.LogInformation(""); // For spacing between employees
+                    // _logger.LogInformation($"Employee ID: {employee.EmployeeID}");
+                    // _logger.LogInformation($"Name: {employee.EmployeeName}");
+                    // _logger.LogInformation($"Department: {employee.Department}");
+                    // _logger.LogInformation($"Email: {employee.Email}");
+                    // _logger.LogInformation($"Phone Number: {employee.PhoneNumber}");
+                    // _logger.LogInformation($"Role: {employee.Role}");
+                    // _logger.LogInformation($"Hire Date: {employee.HireDate}");
+                    // _logger.LogInformation($"Restaurant ID: {employee.RestID}");
+                    // _logger.LogInformation($"Employee Pic: {employee.EmployeePic}");
+                    // _logger.LogInformation(""); // For spacing between employees
                 }
             }
             return View(employees);
@@ -90,7 +90,7 @@ namespace EffectiveWebProg.Controllers
             if (!string.IsNullOrEmpty(ssid))
                 {
                     var employee = new EmployeesModel { RestID = Guid.Parse(ssid) }; // Initialize with RestID from session
-                    _logger.LogInformation($"ssid: meow {ssid}");
+                    // _logger.LogInformation($"ssid: meow {ssid}");
 
                     return View(employee);
                 }
@@ -136,7 +136,7 @@ namespace EffectiveWebProg.Controllers
                 var restaurant = await _db.Restaurants.FindAsync(employee.RestID);
                 if (restaurant == null)
                 {
-                    _logger.LogError($"Restaurant not found. {employee.RestID}");
+                    // _logger.LogError($"Restaurant not found. {employee.RestID}");
                     return BadRequest("Restaurant not found.");
                 }
 
@@ -147,12 +147,12 @@ namespace EffectiveWebProg.Controllers
                 _db.Add(employee);
                 await _db.SaveChangesAsync();
 
-                _logger.LogInformation("Employee added to database.");
+                // _logger.LogInformation("Employee added to database.");
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                _logger.LogError("An error occurred while creating the employee: " + ex.Message);
+                // _logger.LogError("An error occurred while creating the employee: " + ex.Message);
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -166,14 +166,14 @@ namespace EffectiveWebProg.Controllers
                 var employee = await _db.Employees.FindAsync(id);
                 if (employee == null)
                 {
-                    _logger.LogError($"Employee with ID {id} not found.");
+                    // _logger.LogError($"Employee with ID {id} not found.");
                     return NotFound();
                 }
                 return Json(employee);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error fetching employee data: {ex.Message}");
+                // _logger.LogError($"Error fetching employee data: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -182,17 +182,17 @@ namespace EffectiveWebProg.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit([FromForm] EmployeesModel employee, IFormFile? photo)
         {
-    if (!ModelState.IsValid)
-    {
-        foreach (var modelState in ModelState.Values)
-        {
-            foreach (var error in modelState.Errors)
+            if (!ModelState.IsValid)
             {
-                _logger.LogError(error.ErrorMessage);
+                foreach (var modelState in ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        // _logger.LogError(error.ErrorMessage);
+                    }
+                }
+                return BadRequest(ModelState);
             }
-        }
-        return BadRequest(ModelState);
-    }
 
             try
             {
@@ -232,12 +232,12 @@ namespace EffectiveWebProg.Controllers
                 _db.Update(existingEmployee);
                 await _db.SaveChangesAsync();
 
-                _logger.LogInformation("Employee updated in database.");
+                // _logger.LogInformation("Employee updated in database.");
                 return Ok(existingEmployee);
             }
             catch (Exception ex)
             {
-                _logger.LogError("An error occurred while updating the employee: " + ex.Message);
+                // _logger.LogError("An error occurred while updating the employee: " + ex.Message);
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -258,12 +258,12 @@ namespace EffectiveWebProg.Controllers
                 _db.Employees.Remove(employee);
                 await _db.SaveChangesAsync();
 
-                _logger.LogInformation($"Employee {id} deleted successfully.");
+                // _logger.LogInformation($"Employee {id} deleted successfully.");
                 return Ok();
             }
             catch (Exception ex)
             {
-                _logger.LogError("An error occurred while deleting the employee: " + ex.Message);
+                // _logger.LogError("An error occurred while deleting the employee: " + ex.Message);
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -272,7 +272,7 @@ namespace EffectiveWebProg.Controllers
         [HttpGet]
         public IActionResult Search(string searchTerm)
         {
-            _logger.LogInformation($"Search term: {searchTerm}");
+            // _logger.LogInformation($"Search term: {searchTerm}");
             var employees = _db.Employees
                             .Where(e => e.EmployeeName.Contains(searchTerm) ||
                                         e.Role.Contains(searchTerm) ||
