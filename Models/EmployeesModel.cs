@@ -61,3 +61,4 @@ namespace EffectiveWebProg.Models
         RestID = restId;
     }
 }
+}
