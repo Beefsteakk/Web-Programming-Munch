@@ -106,11 +106,12 @@ namespace EffectiveWebProg.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> DeleteReservation(Guid id)
-        {
-            Console.WriteLine("Deleting reservation with ID: " + id);
-            string query = "DELETE FROM Reservations WHERE ReservationID = @ReservationID";
+        {   
+            
+            
+            string query = "UPDATE Reservations SET ReservationStatus='Cancelled' WHERE ReservationID = @ReservationID";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
