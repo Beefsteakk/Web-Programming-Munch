@@ -167,3 +167,19 @@ body {
 .close:hover {
   color: #f8f9fa !important;
 }
+
+.ui-autocomplete {
+  max-height: 200px;
+  overflow-y: auto;
+  /* Prevent horizontal scrollbar */
+  overflow-x: hidden;
+}
+
+.ui-menu-item {
+  padding-bottom: 1px;
+  cursor: pointer;
+}
+
+.ui-helper-hidden-accessible {
+  display: none;
+}

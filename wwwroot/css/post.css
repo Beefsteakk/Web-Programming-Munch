@@ -350,3 +350,18 @@ aside .recommended ul li span {
     position: relative;
     width: 20%;
 }
+
+.ui-autocomplete {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .ui-menu-item {
+    padding-bottom: 1px;
+    cursor: pointer;
+  }
+  
+  .ui-helper-hidden-accessible {
+    display: none;
+  }

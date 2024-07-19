@@ -8,7 +8,6 @@
 }
 @using EffectiveWebProg.ViewModels;
 @model ProfileViewModel;
-
 <div class="profile-container">
     <div class="profile-header">
         <div class="profile-picture">
@@ -281,9 +280,12 @@
     </div>
 </div>
 @section Scripts {
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function openEditModal(reservationId, reservedName, reservationDate, reservationTime, numOfGuests, specialRequest) {
