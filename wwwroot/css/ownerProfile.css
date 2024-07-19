@@ -304,16 +304,21 @@ button {
 }
 
 /* Modal Content */
-.modal-contentReserve {
+.modalReserve-content {
   background-color: #fefefe;
-  margin: 10% auto; /* 10% from the top and centered */
-  padding: 20px;
+  margin: 2% auto; /* 10% from the top and centered */
+  padding: 1%;
+  padding-bottom: 5%;
   border: 1px solid #888;
-  width: 90%; /* Could be more or less, depending on screen size */
-  max-width: 600px; /* Max width for larger screens */
+  width: 40%; /* Could be more or less, depending on screen size */
+  max-height: 100%; /* Maximum height */
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
+  overflow-y: auto; /* Add vertical scroll if content overflows */
+}
+@media screen and (max-width: 600px) {
+  .modalReserve-content {
+      width: 95%; /* Adjust modal width for small screens */
+  }
 }
 
 /* The Close Button */
