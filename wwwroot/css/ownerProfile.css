@@ -315,11 +315,7 @@ button {
   border-radius: 8px;
   overflow-y: auto; /* Add vertical scroll if content overflows */
 }
-@media screen and (max-width: 600px) {
-  .modalReserve-content {
-      width: 95%; /* Adjust modal width for small screens */
-  }
-}
+
 
 /* The Close Button */
 .close {
