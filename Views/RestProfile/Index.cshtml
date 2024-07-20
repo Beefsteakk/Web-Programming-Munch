@@ -9,6 +9,7 @@
 <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
 <script
     src="https://www.paypal.com/sdk/js?client-id=AVkGFYL29FKXNC4HSGogpIF4bRCV_ckeHqc6QW6cO-YJWpKSFmMDvLKZUr_JIj-Viou_PEZgSzbdFV-o&currency=SGD"></script>
+<script type="text/javascript" src="~/js/follow.js" defer></script>
 
 <div class="container">
     <div class="profile-header">
@@ -50,7 +51,7 @@
                                     <div class="col-7">
                                         @if (!ViewBag.isOwnRestaurant)
                                         {
-                                            <button class="f-btn btn btn-primary">
+                                            <button class="f-btn btn btn-primary" id="follow-button" onclick="followRestaurant('@details.RestID')">
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path fill-rule="evenodd" clip-rule="evenodd"

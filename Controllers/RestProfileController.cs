@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace EffectiveWebProg.Controllers
 {
@@ -298,7 +299,30 @@ namespace EffectiveWebProg.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [Route("Restaurant/Follow")]
+        public async Task<JsonResult> FollowAsync(Guid restaurantId)
+        {
+            var restaurant = await _db.Restaurants.FindAsync(restaurantId);
+            if (restaurant == null) return Json(new {status = "failed", reason = "Restaurant not found."});
 
+            var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
+            var user = await _db.Users.FindAsync(sessionID);
+            if (user == null) return Json(new {status = "failed", reason = "User not found."});
+
+            var follow = await _db.Followings.FirstOrDefaultAsync(f => f.UserID == user.UserID && f.RestID == restaurant.RestID);
+            if (follow == null)
+            {
+                follow = new FollowingsModel { Rest = restaurant, User = user };
+                await _db.Followings.AddAsync(follow);
+            }
+            else
+            {
+                _db.Followings.Remove(follow);
+            }
+
+            await _db.SaveChangesAsync();
+            return Json(new {status = "success"});
+        }
     }
-
 }
