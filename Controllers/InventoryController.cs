@@ -12,7 +12,6 @@ namespace EffectiveWebProg.Controllers
     public class InventoryController : BaseController
     {
         private readonly ApplicationDbContext _db;
-        private const int PageSize = 10;
 
         public InventoryController(ApplicationDbContext db)
         {
@@ -20,7 +19,7 @@ namespace EffectiveWebProg.Controllers
         }
 
         // GET: Items
-        public async Task<IActionResult> Index(int page = 1)
+        public async Task<IActionResult> Index()
         {
             var userType = HttpContext.Session.GetString("SSUserType");
             ViewBag.UserType = userType;
@@ -47,16 +46,8 @@ namespace EffectiveWebProg.Controllers
                 .Where(ii => ii.Inventory.RestID == restID)
                 .AsQueryable();
 
-            var totalItems = await query.CountAsync();
-            var inventoryItems = await query
-                .Skip((page - 1) * PageSize)
-                .Take(PageSize)
-                .ToListAsync();
-
+            var inventoryItems = await query.ToListAsync();
             var categories = await _db.ItemCat.ToListAsync();
-
-            ViewBag.CurrentPage = page;
-            ViewBag.TotalPages = (int)Math.Ceiling(totalItems / (double)PageSize);
 
             ViewBag.TotalStockCount = query.Sum(ii => ii.StockCount);
             ViewBag.TotalPrice = query.Sum(ii => ii.TotalPrice);
@@ -68,6 +59,26 @@ namespace EffectiveWebProg.Controllers
                 ItemCat = categories
             };
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DecreaseStock(Guid inventoryId, Guid itemId)
+        {
+            var inventoryItem = await _db.InventoryItems
+                .FirstOrDefaultAsync(ii => ii.InventoryID == inventoryId && ii.ItemID == itemId);
+
+            if (inventoryItem == null)
+            {
+                return NotFound();
+            }
+
+            if (inventoryItem.StockCount > 0)
+            {
+                inventoryItem.StockCount--;
+                await _db.SaveChangesAsync();
+            }
+
+            return Ok(new { inventoryId, itemId, newStockCount = inventoryItem.StockCount });
         }
     }
 }
