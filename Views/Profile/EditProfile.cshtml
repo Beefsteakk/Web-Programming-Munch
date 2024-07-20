@@ -2,7 +2,8 @@
 @model UsersModel;
 
 <div class="container mt-5">
-    <form action="/Profile/EditProfile" method="post" enctype="multipart/form-data" class="p-4 shadow-sm rounded" style="background: #fff;">
+    <form action="/Profile/EditProfile" method="post" enctype="multipart/form-data" class="p-4 shadow-sm rounded"
+        style="background: #fff;">
         <div class="row mb-4">
             <div class="col-sm-10">
                 <h1 class="display-4">Edit User Profile</h1>
@@ -11,11 +12,14 @@
                 <div class="profile-picture">
                     @if (Model.UserProfilePic == null)
                     {
-                        <img src="~/images/chef.png" alt="Profile Photo" id="profilePhoto" class="rounded-circle img-thumbnail" style="cursor: pointer;">
+                        <img src="~/images/chef.png" alt="Profile Photo" id="profilePhoto"
+                            class="rounded-circle img-thumbnail" style="cursor: pointer;">
                         <input type="file" id="fileInput" name="UserProfilePic" style="display:none" accept="image/*">
-                    } else
+                    }
+                    else
                     {
-                        <img src="/Images/UserProfilePics/@Model.UserProfilePic" alt="Profile Photo" id="profilePhoto" class="rounded-circle img-thumbnail" style="cursor: pointer;">
+                        <img src="/Images/UserProfilePics/@Model.UserProfilePic" alt="Profile Photo" id="profilePhoto"
+                            class="rounded-circle img-thumbnail" style="cursor: pointer;">
                         <input type="file" id="fileInput" name="UserProfilePic" style="display:none" accept="image/*">
                     }
                 </div>
@@ -24,39 +28,53 @@
 
         <div class="form-group">
             <label for="UserName">Name</label>
-            <input type="text" id="UserName" name="UserName" class="form-control" pattern="^[a-zA-Z][a-zA-Z ]{3,100}$" title="Name must be between 3 to 100 characters long, with no special characters." value="@Model.UserName" autocomplete="off" required>
+            <input type="text" id="UserName" name="UserName" class="form-control" pattern="^[a-zA-Z][a-zA-Z ]{3,100}$"
+                title="Name must be between 3 to 100 characters long, with no special characters."
+                value="@Model.UserName" autocomplete="off" required>
             <span class="text-danger" asp-validation-for="UserName"></span>
         </div>
 
         <div class="form-group">
             <label for="UserUsername">Username</label>
-            <input type="text" id="UserUsername" name="UserUsername" class="form-control" pattern="^[a-zA-Z][a-zA-Z ]{5,30}$" title="Username must be between 5 to 30 characters long, with no special characters." value="@Model.UserUsername" autocomplete="off" required>
+            <input type="text" id="UserUsername" name="UserUsername" class="form-control"
+                pattern="^[a-zA-Z][a-zA-Z ]{5,30}$"
+                title="Username must be between 5 to 30 characters long, with no special characters."
+                value="@Model.UserUsername" autocomplete="off" required>
             <span class="text-danger" asp-validation-for="UserUsername"></span>
         </div>
 
         <div class="form-group">
             <label for="UserEmail">Email</label>
-            <input type="email" id="UserEmail" name="UserEmail" class="form-control" value="@Model.UserEmail" autocomplete="off" required>
+            <input type="email" id="UserEmail" name="UserEmail" class="form-control" value="@Model.UserEmail"
+                autocomplete="off" required>
             <span class="text-danger" asp-validation-for="UserEmail"></span>
             <span class="valid-icon"></span>
         </div>
 
         <div class="form-group">
             <label for="UserContactNum">Contact Number</label>
-            <input type="text", id="UserContactNum" name="UserContactNum" class="form-control" autocomplete="off" placeholder="12345678" value="@Model.UserContactNum" minlength="8" maxlength="8" title="Contact number has to be 8 digits." pattern="[0-9]{8}" required>
+            <input type="text" , id="UserContactNum" name="UserContactNum" class="form-control" autocomplete="off"
+                placeholder="12345678" value="@Model.UserContactNum" minlength="8" maxlength="8"
+                title="Contact number has to be 8 digits." pattern="[0-9]{8}" required>
             <span asp-validation-for="UserContactNum" class="text-danger"></span>
         </div>
 
         @*
         <div class="form-group">
-            <label for="UserPassword">User Password</label>
-            <input type="password" id="UserPassword" name="UserPassword" class="form-control" value="@Model.UserPassword" required />
+        <label for="UserPassword">User Password</label>
+        <input type="password" id="UserPassword" name="UserPassword" class="form-control" value="@Model.UserPassword"
+        required />
         </div>
         *@
 
         <div class="form-row">
-            <button type="submit" class="btn btn-primary btn-block">Save</button>
-            <button type="button" class="btn btn-secondary btn-block" onclick="window.location.href='/Profile/Index'">Cancel</button>
+            <div class="col-sm-6 mb-2">
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
+            </div>
+            <div class="col-sm-6">
+                <button type="button" class="btn btn-secondary btn-block"
+                    onclick="window.location.href='/Profile/Index'">Cancel</button>
+            </div>
         </div>
     </form>
 </div>

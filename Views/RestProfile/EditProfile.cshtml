@@ -1,6 +1,9 @@
+@using EffectiveWebProg.Models
 @{
     ViewData["Title"] = "Edit Restaurant Profile";
     var details = ViewBag.RestaurantDetails as RestaurantsModel;
+    Console.WriteLine("PROFILE IMAGE"+details.RestPic);
+
     <link href="~/css/editprofile.css" rel="stylesheet" />
 }
 
@@ -12,16 +15,19 @@
         font-family: 'Poppins', sans-serif;
         background-color: #f8f9fa;
     }
+
     .container {
         max-width: 800px;
         margin-top: 50px;
     }
+
     .form_area {
         background-color: white;
         padding: 40px;
         border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
+
     .title {
         font-size: 24px;
         font-weight: 600;
@@ -29,15 +35,18 @@
         margin-bottom: 30px;
         text-align: center;
     }
+
     .form_group {
         margin-bottom: 25px;
     }
+
     .sub_title {
         font-weight: 500;
         color: #555;
         margin-bottom: 8px;
         display: block;
     }
+
     .form_style {
         width: 100%;
         padding: 10px 15px;
@@ -46,17 +55,21 @@
         font-size: 16px;
         transition: border-color 0.3s;
     }
+
     .form_style:focus {
         border-color: #4a90e2;
         outline: none;
     }
+
     .input-group {
         display: flex;
     }
+
     .input-container {
         flex-grow: 1;
         position: relative;
     }
+
     .map-button {
         position: absolute;
         right: 5px;
@@ -69,7 +82,9 @@
         border-radius: 3px;
         cursor: pointer;
     }
-    .gbtn, .rbtn {
+
+    .gbtn,
+    .rbtn {
         padding: 10px 20px;
         border: none;
         border-radius: 5px;
@@ -77,18 +92,22 @@
         cursor: pointer;
         transition: background-color 0.3s;
     }
+
     .gbtn {
         background-color: #4a90e2;
         color: white;
         margin-right: 10px;
     }
+
     .gbtn:hover {
         background-color: #3a7bc8;
     }
+
     .rbtn {
         background-color: #e74c3c;
         color: white;
     }
+
     .rbtn:hover {
         background-color: #c0392b;
     }
@@ -99,22 +118,24 @@
         <h2 class="title">Edit Restaurant Profile</h2>
         <form action="/RestProfile/SaveProfile" method="post" enctype="multipart/form-data">
             <input type="hidden" name="RestID" value="@details.RestID" />
-            
+
             <div class="form_group">
                 <label class="sub_title" for="RestName">Name</label>
                 <input value="@details.RestName" id="RestName" name="RestName" class="form_style" type="text" required>
             </div>
-            
+
             <div class="form_group">
                 <label class="sub_title" for="RestEmail">Email</label>
-                <input type="email" id="RestEmail" name="RestEmail" class="form_style" value="@details.RestEmail" required>
+                <input type="email" id="RestEmail" name="RestEmail" class="form_style" value="@details.RestEmail"
+                    required>
             </div>
-            
+
             <div class="form_group">
                 <label class="sub_title" for="RestAddress">Restaurant Address</label>
                 <div class="input-group">
                     <div class="input-container">
-                        <input type="text" id="RestAddress" name="RestAddress" class="form_style" value="@details.RestAddress" required />
+                        <input type="text" id="RestAddress" name="RestAddress" class="form_style"
+                            value="@details.RestAddress" required />
                         <button type="button" class="map-button" onclick="openMapModal()">Map</button>
                     </div>
                 </div>
@@ -124,12 +145,14 @@
 
             <div class="form_group">
                 <label class="sub_title" for="RestContact">Restaurant Contact</label>
-                <input type="tel" id="RestContact" name="RestContact" class="form_style" value="@details.RestContact" required />
+                <input type="tel" id="RestContact" name="RestContact" class="form_style" value="@details.RestContact"
+                    required />
             </div>
 
             <div class="form_group">
                 <label class="sub_title" for="RestWebsite">Restaurant Website</label>
-                <input type="url" id="RestWebsite" name="RestWebsite" class="form_style" value="@details.RestWebsite" required />
+                <input type="url" id="RestWebsite" name="RestWebsite" class="form_style" value="@details.RestWebsite"
+                     />
             </div>
 
             <div class="form_group">
@@ -139,23 +162,31 @@
 
             <div class="form_group">
                 <label class="sub_title" for="RestPic">Restaurant Picture</label>
-                <input type="file" id="RestPic" name="RestPic" class="form_style" accept="image/*" />
-            </div>
+                    @if (!string.IsNullOrEmpty(details.RestPic))
+                        {
+                            <div>
+                                <img src="@Url.Content("~/images/RestProfilePics/" + details.RestPic)" alt="Restaurant Picture" style="max-width: 200px; max-height: 200px;" />
+                            </div>
+                        }
+                <input type="file" id="RestPic" name="RestPic" class="form_style" accept="image/*" value="@details.RestPic" />
 
+            </div>
 
             <div class="form_group">
                 <label class="sub_title" for="RestOpenHr">Restaurant Opening Hour</label>
-                <input type="time" id="RestOpenHr" name="RestOpenHr" class="form_style" value="@details.RestOpenHr" required />
+                <input type="time" id="RestOpenHr" name="RestOpenHr" class="form_style" value="@details.RestOpenHr"
+                    required />
             </div>
 
             <div class="form_group">
                 <label class="sub_title" for="RestCloseHr">Restaurant Closing Hour</label>
-                <input type="time" id="RestCloseHr" name="RestCloseHr" class="form_style" value="@details.RestCloseHr" required />
+                <input type="time" id="RestCloseHr" name="RestCloseHr" class="form_style" value="@details.RestCloseHr"
+                    required />
             </div>
 
             <div class="form_group">
                 <label class="sub_title" for="RestCoverPic">Restaurant Cover Picture</label>
-                <input type="file" id="RestCoverPic" name="RestCoverPic" class="form_style" accept="image/*" />
+                <input type="file" id="RestCoverPic" name="RestCoverPic" class="form_style" accept="image/*" value="@details.RestCoverPic" />
             </div>
 
             <div class="form_group">
@@ -182,13 +213,15 @@
                 <div id="map" style="height: 400px;"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="closeMapModal()" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" onclick="closeMapModal()"
+                    data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" onclick="saveAddress()">Save Address</button>
             </div>
         </div>
     </div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcZ-tpp7-d401k61UO39tGYGvq-yOAn1s&libraries=places"></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcZ-tpp7-d401k61UO39tGYGvq-yOAn1s&libraries=places"></script>
 
 <script>
     let map, marker, searchBox;
@@ -202,7 +235,20 @@
     }
 
     function initializeMap() {
-        const initialLocation = { lat: @details.RestLat, lng: @details.RestLong }; // Default to initial coordinates
+    @if (details.RestLat == null || details.RestLong == null)
+    {
+        <text>
+
+                    var initialLocation = {lat: 1.290270, lng: 103.851959 };
+        </text>
+    }
+    else
+    {
+        <text>
+                     const initialLocation = { lat: @details.RestLat, lng: @details.RestLong }; // Default to initial coordinates
+        </text>
+    }
+       
 
         map = new google.maps.Map(document.getElementById("map"), {
             center: initialLocation,
@@ -271,9 +317,9 @@
 
         geocoder.geocode({ 'location': markerPosition }, function (results, status) {
             if (status === 'OK') {
-                
+
                 if (results[0]) {
-                   
+
                     document.getElementById('RestAddress').value = results[0].formatted_address;
                     document.getElementById('latitude').value = markerPosition.lat();
                     document.getElementById('longitude').value = markerPosition.lng();

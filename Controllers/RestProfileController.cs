@@ -23,7 +23,7 @@ namespace EffectiveWebProg.Controllers
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@RestID", restID);
-                    
+
                     using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
                     {
                         if (await reader.ReadAsync())
@@ -128,7 +128,7 @@ namespace EffectiveWebProg.Controllers
             int count = restaurantPosts.Count;
             ViewBag.PostCount = count;
 
-            
+
             string sessionemail = HttpContext.Session.GetString("SSName") ?? "";
 
             string sessionType = HttpContext.Session.GetString("SSUserType") ?? "";
@@ -139,7 +139,7 @@ namespace EffectiveWebProg.Controllers
             ViewBag.isOwnRestaurant = isOwnRestaurant;
             ViewBag.RestaurantPosts = restaurantPosts;
             ViewBag.FollowersCount = await GetRestaurantFollowersCount(restID);
-            
+
             return View();
         }
 
@@ -159,25 +159,59 @@ namespace EffectiveWebProg.Controllers
         [Route("RestProfile/SaveProfile")]
         public async Task<IActionResult> SaveProfile(RestaurantsModel restaurantDetails, IFormFile? RestPic, IFormFile? RestCoverPic)
         {
+            if (restaurantDetails == null)
+            {
+                Console.WriteLine("restaurantDetails is null");
+                return BadRequest("Restaurant details are required.");
+            }
+
             if (RestPic != null)
             {
                 Console.WriteLine("Restpic id " + RestPic);
                 var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "RestProfilePics");
+                string filePath;
                 var filename = $"{restaurantDetails.RestID}{Path.GetExtension(RestPic.FileName)}";
-                var filePath = Path.Combine(uploadsFolder, filename);
+                filePath = Path.Combine(uploadsFolder, filename);
+
+                // Check if the file already exists
+                if (System.IO.File.Exists(filePath))
+                {
+                    // Handle the case where the file already exists
+                    // For example, you can delete the existing file, rename it, or log a message
+                    Console.WriteLine("File already exists. Deleting the existing file.");
+                    System.IO.File.Delete(filePath); // This will delete the existing file
+                }
+
                 using var fileStream = new FileStream(filePath, FileMode.Create);
                 await RestPic.CopyToAsync(fileStream);
                 restaurantDetails.RestPic = filename;
+            }
+            else
+            {
+                Console.WriteLine("RestPic is null");
             }
 
             if (RestCoverPic != null)
             {
                 var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "RestCoverPics");
+                string filePath;
+                if (!string.IsNullOrEmpty(restaurantDetails.RestCoverPic))
+                {
+                    filePath = Path.Combine(uploadsFolder, restaurantDetails.RestCoverPic);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                }
                 var filename = $"{restaurantDetails.RestID}{Path.GetExtension(RestCoverPic.FileName)}";
-                var filePath = Path.Combine(uploadsFolder, filename);
+                filePath = Path.Combine(uploadsFolder, filename);
                 using var fileStream = new FileStream(filePath, FileMode.Create);
                 await RestCoverPic.CopyToAsync(fileStream);
                 restaurantDetails.RestCoverPic = filename;
+            }
+            else
+            {
+                Console.WriteLine("RestCoverPic is null");
             }
 
             string query = @"UPDATE Restaurants 

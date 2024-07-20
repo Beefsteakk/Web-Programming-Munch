@@ -1,3 +1,4 @@
+@using EffectiveWebProg.Models
 @{
     <link href="~/css/ownerProfile.css" rel="stylesheet" />
     ViewData["Title"] = "Restaurant Profile";
@@ -13,7 +14,7 @@
     <div class="profile-header">
         <div class="row">
             <div class="position-relative">
-                                @if (string.IsNullOrEmpty(details.RestCoverPic))
+                @if (string.IsNullOrEmpty(details.RestCoverPic))
                 {
                     <img src="~/images/RestCoverPics/noImage.jpeg" alt="Cover Photo" class="img-fluid w-100"
                         style="height: 300px; object-fit: cover;">
@@ -23,7 +24,7 @@
                     <img src="~/images/RestCoverPics/@details.RestCoverPic" alt="Cover Photo" class="img-fluid w-100"
                         style="height: 300px; object-fit: cover;">
                 }
-                
+
                 <div class="row">
                     <div class="profile-info col-3">
                         @if (string.IsNullOrEmpty(details.RestPic))
@@ -50,14 +51,14 @@
                                         @if (!ViewBag.isOwnRestaurant)
                                         {
                                             <button class="f-btn btn btn-primary">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                                    d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM11 17V13H7V11H11V7H13V11H17V13H13V17H11Z"
-                                                    fill="currentColor" />
-                                            </svg>
-                                            Follow
-                                        </button>
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM11 17V13H7V11H11V7H13V11H17V13H13V17H11Z"
+                                                        fill="currentColor" />
+                                                </svg>
+                                                Follow
+                                            </button>
                                         }
                                         @if (ViewBag.isOwnRestaurant)
                                         {
@@ -66,14 +67,28 @@
                                         }
                                     </div>
                                 </div>
-                              
+
                                 <div class="profile-bio">
-                                    <p><strong>Bio: </strong>@details.RestBio</p>
+                                    @if (string.IsNullOrEmpty(details.RestBio))
+                                    {
+                                        <p><strong>Bio: </strong>No bio available</p>
+                                    }
+                                    else
+                                    {
+                                        <p><strong>Bio: </strong>@details.RestBio</p>
+                                    }
                                 </div>
-                                
+
                                 <p class="website-link">
                                     <i class="fas fa-link"></i>
-                                    <a href="@details.RestWebsite" target="_blank">@details.RestWebsite</a>
+                                    @if (string.IsNullOrEmpty(details.RestWebsite))
+                                    {
+                                        <a href="#">No website available</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@details.RestWebsite" target="_blank">@details.RestWebsite</a>
+                                    }
                                 </p>
                             </div>
                             <div class="col-1"></div>
@@ -87,7 +102,7 @@
                                     </svg>
                                     Reserve
                                 </button>
-                            
+
                             </div>
                         </div>
                     </div>
@@ -108,7 +123,7 @@
                         @* <span><strong>@followerCount</strong> followers</span> *@
                     </div>
                     <div class="col-md text-center">
-                        <span><strong>@ViewBag.FollowersCount</strong> following</span>
+                        <span><strong>@ViewBag.FollowersCount</strong> followers</span>
                     </div>
                 </div>
             </div>
@@ -136,57 +151,70 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md">
-                        <div class="row">
-                            @foreach (var post in postDetails)
-                            {
-                                <div class="col-md-4">
-                                    <img src="/Images/PostPics/@post.ImageURL" id="@post.PicID" class="img-fluid">
-                                </div>
-                            }
+                    @if (postDetails.Count == 0)
+                    {
+                        <div class="col-md-12 d-flex justify-content-center">
+                            <h4>No posts available</h4>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md">
+                            <div class="row">
+                                @foreach (var post in postDetails)
+                                {
+                                    <div class="col-md-4">
+                                        <img src="/Images/PostPics/@post.ImageURL" id="@post.PicID" class="img-fluid">
+                                    </div>
+                                }
 
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div id="About" class="tab-content">
+                <div class="container about-container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="sidebar">
+                                <h3>About</h3>
+                                <ul class="nav flex-column">
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="#contact-info">
+                                            Contact and basic info
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="content-area">
+                                <h2>Contact and Basic Information</h2>
+
+                                <div class="info-section">
+                                    <h4>Contact Information</h4>
+                                    <p>Phone: @details.RestContact</p>
+                                    <p>Email: @details.RestEmail</p>
+                                </div>
+                                <div>
+                                    <h4>Address</h4>
+                                    <p>@details.RestAddress</p>
+                                    <h5>Opening Hours</h5>
+                                    <p>@details.RestOpenHr - @details.RestCloseHr</p>
+                                </div>
+                                <div class="map-section">
+                                    <h4>Location</h4>
+                                    <div id="map" class="map-container">
+                                        <!-- Insert your Google Maps iframe or component here -->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-<div id="About" class="tab-content">
-    <div class="container about-container">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="sidebar">
-                    <h3>About</h3>
-                    <ul class="nav flex-column">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#contact-info">
-                                Contact and basic info
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-9">
-                <div class="content-area">
-                    <h2>Contact and Basic Information</h2>
-                    <div class="info-section">
-                        <h4>Categories</h4>
-                        <p>Bar</p>
-                    </div>
-                    <div class="info-section">
-                        <h4>Contact Information</h4>
-                        <p>Phone: @details.RestContact</p>
-                        <p>Email: @details.RestEmail</p>
-                    </div>
-                    <div class="map-section">
-                        <h4>Location</h4>
-                        <div id="map" class="map-container">
-                            <!-- Insert your Google Maps iframe or component here -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
         </div>
@@ -286,22 +314,38 @@
         </div>
     </div>
 </div>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcZ-tpp7-d401k61UO39tGYGvq-yOAn1s&callback=initMap" async
-        defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvLyTcOhpRBW16BzIUGKxukZ2aqDOEySo&callback=initMap" async
+    defer></script>
+<script>
+    function initMap() {
+        // Replace these with the actual Razor syntax for your environment
+    @if (details.RestLat == null || details.RestLong == null)
+    {
+        <text>
+
+                    var location = {lat: 1.290270, lng: 103.851959 };
+        </text>
+    }
+    else
+    {
+        <text>
+                    var location = {lat: @Html.Raw(details.RestLat), lng: @Html.Raw(details.RestLong) };
+        </text>
+    }
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 10,
+            center: location
+        });
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map
+        });
+    }
+</script>
 
 <script>
-            function initMap() {
-  
-            var location = { lat: @details.RestLat, lng: @details.RestLong }; // Example coordinates for Singapore
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 10,
-                center: location
-            });
-            var marker = new google.maps.Marker({
-                position: location,
-                map: map
-            });
-        }
+
     // Function to validate reservation form
     function validateReservationForm() {
         const reservedName = document.getElementById('reservedName').value.trim();
@@ -496,6 +540,7 @@
     }
 
     function openReservationPopup() {
+
         document.getElementById('reservationPopup').style.display = 'block';
         onGooglePayLoaded();
     }
