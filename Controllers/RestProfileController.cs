@@ -114,14 +114,38 @@ namespace EffectiveWebProg.Controllers
 
             return followersCount;
         }
+
+        private async Task<bool> IsFollowing(string restID, string userID)
+        {
+            string query = "SELECT EXISTS(SELECT 1 FROM Followings WHERE RestID = @RestID AND UserID = @UserID)";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@RestID", restID);
+                    cmd.Parameters.AddWithValue("@UserID", userID);
+
+                    var result = await cmd.ExecuteScalarAsync();
+                    return Convert.ToBoolean(result);
+                }
+            }
+        }
+
         public async Task<IActionResult> Index()
         {
             string restID = HttpContext.Session.GetString("RestID") ?? "";
+            string userID = HttpContext.Session.GetString("SSID") ?? "";
             if (string.IsNullOrEmpty(restID))
             {
                 Console.WriteLine("RestID is null or empty: " + restID);
                 // Handle the case where the restID is not available in the session
                 return RedirectToAction("Error", "Home");
+            }
+            if (!string.IsNullOrEmpty(userID))
+            {
+                ViewBag.isFollowing = await IsFollowing(restID, userID);
             }
 
             RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(restID);
@@ -311,18 +335,21 @@ namespace EffectiveWebProg.Controllers
             if (user == null) return Json(new {status = "failed", reason = "User not found."});
 
             var follow = await _db.Followings.FirstOrDefaultAsync(f => f.UserID == user.UserID && f.RestID == restaurant.RestID);
+            var type = "";
             if (follow == null)
             {
                 follow = new FollowingsModel { Rest = restaurant, User = user };
                 await _db.Followings.AddAsync(follow);
+                type = "follow";
             }
             else
             {
                 _db.Followings.Remove(follow);
+                type = "unfollow";
             }
 
             await _db.SaveChangesAsync();
-            return Json(new {status = "success"});
+            return Json(new {status = "success", type = type});
         }
     }
 }
