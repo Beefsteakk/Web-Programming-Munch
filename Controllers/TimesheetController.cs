@@ -55,8 +55,8 @@ namespace EffectiveWebProg.Controllers
             try
             {
                 // Convert local times to UTC for storage
-                model.StartTime = DateTime.SpecifyKind(model.StartTime, DateTimeKind.Local).ToUniversalTime();
-                model.EndTime = DateTime.SpecifyKind(model.EndTime, DateTimeKind.Local).ToUniversalTime();
+                // model.StartTime = DateTime.SpecifyKind(model.StartTime, DateTimeKind.Local).ToLocalTime();
+                // model.EndTime = DateTime.SpecifyKind(model.EndTime, DateTimeKind.Local).ToLocalTime();
 
                 _context.TimeSheet.Add(model);
                 await _context.SaveChangesAsync();
@@ -112,8 +112,8 @@ namespace EffectiveWebProg.Controllers
                 }
 
                 // Convert local times to UTC for storage
-                model.StartTime = DateTime.SpecifyKind(model.StartTime, DateTimeKind.Local).ToUniversalTime();
-                model.EndTime = DateTime.SpecifyKind(model.EndTime, DateTimeKind.Local).ToUniversalTime();
+                // model.StartTime = DateTime.SpecifyKind(model.StartTime, DateTimeKind.Local).ToLocalTime();
+                // model.EndTime = DateTime.SpecifyKind(model.EndTime, DateTimeKind.Local).ToLocalTime();
 
                 _context.Entry(existingShift).CurrentValues.SetValues(model);
                 await _context.SaveChangesAsync();
