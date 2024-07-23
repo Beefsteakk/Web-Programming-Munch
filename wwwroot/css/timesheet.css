@@ -10,7 +10,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
 }
 
 /* Day box styling */
@@ -18,10 +17,10 @@
     position: relative;
     padding: 10px;
     border: 1px solid #ccc;
-    margin: 5px;
+    margin: 5px 0 5px 0;
     border-radius: 5px;
     width: 100%;
-    height: 200px; /* Fixed height, will extend downwards if content overflows */
+    height: 300px; /* Fixed height, will extend downwards if content overflows */
     overflow-y: auto; /* Allow scrolling if content overflows */
     box-sizing: border-box;
     text-align: center;
@@ -55,14 +54,14 @@
 /* Table styling */
 .table {
     width: 100%;
-    margin-top: 20px;
+    margin: 20px 0 0 0;
     border-collapse: collapse;
 }
 .table th,
 .table td {
     text-align: center;
     vertical-align: middle;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #ccc;
 }
 .table thead th {
@@ -84,9 +83,9 @@
 /* Box for weekly overview */
 .weekly-overview {
     border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 15px;
-    margin-top: 20px;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 80px 20px 20px 20px;
 }
 .weekly-overview h3 {
     margin-top: 0;
@@ -96,17 +95,17 @@
 /* Oval shape for shifts */
 .shift-oval {
     display: inline-block;
-    padding: 5px 10px;
+    padding: 5px 20px;
     border-radius: 15px;
     color: #fff;
     font-size: 12px;
     margin: 2px;
 }
 .shift-oval.am {
-    background-color: #ffd700; /* Yellow for AM */
+    background-color: #f8b706; /* Yellow for AM */
 }
 .shift-oval.pm {
-    background-color: #32cd32; /* Green for PM */
+    background-color: #1a881a; /* Green for PM */
 }
 
 /* Modal styling */
@@ -160,5 +159,11 @@ li:hover {
 
 /* Button styling */
 .btn {
-    margin: 5px;
+    margin: 2px;
+    background-color: #ff5722;
+    border-radius: 20px;
+    border: none;
+}
+.btn:hover {
+    background-color: #fc9272;
 }
