@@ -185,6 +185,7 @@ aside .recommended ul li span {
 .modal-info-message {
     font-size: 18px;
     margin-bottom: 20px;
+    margin-top: 40px;
 }
 .modal-info-comments {
     font-size: 14px; /* Smaller font size */

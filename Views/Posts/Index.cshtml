@@ -36,7 +36,7 @@
             <div class="col-xl-9">
                 <div class="row">
                     <div class="col-lg-1"></div>
-                    <div class="col-lg-10 col-12">
+                    <div class="col-lg-10 col-12" id="post-container">
                         @foreach (var item in Model.PostLists)
                         {
                             <div class="posts" id="@item.Post.PostID">
@@ -102,6 +102,14 @@
                                     </button>
                                 </div>
                                 @await Html.PartialAsync("/Views/Comments/_CommentFormPartial.cshtml", new CommentsModel { PostID = item.Post.PostID })
+                            </div>
+                        }
+                        @if (Model.PostLists.Count == 0)
+                        {
+                            <div class="main-content mt-5">
+                                <div class="content">
+                                    There are no posts to display.
+                                </div>
                             </div>
                         }
                     </div>
