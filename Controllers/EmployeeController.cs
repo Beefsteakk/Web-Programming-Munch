@@ -221,13 +221,25 @@ namespace EffectiveWebProg.Controllers
         {
             try
             {
-                var employee = await _db.Employees.FindAsync(id);
+                var employee = await _db.Employees
+                    .Include(e => e.TimeSheets) // Include related timesheets
+                    .FirstOrDefaultAsync(e => e.EmployeeID == id);
+
                 if (employee == null)
                 {
                     return NotFound("Employee not found.");
                 }
 
+                // Remove associated timesheets
+                var timesheets = employee.TimeSheets;
+                foreach (var timesheet in timesheets)
+                {
+                    _db.TimeSheet.Remove(timesheet);
+                }
+                // Remove the employee
                 _db.Employees.Remove(employee);
+
+                // Save changes
                 await _db.SaveChangesAsync();
 
                 // _logger.LogInformation($"Employee {id} deleted successfully.");
@@ -235,7 +247,7 @@ namespace EffectiveWebProg.Controllers
             }
             catch (Exception ex)
             {
-                // _logger.LogError("An error occurred while deleting the employee: " + ex.Message);
+                // Console.WriteLine("An error occurred while deleting the employee: " + ex.Message);
                 return StatusCode(500, "Internal server error");
             }
         }
