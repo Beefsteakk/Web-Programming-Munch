@@ -91,7 +91,7 @@ public class PostsController(ApplicationDbContext db) : BaseController
         post.RestID = restaurant.RestID;
         await _db.Posts.AddAsync(post);
         await _db.SaveChangesAsync();
-        return RedirectToAction("");
+        return RedirectToAction("Index", "RestProfile");
     }
 
     [HttpPost]
