@@ -1,6 +1,4 @@
-using EffectiveWebProg.Models;
 using EffectiveWebProg.Data;
-
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +13,7 @@ builder.Services.AddSession();
 builder.WebHost.UseKestrel(options =>
 {
     options.ListenAnyIP(443, listenOptions => {
-        listenOptions.UseHttps();
+        listenOptions.UseHttps("mycert.pfx", "Password123!");
     });
 });
 
