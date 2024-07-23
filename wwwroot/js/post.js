@@ -47,7 +47,7 @@ allPost.forEach(function (e) {
                     if (response.post.postAuthorRestaurant.restPic == null) {
                         document.getElementById("modalProfilePic").src = "Images/chef.png"
                     } else {
-                        document.getElementById("modalProfilePic").src = `Images/RestaurantProfilePics/${response.post.postAuthorRestaurant.restPic}`
+                        document.getElementById("modalProfilePic").src = `Images/RestProfilePics/${response.post.postAuthorRestaurant.restPic}`
                     }
                     $('#modalUsername').text(response.post.postAuthorUser != null ? response.post.postAuthorUser.username : response.post.postAuthorRestaurant.restName);
                     $('#modalCreatedAt').text(response.post.postCreatedAt);
