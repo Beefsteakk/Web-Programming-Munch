@@ -184,6 +184,15 @@ namespace EffectiveWebProg.Controllers
         [Route("RestProfile/SaveProfile")]
         public async Task<IActionResult> SaveProfile(RestaurantsModel restaurantDetails, IFormFile? RestPic, IFormFile? RestCoverPic)
         {
+            Console.WriteLine(restaurantDetails.RestName);
+            var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
+            var restaurant = await _db.Restaurants.FirstAsync(r => r.RestID == sessionID);
+            if (restaurant == null)
+            {
+                Response.StatusCode = 500;
+                return Content("Internal Server Error: An unknown issue was encountered, please retry.");
+            }
+
             if (restaurantDetails == null)
             {
                 Console.WriteLine("restaurantDetails is null");
@@ -209,7 +218,7 @@ namespace EffectiveWebProg.Controllers
 
                 using var fileStream = new FileStream(filePath, FileMode.Create);
                 await RestPic.CopyToAsync(fileStream);
-                restaurantDetails.RestPic = filename;
+                restaurant.RestPic = filename;
             }
             else
             {
@@ -232,44 +241,24 @@ namespace EffectiveWebProg.Controllers
                 filePath = Path.Combine(uploadsFolder, filename);
                 using var fileStream = new FileStream(filePath, FileMode.Create);
                 await RestCoverPic.CopyToAsync(fileStream);
-                restaurantDetails.RestCoverPic = filename;
+                restaurant.RestCoverPic = filename;
             }
             else
             {
                 Console.WriteLine("RestCoverPic is null");
             }
 
-            string query = @"UPDATE Restaurants 
-                     SET RestName = @RestName, RestBio = @RestBio, RestContact = @RestContact, 
-                         RestEmail = @RestEmail, RestAddress = @RestAddress, RestLat = @RestLat, 
-                         RestLong = @RestLong, RestPic = @RestPic, RestWebsite = @RestWebsite, 
-                         RestOpenHr = @RestOpenHr, 
-                         RestCloseHr = @RestCloseHr, RestCoverPic = @RestCoverPic 
-                     WHERE RestID = @RestID";
-
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                await conn.OpenAsync();
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@RestID", restaurantDetails.RestID);
-                    cmd.Parameters.AddWithValue("@RestName", restaurantDetails.RestName);
-                    cmd.Parameters.AddWithValue("@RestBio", restaurantDetails.RestBio);
-                    cmd.Parameters.AddWithValue("@RestContact", restaurantDetails.RestContact);
-                    cmd.Parameters.AddWithValue("@RestEmail", restaurantDetails.RestEmail);
-                    cmd.Parameters.AddWithValue("@RestAddress", restaurantDetails.RestAddress);
-                    cmd.Parameters.AddWithValue("@RestLat", restaurantDetails.RestLat);
-                    cmd.Parameters.AddWithValue("@RestLong", restaurantDetails.RestLong);
-                    cmd.Parameters.AddWithValue("@RestPic", restaurantDetails.RestPic);
-                    cmd.Parameters.AddWithValue("@RestWebsite", restaurantDetails.RestWebsite);
-                    cmd.Parameters.AddWithValue("@RestOpenHr", restaurantDetails.RestOpenHr);
-                    cmd.Parameters.AddWithValue("@RestCloseHr", restaurantDetails.RestCloseHr);
-                    cmd.Parameters.AddWithValue("@RestCoverPic", restaurantDetails.RestCoverPic);
-
-                    await cmd.ExecuteNonQueryAsync();
-                }
-            }
-
+            restaurant.RestName = restaurantDetails.RestName;
+            restaurant.RestEmail = restaurantDetails.RestEmail;
+            restaurant.RestContact = restaurantDetails.RestContact;
+            restaurant.RestWebsite = restaurantDetails.RestWebsite;
+            restaurant.RestBio = restaurantDetails.RestBio;
+            restaurant.RestOpenHr = restaurantDetails.RestOpenHr;
+            restaurant.RestCloseHr = restaurantDetails.RestCloseHr;
+            restaurant.RestLat = restaurantDetails.RestLat;
+            restaurant.RestLong = restaurantDetails.RestLong;
+            _db.Restaurants.Update(restaurant);
+            await _db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
