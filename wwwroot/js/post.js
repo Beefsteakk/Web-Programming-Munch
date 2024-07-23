@@ -2,7 +2,7 @@ const ignoredElements = new Set(['button', 'textarea', 'h4', 'span']);
 const postContainer = document.querySelector('#post-container');
 postContainer.addEventListener('click', function (obj) {
     const target = obj.target;
-    if (!ignoredElements.has(target.localName) && !target.closest('.clickable') && !target.closest('.post-header')) {
+    if (!ignoredElements.has(target.localName) && !target.closest('.clickable') && !target.closest('.left-nav-link')) {
         $.ajax({
             url: '/Posts/GetInfo',
             type: 'POST',
