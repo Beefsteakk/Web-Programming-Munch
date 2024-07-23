@@ -3,53 +3,92 @@
 @{
     ViewData["Title"] = "Timesheet";
     var startOfWeek = Model.CurrentDate.AddDays(-(int)Model.CurrentDate.DayOfWeek);
+    var today = DateTime.Today;
+    <link href="~/css/timesheet.css" rel="stylesheet" />
 }
 
-<div class="container">
+<div class="main-content">
+    <h2 style="text-align: center">Employee Timesheet</h2>
     <div class="nav">
-        <h2 id="monthYear">@Model.CurrentDate.ToString("MMMM yyyy")</h2>
+        <h3 id="monthYear">@Model.CurrentDate.ToString("MMMM yyyy")</h3>
         <div class="nav-buttons">
             <a asp-action="Index" asp-route-date="@Model.CurrentDate.AddDays(-7).ToString("yyyy-MM-dd")" class="btn btn-primary">&lt;</a>
             <a asp-action="Index" class="btn btn-primary">Today</a>
             <a asp-action="Index" asp-route-date="@Model.CurrentDate.AddDays(7).ToString("yyyy-MM-dd")" class="btn btn-primary">&gt;</a>
         </div>
     </div>
-</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            @for (var day = 0; day < 7; day++)
-            {
-                <th>@startOfWeek.AddDays(day).ToString("dddd")</th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            @for (var day = 0; day < 7; day++)
-            {
-                var currentDay = startOfWeek.AddDays(day);
-                <td>
-                    <div class="day-box" data-date="@currentDay.ToString("yyyy-MM-dd")">
-                        <span>@currentDay.ToString("MMM d")</span>
-                        <div class="plus-sign" onclick="showShiftForm(this, '@currentDay.ToString("yyyy-MM-dd")')" title="Add Shift">
-                            <i class="fas fa-plus-circle"></i>
+    <table class="table">
+        <thead>
+            <tr>
+                @for (var day = 0; day < 7; day++)
+                {
+                    <th>@startOfWeek.AddDays(day).ToString("dddd")</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @for (var day = 0; day < 7; day++)
+                {
+                    var currentDay = startOfWeek.AddDays(day);
+                    var dayBoxClass = currentDay.Date == today ? "day-box today" : "day-box";
+                    <td class = "boxes">
+                        <div class="@dayBoxClass" data-date="@currentDay.ToString("yyyy-MM-dd")">
+                            <span>@currentDay.ToString("MMM d")</span>
+                            <div class="plus-sign" onclick="showShiftForm(this, '@currentDay.ToString("yyyy-MM-dd")')" title="Add Shift">
+                                <i class="fas fa-plus-circle"></i>
+                            </div>
+                            <ul>
+                                @foreach (var timesheet in Model.Timesheets.Where(t => t.Day.Date == currentDay.Date))
+                                {
+                                    <li onclick="showEditShiftForm('@timesheet.SheetID')">
+                                        @timesheet.Employees.EmployeeName<br />
+                                        - @timesheet.ShiftType
+                                    </li>
+                                }
+                            </ul>
                         </div>
-                        <ul>
-                            @foreach (var timesheet in Model.Timesheets.Where(t => t.Day.Date == currentDay.Date))
-                            {
-                                <li onclick="showEditShiftForm('@timesheet.SheetID')">
-                                    @timesheet.Employees.EmployeeName - @timesheet.ShiftType
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </td>
-            }
-        </tr>
-    </tbody>
-</table>
+                    </td>
+                }
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="weekly-overview">
+        <h3>Weekly Overview</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    @for (var day = 0; day < 7; day++)
+                    {
+                        <th>@startOfWeek.AddDays(day).ToString("ddd")</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var employee in Model.Employees)
+                {
+                    <tr>
+                        <td>@employee.EmployeeName</td>
+                        @for (var day = 0; day < 7; day++)
+                        {
+                            var currentDay = startOfWeek.AddDays(day);
+                            var timesheet = Model.Timesheets.FirstOrDefault(t => t.EmployeeID == employee.EmployeeID && t.Day.Date == currentDay.Date);
+                            <td>
+                                @if (timesheet != null)
+                                {
+                                    <span class="shift-oval @timesheet.ShiftType.ToLower()">@timesheet.ShiftType</span>
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <!-- Add Shift Modal -->
 <div id="shiftFormModal" class="modal">
@@ -135,63 +174,4 @@
 
 @section Scripts {
     <script src="~/js/timesheet.js"></script>
-
-    <style>
-        .day-box {
-            position: relative;
-            padding: 10px;
-            border: 1px solid #ccc;
-            margin: 5px;
-            border-radius: 5px;
-        }
-        .plus-sign {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            cursor: pointer;
-            display: none;
-        }
-        .day-box:hover .plus-sign {
-            display: block;
-        }
-        th {
-            text-align: center;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        li {
-            cursor: pointer;
-        }
-        li:hover {
-            background-color: #f0f0f0;
-        }
-    </style>
 }

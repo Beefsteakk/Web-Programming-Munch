@@ -1,120 +1,169 @@
-.container {
-    width: 100%;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    text-align: center;
-    color: #2a5d2d;
-}
-
-h2 {
-    text-align: center;
-    color: #757475;
-}
-
-.legend {
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
     display: flex;
-    justify-content: center;
-    margin: 20px 0;
+    flex-direction: column;
 }
 
-.legend-item {
-    margin: 0 10px;
-    padding: 5px 10px;
-    border-radius: 4px;
-    color: #494747;
+/* Navigation styling */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.legend-item.morning {
-    background-color: #ebebeb;
-    font-weight: bold;
-
-}
-
-.legend-item.afternoon {
-    background-color: #ebebeb;
-    font-weight: bold;
-}
-
-.legend-item.full {
-    background-color: #ebebeb;
-    font-weight: bold;
-}
-
-.legend-item.annual {
-    background-color: rgb(117, 251,253);
-}
-
-.legend-item.off {
-    background-color: rgb(117, 251,76);
-}
-
-.legend-item.ph {
-    background-color: rgb(255, 246, 84);
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-thead th {
-    background-color: #455a64;
-    color: #fff;
+/* Day box styling */
+.day-box {
+    position: relative;
     padding: 10px;
-    width: 80px;
+    border: 1px solid #ccc;
+    margin: 5px 0 5px 0;
+    border-radius: 5px;
+    width: 100%;
+    height: 300px; /* Fixed height, will extend downwards if content overflows */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+    box-sizing: border-box;
     text-align: center;
-    border: 0.5px solid #b7b7b7;
+    vertical-align: top;
+}
+.plus-sign {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    display: none;
+}
+.day-box:hover .plus-sign {
+    display: block;
+}
+.day-box span {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.boxes {
+    width: calc(100% / 7); /* Divide the table width equally by 7 columns */
 }
 
-tbody td {
+/* Highlight today's date */
+.day-box.today {
+    background-color: #e6f7ff;
+    border-color: #0099ff;
+}
+
+/* Table styling */
+.table {
+    width: 100%;
+    margin: 20px 0 0 0;
+    border-collapse: collapse;
+}
+.table th,
+.table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 15px;
+    border: 1px solid #ccc;
+}
+.table thead th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+}
+.table tbody td {
+    min-width: 100px;
+    border-left: none;
+    border-right: none;
+}
+.table tbody td:first-child {
+    border-left: 1px solid #ccc;
+}
+.table tbody td:last-child {
+    border-right: 1px solid #ccc;
+}
+
+/* Box for weekly overview */
+.weekly-overview {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 25px;
+    margin: 80px 20px 20px 20px;
+}
+.weekly-overview h3 {
+    margin-top: 0;
+    text-align: center;
+}
+
+/* Oval shape for shifts */
+.shift-oval {
+    display: inline-block;
+    padding: 5px 20px;
+    border-radius: 15px;
+    color: #fff;
+    font-size: 12px;
+    margin: 2px;
+}
+.shift-oval.am {
+    background-color: #f8b706; /* Yellow for AM */
+}
+.shift-oval.pm {
+    background-color: #1a881a; /* Green for PM */
+}
+
+/* Modal styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* List item styling */
+ul {
+    padding-left: 20px; /* Add padding for list dots */
+    list-style-type: disc; /* Ensure dots are shown */
     text-align: left;
+}
+li {
+    cursor: pointer;
     padding: 5px;
-    border: 1px solid #ddd;
+    line-height: 1.5; /* Increase line height for readability */
+}
+li:hover {
+    background-color: #f0f0f0;
 }
 
-tbody td.full {
-    /* background-color: rgb(117, 251,253); */
-    text-align: center;
+/* Button styling */
+.btn {
+    margin: 2px;
+    background-color: #ff5722;
+    border-radius: 20px;
+    border: none;
 }
-
-/* tbody td.morning {
-    background-color: #c4b39a;
-} */
-
-tbody td.morning {
-    /* background-color: rgb(117, 251,76); */
-    text-align: center;
-}
-
-tbody td.afternoon {
-    /* background-color: rgb(255, 246, 84); */
-    text-align: center;
-}
-
-tbody td.off {
-    text-align: center;
-    background-color: rgb(117, 251,76);
-}
-
-tbody td.annual {
-    text-align: center;
-    background-color: rgb(117, 251,253);
-}
-
-tbody td.ph {
-    text-align: center;
-    background-color: rgb(255, 246, 84);
-}
-
-.totals {
-    text-align: center;
-    font-size: 1.2em;
-    color: #455a64;
+.btn:hover {
+    background-color: #fc9272;
 }
