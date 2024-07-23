@@ -23,16 +23,19 @@ namespace EffectiveWebProg.Controllers
 
         public async Task<IActionResult> Index(DateTime? date)
         {
+
+            var restID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
+
             var currentDate = date ?? DateTime.Today;
             var startOfWeek = currentDate.AddDays(-(int)currentDate.DayOfWeek);
             var endOfWeek = startOfWeek.AddDays(6);
 
-            var timesheets = await _context.TimeSheet
+            var timesheets = await _context.TimeSheet.Where(t => t.Employees.RestID == restID)
                 .Include(t => t.Employees)
                 .Where(t => t.Day >= startOfWeek && t.Day <= endOfWeek)
                 .ToListAsync();
 
-            var employees = await _context.Employees.ToListAsync();
+            var employees = await _context.Employees.Where(e => e.RestID == restID).ToListAsync();
 
             var viewModel = new TimesheetViewModel
             {
