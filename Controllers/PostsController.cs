@@ -14,54 +14,25 @@ public class PostsController(ApplicationDbContext db) : BaseController
 
     public async Task<IActionResult> Index()
     {
-        // if (HttpContext.Session.GetString("SSUserType") != "User") return Forbid();
-        // var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
-        // var posts = await FetchViewablePostsByIDAsync(sessionID);
-        // var postViewModels = new List<PostViewModel>();
-        // foreach (var post in posts)
-        // {
-        //     var imageURLs = await _db.PostPics
-        //         .Where(p => p.PostID == post.PostID)
-        //         .Select(p => p.ImageURL)
-        //         .ToListAsync();
-
-        //     var user = await _db.Users.FindAsync(sessionID);
-        //     if (user != null){
-        //         var like = await _db.PostLikes.FirstOrDefaultAsync(
-        //             l => l.PostID == post.PostID && l.UserID == user.UserID
-        //         );
-        //         postViewModels.Add(new PostViewModel(post, like != null, false, imageURLs));
-        //     }
-        // }
-        // return View(new MainFeedViewModel(postViewModels));
-
-
         if (HttpContext.Session.GetString("SSUserType") != "User") return Forbid();
         var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
-
-        var posts = await _db.Posts
-            .Include(p => p.Restaurant)
-            .ToListAsync();
-
-        var userLikes = await _db.PostLikes
-            .Where(l => l.UserID == sessionID && posts.Select(p => p.PostID).Contains(l.PostID))
-            .ToListAsync();
-
-        var postImages = await _db.PostPics
-            .Where(pi => posts.Select(p => p.PostID).Contains(pi.PostID))
-            .ToListAsync();
-
-        var postViewModels = posts.Select(post =>
+        var posts = await FetchViewablePostsByIDAsync(sessionID);
+        var postViewModels = new List<PostViewModel>();
+        foreach (var post in posts)
         {
-            var imageURLs = postImages.Where(pi => pi.PostID == post.PostID).Select(pi => pi.ImageURL).ToList();
+            var imageURLs = await _db.PostPics
+                .Where(p => p.PostID == post.PostID)
+                .Select(p => p.ImageURL)
+                .ToListAsync();
 
-            var isLikedByUser = userLikes.Any(like => like.PostID == post.PostID);
-
-            var isOwnPost = post.RestID == sessionID;
-
-            return new PostViewModel(post, isLikedByUser, isOwnPost, imageURLs);
-        }).ToList();
-
+            var user = await _db.Users.FindAsync(sessionID);
+            if (user != null){
+                var like = await _db.PostLikes.FirstOrDefaultAsync(
+                    l => l.PostID == post.PostID && l.UserID == user.UserID
+                );
+                postViewModels.Add(new PostViewModel(post, like != null, false, imageURLs));
+            }
+        }
         return View(new MainFeedViewModel(postViewModels));
     }
 
@@ -91,7 +62,7 @@ public class PostsController(ApplicationDbContext db) : BaseController
         post.RestID = restaurant.RestID;
         await _db.Posts.AddAsync(post);
         await _db.SaveChangesAsync();
-        return RedirectToAction("");
+        return RedirectToAction("Index", "RestProfile");
     }
 
     [HttpPost]
