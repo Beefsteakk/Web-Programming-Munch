@@ -57,7 +57,15 @@
 
     <div class="weekly-overview">
         <h3>Weekly Overview</h3>
-        <table class="table">
+        <div class="controls">
+            <button class="btn btn-secondary mb-2" onclick="sortTable()">Sort by Employee Name</button>
+            <select id="shiftFilter" onchange="filterTable()">
+                <option value="all">All Shifts</option>
+                <option value="AM">Morning Shift</option>
+                <option value="PM">Afternoon Shift</option>
+            </select>
+        </div>
+        <table id="employeeTable" class="table">
             <thead>
                 <tr>
                     <th>Employee Name</th>
@@ -125,7 +133,7 @@
                 <label for="endTime">End Time</label>
                 <input type="time" id="endTime" name="EndTime" class="form-control" required />
             </div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-save">Save</button>
         </form>
     </div>
 </div>
@@ -166,7 +174,7 @@
                 <label for="editEndTime">End Time</label>
                 <input type="time" id="editEndTime" name="EndTime" class="form-control" required />
             </div>
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn btn-save">Update</button>
             <button type="button" class="btn btn-danger" onclick="deleteShift()">Delete</button>
         </form>
     </div>
