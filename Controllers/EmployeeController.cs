@@ -11,7 +11,6 @@ namespace EffectiveWebProg.Controllers
     {
         private readonly ApplicationDbContext _db;
         // private readonly ILogger<EmployeesController> _logger;
-
         private readonly IWebHostEnvironment _hostingEnvironment;
 
         public EmployeesController(ApplicationDbContext db, ILogger<EmployeesController> logger, IWebHostEnvironment hostingEnvironment)
@@ -22,42 +21,15 @@ namespace EffectiveWebProg.Controllers
         }
 
         // GET: Employees
-        public async Task<IActionResult> Index()
-        {
-            var employees = await _db.Employees.ToListAsync();
-            if (employees == null || !employees.Any())
-            {
-                // _logger.LogInformation("No employees found in the database.");
-            }
-            else
-            {
-                // foreach (var employee in employees)
-                // {
-                //     _logger.LogInformation($"Employee ID: {employee.EmployeeID}");
-                //     _logger.LogInformation($"Name: {employee.EmployeeName}");
-                //     _logger.LogInformation($"Department: {employee.Department}");
-                //     _logger.LogInformation($"Email: {employee.Email}");
-                //     _logger.LogInformation($"Phone Number: {employee.PhoneNumber}");
-                //     _logger.LogInformation($"Role: {employee.Role}");
-                //     _logger.LogInformation($"Hire Date: {employee.HireDate}");
-                //     _logger.LogInformation($"Restaurant ID: {employee.RestID}");
-                //     _logger.LogInformation($"Employee Pic: {employee.EmployeePic}");
-                //     _logger.LogInformation(""); // For spacing between employees
-                // }
-            }
-            return View(employees);
-        }
-
-        // GET: Employees/Filter
         [HttpGet]
-        public IActionResult Index(string sortOrder, string currentFilter)
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter)
         {
+            var restID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParam"] = sortOrder == "name_asc" ? "name_desc" : "name_asc";
             ViewData["DeptSortParam"] = sortOrder == "dept_asc" ? "dept_desc" : "dept_asc";
 
-            var employees = from e in _db.Employees
-                            select e;
+            var employees =  _db.Employees.Where(e => e.RestID == restID);
 
             switch (sortOrder)
             {
@@ -75,7 +47,7 @@ namespace EffectiveWebProg.Controllers
                     break;
             }
 
-            return View(employees.ToList());
+            return View(await employees.ToListAsync());
         }
 
 
@@ -88,12 +60,12 @@ namespace EffectiveWebProg.Controllers
             var ssid = HttpContext.Session.GetString("SSID"); // Examplee of retrieving from session
 
             if (!string.IsNullOrEmpty(ssid))
-                {
-                    var employee = new EmployeesModel { RestID = Guid.Parse(ssid) }; // Initialize with RestID from session
-                    // _logger.LogInformation($"ssid: meow {ssid}");
+            {
+                var employee = new EmployeesModel { RestID = Guid.Parse(ssid) }; // Initialize with RestID from session
+                // _logger.LogInformation($"ssid: meow {ssid}");
 
-                    return View(employee);
-                }
+                return View(employee);
+            }
 
             return View();
         }
@@ -106,7 +78,7 @@ namespace EffectiveWebProg.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             try
             {
                 // Handle file upload
@@ -182,17 +154,17 @@ namespace EffectiveWebProg.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit([FromForm] EmployeesModel employee, IFormFile? photo)
         {
-    if (!ModelState.IsValid)
-    {
-        foreach (var modelState in ModelState.Values)
-        {
-            foreach (var error in modelState.Errors)
+            if (!ModelState.IsValid)
             {
-                // _logger.LogError(error.ErrorMessage);
+                foreach (var modelState in ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        // _logger.LogError(error.ErrorMessage);
+                    }
+                }
+                return BadRequest(ModelState);
             }
-        }
-        return BadRequest(ModelState);
-    }
 
             try
             {

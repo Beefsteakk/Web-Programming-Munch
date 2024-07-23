@@ -4,6 +4,7 @@ using EffectiveWebProg.Data;
 using Microsoft.EntityFrameworkCore;
 using EffectiveWebProg.ViewModels;
 using EffectiveWebProg.DTOs.Posts;
+using MySqlX.XDevAPI;
 
 namespace EffectiveWebProg.Controllers;
 
@@ -45,21 +46,23 @@ public class PostsController(ApplicationDbContext db) : BaseController
         if (restaurant == null) return Forbid();
 
         var post = new PostsModel() { PostContent = postContent };
-        if (pictures.Count > 0) {
+        if (pictures.Count > 0)
+        {
             var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "PostPics");
-            foreach (var picture in pictures) {
-                var postPicture = new PostPicsModel(picture.FileName) {PostID = post.PostID};
+            foreach (var picture in pictures)
+            {
+                var postPicture = new PostPicsModel(picture.FileName) { PostID = post.PostID };
                 var filePath = Path.Combine(uploadsFolder, postPicture.ImageURL);
                 using var fileStream = new FileStream(filePath, FileMode.Create);
                 await picture.CopyToAsync(fileStream);
                 await _db.PostPics.AddAsync(postPicture);
             }
         }
-    
+
         post.RestID = restaurant.RestID;
         await _db.Posts.AddAsync(post);
         await _db.SaveChangesAsync();
-        return RedirectToAction("");
+        return RedirectToAction("Index", "RestProfile");
     }
 
     [HttpPost]
@@ -85,9 +88,11 @@ public class PostsController(ApplicationDbContext db) : BaseController
         if (!CheckOperationIsPermitted(post)) return Forbid();
 
         var pictures = await _db.PostPics.Where(p => p.PostID == postID).ToListAsync();
-        if (pictures != null && pictures.Count > 0) {
+        if (pictures != null && pictures.Count > 0)
+        {
             var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "PostPics");
-            foreach (var picture in pictures) {
+            foreach (var picture in pictures)
+            {
                 var filePath = Path.Combine(uploadsFolder, picture.ImageURL);
                 System.IO.File.Delete(filePath);
             }
@@ -229,11 +234,11 @@ public class PostsController(ApplicationDbContext db) : BaseController
     {
         var post = await FetchPostByIDAsync(postId);
         var sessionID = Guid.Parse(HttpContext.Session.GetString("SSID") ?? "");
-        if (post == null) return Json(new {status = "failed", reason = "Post not found."});
+        if (post == null) return Json(new { status = "failed", reason = "Post not found." });
 
         var user = await _db.Users.FindAsync(sessionID);
-        if (user == null) return Json(new {status = "failed", reason = "User not found."});
-    
+        if (user == null) return Json(new { status = "failed", reason = "User not found." });
+
         var like = await _db.PostLikes.FirstOrDefaultAsync(l => l.PostID == postId && l.UserID == sessionID);
         if (like == null)
         {
@@ -246,7 +251,7 @@ public class PostsController(ApplicationDbContext db) : BaseController
         }
 
         await _db.SaveChangesAsync();
-        return Json(new {status = "success"});
+        return Json(new { status = "success" });
     }
 
     [HttpGet]
