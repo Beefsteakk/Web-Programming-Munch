@@ -163,6 +163,23 @@ namespace EffectiveWebProg.Controllers
             return count;
         }
 
+        private async Task<int> GetTotalPostCountAsync(string restId)
+        {
+            int count = 0;
+            string query = "SELECT COUNT(*) FROM Posts WHERE RestID = @RestID";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@RestID", restId);
+                    count = Convert.ToInt32(await cmd.ExecuteScalarAsync());
+                }
+            }
+            return count;
+        }
+
         public async Task<IActionResult> Index()
         {
             string restID = HttpContext.Session.GetString("SSID") ?? "";
@@ -177,6 +194,7 @@ namespace EffectiveWebProg.Controllers
             List<ReservationsModel> upcomingReservations = await GetUpcomingReservationsAsync(restID);
             int totalReservations = await GetTotalReservationsCountAsync(restID);
             int totalEmployees = await GetTotalEmployeesCountAsync(restID);
+            int totalPosts = await GetTotalPostCountAsync(restID);
             var reservationStats = await GetReservationStatsAsync(restID);
             var itemStocks = await GetItemStocksAsync(restID);
             var employeeWorkingHours = await GetEmployeeWorkingHoursAsync(restID);
@@ -188,6 +206,7 @@ namespace EffectiveWebProg.Controllers
             ViewBag.ReservationStats = reservationStats;
             ViewBag.ItemStocks = itemStocks;
             ViewBag.EmployeeWorkingHours = employeeWorkingHours;
+            ViewBag.TotalPosts = totalPosts;
 
             return View();
         }

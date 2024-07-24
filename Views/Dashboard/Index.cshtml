@@ -11,6 +11,7 @@
     var totalEmployees = ViewBag.TotalEmployees; // Assuming you have this value in ViewBag
     var todayReservations = upcomingReservations.Where(r => r.ReservationDate == DateOnly.FromDateTime(DateTime.Today)).ToList();
     var futureReservations = upcomingReservations.Where(r => r.ReservationDate > DateOnly.FromDateTime(DateTime.Today)).ToList();
+    var totalPosts = ViewBag.totalPosts;
 }
 
 <div class="container-fluid">
@@ -35,7 +36,7 @@
                     <div class="card mb-4 shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">Posts</h5>
-                            <p class="card-text">@((ViewBag.PostCount ?? 0) == 0 ? 0 : ViewBag.PostCount)</p>
+                            <p class="card-text">@totalPosts</p>
                         </div>
                     </div>
                 </div>
