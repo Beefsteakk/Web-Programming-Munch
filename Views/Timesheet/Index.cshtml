@@ -10,7 +10,7 @@
 <div class="main-content">
     <h2 style="text-align: center">Employee Timesheet</h2>
     <div class="nav">
-        <h3 id="monthYear">@Model.CurrentDate.ToString("MMMM yyyy")</h3>
+        <h4 id="monthYear">@Model.CurrentDate.ToString("MMMM yyyy")</h4>
         <div class="nav-buttons">
             <a asp-action="Index" asp-route-date="@Model.CurrentDate.AddDays(-7).ToString("yyyy-MM-dd")" class="btn btn-primary">&lt;</a>
             <a asp-action="Index" class="btn btn-primary">Today</a>
@@ -58,7 +58,7 @@
     <div class="weekly-overview">
         <h3>Weekly Overview</h3>
         <div class="controls">
-            <button class="btn btn-secondary mb-2" onclick="sortTable()">Sort by Employee Name</button>
+            <button class="btn btn-secondary mb-2" onclick="sortTable()">Sort by Name</button>
             <select id="shiftFilter" onchange="filterTable()">
                 <option value="all">All Shifts</option>
                 <option value="AM">Morning Shift</option>
@@ -87,7 +87,7 @@
                             <td>
                                 @if (timesheet != null)
                                 {
-                                    <span class="shift-oval @timesheet.ShiftType.ToLower()">@timesheet.ShiftType</span>
+                                    <span class="shift-oval @timesheet.ShiftType.ToLower()" data-date="@currentDay.ToString("yyyy-MM-dd")">@timesheet.ShiftType</span>
                                 }
                             </td>
                         }
