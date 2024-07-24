@@ -58,7 +58,7 @@ namespace EffectiveWebProg.Controllers
         private async Task<List<PostPicsModel>> GetRestaurantPostsAsync(string restID)
         {
             List<PostPicsModel> postDetailsList = new List<PostPicsModel>();
-            string query = "SELECT pp.PicID, pp.ImageURL FROM PostPics pp JOIN Posts p on pp.PostID = p.PostID WHERE p.RestID = @RestID ORDER BY p.PostCreatedAt DESC";
+            string query = "SELECT pp.PostID, pp.PicID, pp.ImageURL FROM PostPics pp JOIN Posts p on pp.PostID = p.PostID WHERE p.RestID = @RestID ORDER BY p.PostCreatedAt DESC";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -73,6 +73,7 @@ namespace EffectiveWebProg.Controllers
                         {
                             PostPicsModel postDetails = new PostPicsModel
                             {
+                                PostID = Guid.Parse(reader["PostID"].ToString() ?? ""),
                                 PicID = Guid.Parse(reader["PicID"].ToString() ?? ""),
                                 ImageURL = reader["ImageURL"].ToString() ?? "",
                             };
@@ -150,6 +151,7 @@ namespace EffectiveWebProg.Controllers
 
             RestaurantsModel restaurantDetails = await GetRestaurantDetailsByUserIdAsync(restID);
             List<PostPicsModel> restaurantPosts = await GetRestaurantPostsAsync(restID);
+
             int count = restaurantPosts.Count;
             ViewBag.PostCount = count;
 

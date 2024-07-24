@@ -213,6 +213,10 @@ public class PostsController(ApplicationDbContext db) : BaseController
             .Select(p => p.ImageURL)
             .ToListAsync();
 
+        foreach (var comment in comments)
+        {
+            await CompleteCommentObject(comment);
+        }
         var model = new IndividualPostViewModel { Post = post, CommentsList = comments, PostImageURLs = imageURLs };
         return View(model);
     }

@@ -172,7 +172,9 @@
                                 @foreach (var post in postDetails)
                                 {
                                     <div class="col-md-4">
-                                        <img src="/Images/PostPics/@post.ImageURL" id="@post.PicID" class="img-fluid">
+                                        <a href="/Posts/SpecificPost/@post.PostID">
+                                            <img src="/Images/PostPics/@post.ImageURL" id="@post.PicID" class="img-fluid">
+                                        </a>
                                     </div>
                                 }
 
