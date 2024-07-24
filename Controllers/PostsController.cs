@@ -62,7 +62,7 @@ public class PostsController(ApplicationDbContext db) : BaseController
         post.RestID = restaurant.RestID;
         await _db.Posts.AddAsync(post);
         await _db.SaveChangesAsync();
-        return RedirectToAction("Index", "RestProfile");
+        return RedirectToAction("SelectRestaurant", "RestProfile", new { restID = post.RestID });
     }
 
     [HttpPost]
@@ -99,7 +99,7 @@ public class PostsController(ApplicationDbContext db) : BaseController
         }
         _db.Posts.Remove(post);
         await _db.SaveChangesAsync();
-        return RedirectToAction("");
+        return RedirectToAction("", "RestProfile");
     }
 
     [HttpPost]
