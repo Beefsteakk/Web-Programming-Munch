@@ -11,6 +11,10 @@
     justify-content: space-between;
     align-items: center;
 }
+.nav-buttons {
+    display: flex;
+    align-items: center;
+}
 
 /* Day box styling */
 .day-box {
@@ -195,14 +199,16 @@ li:hover {
 }
 
 /* Button styling */
-.btn {
-    margin: 2px;
+.btn-primary {
+    margin: 0 2px;
+    padding: 6px 11px;
     background-color: #ff5722;
     color: #fff;
-    border-radius: 20px;
+    font-size: small;
+    border-radius: 5px;
     border: none;
 }
-.btn:hover {
+.btn-primary:hover {
     background-color: #fc9272;
 }
 .btn-save {

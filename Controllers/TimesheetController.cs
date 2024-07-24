@@ -57,9 +57,13 @@ namespace EffectiveWebProg.Controllers
 
             try
             {
-                // Convert local times to UTC for storage
-                // model.StartTime = DateTime.SpecifyKind(model.StartTime, DateTimeKind.Local).ToLocalTime();
-                // model.EndTime = DateTime.SpecifyKind(model.EndTime, DateTimeKind.Local).ToLocalTime();
+                var existingShift = await _context.TimeSheet
+                    .FirstOrDefaultAsync(t => t.EmployeeID == model.EmployeeID && t.Day.Date == model.Day.Date);
+
+                if (existingShift != null)
+                {
+                    return Json(new { success = false, message = "This employee already has a shift for the selected day. Please proceed to update it." });
+                }
 
                 _context.TimeSheet.Add(model);
                 await _context.SaveChangesAsync();
