@@ -10,21 +10,15 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSession();
 
-<<<<<<< HEAD
-// builder.WebHost.UseKestrel(options =>
-// {
-//     options.ListenAnyIP(443, listenOptions => {
-//         listenOptions.UseHttps();
-//     });
-// });
-=======
+
 builder.WebHost.UseKestrel(options =>
 {
+    options.ListenAnyIP(80);
     options.ListenAnyIP(443, listenOptions => {
-        listenOptions.UseHttps("mycert.pfx", "Password123!");
+        listenOptions.UseHttps("new_munch.pfx", "password");
     });
 });
->>>>>>> 8e1200cf6a009d3a8f508bfbf49c7b19b4003c42
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 
