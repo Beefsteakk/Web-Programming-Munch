@@ -94,7 +94,7 @@ function submitShiftForm(form, url) {
             editModal.style.display = "none";
             location.reload();
         } else {
-            alert("Failed to save shift. Error: " + (data.error || "Unknown error"));
+            alert(data.message || "Unknown error");
         }
     })
     .catch(error => {
@@ -157,5 +157,87 @@ function updateEditShiftTimes() {
         endTime.value = "23:00";
     }
 }
+
+function sortTable() {
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("employeeTable");
+    switching = true;
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[0];
+            y = rows[i + 1].getElementsByTagName("TD")[0];
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+        }
+    }
+}
+
+function filterTable() {
+    var filter = document.getElementById("shiftFilter").value;
+    var table = document.getElementById("employeeTable");
+    var tr = table.getElementsByTagName("tr");
+
+    for (var i = 1; i < tr.length; i++) {
+        tr[i].style.display = "";
+    }
+
+    if (filter !== "all") {
+        for (var i = 1; i < tr.length; i++) {
+            var td = tr[i].getElementsByTagName("td");
+            var hasVisibleShift = false;
+
+            for (var j = 1; j < td.length; j++) {
+                var span = td[j].getElementsByTagName("span")[0];
+                if (span) {
+                    if (span.textContent === filter) {
+                        hasVisibleShift = true;
+                    } else {
+                        span.style.display = "none";
+                    }
+                }
+            }
+
+            if (!hasVisibleShift) {
+                tr[i].style.display = "none";
+            }
+        }
+    } else {
+        var spans = table.getElementsByTagName("span");
+        for (var i = 0; i < spans.length; i++) {
+            spans[i].style.display = "";
+        }
+    }
+}
+
+function resetTable() {
+    var table = document.getElementById("employeeTable");
+    var spans = table.getElementsByTagName("span");
+    var rows = table.getElementsByTagName("tr");
+
+    // Show all spans
+    for (var i = 0; i < spans.length; i++) {
+        spans[i].style.display = "";
+    }
+
+    // Show all rows
+    for (var i = 1; i < rows.length; i++) {
+        rows[i].style.display = "";
+    }
+}
+
+// Modify the event listener for the filter dropdown
+document.getElementById("shiftFilter").addEventListener("change", function() {
+    resetTable();
+    filterTable();
+});
 
 console.log("timesheet.js loaded");

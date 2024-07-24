@@ -11,13 +11,17 @@
     justify-content: space-between;
     align-items: center;
 }
+.nav-buttons {
+    display: flex;
+    align-items: center;
+}
 
 /* Day box styling */
 .day-box {
     position: relative;
     padding: 10px;
     border: 1px solid #ccc;
-    margin: 5px 0 5px 0;
+    margin: 5px 0;
     border-radius: 5px;
     width: 100%;
     height: 300px; /* Fixed height, will extend downwards if content overflows */
@@ -32,6 +36,8 @@
     right: 5px;
     cursor: pointer;
     display: none;
+    color: #ff5722;
+    font-size: 20px;
 }
 .day-box:hover .plus-sign {
     display: block;
@@ -48,7 +54,7 @@
 /* Highlight today's date */
 .day-box.today {
     background-color: #e6f7ff;
-    border-color: #0099ff;
+    border-color: #3498db;
 }
 
 /* Table styling */
@@ -61,7 +67,7 @@
 .table td {
     text-align: center;
     vertical-align: middle;
-    padding: 15px;
+    padding: 10px;
     border: 1px solid #ccc;
 }
 .table thead th {
@@ -90,6 +96,36 @@
 .weekly-overview h3 {
     margin-top: 0;
     text-align: center;
+    color: #2c3e50;
+}
+
+/* Controls for sorting and filtering */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.controls button,
+.controls select {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff5722;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.controls button:hover,
+.controls select:hover {
+    background-color: #fc9272;
+}
+.controls select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
 }
 
 /* Oval shape for shifts */
@@ -100,70 +136,114 @@
     color: #fff;
     font-size: 12px;
     margin: 2px;
+    font-weight: bold;
 }
 .shift-oval.am {
-    background-color: #f8b706; /* Yellow for AM */
+    background-color: #f39c12; /* Yellow for AM */
 }
 .shift-oval.pm {
-    background-color: #1a881a; /* Green for PM */
+    background-color: #27ae60; /* Green for PM */
 }
 
 /* Modal styling */
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.5);
 }
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 30px;
+    border: none;
+    width: 90%;
     max-width: 500px;
-    border-radius: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 .close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
+    transition: color 0.3s ease;
 }
 .close:hover,
 .close:focus {
-    color: black;
+    color: #2c3e50;
     text-decoration: none;
     cursor: pointer;
 }
 
 /* List item styling */
 ul {
-    padding-left: 20px; /* Add padding for list dots */
-    list-style-type: disc; /* Ensure dots are shown */
+    padding-left: 20px;
+    list-style-type: disc;
     text-align: left;
 }
 li {
     cursor: pointer;
-    padding: 5px;
-    line-height: 1.5; /* Increase line height for readability */
+    padding: 3px 0;
+    line-height: 1.5;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 li:hover {
     background-color: #f0f0f0;
 }
 
 /* Button styling */
-.btn {
-    margin: 2px;
+.btn-primary {
+    margin: 0 2px;
+    padding: 6px 11px;
     background-color: #ff5722;
-    border-radius: 20px;
+    color: #fff;
+    font-size: small;
+    border-radius: 5px;
     border: none;
 }
-.btn:hover {
+.btn-primary:hover {
     background-color: #fc9272;
+}
+.btn-save {
+    background-color: #3498db;
+}
+.btn-save:hover {
+    background-color: #2980b9;
+    color: #fff;
+}
+.btn-danger {
+    background-color: #e74c3c;
+}
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+/* Form styling */
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.form-control:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
