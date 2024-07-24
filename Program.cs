@@ -12,12 +12,12 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSession();
 
-builder.WebHost.UseKestrel(options =>
-{
-    options.ListenAnyIP(443, listenOptions => {
-        listenOptions.UseHttps();
-    });
-});
+// builder.WebHost.UseKestrel(options =>
+// {
+//     options.ListenAnyIP(443, listenOptions => {
+//         listenOptions.UseHttps();
+//     });
+// });
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), 

@@ -178,7 +178,7 @@ namespace EffectiveWebProg.Controllers
             int totalReservations = await GetTotalReservationsCountAsync(restID);
             int totalEmployees = await GetTotalEmployeesCountAsync(restID);
             var reservationStats = await GetReservationStatsAsync(restID);
-            var itemStocks = await GetItemStocksAsync();
+            var itemStocks = await GetItemStocksAsync(restID);
             var employeeWorkingHours = await GetEmployeeWorkingHoursAsync(restID);
 
             ViewBag.RestaurantDetails = restaurantDetails;
@@ -219,16 +219,23 @@ namespace EffectiveWebProg.Controllers
             return stats;
         }
 
-        private async Task<Dictionary<string, int>> GetItemStocksAsync()
+        private async Task<Dictionary<string, int>> GetItemStocksAsync(string restID)
         {
             var stocks = new Dictionary<string, int>();
-            string query = "SELECT ItemName, StockCount FROM InventoryItems JOIN Items ON InventoryItems.ItemID = Items.ItemID";
+            string query = "SELECT Items.ItemName, InventoryItems.StockCount " +
+                        "FROM InventoryItems " +
+                        "JOIN Items ON InventoryItems.ItemID = Items.ItemID " +
+                        "JOIN Inventory ON Inventory.InventoryID = InventoryItems.InventoryID " +
+                        "WHERE Inventory.RestID = @restID";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 await conn.OpenAsync();
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
+                    // Add the restID parameter to the command
+                    cmd.Parameters.AddWithValue("@restID", restID);
+
                     using (MySqlDataReader reader = (MySqlDataReader)await cmd.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync())
@@ -240,6 +247,7 @@ namespace EffectiveWebProg.Controllers
             }
             return stocks;
         }
+
 
         private async Task<Dictionary<string, double>> GetEmployeeWorkingHoursAsync(string restId)
         {
