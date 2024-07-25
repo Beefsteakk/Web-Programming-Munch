@@ -11,6 +11,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 
 
+// Uncommnet this these lines of code when hosting website on the cloud
 // builder.WebHost.UseKestrel(options =>
 // {
 //     options.ListenAnyIP(80);
