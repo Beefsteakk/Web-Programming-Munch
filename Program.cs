@@ -11,13 +11,13 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 
 
-builder.WebHost.UseKestrel(options =>
-{
-    options.ListenAnyIP(80);
-    options.ListenAnyIP(443, listenOptions => {
-        listenOptions.UseHttps("new_munch.pfx", "password");
-    });
-});
+// builder.WebHost.UseKestrel(options =>
+// {
+//     options.ListenAnyIP(80);
+//     options.ListenAnyIP(443, listenOptions => {
+//         listenOptions.UseHttps("new_munch.pfx", "password");
+//     });
+// });
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
