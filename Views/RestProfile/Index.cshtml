@@ -172,9 +172,15 @@
                                 @foreach (var post in postDetails)
                                 {
                                     <div class="col-md-4">
-                                        <a href="/Posts/SpecificPost/@post.PostID">
+                                        @if (ViewBag.isOwnRestaurant)
+                                        {
+                                            <a href="/Posts/SpecificPost/@post.PostID">
+                                                <img src="/Images/PostPics/@post.ImageURL" id="@post.PicID" class="img-fluid">
+                                            </a>
+                                        }
+                                        else {
                                             <img src="/Images/PostPics/@post.ImageURL" id="@post.PicID" class="img-fluid">
-                                        </a>
+                                        }
                                     </div>
                                 }
 
